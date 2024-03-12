@@ -1,0 +1,20 @@
+.input-with-icon {
+    position: relative;
+    margin-bottom: 15px;
+    /* Add margin bottom */
+}
+
+
+
+.input-field {
+    padding-left: 40px;
+    padding-top: 5px;
+    /* Add padding top */
+}
+
+/* Style placeholder text */
+.input-field::placeholder {
+    color: #aaa;
+    margin-left: 50px;
+    /* Adjust placeholder position */
+}

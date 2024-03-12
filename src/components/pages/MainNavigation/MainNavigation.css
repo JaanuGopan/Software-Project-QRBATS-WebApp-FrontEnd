@@ -1,0 +1,141 @@
+/* Global styles */
+body {
+    height: 100vh;
+    background: #ffffff;
+}
+
+/* Top section styles */
+.top {
+    position: fixed;
+    background-color: #0063a0;
+    color: white;
+    padding: 20px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.titleImage_logo {
+    display: flex;
+    flex-direction: row;
+}
+
+.titleImage_logo img {
+    height: 60px;
+    width: 70px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 1px;
+    background-color: transparent;
+}
+
+.companyname {
+    font-size: 30px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.profilename {
+    font-size: 18px;
+    margin-right: 20px;
+}
+
+/* Main container */
+.main {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Content section */
+.below {
+    flex: 1;
+    display: flex;
+    margin-top: 12vh;
+}
+
+.main-page {
+    display: flex;
+    flex: 1;
+}
+
+.maincontent {
+    display: flex;
+    margin-left: 40vh;
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    max-height: 80vh;
+}
+
+/* Sidebar styles */
+.sidebar {
+    position: fixed;
+    flex: 0 0 15% 0;
+    background-color: #0063a0;
+    padding: 30px;
+    height: 100%;
+    width: 20vw;
+    border-radius: 0 20px 20px 0;
+}
+
+.sidemenu {
+    margin-bottom: 10px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 15px;
+    color: #fff;
+    font-size: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.menu-item:hover {
+    background-color: #004f7c;
+}
+
+.image1 {
+    display: flex;
+    justify-content: center;
+}
+
+.image1 img {
+    margin-bottom: 30px;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: transparent;
+    border-radius: 30px;
+}
+
+.dropdown {
+    padding-left: 20px;
+}
+
+.dropdown-item {
+    padding: 5px;
+    padding-left: 60px;
+    font-size: 20px;
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #0a5482;
+}
+
+.dropdown-icon {
+    font-size: 20px;
+    padding-left: 15px;
+    transition: transform 0.3s ease;
+}
+
+/* Logout section */
+.logout {
+    padding-top: 50px;
+    padding-left: 150px;
+    color: white;
+}
