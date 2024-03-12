@@ -13,9 +13,9 @@ const Navigator = () => {
           style={{
             color: "white",
             letterSpacing: "0.5rem",
-            marginTop: "0.75vw",
             marginLeft: "0.5vw",
-            fontSize: `min(${maxFontSize}vw, 200%)`,
+            marginBottom:'0px',
+            fontSize: `min(${maxFontSize}vw, 150%)`,
             fontWeight: "bold",
           }}
         >
