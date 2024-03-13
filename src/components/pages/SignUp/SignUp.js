@@ -60,8 +60,8 @@ function SignUp() {
   };
 
   return (
-    <div className="container">
-      <div className="main-container">
+    <div className="signup-container">
+      <div className="signup-main-container">
         <button className="back-button" onClick={() => navigate(-1)}>
           <FontAwesomeIcon icon={faCircleArrowLeft} className="icon" />
         </button>
