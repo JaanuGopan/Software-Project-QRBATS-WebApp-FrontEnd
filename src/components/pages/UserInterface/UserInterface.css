@@ -135,3 +135,13 @@
     flex-direction: column;
     padding: 0% 2% 5% 2%;
   }
+
+  a[target="_blank"] {
+    color: blue; /* Set your desired text color */
+    text-decoration: none;
+  }
+  
+  a[target="_blank"]:hover {
+    text-decoration: underline;
+    background-color: transparent;
+  }

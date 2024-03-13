@@ -22,7 +22,7 @@ const Navigator = () => {
           SKY TICKER
         </p>
       </div>
-      <a href="/signin">
+      <a href="/staffMainNavigation">
         <Button
           style={{
             color: "#0063A0",

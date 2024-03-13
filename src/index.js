@@ -9,6 +9,7 @@ import AdminDashboard from "./components/pages/AdminDashboard/AdminDashboard";
 import SignUp from "./components/pages/SignUp/SignUp";
 import MainNavigationPage from "./components/pages/MainNavigation/MainNavigation";
 import EventCreation from "./components/pages/Event/EventCreation/EventCreation";
+import StaffMainNavigation from "./components/pages/StaffMainNavigation/StaffMainNavigation";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,11 @@ const router = createBrowserRouter([
   {
     path: "eventCreation",
     element: <EventCreation />,
+  },
+  
+  {
+    path: "staffMainNavigation",
+    element: <StaffMainNavigation />,
   },
 ]);
 
