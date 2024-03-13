@@ -14,7 +14,7 @@ const Navigator = () => {
             color: "white",
             letterSpacing: "0.5rem",
             marginLeft: "0.5vw",
-            marginBottom:'0px',
+            marginBottom: "0px",
             fontSize: `min(${maxFontSize}vw, 150%)`,
             fontWeight: "bold",
           }}
@@ -22,7 +22,7 @@ const Navigator = () => {
           SKY TICKER
         </p>
       </div>
-      <a href="/staffMainNavigation">
+      <a href="/signin">
         <Button
           style={{
             color: "#0063A0",
