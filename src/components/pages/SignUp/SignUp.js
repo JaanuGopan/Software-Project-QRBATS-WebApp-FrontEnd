@@ -41,7 +41,7 @@ function SignUp() {
       const userEmail = decodedToken.sub;
       localStorage.setItem("token", token);
       //navigate("/profile", { state: { userEmail } });
-      navigate("/mainNavigation");
+      navigate("/mainNavigation", { state: { userEmail } });
     } catch (error) {
       console.error("Login failed", error);
     }
