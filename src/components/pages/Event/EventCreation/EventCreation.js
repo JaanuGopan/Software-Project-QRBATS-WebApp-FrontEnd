@@ -9,21 +9,36 @@ import QRCode from "react-qr-code";
 import axios from "axios";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import toast, { Toaster } from "react-hot-toast";
 
 function EventCreation() {
   const navigate = useNavigate();
 
   const [eventName, setEventName] = useState("");
-  const [moduleName, setModuleName] = useState("");
+  const [moduleName, setModuleName] = useState(null);
   const [eventDate, setEventDate] = useState("");
   const [eventValidDate, setEventValidDate] = useState("");
   const [eventTime, setEventTime] = useState("");
   const [eventVenue, setEventVenue] = useState("");
   const [showQRCode, setShowQRCode] = useState(false);
+  const [eventRole, setEventRole] = useState("EVENT");
+  const [eventAssignedUserId, setEventAssignedUserId] = useState(null);
+
   const [showModuleNameInput, setShowModuleNameInput] = useState(true);
   const [title, setTitle] = useState("Event");
 
   const qrCodeRef = useRef(null);
+
+  const notifySuccess = () => toast.success("Successfully Event Created!");
+
+  const handleEreseValu = () => {
+    setEventName("");
+    setModuleName(null);
+    setEventDate("");
+    setEventValidDate("");
+    setEventTime("");
+    setEventVenue("");
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,20 +60,31 @@ function EventCreation() {
             eventValidDate: eventValidDate,
             eventTime: eventTime,
             eventVenue: eventVenue,
-            eventRole: "LECTURE",
-            eventAssignedStaffId: 1,
+            eventRole: eventRole,
             eventModuleName: moduleName,
             eventAssignedUserId: 1,
           }
         );
         const responseEventName = response.data.eventName;
         console.log("Event is : " + responseEventName);
+        notifySuccess();
       } catch (error) {
         console.error("Event failed", error);
       } finally {
         setShowQRCode(true);
       }
     }
+  };
+
+  const handleDownloadQRCode = () => {
+    const canvas = qrCodeRef.current.querySelector("canvas");
+    const url = canvas
+      .toDataURL("image/png")
+      .replace("image/png", "image/octet-stream");
+    const link = document.createElement("a");
+    link.download = "qr_code.png";
+    link.href = url;
+    link.click();
   };
 
   const handleShareQRCode = () => {
@@ -71,10 +97,11 @@ function EventCreation() {
   };
 
   // Concatenate all event details into a single string
-  const eventDetails = `${eventName}, ${moduleName}, ${eventDate}, ${eventTime}, ${eventVenue}`;
+  const eventDetails = `${eventName}, ${moduleName}, ${eventDate}, ${eventValidDate}, ${eventTime}, ${eventVenue}, ${eventAssignedUserId}`;
 
   return (
     <div className="event-main-div">
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="event-main-container1">
         <h2>Create {title}</h2>
         <div className="eventCreation-field">
@@ -85,21 +112,29 @@ function EventCreation() {
             <div className="button-group">
               <button
                 className="eventCreation-switchbutton"
-                onClick={() => setShowModuleNameInput(false)}
+                onClick={() =>
+                  setShowModuleNameInput(false) &&
+                  setTitle("Event") &&
+                  setEventRole("EVENT") &&
+                  handleEreseValu()
+                }
               >
                 Event
               </button>
               <button
                 className="eventCreation-switchbutton"
                 onClick={() =>
-                  setShowModuleNameInput(true) && setTitle("Lecture")
+                  setShowModuleNameInput(true) &&
+                  setTitle("Lecture") &&
+                  setEventRole("LECTURE") &&
+                  handleEreseValu()
                 }
               >
                 Lecture
               </button>
             </div>
             <form onSubmit={handleSubmit}>
-              <div className="form-group">
+              <div className="eventCreation-form">
                 <div className="input-with-icon">
                   <input
                     type="text"
@@ -113,7 +148,7 @@ function EventCreation() {
                 </div>
               </div>
               {showModuleNameInput && (
-                <div className="form-group">
+                <div className="eventCreation-form">
                   <div className="input-with-icon">
                     <input
                       type="text"
@@ -128,7 +163,7 @@ function EventCreation() {
                 </div>
               )}
               <div className="date-div">
-                <div className="form-group">
+                <div className="eventCreation-form">
                   <div>
                     <label className="date-label" htmlFor="eventDate">
                       {title} Starting Date
@@ -141,7 +176,7 @@ function EventCreation() {
                     />
                   </div>
                 </div>
-                <div className="form-group">
+                <div className="eventCreation-form">
                   <div>
                     <label className="date-label" htmlFor="eventDate">
                       {title} Ending Date
@@ -155,7 +190,7 @@ function EventCreation() {
                   </div>
                 </div>
               </div>
-              <div className="form-group">
+              <div className="eventCreation-form">
                 <div>
                   <select
                     value={eventVenue}
@@ -171,7 +206,7 @@ function EventCreation() {
                   </select>
                 </div>
               </div>
-              <div className="form-group">
+              <div className="eventCreation-form">
                 <div>
                   <label className="form-label" htmlFor="eventDate">
                     {title} Starting Time
@@ -186,7 +221,7 @@ function EventCreation() {
                 </div>
               </div>
 
-              <div className="form-group"></div>
+              <div className="eventCreation-form"></div>
               <button type="submit" className="btn btn-primary w-100">
                 Create {title}
               </button>
@@ -195,15 +230,30 @@ function EventCreation() {
         </div>
         {showQRCode && (
           <div ref={qrCodeRef} className="qr-code">
-            <QRCode name="QRCode" value={eventDetails} className="mb-2" />
-            <p>Scan this QR code to mark attendance.</p>
-            <div className="mt-4">
-              <button
-                onClick={handleShareQRCode}
-                className="btn btn-primary mr-2"
-              >
-                Share QR Code
-              </button>
+            <div className="row-center">
+              <QRCode name="QRCode" value={eventDetails} className="mb-2" />
+            </div>
+            <div>
+              <p className="text-center">Scan this QR code to join {title}</p>
+            </div>
+
+            <div className="row-center">
+              <div className="QRbutton">
+                <button
+                  onClick={handleShareQRCode}
+                  className="btn btn-primary mr-3"
+                >
+                  Download QR-Code
+                </button>
+              </div>
+              <div className="QRbutton">
+                <button
+                  onClick={handleShareQRCode}
+                  className="btn btn-success mr-3"
+                >
+                  Save
+                </button>
+              </div>
             </div>
           </div>
         )}

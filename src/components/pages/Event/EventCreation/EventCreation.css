@@ -89,6 +89,41 @@ label {
     margin-bottom: 5px;
 }
 
+.button-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.eventCreation-switchbutton {
+    margin-right: 30px;
+    
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #0077C0;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+a {
+    color: #0077C0;
+    text-decoration: none;
+}
+
+button:hover,
+a:hover {
+    background-color: #0056b3;
+}
+
+
+
+
 input[type="text"],
 input[type="password"] {
     width: 100%;
@@ -119,38 +154,7 @@ input[type="password"]:not(:focus) {
     /* Add curved border at the top */
 }
 
-button {
-    padding: 10px 20px;
-    background-color: #0077C0;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
 
-a {
-    color: #0077C0;
-    text-decoration: none;
-}
-
-button:hover,
-a:hover {
-    background-color: #0056b3;
-}
-
-
-.input-with-icon {
-    position: relative;
-}
-
-.input-icon {
-
-    left: 10px;
-    /* Adjust as needed */
-    top: calc(50% - 0.5em);
-
-    color: #aaa;
-}
 
 /* Style placeholder text */
 input[type="text"]::placeholder,
@@ -180,14 +184,9 @@ input[type="password"]::placeholder {
     /* Adjust the width as needed */
 }
 
-.button-group {
-    margin-bottom: 20px;
-    /* Adjust the margin as needed */
-}
 
-.custom-button{
-    margin-right: 30px;
-}
+
+
 
 .date-label text{
     font-size: small;
@@ -196,9 +195,25 @@ input[type="password"]::placeholder {
 
 
 .qr-code{
+    margin-top: 10vh;
     flex: 0 0 85% 0;
     height: 100%;
     width: 100%;
     padding: 10px;
     max-height: 80vh;
+    align-items: center;
+    justify-content: center;
+}
+
+.row-center{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.QRbutton{
+    margin-top: 10px;
+    margin-right: 10px;
 }
