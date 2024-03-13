@@ -22,7 +22,6 @@ function MainNavigationPage() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     window.location.reload();
-    window.location.href = "/";
   };
 
   const [contentTitle, setContentTitle] = useState("Dashboard");
