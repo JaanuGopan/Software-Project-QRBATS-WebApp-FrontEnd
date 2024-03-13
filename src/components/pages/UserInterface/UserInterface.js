@@ -10,9 +10,9 @@ import { IoLogoYoutube } from "react-icons/io";
 
 const UserInterface = () => {
   return (
-    <div>
+    <div className="userinterface-mainContainer">
       <Navigator />
-      <div className="backgroundimage">
+      <div className="userinterface-backgroundimage">
         <div className="welcomewin">
           <p style={{ color: "white", fontWeight: "bolder", fontSize: "2rem" }}>
             WELCOME TO SKYTICKER
@@ -39,15 +39,15 @@ const UserInterface = () => {
           </a>
         </div>
       </div>
-      <div className="container">
-        <div className="row">
+      <div className="userinterface-container">
+        <div className="userinterface-row">
           <AvailableDepartment />
         </div>
-        <div className="row" style={{ minHeight: "450px" }}>
+        <div className="userinterface-row1" style={{ minHeight: "450px" }}>
           <Calender />
         </div>
       </div>
-      <div className="users">
+      <div className="userinterface-users">
         <h2 style={{ color: "white", textAlign: "center" }}>USERS</h2>
         <h5 style={{ color: "#FFFFFF", textAlign: "center" }}>
           The Website Useful for
@@ -85,7 +85,7 @@ const UserInterface = () => {
           </div>
         </div>
       </div>
-      <div className="container">
+      <div className="userinterface-container1">
         <div className="column">
           <h2
             style={{

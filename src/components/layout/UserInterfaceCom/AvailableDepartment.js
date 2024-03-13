@@ -17,7 +17,7 @@ const AvailableDepartment = () => {
   ));
 
   return (
-    <div className="departmentslide">
+    <div className="userinterface-departmentslide">
       <h2 style={{ color: "#025587", paddingBottom: "5%" }}>
         Available Department
       </h2>
