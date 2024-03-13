@@ -145,3 +145,11 @@
     text-decoration: underline;
     background-color: transparent;
   }
+
+  a:hover{
+    background-color: transparent;
+  }
+
+  .signinbutton:hover{
+    background-color: transparent;
+  }

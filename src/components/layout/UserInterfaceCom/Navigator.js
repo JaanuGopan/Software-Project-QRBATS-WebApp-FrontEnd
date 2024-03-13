@@ -22,7 +22,7 @@ const Navigator = () => {
           SKY TICKER
         </p>
       </div>
-      <a href="/signin">
+      
         <Button
           style={{
             color: "#0063A0",
@@ -31,10 +31,10 @@ const Navigator = () => {
             fontWeight: "bold",
           }}
           variant="contained"
-        >
-          Sign In
+        ><a className="signinbutton" href="/signin">
+          Sign In</a>
         </Button>
-      </a>
+      
     </div>
   );
 };
