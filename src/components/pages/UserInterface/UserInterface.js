@@ -168,7 +168,7 @@ const UserInterface = () => {
               padding: "0% 0% 5% 0%",
             }}
           >
-            Mail :- <a href="">leodash@gmail.com</a>
+            Mail :- <a target="_blank" href=''>leodash@gmail.com</a>
           </p>
           <div
             style={{
