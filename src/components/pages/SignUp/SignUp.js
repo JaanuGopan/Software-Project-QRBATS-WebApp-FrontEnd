@@ -65,7 +65,7 @@ function SignUp() {
         <button className="back-button" onClick={() => navigate(-1)}>
           <FontAwesomeIcon icon={faCircleArrowLeft} className="icon" />
         </button>
-        <h2>SIGN UP</h2>
+        <p className="head1">SIGN UP</p>
         <div className="login-container">
           <div className="image-container">
             <img src={logo} className="logo" alt="Logo" />
