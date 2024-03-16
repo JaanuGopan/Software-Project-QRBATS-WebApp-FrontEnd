@@ -1,15 +1,16 @@
 import React from 'react';
-import StaffNavBar from '../../layout/StaffDashboardComponents/StaffSideBar';
+import './StaffMainNavigation.css'
+import StaffNavBar from '../../layout/StaffDashboardComponents/StaffNavBar';
 import StaffSideBar from '../../layout/StaffDashboardComponents/StaffSideBar';
 
 const StaffMainNavigation = () => {
   return (
     <div className='staff-Main'>
-        <StaffNavBar/>
-      <div className='staff-Submain'>
+      <StaffNavBar/>
+      <div class="staff-Submain">
         <StaffSideBar/>
-        <div className='staff-SubPage'>
-            SubPages
+        <div>
+          SubPage
         </div>
       </div>
     </div>

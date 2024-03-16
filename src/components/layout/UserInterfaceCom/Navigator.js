@@ -31,10 +31,9 @@ const Navigator = () => {
             fontWeight: "bold",
           }}
           variant="contained"
-        ><a className="signinbutton" href="/signin">
+        ><a className="signinbutton" href="/staffMainNavigation">
           Sign In</a>
         </Button>
-      
     </div>
   );
 };
