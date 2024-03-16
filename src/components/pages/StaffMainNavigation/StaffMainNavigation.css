@@ -15,7 +15,21 @@
       width: 250px;
     }
     .buttonIcon{
-      size: 30px;
+      height: 1.5rem;
+      width: 1.5rem;
+    }
+    .SideBarButton{
+      height: 3rem;
+      padding-left: 2vw;
+    }
+    .SideBar{
+      margin-top: 2vh;
+      width: 100%;
+    }
+    .SideBarLabel{
+      font-size: larger;
+      padding: 1vw;
+      margin-bottom: 0px;
     }
 }
 
@@ -33,16 +47,28 @@
       font-weight: bold;
     }
     .Staff-Sidebar{
-      width: 70px;
+      width: 60px;
     }
     .Sidebarlogo{
       visibility: hidden;
     }
     .buttonIcon{
-      size: 40px;
+      height: 2rem;
+      width: 2rem;
     }
     .SideBarLabel{
       visibility: hidden;
+      font-size: 0px;
+      padding: 0px;
+      margin-bottom: 0px;
+    }
+    .SideBar{
+      margin-top: 5vh;
+      width: 100%;
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 }
 
@@ -62,30 +88,27 @@
     .ProfileName{
       font-weight: normal;
     }
-    .Staff-Sidebar{
-      visibility: hidden;
-    }
 }
 
 .staff-Main{
-    display: flex;
-    flex-direction: column;
-    width: 100vw;
-    align-items: stretch;
-    justify-content: flex-start;
-    height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  align-items: stretch;
+  justify-content: flex-start;
+  height: 100vh;
 }
 
 .Staff-Navbar{
-    background-color: #0063A0;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    height: 5rem;
-    width: 100%;
-    position: relative;
-    flex-wrap: nowrap;
+  background-color: #0063A0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 5rem;
+  width: 100%;
+  position: relative;
+  flex-wrap: nowrap;
 }
 
 .Staff-Icon{
@@ -128,7 +151,7 @@
     background-color: white;
     border-color: #0063A0;
     .ProfileName{
-        color: #0063A0;
+      color: #0063A0;
     }
 }
 
@@ -156,11 +179,7 @@
     align-items: flex-start;
     justify-content: flex-start;
     height: 100vh;
-}
-
-.SideBar{
-  margin-top: 2vh;
-  width: 100%;
+    position: relative;
 }
 
 .Staff-Sidebar{
@@ -173,6 +192,7 @@
   height: 100vh;
   border-top: 5px solid white;
   border-top-right-radius: 20px;
+  z-index: 1;
 }
 
 .Sidebarlogo{
@@ -189,9 +209,7 @@
   align-items: center;
   color: white;
   width: 100%;
-  height: 3rem;
   cursor: pointer;
-  padding-left: 2vw;
 }
 
 .SideBarButton:hover{
@@ -200,8 +218,27 @@
   border: 1px solid white;
 }
 
-.SideBarLabel{
-  font-size: larger;
-  padding: 1vw;
-  margin-bottom: 0px;
+.menuButton{
+  position: absolute;
+  color:'black';
+  margin-top: 5rem;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.closeButton{
+  color: white;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-end;
+  margin-left: 75%;
+  margin-top: 10px;
+}
+
+.Staff-Subpage{
+  display: block;
+  position: relative;
 }

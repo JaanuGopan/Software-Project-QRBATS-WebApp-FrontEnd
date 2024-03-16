@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { IoMdCloseCircleOutline } from "react-icons/io";
 import { IoSettings } from "react-icons/io5";
 import { FaUserTie } from "react-icons/fa";
 import { PiStudentBold } from "react-icons/pi";
@@ -8,9 +9,10 @@ import logo from '../../../assets/Images/logo/logo_white.png'
 import Sidebarbutton from './Sidebarbutton';
 import { AiFillDashboard } from "react-icons/ai";
 
-const StaffSideBar = () => {
+const StaffSideBar = ({handleclose}) => {
   return (
     <div class="Staff-Sidebar">
+      <div className='closeButton' onClick={handleclose}><IoMdCloseCircleOutline /></div>
       <img src={logo} className='Sidebarlogo'/>
       <div className='SideBar'>
         <Sidebarbutton title={'Dashboard'} titlewithiconicon={<AiFillDashboard className='buttonIcon'/>}/>
