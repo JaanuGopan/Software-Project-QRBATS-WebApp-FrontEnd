@@ -12,7 +12,7 @@
       font-weight: bold;
     }
     .Staff-Sidebar{
-      width: 250px;
+      width: 330px;
     }
     .buttonIcon{
       height: 1.5rem;
@@ -189,10 +189,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  height: 100vh;
   border-top: 5px solid white;
   border-top-right-radius: 20px;
   z-index: 1;
+  height:-webkit-fill-available;
 }
 
 .Sidebarlogo{
@@ -218,12 +218,22 @@
   border: 1px solid white;
 }
 
+.SideBarButton.active {
+  background-color: #f0f0f0;
+  color: #333;
+  border-left: 3px solid #007bff; /* Example of adding a border to indicate active state */
+}
+
 .menuButton{
   position: absolute;
   color:'black';
   margin-top: 5rem;
   z-index: 1;
   cursor: pointer;
+}
+
+.menuButton:hover{
+  background-color: #ccc;
 }
 
 .closeButton{
@@ -236,12 +246,17 @@
   justify-content: flex-end;
   margin-left: 75%;
   margin-top: 10px;
+  padding: 5px;
+  border-radius: 50px;
+}
+.closeButton:hover{
+  background-color: #025587;
 }
 
 .Staff-Subpage{
   display: block;
   position: relative;
   background-color: aqua;
-  width: 100vw;
-  height: 100vh;
+  height:-webkit-fill-available;
+  width:-webkit-fill-available;
 }

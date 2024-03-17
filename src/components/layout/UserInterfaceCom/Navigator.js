@@ -31,7 +31,7 @@ const Navigator = () => {
             fontWeight: "bold",
           }}
           variant="contained"
-        ><a className="signinbutton" href="/staffMainNavigation">
+        ><a className="signinbutton" href="/signin">
           Sign In</a>
         </Button>
     </div>

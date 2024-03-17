@@ -1,52 +1,10 @@
-/* Global styles */
-body {
-    height: 100vh;
-    background: #ffffff;
-}
-
-/* Top section styles */
-.top {
-    position: fixed;
-    background-color: #0063a0;
-    color: white;
-    padding: 20px;
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 1;
-}
-
-.titleImage_logo {
-    display: flex;
-    flex-direction: row;
-}
-
-.titleImage_logo img {
-    height: 60px;
-    width: 70px;
-    margin-left: 10px;
-    margin-right: 10px;
-    padding: 1px;
-    background-color: transparent;
-}
-
-.companyname {
-    font-size: 30px;
-    margin-left: 10px;
-    margin-top: 10px;
-}
-
-.profilename {
-    font-size: 18px;
-    margin-right: 20px;
-}
-
-/* Main container */
-.main {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+.Admin-main {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  align-items: stretch;
+  justify-content: flex-start;
+  height: 100vh;
 }
 
 /* Content section */

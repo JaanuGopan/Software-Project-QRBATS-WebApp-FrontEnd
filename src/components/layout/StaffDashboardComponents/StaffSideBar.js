@@ -4,6 +4,7 @@ import { IoSettings } from "react-icons/io5";
 import { FaUserTie } from "react-icons/fa";
 import { PiStudentBold } from "react-icons/pi";
 import { MdOutlineEventNote } from "react-icons/md";
+import { IoLogOut } from "react-icons/io5";
 import '../../pages/StaffMainNavigation/StaffMainNavigation.css'
 import logo from '../../../assets/Images/logo/logo_white.png'
 import Sidebarbutton from './Sidebarbutton';
@@ -20,6 +21,7 @@ const StaffSideBar = ({handleclose}) => {
         <Sidebarbutton title={'Staff'} titlewithiconicon={<FaUserTie className='buttonIcon'/>}/>
         <Sidebarbutton title={'Student'} titlewithiconicon={<PiStudentBold className='buttonIcon'/>}/>
         <Sidebarbutton title={'Setting'} titlewithiconicon={<IoSettings className='buttonIcon'/>}/>
+        <Sidebarbutton title={'Logout'} titlewithiconicon={<IoLogOut className='buttonIcon'/>}/>
       </div>
     </div>
   );
