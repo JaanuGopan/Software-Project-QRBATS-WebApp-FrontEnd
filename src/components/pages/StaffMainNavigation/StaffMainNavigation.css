@@ -185,7 +185,7 @@
 .Staff-Sidebar{
   background: linear-gradient(#0063A0, rgba(0,100,160,0.8));
   display: flex;
-  position: fixed;
+  position: relative;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
@@ -241,4 +241,7 @@
 .Staff-Subpage{
   display: block;
   position: relative;
+  background-color: aqua;
+  width: 100vw;
+  height: 100vh;
 }
