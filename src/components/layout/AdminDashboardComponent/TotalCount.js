@@ -1,8 +1,7 @@
 import React from "react";
 import "../../pages/AdminDashboard/AdminDashboard.css";
-import { FaUsers } from "react-icons/fa";
 
-const TotalCount = () => {
+const TotalCount = ({total, countIcon, countTitle}) => {
   return (
     <div className="inform">
       <div className="inform1">
@@ -14,19 +13,18 @@ const TotalCount = () => {
             padding: "5%",
           }}
         >
-          20
+          {total}
         </p>
-        <FaUsers style={{ color: "white", padding: "2%", fontSize: "250%" }} />
+        {countIcon}
       </div>
-      <p
+      <p className="informationText"
         style={{
           color: "white",
-          fontSize: "large",
           fontWeight: "bold",
           padding: "5%",
         }}
       >
-        Total Staff
+        {countTitle}
       </p>
     </div>
   );

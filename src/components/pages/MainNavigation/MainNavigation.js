@@ -11,14 +11,11 @@ import AdminSideBar from "../../layout/AdminDashboardComponent/AdminSideBar";
 
 function MainNavigationPage() {
   const location = useLocation();
-  const { userEmail } = location.state;
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     window.location.reload();
   };
-
-  const [contentTitle, setContentTitle] = useState("Dashboard");
 
   const [isHidden, setIsHidden] = useState(false);
   const handleshow = () => {
