@@ -34,7 +34,6 @@ const Navigator = () => {
         ><a className="signinbutton" href="/signin">
           Sign In</a>
         </Button>
-      
     </div>
   );
 };
