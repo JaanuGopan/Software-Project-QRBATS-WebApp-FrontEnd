@@ -230,10 +230,15 @@
   margin-top: 5rem;
   z-index: 1;
   cursor: pointer;
+  background-color:#ccc;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  padding: 5px;
+  box-shadow: 2px 2px 2px 0px rgba(27, 37, 49, 0.5);
 }
 
 .menuButton:hover{
-  background-color: #ccc;
+  background-color: darkgray;
 }
 
 .closeButton{
