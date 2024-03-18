@@ -25,7 +25,7 @@ function SignUp() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/v1/auth/register",
+        "http://localhost:8080/api/v1/auth/signin",
         {
           firstName: firstname,
           lastName: lastname,
@@ -38,9 +38,9 @@ function SignUp() {
       );
       const token = response.data.token;
       const decodedToken = parseJwt(token);
-      const userEmail = decodedToken.sub;
+      const userName = decodedToken.sub;
       localStorage.setItem("token", token);
-      navigate("/mainNavigation", { state: { userEmail } });
+      navigate("/mainNavigation", { state: { userName } });
     } catch (error) {
       console.error("Login failed", error);
     }

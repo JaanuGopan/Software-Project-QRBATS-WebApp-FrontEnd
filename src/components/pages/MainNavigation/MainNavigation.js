@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./MainNavigation.css";
-import '../StaffMainNavigation/StaffMainNavigation.css'
+import "../StaffMainNavigation/StaffMainNavigation.css";
 import EventCreation from "../Event/EventCreation/EventCreation";
 import { useLocation } from "react-router-dom";
 import Staff from "../StaffDashboard/Staff";
@@ -22,23 +22,30 @@ function MainNavigationPage() {
     setIsHidden(false);
   };
   const handleclose = () => {
-    setIsHidden(true)
-  }
+    setIsHidden(true);
+  };
 
-  const [openMenu, setOpenMenu]=useState(0);
-
+  const [openMenu, setOpenMenu] = useState(0);
 
   return (
     <div className="staff-Main">
-      <div className='menuButton' onClick={handleshow}><PiListDashesFill size={'30px'}/></div>
-      <StaffNavBar/>
+      <div className="menuButton" onClick={handleshow}>
+        <PiListDashesFill size={"30px"} />
+      </div>
+      <StaffNavBar />
       <div className="staff-Submain">
-      {!isHidden && (<AdminSideBar handleclose={handleclose} index={openMenu} setIndex={setOpenMenu}/>)}
-          <div className="maincontent">
-            {openMenu === 0 && <AdminDashboard />}
-            {openMenu === 1 && <EventCreation />} 
-            {openMenu === 2 && <Staff />}
-          </div>
+        {!isHidden && (
+          <AdminSideBar
+            handleclose={handleclose}
+            index={openMenu}
+            setIndex={setOpenMenu}
+          />
+        )}
+        <div className="maincontent">
+          {openMenu === 0 && <AdminDashboard />}
+          {openMenu === 1 && <EventCreation />}
+          {openMenu === 2 && <Staff />}
+        </div>
       </div>
     </div>
   );

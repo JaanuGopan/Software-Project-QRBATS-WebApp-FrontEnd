@@ -14,7 +14,7 @@ const LoginForm = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/v1/auth/authendicate", // Corrected endpoint URL
+        "http://localhost:8080/api/v1/auth/signin", // Corrected endpoint URL
         {
           userName: userName,
           password: password,
