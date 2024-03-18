@@ -63,7 +63,8 @@ body {
 
 .maincontent {
     display: flex;
-    margin-left: 40vh;
+    margin-left: 0vh;
+    margin-top: 2vh;
     height: 100%;
     width: 100%;
     padding: 10px;
@@ -139,5 +140,10 @@ body {
 .logout {
     padding-top: 50px;
     padding-left: 150px;
+    color: white;
+}
+
+.logouttext:hover{
+    background-color: transparent ;
     color: white;
 }

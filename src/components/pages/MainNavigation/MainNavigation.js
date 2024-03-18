@@ -104,7 +104,11 @@ function MainNavigationPage() {
             <div className="logout">
               <div className="menu-item" onClick={() => handleLogout}>
                 <FaSignOutAlt className="menu-icon" />
-                <div className="menu-name">Logout</div>
+                <div className="menu-name">
+                  <a style={{ color: "white" }} className="logouttext" href="/">
+                    Logout
+                  </a>
+                </div>
               </div>
             </div>
           </div>
