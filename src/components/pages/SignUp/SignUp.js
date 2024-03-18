@@ -40,7 +40,6 @@ function SignUp() {
       const decodedToken = parseJwt(token);
       const userEmail = decodedToken.sub;
       localStorage.setItem("token", token);
-      //navigate("/profile", { state: { userEmail } });
       navigate("/mainNavigation", { state: { userEmail } });
     } catch (error) {
       console.error("Login failed", error);
@@ -63,7 +62,7 @@ function SignUp() {
     <div className="signup-container">
       <div className="signup-main-container">
         <button className="back-button" onClick={() => navigate(-1)}>
-          <FontAwesomeIcon icon={faCircleArrowLeft} className="icon" />
+          <FontAwesomeIcon icon={faCircleArrowLeft} className="icon1" />
         </button>
         <p className="head1">SIGN UP</p>
         <div className="login-container">
@@ -144,7 +143,7 @@ function SignUp() {
               </div>
 
               <button type="submit" className="btn btn-primary w-100">
-                Next Page
+                Create Account
               </button>
             </form>
           </div>

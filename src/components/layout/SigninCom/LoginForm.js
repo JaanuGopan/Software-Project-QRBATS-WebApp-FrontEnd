@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
@@ -16,17 +16,17 @@ const LoginForm = () => {
       const response = await axios.post(
         "http://localhost:8080/api/v1/auth/authendicate", // Corrected endpoint URL
         {
-          email: email,
+          userName: userName,
           password: password,
         }
       );
       const token = response.data.token;
       console.log("Token is : " + token);
       const decodedToken = parseJwt(token);
-      const userEmail = decodedToken.sub;
-      console.log("User Email is : " + userEmail);
+      const loginUserName = decodedToken.sub;
+      console.log("User User Name is : " + loginUserName);
       localStorage.setItem("token", token);
-      navigate("/mainNavigation", { state: { userEmail } }); // Pass userEmail as a parameter
+      navigate("/mainNavigation", { state: { loginUserName } }); // Pass userEmail as a parameter
     } catch (error) {
       console.error("Login failed", error);
     }
@@ -53,12 +53,12 @@ const LoginForm = () => {
             <FaUser className="input-icon" />
             <input
               type="text"
-              id="email"
-              name="email"
-              placeholder="Email"
+              id="userName"
+              name="userName"
+              placeholder="user name"
               className="signin-input-field"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
             />
           </div>
         </div>
