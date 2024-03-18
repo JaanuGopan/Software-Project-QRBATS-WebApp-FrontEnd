@@ -1,19 +1,47 @@
-.mainHead {
+@media screen and (max-width: 1800px){
+  .mainHead {
     font-size: x-large;
-    color: #0D295E;
-    font-weight: bolder;
-    padding: 2%;
-    overflow-y: auto;
+    margin-top: 5px;
+  }
+  .informationText{
+    font-size: large;
+  }
+}
+
+@media screen and (max-width: 768px){
+  .mainHead {
+    font-size: large;
+    margin-top: 10px;
+  }
+  .informationText{
+    font-size: large;
+  }
+}
+
+@media screen and (max-width: 400px){
+  .informationText{
+    font-size: medium;
+  }
+}
+
+.admin-Dash{
+  flex-grow: 1; 
+  height: 90vh;
+  width: 100%;
+}
+
+.mainHead {
+  color: #0D295E;
+  font-weight: bold;
+  padding-left: 35px;
+  margin-bottom: 0px;
 }
 
 .mainInform {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    align-content: space-evenly;
-    justify-content: space-evenly;
-    padding: 3%;
-    flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .inform {
@@ -27,7 +55,7 @@
     width: 20vw;
     height: 20vh;
     margin: 1%;
-    min-width: 50px;
+    min-width: 115px;
     background-color:#0063A0 ;
 }
 
