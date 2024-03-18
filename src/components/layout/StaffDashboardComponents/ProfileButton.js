@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "../../pages/StaffMainNavigation/StaffMainNavigation.css";
 import profilePic from "../../../assets/Images/Profile.png";
 import { useLocation } from "react-router-dom";
@@ -9,6 +9,7 @@ const ProfileButton = () => {
   };
   const location = useLocation();
   const { userName } = location.state;
+
   return (
     <div className="ProfileButton" onClick={handleClick}>
       <p className="ProfileName">{userName}</p>

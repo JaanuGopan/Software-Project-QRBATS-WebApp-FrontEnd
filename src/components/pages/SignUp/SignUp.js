@@ -32,7 +32,6 @@ function SignUp() {
           email: email,
           password: password,
           userName: userName,
-          role: userRole,
           departmentId: deparmentList.indexOf(departmentId) + 1,
         }
       );
