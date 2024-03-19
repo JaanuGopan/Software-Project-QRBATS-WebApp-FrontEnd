@@ -5,11 +5,11 @@ import { FaEdit } from "react-icons/fa";
 const Table = () => {
   return (
     <div className='tableDesign'>
-       <table>
+       <table className='tableArrangement'>
           <thead>
             <tr>
               <th>No</th>
-              <th>Name</th>
+              <th className='expand'>Name</th>
               <th>Date</th>
               <th>Venue</th>
               <th>Time</th>
@@ -23,7 +23,7 @@ const Table = () => {
               <td>Fri 29 Dec</td>
               <td>NCC</td>
               <td>10.00 am</td>
-              <td><button><FaEdit /></button></td>
+              <td><button className='EditButton'><FaEdit className='EditIcon'/></button></td>
             </tr>
             <tr>
             <td>2</td>
