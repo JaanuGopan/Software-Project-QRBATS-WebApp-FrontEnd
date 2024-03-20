@@ -9,10 +9,11 @@ import { IoNewspaperSharp } from "react-icons/io5";
 import NormalButton from "../../layout/AdminDashboardComponent/NormalButton";
 import { MdCreateNewFolder } from "react-icons/md";
 import { RiDeleteBin5Fill } from "react-icons/ri";
-import EventCreation from "../Event/EventCreation/EventCreation";
+import AdminEventCreation from "../Event/AdminEventCreation";
 
 const AdminDashboard = () => {
   const [eventCreatePopUpWindow, setEventCreatePopUpWindow]=useState(false);
+  const [closeEventCreateWindow, setCloseEventCreateWindow]=useState(true)
 
   return (
     <div className="admin-Dash">
@@ -32,7 +33,7 @@ const AdminDashboard = () => {
         </div>
       </div>
       {eventCreatePopUpWindow && (<div className="Admin-Create-Event-Dashboard">
-        <EventCreation/>
+        <AdminEventCreation handlecloseCreateEventWindow={()=>setEventCreatePopUpWindow(false)}/>
       </div>)}
     </div>
   );

@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../../pages/AdminDashboard/AdminDashboard.css'
 import { FaEdit } from "react-icons/fa";
+import axios from 'axios';
 
 const Table = () => {
+  useEffect(()=>{
+    axios.get('')
+    .then(res => console.log(res))
+    .catch(er => console.log(er));
+  }, [])
   return (
     <div className='tableDesign'>
        <table className='tableArrangement'>
