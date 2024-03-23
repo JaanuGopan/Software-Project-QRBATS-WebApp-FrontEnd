@@ -3,7 +3,7 @@ import '../../pages/AdminDashboard/AdminDashboard.css'
 import { FaEdit } from "react-icons/fa";
 import axios from 'axios';
 
-const Table = () => {
+const Table = ({handleUpdateEvent}) => {
   useEffect(()=>{
     axios.get('')
     .then(res => console.log(res))
@@ -29,7 +29,7 @@ const Table = () => {
               <td>Fri 29 Dec</td>
               <td>NCC</td>
               <td>10.00 am</td>
-              <td><button className='EditButton'><FaEdit className='EditIcon'/></button></td>
+              <td><button onClick={handleUpdateEvent} className='EditButton'><FaEdit className='EditIcon'/></button></td>
             </tr>
             <tr>
             <td>2</td>

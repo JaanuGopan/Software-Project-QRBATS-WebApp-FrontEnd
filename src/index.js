@@ -36,7 +36,6 @@ const router = createBrowserRouter([
     path: "eventCreation",
     element: <EventCreation />,
   },
-  
   {
     path: "staffMainNavigation",
     element: <StaffMainNavigation />,
