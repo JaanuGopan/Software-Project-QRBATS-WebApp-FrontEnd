@@ -1,10 +1,6 @@
 import "./EventCreation.css";
 import eventCreationImage from "../../../../assets/Images/signin/Signin.jpeg";
-import { FaUser, FaCalendarAlt, FaMapMarkerAlt, FaTimes } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-
 import React, { useState, useRef } from "react";
-import { useLocation } from "react-router-dom";
 import QRCode from "react-qr-code";
 import axios from "axios";
 import html2canvas from "html2canvas";
@@ -12,8 +8,6 @@ import jsPDF from "jspdf";
 import toast, { Toaster } from "react-hot-toast";
 
 function EventCreation() {
-  const navigate = useNavigate();
-
   const [eventName, setEventName] = useState("");
   const [moduleName, setModuleName] = useState(null);
   const [eventDate, setEventDate] = useState("");

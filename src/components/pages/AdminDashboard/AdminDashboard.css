@@ -6,6 +6,21 @@
   .informationText{
     font-size: large;
   }
+  .buttonIcon{
+    height: 1.5rem;
+    width: 1.5rem;
+    size: 1.5rem;
+  }
+  .NormalButton{
+    height: 2.5rem;
+    padding: 0.2vw;
+    padding-left: 1vw;
+  }
+  .NormalButtonLabel{
+    font-size: larger;
+    padding: 1vw;
+    margin-bottom: 0px;
+  }
 }
 
 @media screen and (max-width: 768px){
@@ -16,11 +31,32 @@
   .informationText{
     font-size: large;
   }
+  .buttonIcon{
+    height: 1rem;
+    width: 1rem;
+    size: 1rem;
+  }
+  .NormalButtonLabel{
+    font-size: small;
+    margin-bottom: 0px;
+  }
 }
 
 @media screen and (max-width: 400px){
   .informationText{
     font-size: medium;
+  }
+  .admin-Dash{
+    margin: 10px;
+  }
+  .NormalButtonLabel{
+    font-size: small;
+    margin-bottom: 0px;
+  }
+  .buttonIcon{
+    height: 0.5rem;
+    width: 0.5rem;
+    size: 0.5rem;
   }
 }
 
@@ -45,18 +81,18 @@
 }
 
 .inform {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    align-items: stretch;
-    border: 3px solid white;
-    border-radius: 10px;
-    padding: 2%;
-    width: 20vw;
-    height: 20vh;
-    margin: 1%;
-    min-width: 115px;
-    background-color:#0063A0 ;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: stretch;
+  border: 3px solid white;
+  border-radius: 10px;
+  padding: 2%;
+  width: 20vw;
+  height: 20vh;
+  margin: 1%;
+  min-width: 115px;
+  background-color:#0063A0 ;
 }
 
 .inform1 {
@@ -65,66 +101,144 @@
     justify-content: space-between;
 }
 
-.subHead {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-evenly;
-    width: 100%;
-    min-width: 450px;
-}
-
-.subBody { 
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    margin: 3%;
-    max-width: 600px;
-    max-height: 600px;
-    border-top: 5px solid blue;
-    border-bottom: 5px solid blue;
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.AdminEventList{
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding: 10px;
+  width: 100%;
+  height: 400px;
+  border-top: 5px solid #0365A1;
+  box-shadow: 0.5px 2px 0.5px 0.5px rgba(25, 65, 85, 0.5);
+  border-radius: 10px;
+  background-color: #FAFAFA;
 }
 
 .tableDesign {
-  max-width: 600px;
-  max-height: 450px;
-  padding-left: 10px;
-  padding-right: 10px;
-  overflow-y: auto;
+ /* position: relative;
+  height: 350px;
+  display: block;*/
+  width: 100%;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
+.tableArrangement {
+  /*position: relative;
+  height: 345px;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  border-collapse: collapse;*/
+  display: block;
+  overflow: hidden;
+  table-layout: auto;
+  border-collapse: collapse;
+  box-shadow: 0px 5px 5px #ccc;
+  border-radius: 10px;
+  white-space: nowrap;
+  width: 100em;
+  max-width: 90%;
+  margin: auto;
+  overflow-x: auto;
+  height: 320px;
+  overflow-y: auto;
+  border-bottom: 2px solid #0063A0;
+}
 
-.table {
-    width: 100%;
-  }
-  
-  /* Style the table headers */
-  th {
-    color: black;
-    text-align: center;
-    padding: 10px;
-    border-bottom: 3px solid blue;
-  }
-  
-  /* Style the table cells */
-  td {
-    padding: 10px;
-  }
-  
-  /* Style alternating rows for better readability */
-  tbody tr {
-    border: 1px solid blue;
-    margin: 5px;
-    border-radius: 15px;
-  }
+.tableArrangement thead{
+  position: sticky;
+  top: 0;
+  /*z-index: 1;
+  color: #0063A0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;*/
+  background-color: #c1e2f9;
+  color: #0D295E;
+  border-bottom: 3px solid #0063A0;
+  text-align: center;
+}
+
+.tableArrangement th{
+  padding: 0.8rem;
+  text-align: center;
+}
+
+.tableArrangement td{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+
+.tableArrangement tbody{
+  overflow-y: auto;
+  height: 340px;
+}
+
+.tableArrangement tbody tr{
+  border: 0.01px solid rgba(91, 178, 255, 0.608);
+  border-radius: 5px;
+}
+
+.tableArrangement tbody tr:hover{
+  background-color: azure;
+  cursor: pointer;
+}
+
+.expand {
+  width: 100%;
+}
+
+.List-Buttons{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-around;
+  padding: 1rem;
+}
+
+.NormalButton{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  background-color: #0063A0;
+  border-radius: 10px;
+}
+
+.NormalButton:hover{
+  border: 1px solid #025587;
+  background-color: #2273a5;
+}
+
+.EditButton{
+  border-radius: 30px;
+  background-color: #0063A0;
+  color: white;
+}
+
+.EditButton:hover{
+  background-color: blue;
+}
+
+.Admin-Create-Event-Dashboard{
+  position: fixed;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  overflow-y: auto;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}

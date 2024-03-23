@@ -3,7 +3,7 @@ import "./SignUp.css";
 import axios from "axios";
 import logo from "../../../assets/Images/signin/Signin.jpeg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
+import { FaUser} from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import InputField from "../../layout/InputBox/InputField";
@@ -32,7 +32,6 @@ function SignUp() {
           email: email,
           password: password,
           userName: userName,
-          role: userRole,
           departmentId: deparmentList.indexOf(departmentId) + 1,
         }
       );

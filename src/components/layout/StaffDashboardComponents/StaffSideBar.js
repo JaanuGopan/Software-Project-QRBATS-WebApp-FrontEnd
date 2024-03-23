@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { IoSettings } from "react-icons/io5";
 import { FaUserTie } from "react-icons/fa";
