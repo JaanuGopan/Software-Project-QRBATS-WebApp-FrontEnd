@@ -1,0 +1,115 @@
+@media screen and (max-width: 1800px){
+    .student-mainHead {
+      font-size: x-large;
+      margin-top: 5px;
+      padding-left: 35px;
+    }
+    .student-buttonIcon{
+      height: 1.5rem;
+      width: 1.5rem;
+      size: 1.5rem;
+    }
+    .student-Dash{
+      margin-top: 20px;
+    }
+    .student-SearchEvent{
+      margin-right: 35px;
+    }
+  }
+  
+  @media screen and (max-width: 768px){
+    .student-mainHead {
+      font-size: large;
+      margin-top: 10px;
+      padding-left: 35px;
+    }
+    .student-buttonIcon{
+      height: 1rem;
+      width: 1rem;
+      size: 1rem;
+    }
+    .student-Dash{
+      margin-top: 10px;
+    }
+    .student-SearchEvent{
+      margin-right: 35px;
+    }
+  }
+  
+  @media screen and (max-width: 426px){
+    .student-buttonIcon{
+      height: 0.5rem;
+      width: 0.5rem;
+      size: 0.5rem;
+    }
+    .student-Dash{
+      margin-top: 5px;
+    }
+    .student-SearchEvent{
+      margin-right: 0px;
+    }
+    .student-mainHead {
+      padding-left: 5px;
+    }
+  }
+  
+  .student-Dash{
+    flex-grow: 1; 
+    height: 85vh;
+    width: 100%;
+  }
+  
+  .student-mainHead {
+    color: #0D295E;
+    font-weight: bold;
+    margin-bottom: 0px;
+  }
+  
+  .student-EventList{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding: 10px;
+    width: 100%;
+    height: 78vh;
+    border-top: 5px solid #0365A1;
+    box-shadow: 0.5px 2px 0.5px 0.5px rgba(25, 65, 85, 0.5);
+    border-radius: 10px;
+    background-color: #FAFAFA;
+  }
+  
+  .student-List-Buttons{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-around;
+    padding: 1rem;
+  }
+  
+  .student-Create-Event-Dashboard{
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    overflow-y: scroll;
+    width: 100%;
+    height: 100vh;
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .student-SearchEvent{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 10px;
+  }
