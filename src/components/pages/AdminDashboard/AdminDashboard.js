@@ -32,8 +32,8 @@ const AdminDashboard = () => {
           <NormalButton title={"Delete"} titlewithiconicon={<RiDeleteBin5Fill className="buttonIcon"/>}/>
         </div>
       </div>
-      {eventCreatePopUpWindow && (<div className="Admin-Create-Event-Dashboard">
-        <AdminEventCreation handlecloseCreateEventWindow={()=>setEventCreatePopUpWindow(false)}/>
+      {eventCreatePopUpWindow && (<div onClick={()=>setEventCreatePopUpWindow(false)} className="Admin-Create-Event-Dashboard">
+        <AdminEventCreation onClick={()=>setCloseEventCreateWindow(true)} handlecloseCreateEventWindow={()=>setEventCreatePopUpWindow(false)}/>
       </div>)}
     </div>
   );
