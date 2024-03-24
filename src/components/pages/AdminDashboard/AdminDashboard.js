@@ -9,11 +9,12 @@ import { IoNewspaperSharp } from "react-icons/io5";
 import NormalButton from "../../layout/AdminDashboardComponent/NormalButton";
 import { MdCreateNewFolder } from "react-icons/md";
 import { RiDeleteBin5Fill } from "react-icons/ri";
+import AdminUpdateEvent from "../Event/AdminUpdateEvent";
 import AdminEventCreation from "../Event/AdminEventCreation";
 
 const AdminDashboard = () => {
   const [eventCreatePopUpWindow, setEventCreatePopUpWindow]=useState(false);
-  const [closeEventCreateWindow, setCloseEventCreateWindow]=useState(true)
+  const [eventUpdatePopUpWindow, setEventUpdatePopUpWindow] = useState(false)
 
   return (
     <div className="admin-Dash">
@@ -24,16 +25,22 @@ const AdminDashboard = () => {
         <TotalCount total={"08"} countIcon={<FaSchool style={{color: "white", padding: "2%", fontSize: "250%"}}/>} countTitle={"Total Departments"}/>
         <TotalCount total={"350"} countIcon={<IoNewspaperSharp style={{color: "white", padding: "2%", fontSize: "250%"}}/>} countTitle={"Total Modules"}/>
       </div>
-      <p className="mainHead">Upcoming Events</p>
+      <div className="SearchEvent">
+        <p className="mainHead">Upcoming Events</p>
+        <input type="text" placeholder="Search..." style={{width:'150px', padding:'3px 40px', border:'0.5px solid black', borderRadius:'5px', textAlign:'center'}}/>
+      </div>
       <div className="AdminEventList">
-        <Table/>
+        <Table handleUpdateEvent={()=>setEventUpdatePopUpWindow(true)}/>
         <div className="List-Buttons">
           <NormalButton handleClick={()=>setEventCreatePopUpWindow(true)} title={"Create"} titlewithiconicon={<MdCreateNewFolder className="buttonIcon"/>}/>
           <NormalButton title={"Delete"} titlewithiconicon={<RiDeleteBin5Fill className="buttonIcon"/>}/>
         </div>
       </div>
-      {eventCreatePopUpWindow && (<div className="Admin-Create-Event-Dashboard">
+      {eventCreatePopUpWindow && (<div handleClick={()=>setEventCreatePopUpWindow(false)} className="Admin-Create-Event-Dashboard">
         <AdminEventCreation handlecloseCreateEventWindow={()=>setEventCreatePopUpWindow(false)}/>
+      </div>)}
+      {eventUpdatePopUpWindow && (<div handleClick={()=>setEventCreatePopUpWindow(false)} className="Admin-Create-Event-Dashboard">
+        <AdminUpdateEvent handlecloseCreateEventWindow={()=>setEventUpdatePopUpWindow(false)}/>
       </div>)}
     </div>
   );

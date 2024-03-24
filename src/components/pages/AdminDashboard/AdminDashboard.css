@@ -2,6 +2,7 @@
   .mainHead {
     font-size: x-large;
     margin-top: 5px;
+    padding-left: 35px;
   }
   .informationText{
     font-size: large;
@@ -21,12 +22,19 @@
     padding: 1vw;
     margin-bottom: 0px;
   }
+  .admin-Dash{
+    margin: 0px;
+  }
+  .SearchEvent{
+    margin-right: 35px;
+  }
 }
 
 @media screen and (max-width: 768px){
   .mainHead {
     font-size: large;
     margin-top: 10px;
+    padding-left: 35px;
   }
   .informationText{
     font-size: large;
@@ -40,14 +48,17 @@
     font-size: small;
     margin-bottom: 0px;
   }
+  .admin-Dash{
+    margin: 0px;
+  }
+  .SearchEvent{
+    margin-right: 35px;
+  }
 }
 
-@media screen and (max-width: 400px){
+@media screen and (max-width: 426px){
   .informationText{
     font-size: medium;
-  }
-  .admin-Dash{
-    margin: 10px;
   }
   .NormalButtonLabel{
     font-size: small;
@@ -57,6 +68,15 @@
     height: 0.5rem;
     width: 0.5rem;
     size: 0.5rem;
+  }
+  .admin-Dash{
+    margin: 0px;
+  }
+  .SearchEvent{
+    margin-right: 0px;
+  }
+  .mainHead {
+    padding-left: 5px;
   }
 }
 
@@ -69,7 +89,6 @@
 .mainHead {
   color: #0D295E;
   font-weight: bold;
-  padding-left: 35px;
   margin-bottom: 0px;
 }
 
@@ -109,7 +128,7 @@
   padding-right: 10px;
   padding: 10px;
   width: 100%;
-  height: 400px;
+  height: 60vh;
   border-top: 5px solid #0365A1;
   box-shadow: 0.5px 2px 0.5px 0.5px rgba(25, 65, 85, 0.5);
   border-radius: 10px;
@@ -121,15 +140,10 @@
   height: 350px;
   display: block;*/
   width: 100%;
+  height: -webkit-fill-available;
 }
 
 .tableArrangement {
-  /*position: relative;
-  height: 345px;
-  display: block;
-  width: 100%;
-  overflow: hidden;
-  border-collapse: collapse;*/
   display: block;
   overflow: hidden;
   table-layout: auto;
@@ -146,7 +160,33 @@
   border-bottom: 2px solid #0063A0;
 }
 
+.student-tableArrangement{
+  display: block;
+  overflow: hidden;
+  table-layout: auto;
+  border-collapse: collapse;
+  box-shadow: 0px 5px 5px #ccc;
+  border-radius: 10px;
+  white-space: nowrap;
+  width: 100em;
+  max-width: 90%;
+  margin: auto;
+  overflow-x: auto;
+  height: 480px;
+  overflow-y: auto;
+  border-bottom: 2px solid #0063A0;
+}
+
 .tableArrangement thead{
+  position: sticky;
+  top: 0;
+  background-color: #c1e2f9;
+  color: #0D295E;
+  border-bottom: 3px solid #0063A0;
+  text-align: center;
+}
+
+.student-tableArrangement thead{
   position: sticky;
   top: 0;
   /*z-index: 1;
@@ -166,6 +206,11 @@
   text-align: center;
 }
 
+.student-tableArrangement th{
+  padding: 0.8rem;
+  text-align: center;
+}
+
 .tableArrangement td{
   overflow: hidden;
   text-overflow: ellipsis;
@@ -173,8 +218,19 @@
   padding: 0.5rem;
 }
 
+.student-tableArrangement td{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  padding: 0.5rem;
+}
 
 .tableArrangement tbody{
+  overflow-y: auto;
+  height: 340px;
+}
+
+.student-tableArrangement tbody{
   overflow-y: auto;
   height: 340px;
 }
@@ -184,7 +240,17 @@
   border-radius: 5px;
 }
 
+.student-tableArrangement tbody tr{
+  border: 0.01px solid rgba(91, 178, 255, 0.608);
+  border-radius: 5px;
+}
+
 .tableArrangement tbody tr:hover{
+  background-color: azure;
+  cursor: pointer;
+}
+
+.student-tableArrangement tbody tr:hover{
   background-color: azure;
   cursor: pointer;
 }
@@ -223,6 +289,7 @@
   border-radius: 30px;
   background-color: #0063A0;
   color: white;
+  padding: 10px 15px;
 }
 
 .EditButton:hover{
@@ -234,11 +301,31 @@
   z-index: 2;
   left: 0;
   top: 0;
-  overflow-y: auto;
+  overflow-y: scroll;
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  padding-top: 5vh;
+  padding-bottom: 5vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.EditIcon{
+  padding: 0px;
+}
+
+.qr-code{
+  background-color: white;
+  max-width: 60vw;
+}
+
+.SearchEvent{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 10px;
 }

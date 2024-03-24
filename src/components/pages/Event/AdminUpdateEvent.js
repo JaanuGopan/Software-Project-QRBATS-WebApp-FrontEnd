@@ -1,5 +1,4 @@
 import "../Event/EventCreation/EventCreation.css";
-import eventCreationImage from "../../../assets/Images/signin/Signin.jpeg";
 import React, { useState, useRef } from "react";
 import QRCode from "react-qr-code";
 import axios from "axios";
@@ -8,7 +7,7 @@ import jsPDF from "jspdf";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import toast, { Toaster } from "react-hot-toast";
 
-const AdminEventCreation = ({handlecloseCreateEventWindow}) => {
+const AdminUpdateEvent = ({handlecloseCreateEventWindow}) => {
     const [eventName, setEventName] = useState("");
     const [moduleName, setModuleName] = useState(null);
     const [eventDate, setEventDate] = useState("");
@@ -93,14 +92,29 @@ const AdminEventCreation = ({handlecloseCreateEventWindow}) => {
 
     // Concatenate all event details into a single string
     const eventDetails = `${eventName}, ${moduleName}, ${eventDate}, ${eventValidDate}, ${eventTime}, ${eventVenue}, ${eventAssignedUserId}`;
-    const [qrCodeWindow, setQrCodeWindow] = useState(false);
 
     return (
         <div className="event-main-container1">
             <div className='closeCreateEventWindow' onClick={handlecloseCreateEventWindow}><IoMdCloseCircleOutline /></div>
-            <h2>Create Event</h2>
+            <h2>Update Event</h2>
             <div className="eventCreation-field">
-                <img src={eventCreationImage} className="Create-logo" alt="Logo" />
+                <div ref={qrCodeRef}>
+                    <div className="row-center">
+                        <QRCode name="QRCode" value={eventDetails} className="mb-2" />
+                    </div>
+                    <div>
+                        <p className="text-center">Scan this QR code to join {title}</p>
+                    </div>
+
+                    <div className="row-center">
+                        <div className="QRbutton">
+                            <button
+                                onClick={handleShareQRCode}
+                                className="btn btn-success mr-3"
+                            >Save</button>
+                        </div>
+                    </div>
+                </div>
                 <div className="eventCreation-input-field">
                     <form onSubmit={handleSubmit}>
                         <div className="input-with-icon">
@@ -171,42 +185,18 @@ const AdminEventCreation = ({handlecloseCreateEventWindow}) => {
                                     value={eventTime}
                                     onChange={(e) => setEventTime(e.target.value)}
                                     placeholder="Event Time"
-                                    className="form-control mb-2"
-                                />
+                                    className="form-control mb-2"/>
                             </div>
                         </div>
-
                         <div className="eventCreation-form"></div>
-                        <button onClick={()=>setQrCodeWindow(true)} type="submit" className="btn btn-primary w-100">
-                            Create Event
+                        <button type="submit" className="btn btn-primary w-100">
+                            Update
                         </button>
                     </form>
                 </div>
-                    {qrCodeWindow && (<div className="Admin-Create-Event-Dashboard">
-                    {showQRCode && (
-                    <div ref={qrCodeRef} className="event-main-container1">
-                    <div className='closeCreateEventWindow' onClick={handlecloseCreateEventWindow}><IoMdCloseCircleOutline /></div>
-                        <h2>Successfully Event Created</h2>
-                        <div className="row-center">
-                            <QRCode name="QRCode" value={eventDetails} className="mb-2" />
-                        </div>
-                        <div>
-                            <p className="text-center">Scan this QR code to join {title}</p>
-                        </div>
-                        <div className="row-center">
-                            <div className="QRbutton">
-                                <button
-                                    onClick={handleShareQRCode}
-                                    className="btn btn-success mr-3">
-                                    Save
-                                </button>
-                            </div>
-                        </div>
-                    </div>)}
-                </div>)}
             </div>
         </div>
     );
 }
 
-export default AdminEventCreation;
+export default AdminUpdateEvent;

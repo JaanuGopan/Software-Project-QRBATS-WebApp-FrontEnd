@@ -8,7 +8,7 @@ import jsPDF from "jspdf";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import toast, { Toaster } from "react-hot-toast";
 
-const AdminEventCreation = ({handlecloseCreateEventWindow}) => {
+const EventCreateDashboard = () => {
     const [eventName, setEventName] = useState("");
     const [moduleName, setModuleName] = useState(null);
     const [eventDate, setEventDate] = useState("");
@@ -96,8 +96,7 @@ const AdminEventCreation = ({handlecloseCreateEventWindow}) => {
     const [qrCodeWindow, setQrCodeWindow] = useState(false);
 
     return (
-        <div className="event-main-container1">
-            <div className='closeCreateEventWindow' onClick={handlecloseCreateEventWindow}><IoMdCloseCircleOutline /></div>
+        <div className="event-main-container2">
             <h2>Create Event</h2>
             <div className="eventCreation-field">
                 <img src={eventCreationImage} className="Create-logo" alt="Logo" />
@@ -137,8 +136,7 @@ const AdminEventCreation = ({handlecloseCreateEventWindow}) => {
                                         type="date"
                                         value={eventValidDate}
                                         onChange={(e) => setEventValidDate(e.target.value)}
-                                        className="form-control mb-2"
-                                    />
+                                        className="form-control mb-2"/>
                                 </div>
                             </div>
                         </div>
@@ -147,11 +145,9 @@ const AdminEventCreation = ({handlecloseCreateEventWindow}) => {
                                 <label className="date-label" htmlFor="eventDate">
                                     Venue
                                 </label>
-                                <select
-                                    value={eventVenue}
+                                <select value={eventVenue}
                                     onChange={(e) => setEventVenue(e.target.value)}
-                                    className="form-control mb-2"
-                                >
+                                    className="form-control mb-2">
                                     <option value="">Select Venue</option>
                                     <option value="LT1">LT1</option>
                                     <option value="LT2">LT2</option>
@@ -171,8 +167,7 @@ const AdminEventCreation = ({handlecloseCreateEventWindow}) => {
                                     value={eventTime}
                                     onChange={(e) => setEventTime(e.target.value)}
                                     placeholder="Event Time"
-                                    className="form-control mb-2"
-                                />
+                                    className="form-control mb-2"/>
                             </div>
                         </div>
 
@@ -185,7 +180,7 @@ const AdminEventCreation = ({handlecloseCreateEventWindow}) => {
                     {qrCodeWindow && (<div className="Admin-Create-Event-Dashboard">
                     {showQRCode && (
                     <div ref={qrCodeRef} className="event-main-container1">
-                    <div className='closeCreateEventWindow' onClick={handlecloseCreateEventWindow}><IoMdCloseCircleOutline /></div>
+                    <div className='closeCreateEventWindow' onClick={()=>setQrCodeWindow(false)}><IoMdCloseCircleOutline /></div>
                         <h2>Successfully Event Created</h2>
                         <div className="row-center">
                             <QRCode name="QRCode" value={eventDetails} className="mb-2" />
@@ -209,4 +204,4 @@ const AdminEventCreation = ({handlecloseCreateEventWindow}) => {
     );
 }
 
-export default AdminEventCreation;
+export default EventCreateDashboard;
