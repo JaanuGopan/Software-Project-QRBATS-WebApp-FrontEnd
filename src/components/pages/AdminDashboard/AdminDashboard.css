@@ -111,7 +111,7 @@
   height: 20vh;
   margin: 1%;
   min-width: 115px;
-  background-color:#0063A0 ;
+  background: linear-gradient(#0063A0, rgba(0,100,160,0.8));
 }
 
 .inform1 {
