@@ -4,6 +4,8 @@ import axios from "axios";
 import { FaUser, FaLock } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import LoginService from "../../../api/services/LoginService";
+import JwtService from "../../../api/services/JwtService";
 
 const LoginForm = () => {
   const [userName, setUserName] = useState("");
@@ -13,36 +15,16 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/auth/signin", // Corrected endpoint URL
-        {
-          userName: userName,
-          password: password,
-        }
-      );
-      const token = response.data.token;
+      const token = await LoginService.loginUser(userName, password);
       console.log("Token is : " + token);
-      const decodedToken = parseJwt(token);
+      const decodedToken = JwtService.parseJwt(token);
       const loginUserName = decodedToken.sub;
       console.log("User User Name is : " + loginUserName);
       localStorage.setItem("token", token);
-      navigate("/mainNavigation", { state: { loginUserName } }); // Pass userEmail as a parameter
+      navigate("/mainNavigation", { state: { loginUserName } });
     } catch (error) {
       console.error("Login failed", error);
     }
-  };
-
-  // Helper function to parse JWT token
-  const parseJwt = (token) => {
-    const base64Url = token.split(".")[1];
-    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-    const jsonPayload = decodeURIComponent(
-      atob(base64)
-        .split("")
-        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-        .join("")
-    );
-    return JSON.parse(jsonPayload);
   };
 
   return (
