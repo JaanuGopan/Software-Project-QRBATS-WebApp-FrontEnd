@@ -5,18 +5,24 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/features/userSlice";
 
 const ProfileButton = () => {
-  //get the user from redux
+  // Get the user from Redux state
   const user = useSelector(selectUser);
 
   const handleClick = () => {
-    console.log("We have to design that Show Setting Window");
+    console.log("Show Settings Window"); // Corrected spelling
+    // You can add logic to show settings window here
   };
+
+  // Destructure user object for cleaner code
+  const { firstName, lastName } = user || {};
 
   return (
     <div className="ProfileButton" onClick={handleClick}>
-      <p className="ProfileName">{user?.firstName + " " + user?.lastName}</p>
+      {/* Display user's full name */}
+      <p className="ProfileName">{`${firstName || ""} ${lastName || ""}`}</p>
       <div className="circle">
-        <img className="ProfilePicture" src={profilePic} alt="" />
+        {/* Display profile picture */}
+        <img className="ProfilePicture" src={profilePic} alt="Profile" />
       </div>
     </div>
   );

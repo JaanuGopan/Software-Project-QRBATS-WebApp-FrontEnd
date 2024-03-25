@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../pages/Signin/Signin.css";
 import axios from "axios";
 import { FaUser, FaLock } from "react-icons/fa";
@@ -6,15 +6,22 @@ import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LoginService from "../../../api/services/LoginService";
 import JwtService from "../../../api/services/JwtService";
-import { useDispatch } from "react-redux";
-import { login } from "../../../redux/features/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { login, selectUser } from "../../../redux/features/userSlice";
 
 const LoginForm = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+
+  // If user is already logged in, redirect to mainNavigation
+  useEffect(() => {
+    if (user) {
+      navigate("/mainNavigation");
+    }
+  }, [user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
