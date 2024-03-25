@@ -6,7 +6,7 @@ import axios from "axios";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { IoMdCloseCircleOutline } from "react-icons/io";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 const AdminEventCreation = ({handlecloseCreateEventWindow}) => {
     const [eventName, setEventName] = useState("");

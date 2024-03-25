@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import "./MainNavigation.css";
 import "../StaffMainNavigation/StaffMainNavigation.css";
 import { useLocation } from "react-router-dom";
-import Staff from "../StaffDashboard/Staff";
 import AdminDashboard from "../AdminDashboard/AdminDashboard";
 import { PiListDashesFill } from "react-icons/pi";
 import StaffNavBar from "../../layout/StaffDashboardComponents/StaffNavBar";
 import AdminSideBar from "../../layout/AdminDashboardComponent/AdminSideBar";
 import EventCreateDashboard from "../Event/EventCreateDashboard";
 import StudentDashboard from "../Student/StudentDashboard";
+import Setting from "../Setting/Setting";
+import StaffDashboard from "../Staff/StaffDashboard";
 
 function MainNavigationPage() {
   const location = useLocation();
@@ -45,8 +46,9 @@ function MainNavigationPage() {
         <div className="maincontent">
           {openMenu === 0 && <AdminDashboard />}
           {openMenu === 1 && <EventCreateDashboard/>}
-          {openMenu === 2 && <Staff />}
+          {openMenu === 2 && <StaffDashboard />}
           {openMenu === 3 && <StudentDashboard/>}
+          {openMenu === 4 && <Setting/>}
         </div>
       </div>
     </div>

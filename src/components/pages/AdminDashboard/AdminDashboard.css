@@ -111,7 +111,7 @@
   height: 20vh;
   margin: 1%;
   min-width: 115px;
-  background-color:#0063A0 ;
+  background: linear-gradient(#0063A0, rgba(0,100,160,0.8));
 }
 
 .inform1 {
@@ -128,7 +128,7 @@
   padding-right: 10px;
   padding: 10px;
   width: 100%;
-  height: 60vh;
+  height: 55vh;
   border-top: 5px solid #0365A1;
   box-shadow: 0.5px 2px 0.5px 0.5px rgba(25, 65, 85, 0.5);
   border-radius: 10px;
@@ -155,7 +155,7 @@
   max-width: 90%;
   margin: auto;
   overflow-x: auto;
-  height: 320px;
+  height: 45vh;
   overflow-y: auto;
   border-bottom: 2px solid #0063A0;
 }
@@ -172,7 +172,7 @@
   max-width: 90%;
   margin: auto;
   overflow-x: auto;
-  height: 480px;
+  height: 65vh;
   overflow-y: auto;
   border-bottom: 2px solid #0063A0;
 }
