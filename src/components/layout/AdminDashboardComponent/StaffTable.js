@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import '../../pages/AdminDashboard/AdminDashboard.css'
 import { FaEdit } from "react-icons/fa";
 
-const StudentTable = ({handleUpdateStudent}) => {
+const StaffTable = ({handleUpdateStaff}) => {
   return (
     <div className='tableDesign'>
     <table className='student-tableArrangement'>
@@ -23,7 +23,7 @@ const StudentTable = ({handleUpdateStudent}) => {
            <td>Civil</td>
            <td>Njdshg</td>
            <td>********</td>
-           <td><button onClick={handleUpdateStudent} className='EditButton'><FaEdit className='EditIcon'/></button></td>
+           <td><button onClick={handleUpdateStaff} className='EditButton'><FaEdit className='EditIcon'/></button></td>
          </tr>
          <tr>
          <td>2</td>
@@ -151,4 +151,4 @@ const StudentTable = ({handleUpdateStudent}) => {
   );
 }
 
-export default StudentTable;
+export default StaffTable;

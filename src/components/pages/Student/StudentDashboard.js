@@ -3,9 +3,9 @@ import "./Student.css";
 import NormalButton from "../../layout/AdminDashboardComponent/NormalButton";
 import { MdCreateNewFolder } from "react-icons/md";
 import { RiDeleteBin5Fill } from "react-icons/ri";
-import AdminUpdateEvent from "../Event/AdminUpdateEvent";
 import StudentTable from "../../layout/AdminDashboardComponent/StudentTable";
 import CreateStudentWindow from "./CreateStudentWindow";
+import UpdateStudentWindow from "./UpdateStudentWindow";
 
 const StudentDashboard = () => {
     const [studentCreatePopUpWindow, setStudentCreatePopUpWindow]=useState(false);
@@ -25,10 +25,10 @@ const StudentDashboard = () => {
           </div>
         </div>
         {studentCreatePopUpWindow && (<div handleClick={()=>setStudentCreatePopUpWindow(false)} className="student-Create-Event-Dashboard">
-          <CreateStudentWindow handlecloseCreateEventWindow={()=>setStudentCreatePopUpWindow(false)}/>
+          <CreateStudentWindow handlecloseCreateStudentWindow={()=>setStudentCreatePopUpWindow(false)}/>
         </div>)}
         {studentUpdatePopUpWindow && (<div handleClick={()=>setStudentCreatePopUpWindow(false)} className="student-Create-Event-Dashboard">
-          <AdminUpdateEvent handlecloseCreateEventWindow={()=>setStudentUpdatePopUpWindow(false)}/>
+          <UpdateStudentWindow handlecloseUpdateStudentWindow={()=>setStudentUpdatePopUpWindow(false)}/>
         </div>)}
       </div>
     );

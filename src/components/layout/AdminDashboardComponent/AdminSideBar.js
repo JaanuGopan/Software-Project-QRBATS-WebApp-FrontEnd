@@ -24,7 +24,7 @@ const AdminSideBar = ({handleclose, index, setIndex}) => {
         <Sidebarbutton handleSidebarMenu={()=>handleMenuClick(2)} title={'Staff'} titlewithiconicon={<FaUserTie className='buttonIcon'/>} isOpen={index === 2}/>
         <Sidebarbutton handleSidebarMenu={()=>handleMenuClick(3)} title={'Student'} titlewithiconicon={<PiStudentBold className='buttonIcon'/>} isOpen={index === 3}/>
         <Sidebarbutton handleSidebarMenu={()=>handleMenuClick(4)} title={'Setting'} titlewithiconicon={<IoSettings className='buttonIcon'/>} isOpen={index === 4}/>
-        <Sidebarbutton title={'Logout'} titlewithiconicon={<IoLogOut className='buttonIcon'/>}/>
+        <a href='/'><Sidebarbutton title={'Logout'} titlewithiconicon={<IoLogOut className='buttonIcon'/>}/></a>
       </div>
     </div>
   );
