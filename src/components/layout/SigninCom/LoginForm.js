@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../pages/Signin/Signin.css";
 import axios from "axios";
 import { FaUser, FaLock } from "react-icons/fa";
@@ -6,22 +6,50 @@ import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LoginService from "../../../api/services/LoginService";
 import JwtService from "../../../api/services/JwtService";
+import { useDispatch, useSelector } from "react-redux";
+import { login, selectUser } from "../../../redux/features/userSlice";
 
 const LoginForm = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+
+  // If user is already logged in, redirect to mainNavigation
+  useEffect(() => {
+    if (user) {
+      navigate("/mainNavigation");
+    }
+  }, [user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const token = await LoginService.loginUser(userName, password);
-      console.log("Token is : " + token);
       const decodedToken = JwtService.parseJwt(token);
       const loginUserName = decodedToken.sub;
-      console.log("User User Name is : " + loginUserName);
+      const lodinUserFirstName = decodedToken.firstName;
+      const loginUserLastName = decodedToken.lastName;
+      const loginUserEmail = decodedToken.email;
+      const loginUserRole = decodedToken.role;
+      const loginUserId = decodedToken.userId;
       localStorage.setItem("token", token);
-      navigate("/mainNavigation", { state: { loginUserName } });
+
+      dispatch(
+        login({
+          token: token,
+          userId: loginUserId,
+          userName: loginUserName,
+          firstName: lodinUserFirstName,
+          lastName: loginUserLastName,
+          email: loginUserEmail,
+          role: loginUserRole,
+          loggedIn: true,
+        })
+      );
+
+      navigate("/mainNavigation");
     } catch (error) {
       console.error("Login failed", error);
     }

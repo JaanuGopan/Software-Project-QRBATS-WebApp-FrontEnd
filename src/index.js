@@ -4,6 +4,9 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./redux/app/store";
+// import pages
 import Signin from "./components/pages/Signin/Signin";
 import AdminDashboard from "./components/pages/AdminDashboard/AdminDashboard";
 import SignUp from "./components/pages/SignUp/SignUp";
@@ -30,7 +33,7 @@ const router = createBrowserRouter([
   },
   {
     path: "mainNavigation",
-    element: <MainNavigationPage />,
+    element: store.getState().user ? <MainNavigationPage /> : <Signin />,
   },
   {
     path: "eventCreation",
@@ -45,7 +48,9 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );
 
