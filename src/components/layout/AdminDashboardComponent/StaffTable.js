@@ -20,6 +20,8 @@ const StaffTable = ({ handleUpdateStaff }) => {
       });
   }, []);
 
+  const deparmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA"];
+
   return (
     <div className="tableDesign">
       <table className="student-tableArrangement">
@@ -38,7 +40,7 @@ const StaffTable = ({ handleUpdateStaff }) => {
             <tr key={index}>
               <td>{index + 1}</td>
               <td>{staff.firstName + " " + staff.lastName}</td>
-              <td>{staff.department}</td>
+              <td>{deparmentList[staff.departmentId - 1]}</td>
               <td>{staff.username}</td>
               <td>********</td>
               <td>
