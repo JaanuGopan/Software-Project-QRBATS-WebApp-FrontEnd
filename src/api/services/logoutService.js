@@ -1,10 +1,10 @@
-import { useDispatch } from "react-redux";
 import { logout } from "../../redux/features/userSlice";
 
 class Logout {
-  static handleLogout = (e) => {
-    e.preventDefault();
-    const dispatch = useDispatch();
+  static handleLogout = (dispatch, history) => {
     dispatch(logout());
+    window.location.href = "/"; // Redirect to the home page after logout
   };
 }
+
+export default Logout;

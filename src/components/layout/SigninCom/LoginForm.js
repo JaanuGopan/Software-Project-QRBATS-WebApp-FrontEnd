@@ -33,11 +33,13 @@ const LoginForm = () => {
       const loginUserLastName = decodedToken.lastName;
       const loginUserEmail = decodedToken.email;
       const loginUserRole = decodedToken.role;
+      const loginUserId = decodedToken.userId;
       localStorage.setItem("token", token);
 
       dispatch(
         login({
           token: token,
+          userId: loginUserId,
           userName: loginUserName,
           firstName: lodinUserFirstName,
           lastName: loginUserLastName,
