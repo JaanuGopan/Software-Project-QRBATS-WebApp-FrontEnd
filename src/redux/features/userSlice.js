@@ -7,6 +7,7 @@ export const userSlice = createSlice({
     user: JSON.parse(localStorage.getItem("user")) || null,
     error: null,
     loading: null,
+    isloggedIn: !!localStorage.getItem("user"),
   },
   reducers: {
     login: (state, action) => {

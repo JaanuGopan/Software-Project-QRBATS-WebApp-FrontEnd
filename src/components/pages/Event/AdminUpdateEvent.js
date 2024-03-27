@@ -9,17 +9,26 @@ import toast, { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/features/userSlice";
 
-const AdminUpdateEvent = ({ handlecloseCreateEventWindow }) => {
-  const [eventName, setEventName] = useState("");
-  const [moduleName, setModuleName] = useState(null);
-  const [eventDate, setEventDate] = useState("");
-  const [eventValidDate, setEventValidDate] = useState("");
-  const [eventTime, setEventTime] = useState("");
-  const [eventEndTime, setEventEndTime] = useState("");
-  const [eventVenue, setEventVenue] = useState("");
+const AdminUpdateEvent = ({
+  handlecloseCreateEventWindow,
+  selectedEvent,
+  reloadEventList,
+}) => {
+  const [eventId, setEventId] = useState(selectedEvent.eventId);
+  const [eventName, setEventName] = useState(selectedEvent.eventName);
+  const [moduleName, setModuleName] = useState(selectedEvent.moduleName);
+  const [eventDate, setEventDate] = useState(selectedEvent.eventDate);
+  const [eventValidDate, setEventValidDate] = useState(
+    selectedEvent.eventValidDate
+  );
+  const [eventTime, setEventTime] = useState(selectedEvent.eventTime);
+  const [eventEndTime, setEventEndTime] = useState(selectedEvent.eventEndTime);
+  const [eventVenue, setEventVenue] = useState(selectedEvent.eventVenue);
   const [showQRCode, setShowQRCode] = useState(false);
-  const [eventRole, setEventRole] = useState("EVENT");
-  const [eventAssignedUserId, setEventAssignedUserId] = useState(null);
+  const [eventRole, setEventRole] = useState(selectedEvent.eventRole);
+  const [eventAssignedUserId, setEventAssignedUserId] = useState(
+    selectedEvent.eventAssignedUserId
+  );
 
   const [showModuleNameInput, setShowModuleNameInput] = useState(true);
   const [title, setTitle] = useState("Event");
@@ -50,6 +59,7 @@ const AdminUpdateEvent = ({ handlecloseCreateEventWindow }) => {
       const response = await axios.post(
         "http://localhost:8080/api/v1/event/create",
         {
+          eventId: eventId,
           eventName: eventName,
           eventDate: eventDate,
           eventValidDate: eventValidDate,
@@ -64,6 +74,7 @@ const AdminUpdateEvent = ({ handlecloseCreateEventWindow }) => {
       const responseEventName = response.data.eventName;
       console.log("Event is : " + responseEventName);
       notifySuccess();
+      reloadEventList();
     } catch (error) {
       console.error("Event failed", error);
     } finally {

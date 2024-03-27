@@ -3,22 +3,19 @@ import "../../pages/AdminDashboard/AdminDashboard.css";
 import { FaEdit } from "react-icons/fa";
 import axios from "axios";
 
-const Table = ({ handleUpdateEvent }) => {
+const Table = ({ handleUpdateEvent, onEventClick, eventList }) => {
   const [events, setEvents] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   useEffect(() => {
-    // Fetch the list of events from the API
-    axios
-      .post("http://localhost:8080/api/v1/event/getallevents")
-      .then((res) => {
-        console.log(res);
-        // Update the component state with the fetched list of events
-        setEvents(res.data);
-      })
-      .catch((err) => {
-        console.error("Error fetching events:", err);
-      });
-  }, []);
+    // Update events whenever eventList prop changes
+    setEvents(eventList);
+  }, [eventList]);
+
+  const handleEventClick = (event) => {
+    setSelectedEvent(event);
+    onEventClick(event);
+  };
 
   return (
     <div className="tableDesign">
@@ -37,7 +34,11 @@ const Table = ({ handleUpdateEvent }) => {
         </thead>
         <tbody>
           {events.map((event, index) => (
-            <tr key={index}>
+            <tr
+              key={index}
+              onClick={() => handleEventClick(event)}
+              className={selectedEvent === event ? "selected-row" : ""}
+            >
               <td>{index + 1}</td>
               <td>{event.eventName}</td>
               <td>{event.eventDate}</td>

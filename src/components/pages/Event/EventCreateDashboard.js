@@ -20,6 +20,7 @@ const EventCreateDashboard = () => {
   const [eventDate, setEventDate] = useState("");
   const [eventValidDate, setEventValidDate] = useState("");
   const [eventTime, setEventTime] = useState("");
+  const [eventEndTime, setEventEndTime] = useState("");
   const [eventVenue, setEventVenue] = useState("");
   const [showQRCode, setShowQRCode] = useState(false);
   const [eventRole, setEventRole] = useState("EVENT");
@@ -51,10 +52,11 @@ const EventCreateDashboard = () => {
           eventDate: eventDate,
           eventValidDate: eventValidDate,
           eventTime: eventTime,
+          eventEndTime: eventEndTime,
           eventVenue: eventVenue,
           eventRole: eventRole,
           eventModuleName: moduleName,
-          eventAssignedUserId: userId ? parseInt(userId) : null,
+          eventAssignedUserId: userId,
         }
       );
       const responseEventName = response.data.eventName;
@@ -169,6 +171,20 @@ const EventCreateDashboard = () => {
                   placeholder="Event Time"
                   className="form-control mb-2"
                 />
+              </div>
+              <div className="eventCreation-form">
+                <div>
+                  <label className="form-label" htmlFor="enevtEndTime">
+                    Event Ending Time
+                  </label>
+                  <input
+                    type="time"
+                    value={eventEndTime}
+                    onChange={(e) => setEventEndTime(e.target.value)}
+                    placeholder="Event End Time"
+                    className="form-control mb-2"
+                  />
+                </div>
               </div>
             </div>
 

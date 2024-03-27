@@ -329,3 +329,8 @@
   justify-content: space-between;
   padding-right: 10px;
 }
+
+.selected-row {
+  background-color: rgb(208, 238, 248);
+  /* Change the background color to lightblue */
+}
