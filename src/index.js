@@ -33,7 +33,7 @@ const router = createBrowserRouter([
   },
   {
     path: "mainNavigation",
-    element: store.getState().user ? <MainNavigationPage /> : <Signin />,
+    element: store.getState("user") ? <MainNavigationPage /> : <Signin />,
   },
   {
     path: "eventCreation",

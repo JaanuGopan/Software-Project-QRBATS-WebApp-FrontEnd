@@ -10,7 +10,10 @@ import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/features/userSlice";
 
-const AdminEventCreation = ({ handlecloseCreateEventWindow }) => {
+const AdminEventCreation = ({
+  handlecloseCreateEventWindow,
+  reloadEventList,
+}) => {
   const [eventName, setEventName] = useState("");
   const [moduleName, setModuleName] = useState(null);
   const [eventDate, setEventDate] = useState("");
@@ -65,6 +68,7 @@ const AdminEventCreation = ({ handlecloseCreateEventWindow }) => {
       const responseEventName = response.data.eventName;
       console.log("Event is : " + responseEventName);
       notifySuccess();
+      reloadEventList();
     } catch (error) {
       console.error("Event failed", error);
     } finally {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./AdminDashboard.css";
 import Table from "../../layout/AdminDashboardComponent/Table";
 import TotalCount from "../../layout/AdminDashboardComponent/TotalCount";
@@ -11,10 +11,50 @@ import { MdCreateNewFolder } from "react-icons/md";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import AdminUpdateEvent from "../Event/AdminUpdateEvent";
 import AdminEventCreation from "../Event/AdminEventCreation";
+import DeleteEventService from "../../../api/services/DeleteEventService";
+import axios from "axios";
+import FetchEventsService from "../../../api/services/FetchEventsService";
 
 const AdminDashboard = () => {
   const [eventCreatePopUpWindow, setEventCreatePopUpWindow] = useState(false);
   const [eventUpdatePopUpWindow, setEventUpdatePopUpWindow] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [eventList, setEventList] = useState([]);
+
+  useEffect(() => {
+    // Fetch the list of events from the API using the new class
+    handleReloadEventList();
+  }, []);
+
+  // Function to handle event click
+  const handleEventClick = (event) => {
+    setSelectedEvent(event);
+    // Do whatever you want with the selected event data
+    console.log("Selected Event:", event);
+  };
+
+  const handleDelete = async () => {
+    try {
+      const response = await DeleteEventService.deleteEvent(
+        selectedEvent.eventId
+      );
+      // After deleting, you may want to update the event list
+      // Fetch the updated event list
+      handleReloadEventList();
+    } catch (error) {
+      console.log("error " + error);
+    }
+  };
+
+  const handleReloadEventList = async () => {
+    FetchEventsService.fetchEvents()
+      .then((events) => {
+        setEventList(events);
+      })
+      .catch((error) => {
+        console.error("Error fetching events:", error);
+      });
+  };
 
   return (
     <div className="admin-Dash">
@@ -72,7 +112,12 @@ const AdminDashboard = () => {
         />
       </div>
       <div className="AdminEventList">
-        <Table handleUpdateEvent={() => setEventUpdatePopUpWindow(true)} />
+        <Table
+          handleUpdateEvent={() => setEventUpdatePopUpWindow(true)}
+          onEventClick={handleEventClick}
+          eventList={eventList} // Pass the eventList prop here
+        />
+
         <div className="List-Buttons">
           <NormalButton
             handleClick={() => setEventCreatePopUpWindow(true)}
@@ -81,6 +126,7 @@ const AdminDashboard = () => {
           />
           <NormalButton
             title={"Delete"}
+            handleClick={handleDelete}
             titlewithiconicon={<RiDeleteBin5Fill className="buttonIcon" />}
           />
         </div>
@@ -94,6 +140,7 @@ const AdminDashboard = () => {
             handlecloseCreateEventWindow={() =>
               setEventCreatePopUpWindow(false)
             }
+            reloadEventList={handleReloadEventList}
           />
         </div>
       )}
@@ -106,6 +153,8 @@ const AdminDashboard = () => {
             handlecloseCreateEventWindow={() =>
               setEventUpdatePopUpWindow(false)
             }
+            selectedEvent={selectedEvent}
+            reloadEventList={handleReloadEventList}
           />
         </div>
       )}
