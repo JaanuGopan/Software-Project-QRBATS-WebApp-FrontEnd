@@ -1,20 +1,28 @@
 import React from "react";
 import "../../pages/StaffMainNavigation/StaffMainNavigation.css";
 import profilePic from "../../../assets/Images/Profile.png";
-import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../redux/features/userSlice";
 
 const ProfileButton = () => {
+  // Get the user from Redux state
+  const user = useSelector(selectUser);
+
   const handleClick = () => {
-    console.log("We have to design that Show Setting Window");
+    console.log("Show Settings Window"); // Corrected spelling
+    // You can add logic to show settings window here
   };
-  const location = useLocation();
-  const { userName } = location.state;
+
+  // Destructure user object for cleaner code
+  const { firstName, lastName } = user || {};
 
   return (
     <div className="ProfileButton" onClick={handleClick}>
-      <p className="ProfileName">{userName}</p>
+      {/* Display user's full name */}
+      <p className="ProfileName">{`${firstName || ""} ${lastName || ""}`}</p>
       <div className="circle">
-        <img className="ProfilePicture" src={profilePic} alt="" />
+        {/* Display profile picture */}
+        <img className="ProfilePicture" src={profilePic} alt="Profile" />
       </div>
     </div>
   );
