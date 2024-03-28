@@ -9,15 +9,16 @@ import StaffTable from "../../layout/AdminDashboardComponent/StaffTable";
 
 const StaffDashboard = () => {
     const [staffCreatePopUpWindow, setStaffCreatePopUpWindow]=useState(false);
-    const [staffUpdatePopUpWindow, setStaffUpdatePopUpWindow] = useState(false)
+    const [staffUpdatePopUpWindow, setStaffUpdatePopUpWindow] = useState(false);
+    const [search, setSearch] = useState('')
   return (
     <div className="staff-Dash">
         <div className="staff-SearchEvent">
           <p className="staff-mainHead">Staff Details</p>
-          <input type="text" placeholder="Search..." style={{width:'150px', padding:'3px 40px', border:'0.5px solid black', borderRadius:'5px', textAlign:'center'}}/>
+          <input onChange={(e)=>setSearch(e.target.value)} type="text" placeholder="Search..." style={{width:'150px', padding:'3px 40px', border:'0.5px solid black', borderRadius:'5px', textAlign:'center'}}/>
         </div>
         <div className="staff-EventList">
-          <StaffTable handleUpdateStaff={()=>setStaffUpdatePopUpWindow(true)}/>
+          <StaffTable search={search} handleUpdateStaff={()=>setStaffUpdatePopUpWindow(true)}/>
           <div className="staff-List-Buttons">
             <NormalButton handleClick={()=>setStaffCreatePopUpWindow(true)} title={"Create"} titlewithiconicon={<MdCreateNewFolder className="staff-buttonIcon"/>}/>
             <NormalButton title={"Delete"} titlewithiconicon={<RiDeleteBin5Fill className="staff-buttonIcon"/>}/>

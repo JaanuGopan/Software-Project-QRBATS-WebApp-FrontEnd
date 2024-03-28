@@ -12,7 +12,6 @@ import { RiDeleteBin5Fill } from "react-icons/ri";
 import AdminUpdateEvent from "../Event/AdminUpdateEvent";
 import AdminEventCreation from "../Event/AdminEventCreation";
 import DeleteEventService from "../../../api/services/DeleteEventService";
-import axios from "axios";
 import FetchEventsService from "../../../api/services/FetchEventsService";
 
 const AdminDashboard = () => {
@@ -20,6 +19,7 @@ const AdminDashboard = () => {
   const [eventUpdatePopUpWindow, setEventUpdatePopUpWindow] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [eventList, setEventList] = useState([]);
+  const [search, setSearch] = useState('')
 
   useEffect(() => {
     // Fetch the list of events from the API using the new class
@@ -109,10 +109,11 @@ const AdminDashboard = () => {
             borderRadius: "5px",
             textAlign: "center",
           }}
+          onChange={(e)=>setSearch(e.target.value)}
         />
       </div>
       <div className="AdminEventList">
-        <Table
+        <Table search={search}
           handleUpdateEvent={() => setEventUpdatePopUpWindow(true)}
           onEventClick={handleEventClick}
           eventList={eventList} // Pass the eventList prop here

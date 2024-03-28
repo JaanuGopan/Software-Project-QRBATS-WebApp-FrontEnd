@@ -13,6 +13,7 @@ import SignUp from "./components/pages/SignUp/SignUp";
 import MainNavigationPage from "./components/pages/MainNavigation/MainNavigation";
 import EventCreation from "./components/pages/Event/EventCreation/EventCreation";
 import StaffMainNavigation from "./components/pages/StaffMainNavigation/StaffMainNavigation";
+import EventReport from "./components/pages/Event/EventReport";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
   {
     path: "eventCreation",
     element: <EventCreation />,
+  },
+  {
+    path: "eventReport",
+    element: <EventReport />,
   },
   {
     path: "staffMainNavigation",

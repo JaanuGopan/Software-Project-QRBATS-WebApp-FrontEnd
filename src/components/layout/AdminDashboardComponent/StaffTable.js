@@ -3,7 +3,7 @@ import "../../pages/AdminDashboard/AdminDashboard.css";
 import { FaEdit } from "react-icons/fa";
 import axios from "axios";
 
-const StaffTable = ({ handleUpdateStaff }) => {
+const StaffTable = ({ search, handleUpdateStaff }) => {
   const [staffs, setStaffs] = useState([]);
 
   useEffect(() => {
@@ -36,7 +36,13 @@ const StaffTable = ({ handleUpdateStaff }) => {
           </tr>
         </thead>
         <tbody>
-          {staffs.map((staff, index) => (
+          {staffs.filter(staff=>(
+           ((staff.firstName).toLowerCase()).includes(search.toLowerCase()) ||
+            ((staff.lastName).toLowerCase()).includes(search.toLowerCase()) ||
+            ((staff.deparmentList).toLowerCase()).includes(search.toLowerCase()) ||
+            ((staff.username).toLowerCase()).includes(search.toLowerCase())
+          ))
+          .map((staff, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
               <td>{staff.firstName + " " + staff.lastName}</td>
@@ -46,8 +52,7 @@ const StaffTable = ({ handleUpdateStaff }) => {
               <td>
                 <button
                   onClick={() => handleUpdateStaff(staff)}
-                  className="EditButton"
-                >
+                  className="EditButton">
                   <FaEdit className="EditIcon" />
                 </button>
               </td>

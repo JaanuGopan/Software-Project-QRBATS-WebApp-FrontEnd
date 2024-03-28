@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./StaffA.css";
 import axios from "axios";
 import Designer from "../../../assets/Images/Designer.jpeg";
-import { useNavigate } from "react-router-dom";
 import InputField from "../../layout/InputBox/InputField";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 
@@ -15,7 +14,6 @@ const CreateStaff = ({ handlecloseCreateStaffWindow }) => {
   const [userName, setUserName] = useState("");
   const [userRole, setUserRole] = useState("");
   const [departmentId, setDepartmentId] = useState("");
-  const navigate = useNavigate();
 
   const deparmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA"];
   const userRoleList = ["ADMIN", "LECTURER"];

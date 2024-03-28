@@ -85,7 +85,7 @@ const EventCreateDashboard = () => {
     html2canvas(qrCodeRef.current).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF();
-      pdf.addImage(imgData, "PNG", 0, 0);
+      pdf.addImage(imgData, "PNG", 0.5, 0.5);
       pdf.save("qr_code.pdf");
     });
   };
@@ -200,8 +200,6 @@ const EventCreateDashboard = () => {
         </div>
         {qrCodeWindow && (
           <div className="Admin-Create-Event-Dashboard">
-            {showQRCode && (
-              <div ref={qrCodeRef} className="event-main-container1">
                 <div
                   className="closeCreateEventWindow"
                   onClick={() => setQrCodeWindow(false)}
@@ -209,9 +207,12 @@ const EventCreateDashboard = () => {
                   <IoMdCloseCircleOutline />
                 </div>
                 <h2>Successfully Event Created</h2>
-                <div className="row-center">
-                  <QRCode name="QRCode" value={eventDetails} className="mb-2" />
-                </div>
+                {showQRCode && (
+                  <div ref={qrCodeRef} className="event-main-container1">
+                    <div className="row-center">
+                      <QRCode name="QRCode" value={eventDetails} className="mb-2" />
+                    </div>
+                </div>)}
                 <div>
                   <p className="text-center">
                     Scan this QR code to join {title}
@@ -228,8 +229,6 @@ const EventCreateDashboard = () => {
                   </div>
                 </div>
               </div>
-            )}
-          </div>
         )}
       </div>
     </div>
