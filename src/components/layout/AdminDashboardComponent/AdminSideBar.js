@@ -11,6 +11,7 @@ import Sidebarbutton from "../StaffDashboardComponents/Sidebarbutton";
 import { AiFillDashboard } from "react-icons/ai";
 import Logout from "../../../api/services/logoutService";
 import { useDispatch } from "react-redux";
+import { TbReport } from "react-icons/tb";
 
 const AdminSideBar = ({ handleclose, index, setIndex }) => {
   const handleMenuClick = (menuIndex) => {
@@ -58,6 +59,12 @@ const AdminSideBar = ({ handleclose, index, setIndex }) => {
           title={"Setting"}
           titlewithiconicon={<IoSettings className="buttonIcon" />}
           isOpen={index === 4}
+        />
+        <Sidebarbutton
+          handleSidebarMenu={() => handleMenuClick(5)}
+          title={"Report"}
+          titlewithiconicon={<TbReport className="buttonIcon" />}
+          isOpen={index === 5}
         />
         <Sidebarbutton
           handleSidebarMenu={handleLogoutClick}
