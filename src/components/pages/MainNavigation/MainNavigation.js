@@ -10,6 +10,7 @@ import EventCreateDashboard from "../Event/EventCreateDashboard";
 import StudentDashboard from "../Student/StudentDashboard";
 import Setting from "../Setting/Setting";
 import StaffDashboard from "../Staff/StaffDashboard";
+import EventReport from "../Event/EventReport";
 
 function MainNavigationPage() {
   const location = useLocation();
@@ -49,6 +50,7 @@ function MainNavigationPage() {
           {openMenu === 2 && <StaffDashboard />}
           {openMenu === 3 && <StudentDashboard/>}
           {openMenu === 4 && <Setting/>}
+          {openMenu === 5 && <EventReport/>}
         </div>
       </div>
     </div>
