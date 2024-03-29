@@ -1,6 +1,6 @@
 import "../Event/EventCreation/EventCreation.css";
 import React, { useState, useRef } from "react";
-import QRCode from "react-qr-code";
+//import QRCode from "react-qr-code";
 import axios from "axios";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -8,6 +8,7 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import toast, { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/features/userSlice";
+import QRCode from "qrcode.react";
 
 const AdminUpdateEvent = ({
   handlecloseCreateEventWindow,
@@ -82,15 +83,18 @@ const AdminUpdateEvent = ({
     }
   };
 
-  const handleDownloadQRCode = () => {
-    const canvas = qrCodeRef.current.querySelector("canvas");
-    const url = canvas
+  const downloadQRCode = () => {
+    const qrCodeURL = document
+      .getElementById("qrCodeEl")
       .toDataURL("image/png")
       .replace("image/png", "image/octet-stream");
-    const link = document.createElement("a");
-    link.download = "qr_code.png";
-    link.href = url;
-    link.click();
+    console.log(qrCodeURL);
+    let aEl = document.createElement("a");
+    aEl.href = qrCodeURL;
+    aEl.download = "QR_Code.png";
+    document.body.appendChild(aEl);
+    aEl.click();
+    document.body.removeChild(aEl);
   };
 
   const handleShareQRCode = () => {
@@ -117,7 +121,13 @@ const AdminUpdateEvent = ({
       <div className="eventCreation-field">
         <div ref={qrCodeRef}>
           <div className="row-center">
-            <QRCode name="QRCode" value={eventDetails} className="mb-2" />
+            <QRCode
+              name="QRCode"
+              id="qrCodeEl"
+              size={200}
+              value={eventDetails}
+              className="mb-2"
+            />
           </div>
           <div>
             <p className="text-center">Scan this QR code to join {title}</p>
@@ -125,10 +135,7 @@ const AdminUpdateEvent = ({
 
           <div className="row-center">
             <div className="QRbutton">
-              <button
-                onClick={handleShareQRCode}
-                className="btn btn-success mr-3"
-              >
+              <button onClick={downloadQRCode} className="btn btn-success mr-3">
                 Save
               </button>
             </div>

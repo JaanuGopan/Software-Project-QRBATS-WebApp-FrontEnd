@@ -1,7 +1,7 @@
 import "../Event/EventCreation/EventCreation.css";
 import eventCreationImage from "../../../assets/Images/signin/Signin.jpeg";
 import React, { useState, useRef } from "react";
-import QRCode from "react-qr-code";
+//import QRCode from "react-qr-code";
 import axios from "axios";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -9,11 +9,13 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/features/userSlice";
+import QRCode from "qrcode.react";
 
 const AdminEventCreation = ({
   handlecloseCreateEventWindow,
   reloadEventList,
 }) => {
+  const [eventId, setEventId] = useState("");
   const [eventName, setEventName] = useState("");
   const [moduleName, setModuleName] = useState(null);
   const [eventDate, setEventDate] = useState("");
@@ -65,6 +67,7 @@ const AdminEventCreation = ({
           eventAssignedUserId: userId,
         }
       );
+      setEventId(response.data.eventId);
       const responseEventName = response.data.eventName;
       console.log("Event is : " + responseEventName);
       notifySuccess();
@@ -76,15 +79,18 @@ const AdminEventCreation = ({
     }
   };
 
-  const handleDownloadQRCode = () => {
-    const canvas = qrCodeRef.current.querySelector("canvas");
-    const url = canvas
+  const downloadQRCode = () => {
+    const qrCodeURL = document
+      .getElementById("qrCodeEl")
       .toDataURL("image/png")
       .replace("image/png", "image/octet-stream");
-    const link = document.createElement("a");
-    link.download = "qr_code.png";
-    link.href = url;
-    link.click();
+    console.log(qrCodeURL);
+    let aEl = document.createElement("a");
+    aEl.href = qrCodeURL;
+    aEl.download = "QR_Code.png";
+    document.body.appendChild(aEl);
+    aEl.click();
+    document.body.removeChild(aEl);
   };
 
   const handleShareQRCode = () => {
@@ -97,7 +103,7 @@ const AdminEventCreation = ({
   };
 
   // Concatenate all event details into a single string
-  const eventDetails = `${eventName}, ${moduleName}, ${eventDate}, ${eventValidDate}, ${eventTime}, ${eventVenue}, ${eventAssignedUserId}`;
+  const eventDetails = `${eventName}, ${moduleName}, ${eventDate}, ${eventValidDate}, ${eventTime}, ${eventEndTime} ${eventVenue}, ${eventAssignedUserId}, ${eventId}, ${eventRole}`;
   const [qrCodeWindow, setQrCodeWindow] = useState(false);
 
   return (
@@ -222,7 +228,13 @@ const AdminEventCreation = ({
                 </div>
                 <h2>Successfully Event Created</h2>
                 <div className="row-center">
-                  <QRCode name="QRCode" value={eventDetails} className="mb-2" />
+                  <QRCode
+                    name="QRCode"
+                    size={200}
+                    id="qrCodeEl"
+                    value={eventDetails}
+                    className="mb-2"
+                  />
                 </div>
                 <div>
                   <p className="text-center">
@@ -232,7 +244,7 @@ const AdminEventCreation = ({
                 <div className="row-center">
                   <div className="QRbutton">
                     <button
-                      onClick={handleShareQRCode}
+                      onClick={downloadQRCode}
                       className="btn btn-success mr-3"
                     >
                       Save
