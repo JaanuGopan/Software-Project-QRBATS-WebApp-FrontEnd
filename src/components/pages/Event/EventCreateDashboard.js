@@ -86,8 +86,19 @@ const EventCreateDashboard = () => {
   };
 
   // Concatenate all event details into a single string
-  const eventDetails = `${eventName}, ${moduleName}, ${eventDate}, ${eventValidDate}, ${eventTime},${eventEndTime} ${eventVenue}, ${eventAssignedUserId}`;
+  //const eventDetails = `${eventName}, ${moduleName}, ${eventDate}, ${eventValidDate}, ${eventTime},${eventEndTime} ${eventVenue}, ${eventAssignedUserId}`;
   const [qrCodeWindow, setQrCodeWindow] = useState(false);
+
+  const eventDetails = {
+    eventName: eventName,
+    moduleName: moduleName,
+    eventDate: eventDate,
+    eventValidDate: eventValidDate,
+    eventTime: eventTime,
+    eventEndTime: eventEndTime,
+    eventVenue: eventVenue,
+    eventAssignedUserId: eventAssignedUserId,
+  };
 
   return (
     <div className="event-main-container2">
@@ -209,7 +220,7 @@ const EventCreateDashboard = () => {
                     size={200}
                     id="qrCodeEl"
                     name="QRCode"
-                    value={eventDetails}
+                    value={JSON.stringify(eventDetails)}
                     ref={qrCodeRef}
                     className="mb-2"
                   />

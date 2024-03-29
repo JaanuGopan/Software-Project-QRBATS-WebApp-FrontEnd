@@ -40,9 +40,9 @@
     font-size: large;
   }
   .buttonIcon{
-    height: 1rem;
-    width: 1rem;
-    size: 1rem;
+    height: 1.5rem;
+    width: 1.5rem;
+    size: 1.5rem;
   }
   .NormalButtonLabel{
     font-size: small;
@@ -65,9 +65,9 @@
     margin-bottom: 0px;
   }
   .buttonIcon{
-    height: 0.5rem;
-    width: 0.5rem;
-    size: 0.5rem;
+    height: 1rem;
+    width: 1rem;
+    size: 1rem;
   }
   .admin-Dash{
     margin: 0px;

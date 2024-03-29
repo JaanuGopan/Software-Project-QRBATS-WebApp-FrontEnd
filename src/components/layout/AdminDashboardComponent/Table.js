@@ -37,7 +37,7 @@ const Table = ({ handleUpdateEvent, onEventClick, eventList }) => {
             <tr
               key={index}
               onClick={() => handleEventClick(event)}
-              className={selectedEvent === event ? "selected-row" : ""}
+              className={selectedEvent === event ? "selected-row" : "event-row"}
             >
               <td>{index + 1}</td>
               <td>{event.eventName}</td>
