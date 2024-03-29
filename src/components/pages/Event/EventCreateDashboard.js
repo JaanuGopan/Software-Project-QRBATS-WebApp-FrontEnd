@@ -80,7 +80,7 @@ const EventCreateDashboard = () => {
     html2canvas(qrCodeRef.current).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF();
-      pdf.addImage(imgData, "PNG", 0, 0);
+      pdf.addImage(imgData, "PNG", 0.5, 0.5);
       pdf.save("qr_code.pdf");
     });
   };
@@ -195,6 +195,7 @@ const EventCreateDashboard = () => {
         </div>
         {qrCodeWindow && (
           <div className="Admin-Create-Event-Dashboard">
+
             {showQRCode && (
               <div className="event-main-container1">
                 <div
@@ -204,6 +205,7 @@ const EventCreateDashboard = () => {
                   <IoMdCloseCircleOutline />
                 </div>
                 <h2>Successfully Event Created</h2>
+
                 <div className="row-center">
                   <QRCode
                     size={200}
@@ -230,8 +232,6 @@ const EventCreateDashboard = () => {
                   </div>
                 </div>
               </div>
-            )}
-          </div>
         )}
       </div>
     </div>
