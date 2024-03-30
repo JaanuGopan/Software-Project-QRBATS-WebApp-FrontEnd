@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "../../pages/AdminDashboard/AdminDashboard.css";
 import { FaEdit } from "react-icons/fa";
-import axios from "axios";
 
-const Table = ({ handleUpdateEvent, onEventClick, eventList }) => {
+const Table = ({ search, handleUpdateEvent, onEventClick, eventList }) => {
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
 
@@ -33,7 +32,11 @@ const Table = ({ handleUpdateEvent, onEventClick, eventList }) => {
           </tr>
         </thead>
         <tbody>
-          {events.map((event, index) => (
+          {events.filter(event=>(
+           ((event.eventName).toLowerCase()).includes(search.toLowerCase()) ||
+            ((event.eventVenue).toLowerCase()).includes(search.toLowerCase())
+            ))
+            .map((event, index) => (
             <tr
               key={index}
               onClick={() => handleEventClick(event)}

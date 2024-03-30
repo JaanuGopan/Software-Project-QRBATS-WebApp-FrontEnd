@@ -40,9 +40,10 @@
     font-size: large;
   }
   .buttonIcon{
-    height: 1.5rem;
-    width: 1.5rem;
-    size: 1.5rem;
+    height: 2rem;
+    width: 2rem;
+    size: 2rem;
+
   }
   .NormalButtonLabel{
     font-size: small;
@@ -77,6 +78,11 @@
   }
   .mainHead {
     padding-left: 5px;
+  }
+  .buttonIcon{
+    height: 1.5rem;
+    width: 1.5rem;
+    size: 1.5rem;
   }
 }
 
@@ -177,6 +183,23 @@
   border-bottom: 2px solid #0063A0;
 }
 
+.event-report-tableArrangement{
+  display: block;
+  overflow: hidden;
+  table-layout: auto;
+  border-collapse: collapse;
+  box-shadow: 0px 5px 5px #ccc;
+  border-radius: 10px;
+  white-space: nowrap;
+  width: 100em;
+  max-width: 90%;
+  margin: auto;
+  overflow-x: auto;
+  height: 75vh;
+  overflow-y: auto;
+  border-bottom: 2px solid #0063A0;
+}
+
 .tableArrangement thead{
   position: sticky;
   top: 0;
@@ -189,12 +212,15 @@
 .student-tableArrangement thead{
   position: sticky;
   top: 0;
-  /*z-index: 1;
-  color: #0063A0;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;*/
+  background-color: #c1e2f9;
+  color: #0D295E;
+  border-bottom: 3px solid #0063A0;
+  text-align: center;
+}
+
+.event-report-tableArrangement thead{
+  position: sticky;
+  top: 0;
   background-color: #c1e2f9;
   color: #0D295E;
   border-bottom: 3px solid #0063A0;
@@ -207,6 +233,11 @@
 }
 
 .student-tableArrangement th{
+  padding: 0.8rem;
+  text-align: center;
+}
+
+.event-report-tableArrangement th{
   padding: 0.8rem;
   text-align: center;
 }
@@ -225,14 +256,23 @@
   padding: 0.5rem;
 }
 
+.event-report-tableArrangement td{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  padding: 0.5rem;
+}
+
 .tableArrangement tbody{
   overflow-y: auto;
-  height: 340px;
 }
 
 .student-tableArrangement tbody{
   overflow-y: auto;
-  height: 340px;
+}
+
+.event-report-tableArrangement tbody{
+  overflow-y: auto;
 }
 
 .tableArrangement tbody tr{
@@ -245,12 +285,22 @@
   border-radius: 5px;
 }
 
+.event-report-tableArrangement tbody tr{
+  border: 0.01px solid rgba(91, 178, 255, 0.608);
+  border-radius: 5px;
+}
+
 .tableArrangement tbody tr:hover{
   background-color: azure;
   cursor: pointer;
 }
 
 .student-tableArrangement tbody tr:hover{
+  background-color: azure;
+  cursor: pointer;
+}
+
+.event-report-tableArrangement tbody tr:hover{
   background-color: azure;
   cursor: pointer;
 }
@@ -333,4 +383,18 @@
 .selected-row {
   background-color: rgb(208, 238, 248);
   /* Change the background color to lightblue */
+}
+
+.ViewButton{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  padding: 5px 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.ViewButtonLabel{
+  margin: 0px;
+  padding-left: 3px;
 }

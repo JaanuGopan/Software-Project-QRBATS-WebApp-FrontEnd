@@ -126,7 +126,7 @@ const AdminUpdateEvent = ({
               id="qrCodeEl"
               size={200}
               value={eventDetails}
-              className="mb-2"
+              className="QRCode-img"
             />
           </div>
           <div>

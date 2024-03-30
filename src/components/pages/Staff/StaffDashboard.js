@@ -10,8 +10,10 @@ import FetchStaffService from "../../../api/services/FetchStaffService";
 import DeleteStaffService from "../../../api/services/DeleteStaffService";
 
 const StaffDashboard = () => {
+  
   const [staffCreatePopUpWindow, setStaffCreatePopUpWindow] = useState(false);
   const [staffUpdatePopUpWindow, setStaffUpdatePopUpWindow] = useState(false);
+  const [search, setSearch] = useState('');
 
   const [staffsList, setStaffsList] = useState([]);
   const [selectedStaff, setSelectedStaff] = useState(null);
@@ -66,6 +68,7 @@ const StaffDashboard = () => {
       </div>
       <div className="staff-EventList">
         <StaffTable
+          search={search}
           handleUpdateStaff={() => setStaffUpdatePopUpWindow(true)}
           onStaffClick={handleEventClick}
           staffsList={staffsList}

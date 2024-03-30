@@ -207,3 +207,9 @@ a:hover {
     color: white;
   background-color: red;
 }
+
+.QRCode-img{
+    width: 100%;
+    height: 100%;
+    
+}
