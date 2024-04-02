@@ -2,24 +2,45 @@ import React, { useState, useEffect } from "react";
 import "../../pages/AdminDashboard/AdminDashboard.css";
 import { CiViewList } from "react-icons/ci";
 import axios from "axios";
+import FetchAttendanceByEventIdService from "../../../api/services/FetchAttendanceByEventIdService";
 
-const EventReportTable = ({handleOpenReportWindow}) => {
-  const [staffs, setStaffs] = useState([]);
+const EventReportTable = ({
+  handleOpenReportWindow,
+  search,
+  onEventClick,
+  eventList,
+  attendedStudentList,
+}) => {
+  const [events, setEvents] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [attendanceList, setAttendanceList] = useState([]);
 
-    useEffect(() => {
-      // Fetch the list of staffs from the API
-      axios
-        .post("http://localhost:8080/api/v1/auth/getallstaffs")
-        .then((res) => {
-          console.log(res);
-          // Update the component state with the fetched list of staffs
-          setStaffs(res.data);
-        })
-        .catch((err) => {
-          console.error("Error fetching staffs:", err);
-        });
-    }, []);
-    const deparmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA"];
+  useEffect(() => {
+    // Update events whenever eventList prop changes
+    setEvents(eventList);
+  }, [eventList]);
+
+  const handleEventClick = (event) => {
+    setSelectedEvent(event);
+    onEventClick(event);
+  };
+
+  const handleAttendanceList = (attendanceStudentList) => {
+    setAttendanceList(attendanceStudentList);
+    attendedStudentList(attendanceStudentList);
+  };
+
+  const handleReloadAttendanceList = async (eventId) => {
+    FetchAttendanceByEventIdService.fetchAttendance(eventId)
+      .then((attendanceList) => {
+        setAttendanceList(attendanceList);
+        handleAttendanceList(attendanceList);
+        handleOpenReportWindow();
+      })
+      .catch((error) => {
+        console.error("Error fetching attendance:", error);
+      });
+  };
 
   return (
     <div className="tableDesign">
@@ -33,31 +54,46 @@ const EventReportTable = ({handleOpenReportWindow}) => {
             <th>Venue</th>
             <th>Start Time</th>
             <th>End Time</th>
-            <th>Edit</th>
+            <th>View</th>
           </tr>
         </thead>
         <tbody>
-            <tr>
-              <td>1</td>
-              <td>Seminar</td>
-              <td>12-11-2024</td>
-              <td>12-11-2024</td>
-              <td>NCC</td>
-              <td>12.30 pm</td>
-              <td>4.30 pm</td>
-              <td>
-                <button
-                  onClick={handleOpenReportWindow}
-                  className="ViewButton">
-                  <CiViewList className="EditIcon" />
-                  <p className="ViewButtonLabel">View</p>
-                </button>
-              </td>
-            </tr>
+          {events
+            .filter(
+              (event) =>
+                event.eventName.toLowerCase().includes(search.toLowerCase()) ||
+                event.eventVenue.toLowerCase().includes(search.toLowerCase())
+            )
+            .map((event, index) => (
+              <tr
+                key={index}
+                onClick={() => handleEventClick(event)}
+                className={
+                  selectedEvent === event ? "selected-row" : "event-row"
+                }
+              >
+                <td>{index + 1}</td>
+                <td>{event.eventName}</td>
+                <td>{event.eventDate}</td>
+                <td>{event.eventValidDate}</td>
+                <td>{event.eventVenue}</td>
+                <td>{event.eventTime}</td>
+                <td>{event.eventEndTime}</td>
+                <td>
+                  <button
+                    onClick={() => handleReloadAttendanceList(event.eventId)}
+                    className="ViewButton"
+                  >
+                    <CiViewList className="EditIcon" />
+                    <p className="ViewButtonLabel">View</p>
+                  </button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>
   );
-}
+};
 
 export default EventReportTable;

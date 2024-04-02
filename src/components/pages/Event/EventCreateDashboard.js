@@ -1,7 +1,6 @@
 import "../Event/EventCreation/EventCreation.css";
 import eventCreationImage from "../../../assets/Images/signin/Signin.jpeg";
 import React, { useState, useRef } from "react";
-//import QRCode from "react-qr-code";
 import axios from "axios";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -16,6 +15,7 @@ const EventCreateDashboard = () => {
   const user = useSelector(selectUser);
   const { userId } = user || {};
 
+  const [eventId, setEventId] = useState("");
   const [eventName, setEventName] = useState("");
   const [moduleName, setModuleName] = useState(null);
   const [eventDate, setEventDate] = useState("");
@@ -30,10 +30,45 @@ const EventCreateDashboard = () => {
   const [showModuleNameInput, setShowModuleNameInput] = useState(true);
   const [title, setTitle] = useState("Event");
 
+  const venueList = [
+    "NCC",
+    "LT1",
+    "LT2",
+    "Auditorium",
+    "DEIE",
+    "DMME",
+    "DCEE",
+    "Other",
+  ];
+
   const notifySuccess = () => toast.success("Successfully Event Created!");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleInputValidation = () => {
+    if (
+      !eventName ||
+      !eventDate ||
+      !eventValidDate ||
+      !eventTime ||
+      !eventEndTime ||
+      !eventVenue
+    ) {
+      return false;
+    }
+    return true;
+  };
+
+  const clearEventDetails = () => {
+    setEventName("");
+    setEventDate("");
+    setEventValidDate("");
+    setEventTime("");
+    setEventEndTime("");
+    setEventVenue("");
+    setEventAssignedUserId(null);
+    setEventRole("EVENT");
+  };
+
+  const handleCreateEvent = async (e) => {
     try {
       const response = await axios.post(
         "http://localhost:8080/api/v1/event/create",
@@ -49,9 +84,8 @@ const EventCreateDashboard = () => {
           eventAssignedUserId: userId,
         }
       );
+      setEventId(response.data.eventId);
       const responseEventName = response.data.eventName;
-      console.log("Event is : " + responseEventName);
-      console.log("User ID is : " + userId);
       notifySuccess();
     } catch (error) {
       console.error("Event failed", error);
@@ -60,14 +94,21 @@ const EventCreateDashboard = () => {
     }
   };
 
-  const qrCodeRef = useRef(null);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (handleInputValidation()) {
+      await handleCreateEvent(e);
+    } else {
+      console.log("Please fill all the fields");
+    }
+  };
 
+  const qrCodeRef = useRef(null);
   const downloadQRCode = () => {
     const qrCodeURL = document
       .getElementById("qrCodeEl")
       .toDataURL("image/png")
       .replace("image/png", "image/octet-stream");
-    console.log(qrCodeURL);
     let aEl = document.createElement("a");
     aEl.href = qrCodeURL;
     aEl.download = "QR_Code.png";
@@ -76,21 +117,24 @@ const EventCreateDashboard = () => {
     document.body.removeChild(aEl);
   };
 
-  const handleShareQRCode = () => {
-    html2canvas(qrCodeRef.current).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF();
-      pdf.addImage(imgData, "PNG", 0.5, 0.5);
-      pdf.save("qr_code.pdf");
-    });
-  };
-
-  // Concatenate all event details into a single string
-  const eventDetails = `${eventName}, ${moduleName}, ${eventDate}, ${eventValidDate}, ${eventTime},${eventEndTime} ${eventVenue}, ${eventAssignedUserId}`;
   const [qrCodeWindow, setQrCodeWindow] = useState(false);
+
+  const eventDetails = {
+    eventId: eventId,
+    eventName: eventName,
+    moduleName: moduleName,
+    eventDate: eventDate,
+    eventValidDate: eventValidDate,
+    eventTime: eventTime,
+    eventEndTime: eventEndTime,
+    eventVenue: eventVenue,
+    eventAssignedUserId: userId,
+  };
+  const qrCodeDetails = JSON.stringify(eventDetails);
 
   return (
     <div className="event-main-container2">
+      <Toaster />
       <h2>Create Event</h2>
       <div className="eventCreation-field">
         <img src={eventCreationImage} className="Create-logo" alt="Logo" />
@@ -98,6 +142,7 @@ const EventCreateDashboard = () => {
           <form onSubmit={handleSubmit}>
             <div className="input-with-icon">
               <input
+                required
                 type="text"
                 id="eventName"
                 name="eventName"
@@ -114,6 +159,7 @@ const EventCreateDashboard = () => {
                     Event Starting Date
                   </label>
                   <input
+                    required
                     type="date"
                     value={eventDate}
                     onChange={(e) => setEventDate(e.target.value)}
@@ -127,6 +173,7 @@ const EventCreateDashboard = () => {
                     Event Ending Date
                   </label>
                   <input
+                    required
                     type="date"
                     value={eventValidDate}
                     onChange={(e) => setEventValidDate(e.target.value)}
@@ -141,16 +188,17 @@ const EventCreateDashboard = () => {
                   Venue
                 </label>
                 <select
+                  required
                   value={eventVenue}
                   onChange={(e) => setEventVenue(e.target.value)}
                   className="form-control mb-2"
                 >
                   <option value="">Select Venue</option>
-                  <option value="LT1">LT1</option>
-                  <option value="LT2">LT2</option>
-                  <option value="Auditorium">Auditorium</option>
-                  <option value="NCC">NCC</option>
-                  <option value="Other">Other</option>
+                  {venueList.map((option, index) => (
+                    <option key={index} value={option}>
+                      {option}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -160,6 +208,7 @@ const EventCreateDashboard = () => {
                   Event Starting Time
                 </label>
                 <input
+                  required
                   type="time"
                   value={eventTime}
                   onChange={(e) => setEventTime(e.target.value)}
@@ -173,6 +222,7 @@ const EventCreateDashboard = () => {
                     Event Ending Time
                   </label>
                   <input
+                    required
                     type="time"
                     value={eventEndTime}
                     onChange={(e) => setEventEndTime(e.target.value)}
@@ -184,53 +234,60 @@ const EventCreateDashboard = () => {
             </div>
 
             <div className="eventCreation-form"></div>
-            <button
-              onClick={() => setQrCodeWindow(true)}
-              type="submit"
-              className="btn btn-primary w-100"
-            >
-              Create Event
-            </button>
+            <div className="d-flex justify-content-between mr-3 mt-3">
+              <button
+                onClick={() => setQrCodeWindow(true)}
+                type="submit"
+                className="btn btn-primary w-90"
+              >
+                Create Event
+              </button>
+              <button
+                onClick={clearEventDetails}
+                className="btn btn-danger w-30"
+              >
+                Clear
+              </button>
+            </div>
           </form>
         </div>
-        {qrCodeWindow && (
+        {qrCodeWindow && showQRCode && (
           <div className="Admin-Create-Event-Dashboard">
-            {showQRCode && (
-              <div className="event-main-container1">
-                <div
-                  className="closeCreateEventWindow"
-                  onClick={() => setQrCodeWindow(false)}
-                >
-                  <IoMdCloseCircleOutline />
-                </div>
-                <h2>Successfully Event Created</h2>
-                <div className="row-center">
-                  <QRCode
-                    size={200}
-                    id="qrCodeEl"
-                    name="QRCode"
-                    value={eventDetails}
-                    ref={qrCodeRef}
-                    className="mb-2"
-                  />
-                </div>
-                <div>
-                  <p className="text-center">
-                    Scan this QR code to join {title}
-                  </p>
-                </div>
-                <div className="row-center">
-                  <div className="QRbutton">
-                    <button
-                      onClick={downloadQRCode}
-                      className="btn btn-success mr-3"
-                    >
-                      Save
-                    </button>
-                  </div>
+            <div className="event-main-container1">
+              <div
+                className="closeCreateEventWindow"
+                onClick={() => {
+                  setQrCodeWindow(false);
+                  clearEventDetails();
+                }}
+              >
+                <IoMdCloseCircleOutline />
+              </div>
+              <h2>Successfully Event Created</h2>
+              <div className="row-center">
+                <QRCode
+                  size={200}
+                  id="qrCodeEl"
+                  name="QRCode"
+                  value={qrCodeDetails}
+                  ref={qrCodeRef}
+                  className="mb-2"
+                />
+              </div>
+              <div>
+                <p className="text-center">Scan this QR code to join {title}</p>
+              </div>
+              <div className="row-center">
+                <div className="QRbutton">
+                  <button
+                    onClick={downloadQRCode}
+                    className="btn btn-success mr-3"
+                  >
+                    Save
+                  </button>
                 </div>
               </div>
-            )}
+            </div>
           </div>
         )}
       </div>

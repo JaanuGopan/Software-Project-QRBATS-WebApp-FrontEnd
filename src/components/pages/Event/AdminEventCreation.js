@@ -1,12 +1,11 @@
 import "../Event/EventCreation/EventCreation.css";
 import eventCreationImage from "../../../assets/Images/signin/Signin.jpeg";
 import React, { useState, useRef } from "react";
-//import QRCode from "react-qr-code";
 import axios from "axios";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { IoMdCloseCircleOutline } from "react-icons/io";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/features/userSlice";
 import QRCode from "qrcode.react";
@@ -32,16 +31,26 @@ const AdminEventCreation = ({
 
   const qrCodeRef = useRef(null);
 
+  const venueList = [
+    "NCC",
+    "LT1",
+    "LT2",
+    "Auditorium",
+    "DEIE",
+    "DMME",
+    "DCEE",
+    "Other",
+  ];
+
   const notifySuccess = () => toast.success("Successfully Event Created!");
 
-  const handleEreseValu = () => {
+  const clearEventDetails = () => {
     setEventName("");
-    setModuleName(null);
     setEventDate("");
     setEventValidDate("");
     setEventTime("");
-    setEventVenue("");
     setEventEndTime("");
+    setEventVenue("");
     setEventAssignedUserId(null);
     setEventRole("EVENT");
   };
@@ -92,6 +101,18 @@ const AdminEventCreation = ({
     aEl.click();
     document.body.removeChild(aEl);
   };
+  const eventDetails = {
+    eventId: eventId,
+    eventName: eventName,
+    moduleName: moduleName,
+    eventDate: eventDate,
+    eventValidDate: eventValidDate,
+    eventTime: eventTime,
+    eventEndTime: eventEndTime,
+    eventVenue: eventVenue,
+    eventAssignedUserId: userId,
+  };
+  const qrCodeDetails = JSON.stringify(eventDetails);
 
   const handleShareQRCode = () => {
     html2canvas(qrCodeRef.current).then((canvas) => {
@@ -102,12 +123,11 @@ const AdminEventCreation = ({
     });
   };
 
-  // Concatenate all event details into a single string
-  const eventDetails = `${eventName}, ${moduleName}, ${eventDate}, ${eventValidDate}, ${eventTime}, ${eventEndTime} ${eventVenue}, ${eventAssignedUserId}, ${eventId}, ${eventRole}`;
   const [qrCodeWindow, setQrCodeWindow] = useState(false);
 
   return (
     <div className="event-main-container1">
+      <Toaster />
       <div
         className="closeCreateEventWindow"
         onClick={handlecloseCreateEventWindow}
@@ -169,11 +189,11 @@ const AdminEventCreation = ({
                   className="form-control mb-2"
                 >
                   <option value="">Select Venue</option>
-                  <option value="LT1">LT1</option>
-                  <option value="LT2">LT2</option>
-                  <option value="Auditorium">Auditorium</option>
-                  <option value="NCC">NCC</option>
-                  <option value="Other">Other</option>
+                  {venueList.map((option, index) => (
+                    <option key={index} value={option}>
+                      {option}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -232,7 +252,7 @@ const AdminEventCreation = ({
                     name="QRCode"
                     size={200}
                     id="qrCodeEl"
-                    value={eventDetails}
+                    value={qrCodeDetails}
                     className="mb-2"
                   />
                 </div>
