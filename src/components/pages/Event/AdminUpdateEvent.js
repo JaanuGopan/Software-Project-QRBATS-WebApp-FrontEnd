@@ -9,6 +9,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/features/userSlice";
 import QRCode from "qrcode.react";
+import profilePic from "../../../assets/Images/Profile.png";
 
 const AdminUpdateEvent = ({
   handlecloseCreateEventWindow,
@@ -88,10 +89,9 @@ const AdminUpdateEvent = ({
       .getElementById("qrCodeEl")
       .toDataURL("image/png")
       .replace("image/png", "image/octet-stream");
-    console.log(qrCodeURL);
     let aEl = document.createElement("a");
     aEl.href = qrCodeURL;
-    aEl.download = "QR_Code.png";
+    aEl.download = "QR_Code" + "_" + eventName + ".png";
     document.body.appendChild(aEl);
     aEl.click();
     document.body.removeChild(aEl);
@@ -106,8 +106,18 @@ const AdminUpdateEvent = ({
     });
   };
 
-  // Concatenate all event details into a single string
-  const eventDetails = `${eventName}, ${moduleName}, ${eventDate}, ${eventValidDate}, ${eventTime}, ${eventVenue}, ${eventAssignedUserId}`;
+  const eventDetails = {
+    eventId: eventId,
+    eventName: eventName,
+    moduleName: moduleName,
+    eventDate: eventDate,
+    eventValidDate: eventValidDate,
+    eventTime: eventTime,
+    eventEndTime: eventEndTime,
+    eventVenue: eventVenue,
+    eventAssignedUserId: eventAssignedUserId,
+  };
+  const qrCodeDetails = JSON.stringify(eventDetails);
 
   return (
     <div className="event-main-container1">
@@ -121,13 +131,15 @@ const AdminUpdateEvent = ({
       <div className="eventCreation-field">
         <div ref={qrCodeRef}>
           <div className="row-center">
-            <QRCode
-              name="QRCode"
-              id="qrCodeEl"
-              size={200}
-              value={eventDetails}
-              className="QRCode-img"
-            />
+            <div typeof="img">
+              <QRCode
+                id="qrCodeEl"
+                name="QRCode"
+                size={200}
+                value={qrCodeDetails}
+                className="QRCode-img"
+              />
+            </div>
           </div>
           <div>
             <p className="text-center">Scan this QR code to join {title}</p>

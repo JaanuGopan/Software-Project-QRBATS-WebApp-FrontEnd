@@ -1,25 +1,24 @@
 import React, { useState, useEffect } from "react";
 import "../../pages/AdminDashboard/AdminDashboard.css";
-import { CiViewList } from "react-icons/ci";
-import axios from "axios";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
-const EventAttendancetable = () => {
-    const [staffs, setStaffs] = useState([]);
+const EventAttendancetable = ({
+  search,
+  attendanceList,
+  handleGeneratePDF,
+}) => {
+  const [attendance, setAttendance] = useState([]);
+  const [selectedAttendance, setSelectedAttendance] = useState(null);
 
-    useEffect(() => {
-      // Fetch the list of staffs from the API
-      axios
-        .post("http://localhost:8080/api/v1/auth/getallstaffs")
-        .then((res) => {
-          console.log(res);
-          // Update the component state with the fetched list of staffs
-          setStaffs(res.data);
-        })
-        .catch((err) => {
-          console.error("Error fetching staffs:", err);
-        });
-    }, []);
-    const deparmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA"];
+  useEffect(() => {
+    // Update events whenever eventList prop changes
+    setAttendance(attendanceList);
+  }, [attendanceList]);
+
+  const handleAttendanceClick = (attendance) => {
+    setSelectedAttendance(attendance);
+  };
 
   return (
     <div className="tableDesign">
@@ -27,52 +26,44 @@ const EventAttendancetable = () => {
         <thead>
           <tr>
             <th>No</th>
-            <th className="expand">First Name</th>
-            <th className="expand">Last Name</th>
+            <th className="expand">Student Name</th>
             <th>Registration Number</th>
+            <th>Attendance Date</th>
             <th>Attendance Time</th>
           </tr>
         </thead>
+
         <tbody>
-            <tr>
-              <td>1</td>
-              <td>MJgdhwudy</td>
-              <td>jkfgedf</td>
-              <td>EG20205486</td>
-              <td>12.56 pm</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>MJgdhwudy</td>
-              <td>jkfgedf</td>
-              <td>EG20205486</td>
-              <td>12.56 pm</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>MJgdhwudy</td>
-              <td>jkfgedf</td>
-              <td>EG20205486</td>
-              <td>12.56 pm</td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>MJgdhwudy</td>
-              <td>jkfgedf</td>
-              <td>EG20205486</td>
-              <td>12.56 pm</td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>MJgdhwudy</td>
-              <td>jkfgedf</td>
-              <td>EG20205486</td>
-              <td>12.56 pm</td>
-            </tr>
+          {attendance
+            .filter(
+              (attendance) =>
+                attendance.studentName
+                  .toLowerCase()
+                  .includes(search.toLowerCase()) ||
+                attendance.indexNumber
+                  .toLowerCase()
+                  .includes(search.toLowerCase())
+            )
+            .map((attendance, index) => (
+              <tr
+                key={index}
+                className={
+                  selectedAttendance === attendance
+                    ? "selected-row"
+                    : "event-row"
+                }
+              >
+                <td>{index + 1}</td>
+                <td>{attendance.studentName}</td>
+                <td>{attendance.indexNumber}</td>
+                <td>{attendance.attendedDate}</td>
+                <td>{attendance.attendedTime}</td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>
   );
-}
+};
 
 export default EventAttendancetable;
