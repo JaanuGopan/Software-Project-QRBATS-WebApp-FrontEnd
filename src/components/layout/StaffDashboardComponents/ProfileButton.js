@@ -4,14 +4,13 @@ import profilePic from "../../../assets/Images/Profile.png";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/features/userSlice";
 
-const ProfileButton = () => {
+const ProfileButton = ({setIndex}) => {
   // Get the user from Redux state
   const user = useSelector(selectUser);
 
-  const handleClick = () => {
-    console.log("Show Settings Window"); // Corrected spelling
-    // You can add logic to show settings window here
-  };
+  const handleClick = () =>{
+    setIndex(5);
+  }
 
   // Destructure user object for cleaner code
   const { firstName, lastName } = user || {};

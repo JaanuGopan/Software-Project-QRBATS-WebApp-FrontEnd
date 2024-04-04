@@ -56,14 +56,14 @@ const AdminSideBar = ({ handleclose, index, setIndex }) => {
         />
         <Sidebarbutton
           handleSidebarMenu={() => handleMenuClick(4)}
-          title={"Setting"}
-          titlewithiconicon={<IoSettings className="buttonIcon" />}
+          title={"Report"}
+          titlewithiconicon={<TbReport className="buttonIcon" />}
           isOpen={index === 4}
         />
         <Sidebarbutton
           handleSidebarMenu={() => handleMenuClick(5)}
-          title={"Report"}
-          titlewithiconicon={<TbReport className="buttonIcon" />}
+          title={"Setting"}
+          titlewithiconicon={<IoSettings className="buttonIcon" />}
           isOpen={index === 5}
         />
         <Sidebarbutton

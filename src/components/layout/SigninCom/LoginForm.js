@@ -84,7 +84,7 @@ const LoginForm = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <a href="#" onClick={() => navigate("")}>
+          <a href="#" className="forgot-password" onClick={() => navigate("")}>
             Forgot Password?
           </a>
           <button type="submit" className="btn btn-primary w-100">

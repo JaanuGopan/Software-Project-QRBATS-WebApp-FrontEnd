@@ -55,7 +55,7 @@ label {
     display: block;
     margin-bottom: 5px;
 }
-
+/*
 input[type="text"],
 input[type="password"] {
     width: 100%;
@@ -65,22 +65,6 @@ input[type="password"] {
     border-radius: 5px;
     background-color: #ffffff;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-input[type="text"]:focus,
-input[type="password"]:focus {
-    outline: none;
-    border-color: #007bff;
-}
-
-input[type="text"]:not(:focus),
-input[type="password"]:not(:focus) {
-    border-radius: 5px 5px 0 0;
-}
-
-input[type="text"]::placeholder,
-input[type="password"]::placeholder {
-    color: #aaa;
 }
 
 .input-field {
@@ -98,6 +82,22 @@ input[type="password"]::placeholder {
 
 .input-with-icon .react-time-picker {
     width: 100px;
+}*/
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+input[type="text"]:not(:focus),
+input[type="password"]:not(:focus) {
+    border-radius: 5px 5px 0 0;
+}
+
+input[type="text"]::placeholder,
+input[type="password"]::placeholder {
+    color: #aaa;
 }
 
 .back-button {

@@ -35,7 +35,7 @@ function MainNavigationPage() {
       <div className="menuButton" onClick={handleshow}>
         <PiListDashesFill size={"30px"} />
       </div>
-      <StaffNavBar />
+      <StaffNavBar setIndex={setOpenMenu}/>
       <div className="staff-Submain">
         {!isHidden && (
           <AdminSideBar
@@ -49,8 +49,8 @@ function MainNavigationPage() {
           {openMenu === 1 && <EventCreateDashboard/>}
           {openMenu === 2 && <StaffDashboard />}
           {openMenu === 3 && <StudentDashboard/>}
-          {openMenu === 4 && <Setting/>}
-          {openMenu === 5 && <EventReport/>}
+          {openMenu === 4 && <EventReport/>}
+          {openMenu === 5 && <Setting/>}
         </div>
       </div>
     </div>
