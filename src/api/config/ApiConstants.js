@@ -27,7 +27,7 @@ class ApiConstants {
     return ApiConstants.baseUrl + "/auth/deleteuserbyuserid"; //http://localhost:8080/api/v1/auth/deleteuserbyuserid
   }
   static get getAttendanceByEventIdUrl() {
-    return ApiConstants.baseUrl + "//attendance/getallattendancebyeventid"; //http://localhost:8080/api/v1/attendance/getallattendancebyeventid
+    return ApiConstants.baseUrl + "/attendance/getallattendancebyeventid"; //http://localhost:8080/api/v1/attendance/getallattendancebyeventid
   }
 
   static get getDepartmentUrl() {
