@@ -1,11 +1,12 @@
 // FetchEventsService.js
 import axios from "axios";
+import ApiConstants from "../config/ApiConstants";
 
 class FetchAttendanceByEventIdService {
   static async fetchAttendance(eventId) {
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/v1/attendance/getallattendancebyeventid",
+        ApiConstants.getAttendanceByEventIdUrl,
         {
           eventId: eventId,
         }
