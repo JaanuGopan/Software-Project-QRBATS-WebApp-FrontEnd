@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./MainNavigation.css";
 import "../StaffMainNavigation/StaffMainNavigation.css";
 import { useLocation } from "react-router-dom";
@@ -11,9 +11,22 @@ import StudentDashboard from "../Student/StudentDashboard";
 import Setting from "../Setting/Setting";
 import StaffDashboard from "../Staff/StaffDashboard";
 import EventReport from "../Event/EventReport";
+import { useDispatch, useSelector } from "react-redux";
+import { login, selectUser } from "../../../redux/features/userSlice";
+import { useNavigate } from "react-router-dom";
 
 function MainNavigationPage() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+
+  // If user is already logged in, redirect to mainNavigation
+  useEffect(() => {
+    if (!user) {
+      navigate("/signin");
+    }
+  }, [user, navigate]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -46,11 +59,12 @@ function MainNavigationPage() {
         )}
         <div className="maincontent">
           {openMenu === 0 && <AdminDashboard />}
-          {openMenu === 1 && <EventCreateDashboard/>}
+          {openMenu === 1 && <EventCreateDashboard />}
           {openMenu === 2 && <StaffDashboard />}
           {openMenu === 3 && <StudentDashboard/>}
           {openMenu === 4 && <EventReport/>}
           {openMenu === 5 && <Setting/>}
+
         </div>
       </div>
     </div>

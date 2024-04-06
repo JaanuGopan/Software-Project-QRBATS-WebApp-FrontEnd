@@ -5,6 +5,7 @@ const InputField = ({ placeholder, value, onChange, inputType }) => {
   return (
     <div className="input-with-icon">
       <input
+        required
         type={inputType}
         className="input-field"
         placeholder={placeholder}

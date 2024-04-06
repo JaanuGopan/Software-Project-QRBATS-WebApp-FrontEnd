@@ -4,6 +4,7 @@ import axios from "axios";
 import Designer from "../../../assets/Images/Designer.jpeg";
 import InputField from "../../layout/InputBox/InputField";
 import { IoMdCloseCircleOutline } from "react-icons/io";
+import CreateUserService from "../../../api/services/CreateUserService";
 
 const CreateStaff = ({ handlecloseCreateStaffWindow }) => {
   const [firstname, setFirstName] = useState("");
@@ -21,17 +22,14 @@ const CreateStaff = ({ handlecloseCreateStaffWindow }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/auth/signup",
-        {
-          firstName: firstname,
-          lastName: lastname,
-          email: email,
-          password: password,
-          userName: userName,
-          departmentId: deparmentList.indexOf(departmentId) + 1,
-          role: userRoleList.indexOf(userRole),
-        }
+      const response = CreateUserService.saveUser(
+        firstname,
+        lastname,
+        email,
+        password,
+        userName,
+        deparmentList.indexOf(departmentId) + 1,
+        userRoleList.indexOf(userRole)
       );
 
       console.error("Login success...");

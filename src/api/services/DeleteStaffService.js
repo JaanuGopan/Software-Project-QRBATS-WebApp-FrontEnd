@@ -1,14 +1,12 @@
 import axios from "axios";
+import ApiConstants from "../config/ApiConstants";
 
 class DeleteStaffService {
   static async deleteStaff(staffId) {
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/auth/deleteuserbyuserid",
-        {
-          userId: staffId,
-        }
-      );
+      const response = await axios.post(ApiConstants.deleteStaffUrl, {
+        userId: staffId,
+      });
       console.log("deleted Successfully..");
       return response.data.token;
     } catch (error) {

@@ -37,7 +37,7 @@ const AdminUpdateEvent = ({
 
   const qrCodeRef = useRef(null);
 
-  const notifySuccess = () => toast.success("Successfully Event Created!");
+  const notifySuccess = () => toast.success("Successfully Event Updated!");
 
   const handleEreseValu = () => {
     setEventName("");
@@ -138,6 +138,7 @@ const AdminUpdateEvent = ({
                 size={200}
                 value={qrCodeDetails}
                 className="QRCode-img"
+                style={{ border: "5px solid white" }}
               />
             </div>
           </div>
@@ -154,9 +155,11 @@ const AdminUpdateEvent = ({
           </div>
         </div>
         <div className="eventCreation-input-field">
+          <Toaster />
           <form onSubmit={handleSubmit}>
             <div className="input-with-icon">
               <input
+                required
                 type="text"
                 id="eventName"
                 name="eventName"
@@ -173,6 +176,7 @@ const AdminUpdateEvent = ({
                     Event Starting Date
                   </label>
                   <input
+                    required
                     type="date"
                     value={eventDate}
                     onChange={(e) => setEventDate(e.target.value)}
@@ -186,6 +190,7 @@ const AdminUpdateEvent = ({
                     Event Ending Date
                   </label>
                   <input
+                    required
                     type="date"
                     value={eventValidDate}
                     onChange={(e) => setEventValidDate(e.target.value)}
@@ -200,6 +205,7 @@ const AdminUpdateEvent = ({
                   Venue
                 </label>
                 <select
+                  required
                   value={eventVenue}
                   onChange={(e) => setEventVenue(e.target.value)}
                   className="form-control mb-2"
@@ -219,6 +225,7 @@ const AdminUpdateEvent = ({
                   Event Starting Time
                 </label>
                 <input
+                  required
                   type="time"
                   value={eventTime}
                   onChange={(e) => setEventTime(e.target.value)}
@@ -232,6 +239,7 @@ const AdminUpdateEvent = ({
                     Event Ending Time
                   </label>
                   <input
+                    required
                     type="time"
                     value={eventEndTime}
                     onChange={(e) => setEventEndTime(e.target.value)}

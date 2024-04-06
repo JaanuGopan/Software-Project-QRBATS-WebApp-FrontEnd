@@ -9,6 +9,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/features/userSlice";
 import QRCode from "qrcode.react";
+import SaveEventService from "../../../api/services/SaveEventService";
 
 const AdminEventCreation = ({
   handlecloseCreateEventWindow,
@@ -62,23 +63,19 @@ const AdminEventCreation = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/event/create",
-        {
-          eventName: eventName,
-          eventDate: eventDate,
-          eventValidDate: eventValidDate,
-          eventTime: eventTime,
-          eventEndTime: eventEndTime,
-          eventVenue: eventVenue,
-          eventRole: eventRole,
-          eventModuleName: moduleName,
-          eventAssignedUserId: userId,
-        }
+      const response = SaveEventService.saveEvent(
+        eventName,
+        eventDate,
+        eventValidDate,
+        eventTime,
+        eventEndTime,
+        eventVenue,
+        eventRole,
+        moduleName,
+        userId
       );
       setEventId(response.data.eventId);
       const responseEventName = response.data.eventName;
-      console.log("Event is : " + responseEventName);
       notifySuccess();
       reloadEventList();
     } catch (error) {
@@ -93,7 +90,6 @@ const AdminEventCreation = ({
       .getElementById("qrCodeEl")
       .toDataURL("image/png")
       .replace("image/png", "image/octet-stream");
-    console.log(qrCodeURL);
     let aEl = document.createElement("a");
     aEl.href = qrCodeURL;
     aEl.download = "QR_Code.png";
@@ -141,6 +137,7 @@ const AdminEventCreation = ({
           <form onSubmit={handleSubmit}>
             <div className="input-with-icon">
               <input
+                required
                 type="text"
                 id="eventName"
                 name="eventName"
@@ -157,6 +154,7 @@ const AdminEventCreation = ({
                     Event Starting Date
                   </label>
                   <input
+                    required
                     type="date"
                     value={eventDate}
                     onChange={(e) => setEventDate(e.target.value)}
@@ -170,6 +168,7 @@ const AdminEventCreation = ({
                     Event Ending Date
                   </label>
                   <input
+                    required
                     type="date"
                     value={eventValidDate}
                     onChange={(e) => setEventValidDate(e.target.value)}
@@ -184,6 +183,7 @@ const AdminEventCreation = ({
                   Venue
                 </label>
                 <select
+                  required
                   value={eventVenue}
                   onChange={(e) => setEventVenue(e.target.value)}
                   className="form-control mb-2"
@@ -203,6 +203,7 @@ const AdminEventCreation = ({
                   Event Starting Time
                 </label>
                 <input
+                  required
                   type="time"
                   value={eventTime}
                   onChange={(e) => setEventTime(e.target.value)}
@@ -216,6 +217,7 @@ const AdminEventCreation = ({
                     Event Ending Time
                   </label>
                   <input
+                    required
                     type="time"
                     value={eventEndTime}
                     onChange={(e) => setEventEndTime(e.target.value)}
@@ -236,43 +238,39 @@ const AdminEventCreation = ({
             </button>
           </form>
         </div>
-        {qrCodeWindow && (
+        {qrCodeWindow && showQRCode && (
           <div className="Admin-Create-Event-Dashboard">
-            {showQRCode && (
-              <div ref={qrCodeRef} className="event-main-container1">
-                <div
-                  className="closeCreateEventWindow"
-                  onClick={handlecloseCreateEventWindow}
-                >
-                  <IoMdCloseCircleOutline />
-                </div>
-                <h2>Successfully Event Created</h2>
-                <div className="row-center">
-                  <QRCode
-                    name="QRCode"
-                    size={200}
-                    id="qrCodeEl"
-                    value={qrCodeDetails}
-                    className="mb-2"
-                  />
-                </div>
-                <div>
-                  <p className="text-center">
-                    Scan this QR code to join {title}
-                  </p>
-                </div>
-                <div className="row-center">
-                  <div className="QRbutton">
-                    <button
-                      onClick={downloadQRCode}
-                      className="btn btn-success mr-3"
-                    >
-                      Save
-                    </button>
-                  </div>
+            <div ref={qrCodeRef} className="event-main-container1">
+              <div
+                className="closeCreateEventWindow"
+                onClick={handlecloseCreateEventWindow}
+              >
+                <IoMdCloseCircleOutline />
+              </div>
+              <h2>Successfully Event Created</h2>
+              <div className="row-center">
+                <QRCode
+                  name="QRCode"
+                  size={200}
+                  id="qrCodeEl"
+                  value={qrCodeDetails}
+                  className="mb-2"
+                />
+              </div>
+              <div>
+                <p className="text-center">Scan this QR code to join {title}</p>
+              </div>
+              <div className="row-center">
+                <div className="QRbutton">
+                  <button
+                    onClick={downloadQRCode}
+                    className="btn btn-success mr-3"
+                  >
+                    Save
+                  </button>
                 </div>
               </div>
-            )}
+            </div>
           </div>
         )}
       </div>
