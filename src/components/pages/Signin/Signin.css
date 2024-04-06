@@ -129,14 +129,6 @@ label {
     margin-bottom: 5px;
 }
 
-input[type="text"],
-input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    background-color: transparent;
-}
-
 button {
     padding: 10px 20px;
     background-color: #0077C0;
@@ -165,7 +157,8 @@ a:hover {
     border: none;
     margin: 10px 0px;
     border-radius: 5px;
-    border-bottom:3px solid #0063A0;
+    border-bottom:3px solid #0077C0;
+    padding-left: 10px;
 }
 
 .input-icon {
@@ -180,11 +173,12 @@ input[type="password"]::placeholder {
 }
 
 .signin-input-field {
-    padding-left: 50px;
+    padding: 10px;
     border: 0px;
     background-color: transparent;
     box-shadow: none;
     border-bottom: 0px;
+    width: 100%;
 }
 
 .signin-form-group{
@@ -192,4 +186,13 @@ input[type="password"]::placeholder {
     flex-direction: column;
     align-items: center;
     justify-content: stretch;
+}
+
+.forgot-password{
+    padding: 10px;
+}
+
+.forgot-password:hover{
+    background-color: transparent;
+    text-decoration: underline;
 }

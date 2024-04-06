@@ -64,6 +64,7 @@ const StaffDashboard = () => {
             borderRadius: "5px",
             textAlign: "center",
           }}
+          onChange={(e)=>setSearch(e.target.value)}
         />
       </div>
       <div className="staff-EventList">

@@ -19,7 +19,6 @@ const EventReport = () => {
 
   const [selectedAttendance, setSelectedAttendance] = useState(null);
   const [attendanceList, setAttendanceList] = useState([]);
-  const [attendanceAearch, setAttendanceSearch] = useState("");
 
   useEffect(() => {
     // Fetch the list of events from the API using the new class
@@ -76,6 +75,7 @@ const EventReport = () => {
                 borderRadius: "5px",
                 textAlign: "center",
               }}
+              onChange={(e)=>setSearch(e.target.value)}
             />
           </div>
           <div className="staff-EventList">
@@ -102,12 +102,13 @@ const EventReport = () => {
                 borderRadius: "5px",
                 textAlign: "center",
               }}
+              onChange={(e)=>setSearch(e.target.value)}
             />
           </div>
 
           <div id="table-to-print" className="staff-EventList">
             <EventAttendancetable
-              search={attendanceAearch}
+              search={search}
               attendanceList={attendanceList}
             />
             <div className="staff-List-Buttons">
