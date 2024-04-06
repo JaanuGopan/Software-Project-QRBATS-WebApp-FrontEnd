@@ -1,23 +1,18 @@
 import React, { useState, useEffect } from "react";
 import "../../pages/AdminDashboard/AdminDashboard.css";
 import { FaEdit } from "react-icons/fa";
-import axios from "axios";
+import GetAllStudentsService from "../../../api/services/GetAllStudentService";
 
 const StudentTable = ({ handleUpdateStudent }) => {
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
     // Fetch the list of students from the API
-    axios
-      .post("http://localhost:8080/api/v1/mobile/getallstudents")
-      .then((res) => {
-        console.log(res);
-        // Update the component state with the fetched list of students
-        setStudents(res.data);
-      })
-      .catch((err) => {
-        console.error("Error fetching students:", err);
-      });
+    const response = GetAllStudentsService.getAllStudent();
+    response.then((res) => {
+      setStudents(res);
+    });
+    console.log(students);
   }, []);
 
   const deparmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA"];
@@ -29,9 +24,10 @@ const StudentTable = ({ handleUpdateStudent }) => {
           <tr>
             <th>No</th>
             <th className="expand">Name</th>
+            <th>IndexNo</th>
             <th>Department</th>
             <th>Username</th>
-            <th>Password</th>
+            <th>Semester</th>
             <th>Edit</th>
           </tr>
         </thead>
@@ -40,9 +36,10 @@ const StudentTable = ({ handleUpdateStudent }) => {
             <tr key={index}>
               <td>{index + 1}</td>
               <td>{student.studentName}</td>
+              <td>{student.indexNumber}</td>
               <td>{deparmentList[student.departmentId - 1]}</td>
               <td>{student.username}</td>
-              <td>********</td>
+              <td>{student.currentSemester}</td>
               <td>
                 <button
                   onClick={() => handleUpdateStudent(student)}
