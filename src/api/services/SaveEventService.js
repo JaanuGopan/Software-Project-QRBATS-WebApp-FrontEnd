@@ -1,4 +1,5 @@
 import axios from "axios";
+import ApiConstants from "../config/ApiConstants";
 
 class SaveEventService {
   static async saveEvent(
@@ -13,20 +14,17 @@ class SaveEventService {
     eventAssignedUserId
   ) {
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/event/create",
-        {
-          eventName: eventName,
-          eventDate: eventDate,
-          eventValidDate: eventValidDate,
-          eventTime: eventTime,
-          eventEndTime: eventEndTime,
-          eventVenue: eventVenue,
-          eventRole: eventRole,
-          eventModuleName: eventModuleName,
-          eventAssignedUserId: eventAssignedUserId,
-        }
-      );
+      const response = await axios.post(ApiConstants.createEventUrl, {
+        eventName: eventName,
+        eventDate: eventDate,
+        eventValidDate: eventValidDate,
+        eventTime: eventTime,
+        eventEndTime: eventEndTime,
+        eventVenue: eventVenue,
+        eventRole: eventRole,
+        eventModuleName: eventModuleName,
+        eventAssignedUserId: eventAssignedUserId,
+      });
       return response.data;
     } catch (error) {
       throw new Error("Event is not created.", error);
@@ -34,4 +32,4 @@ class SaveEventService {
   }
 }
 
-export default LoginService;
+export default SaveEventService;

@@ -1,12 +1,11 @@
 // FetchEventsService.js
 import axios from "axios";
+import ApiConstants from "../config/ApiConstants";
 
 class FetchEventsService {
   static async fetchEvents() {
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/event/getallevents"
-      );
+      const response = await axios.post(ApiConstants.getAllEventUrl);
       return response.data;
     } catch (error) {
       console.error("Error fetching events:", error);

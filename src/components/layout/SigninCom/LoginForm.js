@@ -26,6 +26,7 @@ const LoginForm = () => {
     e.preventDefault();
     try {
       const token = await LoginService.loginUser(userName, password);
+
       const decodedToken = JwtService.parseJwt(token);
       const loginUserName = decodedToken.sub;
       const lodinUserFirstName = decodedToken.firstName;
