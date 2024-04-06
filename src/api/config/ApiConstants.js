@@ -29,6 +29,9 @@ class ApiConstants {
   static get getAttendanceByEventIdUrl() {
     return ApiConstants.baseUrl + "/attendance/getallattendancebyeventid"; //http://localhost:8080/api/v1/attendance/getallattendancebyeventid
   }
+  static get getAllStudentUrl() {
+    return ApiConstants.baseUrl + "/mobile/getallstudents"; //http://localhost:8080/api/v1/mobile/getallstudents
+  }
 
   static get getDepartmentUrl() {
     return ApiConstants.baseUrl + "/department";
