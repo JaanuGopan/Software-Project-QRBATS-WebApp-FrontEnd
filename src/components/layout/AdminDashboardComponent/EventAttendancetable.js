@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../../pages/AdminDashboard/AdminDashboard.css";
+import "../../../pages/AdminDashboard/AdminDashboard.css";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 

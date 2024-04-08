@@ -3,7 +3,7 @@ import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import Department from "./Department";
 import { DepartmentDetails } from "./DepartmentDetails";
-import "../../pages/UserInterface/UserInterface.css";
+import "../../../pages/UserInterface/UserInterface.css";
 
 const AvailableDepartment = () => {
   const responsive = {

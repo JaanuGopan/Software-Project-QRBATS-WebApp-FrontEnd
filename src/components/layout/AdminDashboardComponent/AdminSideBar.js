@@ -5,7 +5,7 @@ import { FaUserTie } from "react-icons/fa";
 import { PiStudentBold } from "react-icons/pi";
 import { MdOutlineEventNote } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
-import "../../pages/StaffMainNavigation/StaffMainNavigation.css";
+import "../../../pages/StaffMainNavigation/StaffMainNavigation.css";
 import logo from "../../../assets/Images/logo/logo_white.png";
 import Sidebarbutton from "../StaffDashboardComponents/Sidebarbutton";
 import { AiFillDashboard } from "react-icons/ai";

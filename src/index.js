@@ -7,13 +7,13 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/app/store";
 // import pages
-import Signin from "./components/pages/Signin/Signin";
-import AdminDashboard from "./components/pages/AdminDashboard/AdminDashboard";
-import SignUp from "./components/pages/SignUp/SignUp";
-import MainNavigationPage from "./components/pages/MainNavigation/MainNavigation";
-import EventCreation from "./components/pages/Event/EventCreation/EventCreation";
-import StaffMainNavigation from "./components/pages/StaffMainNavigation/StaffMainNavigation";
-import EventReport from "./components/pages/Event/EventReport";
+import Signin from "./pages/Signin/Signin";
+import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
+import SignUp from "./pages/SignUp/SignUp";
+import MainNavigationPage from "./pages/MainNavigation/MainNavigation";
+import EventCreation from "./pages/Event/EventCreation/EventCreation";
+import StaffMainNavigation from "./pages/StaffMainNavigation/StaffMainNavigation";
+import EventReport from "./pages/Event/EventReport";
 
 const router = createBrowserRouter([
   {

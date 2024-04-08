@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../../pages/AdminDashboard/AdminDashboard.css";
+import "../../../pages/AdminDashboard/AdminDashboard.css";
 import { CiViewList } from "react-icons/ci";
 import axios from "axios";
 import FetchAttendanceByEventIdService from "../../../api/services/FetchAttendanceByEventIdService";
