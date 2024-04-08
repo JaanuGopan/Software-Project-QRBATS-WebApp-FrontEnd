@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../../pages/AdminDashboard/AdminDashboard.css";
+import "../../../pages/AdminDashboard/AdminDashboard.css";
 import { FaEdit } from "react-icons/fa";
 
 const Table = ({ search, handleUpdateEvent, onEventClick, eventList }) => {
@@ -32,33 +32,37 @@ const Table = ({ search, handleUpdateEvent, onEventClick, eventList }) => {
           </tr>
         </thead>
         <tbody>
-          {events.filter(event=>(
-           ((event.eventName).toLowerCase()).includes(search.toLowerCase()) ||
-            ((event.eventVenue).toLowerCase()).includes(search.toLowerCase())
-            ))
+          {events
+            .filter(
+              (event) =>
+                event.eventName.toLowerCase().includes(search.toLowerCase()) ||
+                event.eventVenue.toLowerCase().includes(search.toLowerCase())
+            )
             .map((event, index) => (
-            <tr
-              key={index}
-              onClick={() => handleEventClick(event)}
-              className={selectedEvent === event ? "selected-row" : "event-row"}
-            >
-              <td>{index + 1}</td>
-              <td>{event.eventName}</td>
-              <td>{event.eventDate}</td>
-              <td>{event.eventValidDate}</td>
-              <td>{event.eventVenue}</td>
-              <td>{event.eventTime}</td>
-              <td>{event.eventEndTime}</td>
-              <td>
-                <button
-                  onClick={() => handleUpdateEvent(event)}
-                  className="EditButton"
-                >
-                  <FaEdit className="EditIcon" />
-                </button>
-              </td>
-            </tr>
-          ))}
+              <tr
+                key={index}
+                onClick={() => handleEventClick(event)}
+                className={
+                  selectedEvent === event ? "selected-row" : "event-row"
+                }
+              >
+                <td>{index + 1}</td>
+                <td>{event.eventName}</td>
+                <td>{event.eventDate}</td>
+                <td>{event.eventValidDate}</td>
+                <td>{event.eventVenue}</td>
+                <td>{event.eventTime}</td>
+                <td>{event.eventEndTime}</td>
+                <td>
+                  <button
+                    onClick={() => handleUpdateEvent(event)}
+                    className="EditButton"
+                  >
+                    <FaEdit className="EditIcon" />
+                  </button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

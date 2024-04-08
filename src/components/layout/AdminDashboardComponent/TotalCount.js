@@ -1,7 +1,7 @@
 import React from "react";
-import "../../pages/AdminDashboard/AdminDashboard.css";
+import "../../../pages/AdminDashboard/AdminDashboard.css";
 
-const TotalCount = ({total, countIcon, countTitle}) => {
+const TotalCount = ({ total, countIcon, countTitle }) => {
   return (
     <div className="inform">
       <div className="inform1">
@@ -17,7 +17,8 @@ const TotalCount = ({total, countIcon, countTitle}) => {
         </p>
         {countIcon}
       </div>
-      <p className="informationText"
+      <p
+        className="informationText"
         style={{
           color: "white",
           fontWeight: "bold",

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../../pages/AdminDashboard/AdminDashboard.css";
+import "../../../pages/AdminDashboard/AdminDashboard.css";
 import { FaEdit } from "react-icons/fa";
 import GetAllStudentsService from "../../../api/services/GetAllStudentService";
 

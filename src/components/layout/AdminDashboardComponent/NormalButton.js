@@ -1,13 +1,13 @@
-import React from 'react';
-import '../../pages/AdminDashboard/AdminDashboard.css'
+import React from "react";
+import "../../../pages/AdminDashboard/AdminDashboard.css";
 
-const NormalButton = ({title, titlewithiconicon, handleClick}) => {
+const NormalButton = ({ title, titlewithiconicon, handleClick }) => {
   return (
     <div className="NormalButton" onClick={handleClick}>
       {titlewithiconicon}
-      <p className='NormalButtonLabel'>{title}</p>
+      <p className="NormalButtonLabel">{title}</p>
     </div>
   );
-}
+};
 
 export default NormalButton;

@@ -1,16 +1,16 @@
 import React from "react";
-import "../../pages/StaffMainNavigation/StaffMainNavigation.css";
+import "../../../pages/StaffMainNavigation/StaffMainNavigation.css";
 import profilePic from "../../../assets/Images/Profile.png";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/features/userSlice";
 
-const ProfileButton = ({setIndex}) => {
+const ProfileButton = ({ setIndex }) => {
   // Get the user from Redux state
   const user = useSelector(selectUser);
 
-  const handleClick = () =>{
+  const handleClick = () => {
     setIndex(5);
-  }
+  };
 
   // Destructure user object for cleaner code
   const { firstName, lastName } = user || {};
