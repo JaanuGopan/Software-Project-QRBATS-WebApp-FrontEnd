@@ -343,8 +343,11 @@
 }
 
 .EditButton:hover{
-  background-color: blue;
+  background-color: white;
+  color: #0063A0;
+  border: 1px solid #0063A0;
 }
+
 
 .Admin-Create-Event-Dashboard{
   position: fixed;

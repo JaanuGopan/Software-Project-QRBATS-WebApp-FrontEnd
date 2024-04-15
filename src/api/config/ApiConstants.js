@@ -32,6 +32,12 @@ class ApiConstants {
   static get getAllStudentUrl() {
     return ApiConstants.baseUrl + "/mobile/getallstudents"; //http://localhost:8080/api/v1/mobile/getallstudents
   }
+  static get updateStudentUrl() {
+    return ApiConstants.baseUrl + "/mobile/updatestudent"; //http://localhost:8080/api/v1/mobile/updatestudent
+  }
+  static get updateUserUrl() {
+    return ApiConstants.baseUrl + "/auth/updateuser";
+  }
 
   static get getDepartmentUrl() {
     return ApiConstants.baseUrl + "/department";

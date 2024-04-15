@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./MainNavigation.css";
 import "../StaffMainNavigation/StaffMainNavigation.css";
-import { useLocation } from "react-router-dom";
 import AdminDashboard from "../AdminDashboard/AdminDashboard";
 import { PiListDashesFill } from "react-icons/pi";
 import StaffNavBar from "../../components/layout/StaffDashboardComponents/StaffNavBar";
@@ -14,12 +13,14 @@ import EventReport from "../Event/EventReport";
 import { useDispatch, useSelector } from "react-redux";
 import { login, selectUser } from "../../redux/features/userSlice";
 import { useNavigate } from "react-router-dom";
+import LecturerSideBar from "../../components/layout/AdminDashboardComponent/LecturerSideBar";
 
 function MainNavigationPage() {
-  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+
+  const { role } = user || {};
 
   // If user is already logged in, redirect to mainNavigation
   useEffect(() => {
@@ -27,11 +28,6 @@ function MainNavigationPage() {
       navigate("/signin");
     }
   }, [user, navigate]);
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    window.location.reload();
-  };
 
   const [isHidden, setIsHidden] = useState(false);
   const handleshow = () => {
@@ -50,21 +46,38 @@ function MainNavigationPage() {
       </div>
       <StaffNavBar setIndex={setOpenMenu} />
       <div className="staff-Submain">
-        {!isHidden && (
+        {!isHidden && role === "ADMIN" && (
           <AdminSideBar
             handleclose={handleclose}
             index={openMenu}
             setIndex={setOpenMenu}
           />
         )}
-        <div className="maincontent">
-          {openMenu === 0 && <AdminDashboard />}
-          {openMenu === 1 && <EventCreateDashboard />}
-          {openMenu === 2 && <StaffDashboard />}
-          {openMenu === 3 && <StudentDashboard />}
-          {openMenu === 4 && <EventReport />}
-          {openMenu === 5 && <Setting />}
-        </div>
+        {!isHidden && role === "LECTURER" && (
+          <LecturerSideBar
+            handleclose={handleclose}
+            index={openMenu}
+            setIndex={setOpenMenu}
+          />
+        )}
+        {role === "ADMIN" && (
+          <div className="maincontent">
+            {openMenu === 0 && <AdminDashboard />}
+            {openMenu === 1 && <EventCreateDashboard />}
+            {openMenu === 2 && <StaffDashboard />}
+            {openMenu === 3 && <StudentDashboard />}
+            {openMenu === 4 && <EventReport />}
+            {openMenu === 5 && <Setting />}
+          </div>
+        )}
+        {role === "LECTURER" && (
+          <div className="maincontent">
+            {openMenu === 0 && <AdminDashboard />}
+            {openMenu === 1 && <EventCreateDashboard />}
+            {openMenu === 2 && <EventReport />}
+            {openMenu === 3 && <Setting />}
+          </div>
+        )}
       </div>
     </div>
   );

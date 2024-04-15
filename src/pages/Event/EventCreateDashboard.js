@@ -9,6 +9,8 @@ import toast, { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/userSlice";
 import QRCode from "qrcode.react";
+import InputList from "../../components/textfields/InputList/InputList";
+import InputField from "../../components/textfields/InputBox/InputField";
 
 const EventCreateDashboard = () => {
   // Get the user from Redux state
@@ -141,95 +143,69 @@ const EventCreateDashboard = () => {
         <div className="eventCreation-input-field">
           <form onSubmit={handleSubmit}>
             <div className="input-with-icon">
-              <input
-                required
-                type="text"
-                id="eventName"
-                name="eventName"
-                placeholder={"Event Name"}
-                className="form-control mb-2"
+              <InputField
                 value={eventName}
+                placeholder={"Event Name"}
                 onChange={(e) => setEventName(e.target.value)}
+                inputType={"text"}
               />
             </div>
             <div className="date-div">
               <div className="eventCreation-form">
-                <div>
-                  <label className="date-label" htmlFor="eventDate">
-                    Event Starting Date
-                  </label>
-                  <input
-                    required
-                    type="date"
-                    value={eventDate}
-                    onChange={(e) => setEventDate(e.target.value)}
-                    className="form-control mb-2"
-                  />
-                </div>
-              </div>
-              <div className="eventCreation-form">
-                <div>
-                  <label className="date-label" htmlFor="eventDate">
-                    Event Ending Date
-                  </label>
-                  <input
-                    required
-                    type="date"
-                    value={eventValidDate}
-                    onChange={(e) => setEventValidDate(e.target.value)}
-                    className="form-control mb-2"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="eventCreation-form">
-              <div>
                 <label className="date-label" htmlFor="eventDate">
-                  Venue
+                  Event Starting Date
                 </label>
-                <select
-                  required
-                  value={eventVenue}
-                  onChange={(e) => setEventVenue(e.target.value)}
-                  className="form-control mb-2"
-                >
-                  <option value="">Select Venue</option>
-                  {venueList.map((option, index) => (
-                    <option key={index} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-            <div className="eventCreation-form">
-              <div>
-                <label className="form-label" htmlFor="eventDate">
-                  Event Starting Time
-                </label>
-                <input
-                  required
-                  type="time"
-                  value={eventTime}
-                  onChange={(e) => setEventTime(e.target.value)}
-                  placeholder="Event Time"
-                  className="form-control mb-2"
+                <InputField
+                  value={eventDate}
+                  onChange={(e) => setEventDate(e.target.value)}
+                  inputType={"date"}
                 />
               </div>
               <div className="eventCreation-form">
-                <div>
-                  <label className="form-label" htmlFor="enevtEndTime">
-                    Event Ending Time
-                  </label>
-                  <input
-                    required
-                    type="time"
-                    value={eventEndTime}
-                    onChange={(e) => setEventEndTime(e.target.value)}
-                    placeholder="Event End Time"
-                    className="form-control mb-2"
-                  />
-                </div>
+                <label className="date-label" htmlFor="eventDate">
+                  Event Ending Date
+                </label>
+                <InputField
+                  value={eventValidDate}
+                  onChange={(e) => setEventValidDate(e.target.value)}
+                  placeholder={"Event Valid Date"}
+                  inputType={"date"}
+                />
+              </div>
+            </div>
+            <div className="eventCreation-form">
+              <label className="date-label" htmlFor="eventDate">
+                Venue
+              </label>
+              <InputList
+                list={venueList}
+                onChange={(e) => setEventVenue(e.target.value)}
+                placeholder={"Venue"}
+                value={eventVenue}
+                initialValue={"Select Venue"}
+              />
+            </div>
+            <div className="eventCreation-form">
+              <label className="form-label" htmlFor="eventDate">
+                Event Starting Time
+              </label>
+              <InputField
+                inputType={"time"}
+                value={eventTime}
+                onChange={(e) => setEventTime(e.target.value)}
+                placeholder={"Event Time"}
+              />
+
+              <div className="eventCreation-form">
+                <label className="form-label" htmlFor="enevtEndTime">
+                  Event Ending Time
+                </label>
+                <InputField
+                  inputType={"time"}
+                  value={eventEndTime}
+                  onChange={(e) => setEventEndTime(e.target.value)}
+                  placeholder={"Event End Time"}
+                />
               </div>
             </div>
 
