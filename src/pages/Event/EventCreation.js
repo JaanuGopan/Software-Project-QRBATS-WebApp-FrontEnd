@@ -10,7 +10,7 @@ import InputList from "../../components/textfields/InputList/InputList";
 import InputField from "../../components/textfields/InputBox/InputField";
 import EventService from "../../api/services/EventService";
 
-const EventCreateDashboard = () => {
+const EventCreationComponent = () => {
   // Get the user from Redux state
   const user = useSelector(selectUser);
   const { userId } = user || {};
@@ -268,4 +268,4 @@ const EventCreateDashboard = () => {
   );
 };
 
-export default EventCreateDashboard;
+export default EventCreationComponent;
