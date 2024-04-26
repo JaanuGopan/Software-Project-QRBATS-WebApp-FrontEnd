@@ -12,6 +12,12 @@ const StudentDashboard = () => {
     useState(false);
   const [studentUpdatePopUpWindow, setStudentUpdatePopUpWindow] =
     useState(false);
+  const [selectedStudent, setSelectedStudent] = useState(null);
+
+  const handleSelectedStudent = (student) => {
+    setSelectedStudent(student);
+    console.log(selectedStudent);
+  };
 
   return (
     <div className="student-Dash">
@@ -31,7 +37,11 @@ const StudentDashboard = () => {
       </div>
       <div className="student-EventList">
         <StudentTable
-          handleUpdateStudent={() => setStudentUpdatePopUpWindow(true)}
+          handleUpdateStudent={(e) => {
+            setSelectedStudent(e);
+            setStudentUpdatePopUpWindow(true);
+          }}
+          selectedStudent={(e) => handleSelectedStudent(e)}
         />
         <div className="student-List-Buttons">
           <NormalButton
@@ -70,6 +80,7 @@ const StudentDashboard = () => {
             handlecloseUpdateStudentWindow={() =>
               setStudentUpdatePopUpWindow(false)
             }
+            student={selectedStudent}
           />
         </div>
       )}

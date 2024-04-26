@@ -3,7 +3,7 @@ import "../../../pages/AdminDashboard/AdminDashboard.css";
 import { FaEdit } from "react-icons/fa";
 import GetAllStudentsService from "../../../api/services/GetAllStudentService";
 
-const StudentTable = ({ handleUpdateStudent }) => {
+const StudentTable = ({ handleUpdateStudent, selectedStudent }) => {
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
@@ -14,6 +14,10 @@ const StudentTable = ({ handleUpdateStudent }) => {
     });
     console.log(students);
   }, []);
+
+  const handleStudentClick = (student) => {
+    selectedStudent(student);
+  };
 
   const deparmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA"];
 
@@ -33,7 +37,7 @@ const StudentTable = ({ handleUpdateStudent }) => {
         </thead>
         <tbody>
           {students.map((student, index) => (
-            <tr key={index}>
+            <tr key={index} onClick={() => handleStudentClick(student)}>
               <td>{index + 1}</td>
               <td>{student.studentName}</td>
               <td>{student.indexNumber}</td>

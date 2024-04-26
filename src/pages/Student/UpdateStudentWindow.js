@@ -5,15 +5,19 @@ import Designer from "../../assets/Images/Designer.jpeg";
 import { useNavigate } from "react-router-dom";
 import InputField from "../../components/textfields/InputBox/InputField";
 import { IoMdCloseCircleOutline } from "react-icons/io";
+import InputList from "../../components/textfields/InputList/InputList";
+import UpdateStudentServices from "../../api/services/UpdateStudentService";
 
-const UpdateStudentWindow = ({ handlecloseUpdateStudentWindow }) => {
-  const [firstname, setFirstName] = useState("");
-  const [lastname, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [userName, setUserName] = useState("");
-  const [userRole, setUserRole] = useState("");
-  const [departmentId, setDepartmentId] = useState("");
+const UpdateStudentWindow = ({ handlecloseUpdateStudentWindow, student }) => {
+  const [studentId, setStudentId] = useState(student.studentId);
+  const [indexNumber, setIndexNumber] = useState(student.indexNumber);
+  const [studentName, setStudentName] = useState(student.studentName);
+  const [studentEmail, setStudentEmail] = useState(student.studentEmail);
+  const [password, setPassword] = useState(student.password);
+  const [userName, setUserName] = useState(student.username);
+  const [StudentRole, setStudentRole] = useState(student.studentRole);
+  const [departmentId, setDepartmentId] = useState(student.departmentId);
+  const [department, setDepartment] = useState();
   const navigate = useNavigate();
 
   const deparmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA"];
@@ -22,22 +26,15 @@ const UpdateStudentWindow = ({ handlecloseUpdateStudentWindow }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/auth/signin",
-        {
-          firstName: firstname,
-          lastName: lastname,
-          email: email,
-          password: password,
-          userName: userName,
-          departmentId: deparmentList.indexOf(departmentId) + 1,
-        }
+      const response = await UpdateStudentServices.updateStudent(
+        studentId,
+        studentName,
+        studentEmail,
+        userName,
+        deparmentList.indexOf(department) + 1
       );
-      const token = response.data.token;
-      const decodedToken = parseJwt(token);
-      const userName = decodedToken.sub;
-      localStorage.setItem("token", token);
-      navigate("/mainNavigation", { state: { userName } });
+      console.log(department);
+      console.log(deparmentList.indexOf(department) + 1);
     } catch (error) {
       console.error("Login failed", error);
     }
@@ -72,60 +69,59 @@ const UpdateStudentWindow = ({ handlecloseUpdateStudentWindow }) => {
           <form onSubmit={handleSubmit}>
             {/* First Name Input */}
             <InputField
-              placeholder="Enter your first name"
-              value={firstname}
-              onChange={(e) => setFirstName(e.target.value)}
+              placeholder="Enter your name"
+              value={studentName}
+              onChange={(e) => setStudentName(e.target.value)}
               inputType="text"
             />
-
             {/* Last Name Input */}
             <InputField
-              placeholder="Enter your last name"
-              value={lastname}
-              onChange={(e) => setLastName(e.target.value)}
+              placeholder="Enter your index number"
+              value={indexNumber}
+              onChange={(e) => setIndexNumber(e.target.value)}
               inputType="text"
             />
-
             {/* Email Input */}
             <InputField
               placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={studentEmail}
+              onChange={(e) => setStudentEmail(e.target.value)}
               inputType="text"
             />
-
             <InputField
               placeholder="Enter your user name"
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
               inputType="text"
             />
-
-            {/* Password Input */}
-            <InputField
+            {/* <InputField
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               inputType="password"
-            />
-
+            /> */}
             <div className="choice-input mb-3">
-              <select
-                value={departmentId}
-                onChange={(e) => setDepartmentId(e.target.value)}
-                className="student-select-input"
-              >
-                <option value="">Select the department</option>
-                {deparmentList.map((option, index) => (
-                  <option key={index} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
+              <InputList
+                placeholder="Enter Depatrment"
+                value={department}
+                onChange={(e) => setDepartment(e.target.value)}
+                inputType="text"
+                list={deparmentList}
+                initialValue={
+                  departmentId
+                    ? deparmentList[departmentId - 1]
+                    : "Select Department"
+                }
+              />
             </div>
-            <button type="submit" className="btn btn-primary w-100">
-              Save
-            </button>
+            <div className="d-flex justify-content-between mr-3 mt-3">
+              <button type="submit" className="btn btn-primary">
+                Save
+              </button>
+              <button type="reset" className="btn btn-danger">
+                Reset Password
+              </button>
+            </div>
           </form>
         </div>
       </div>

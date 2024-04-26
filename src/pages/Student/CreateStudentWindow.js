@@ -109,11 +109,11 @@ const CreateStudentWindow = ({ handlecloseCreateStudentWindow }) => {
               inputType="password"
             />
 
-            <div className="choice-input mb-3">
+            <div className="eventCreation-form">
               <select
                 value={departmentId}
                 onChange={(e) => setDepartmentId(e.target.value)}
-                className="student-select-input"
+                className="form-control mb-2"
               >
                 <option value="">Select the department</option>
                 {deparmentList.map((option, index) => (

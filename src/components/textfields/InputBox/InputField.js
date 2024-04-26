@@ -1,5 +1,5 @@
 import React from "react";
-import "./inputfield.css";
+import "../../../pages/Event/EventCreation/EventCreation.css";
 
 const InputField = ({ placeholder, value, onChange, inputType }) => {
   return (
@@ -7,7 +7,7 @@ const InputField = ({ placeholder, value, onChange, inputType }) => {
       <input
         required
         type={inputType}
-        className="input-field"
+        className="form-control mb-2"
         placeholder={placeholder}
         value={value}
         onChange={onChange}
