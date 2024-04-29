@@ -1,3 +1,10 @@
+@media screen and (max-width: 1200px) {
+    .event-main-container1 {
+        height: 80vh;
+    }
+}
+
+
 .event-main-container1 {
     width: 60%;
     border-top: 6px solid #0077C0;
