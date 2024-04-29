@@ -1,19 +1,34 @@
-import "./EventCreation/EventCreation.css";
-import eventCreationImage from "../../assets/Images/signin/Signin.jpeg";
-import React, { useState, useRef } from "react";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
+import React, { useState, useEffect, useRef } from "react";
+import EventService from "../../api/services/EventService";
+import InputField from "../../components/textfields/InputBox/InputField";
+import InputList from "../../components/textfields/InputList/InputList";
+import QRCode from "qrcode.react";
+import UserDetails from "../../utils/UserDetails";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import toast, { Toaster } from "react-hot-toast";
+import "../Event/EventCreation/EventCreation.css";
+import eventCreationImage from "../../assets/Images/signin/Signin.jpeg";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/userSlice";
-import QRCode from "qrcode.react";
-import SaveEventService from "../../api/services/SaveEventService";
 
-const AdminEventCreation = ({
-  handlecloseCreateEventWindow,
-  reloadEventList,
+import DualButtonComponent from "../../components/buttons/DualButtonComponent";
+
+const LectureCreation = ({
+  handleCloseCreateLectureWindow,
+  reloadLectureList,
 }) => {
+  //const [userId, setUserId] = useState(null);
+
+  const user = useSelector(selectUser);
+  const { userId } = user || {};
+
+  useEffect(() => {
+    //setUserId(UserDetails.getUserId());
+  });
+
   const [eventId, setEventId] = useState("");
   const [eventName, setEventName] = useState("");
   const [moduleName, setModuleName] = useState(null);
@@ -23,13 +38,11 @@ const AdminEventCreation = ({
   const [eventEndTime, setEventEndTime] = useState("");
   const [eventVenue, setEventVenue] = useState("");
   const [showQRCode, setShowQRCode] = useState(false);
-  const [eventRole, setEventRole] = useState("EVENT");
-  const [eventAssignedUserId, setEventAssignedUserId] = useState(null);
+  const [eventRole, setEventRole] = useState("LECTURE");
+  const [eventAssignedUserId, setEventAssignedUserId] = useState(userId);
 
   const [showModuleNameInput, setShowModuleNameInput] = useState(true);
-  const [title, setTitle] = useState("Event");
-
-  const qrCodeRef = useRef(null);
+  const [title, setTitle] = useState("Lecture");
 
   const venueList = [
     "NCC",
@@ -41,8 +54,23 @@ const AdminEventCreation = ({
     "DCEE",
     "Other",
   ];
+  const qrCodeRef = useRef(null);
 
-  const notifySuccess = () => toast.success("Successfully Event Created!");
+  const notifySuccess = () => toast.success("Successfully Lecture Created!");
+
+  const handleInputValidation = () => {
+    if (
+      !eventName ||
+      !eventDate ||
+      !eventValidDate ||
+      !eventTime ||
+      !eventEndTime ||
+      !eventVenue
+    ) {
+      return false;
+    }
+    return true;
+  };
 
   const clearEventDetails = () => {
     setEventName("");
@@ -52,17 +80,13 @@ const AdminEventCreation = ({
     setEventEndTime("");
     setEventVenue("");
     setEventAssignedUserId(null);
-    setEventRole("EVENT");
+    setEventRole("LECTURE");
   };
-
-  const user = useSelector(selectUser);
-  // Destructure user object for cleaner code
-  const { userId } = user || {};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = SaveEventService.saveEvent(
+      const response = await EventService.saveEvent(
         eventName,
         eventDate,
         eventValidDate,
@@ -76,9 +100,9 @@ const AdminEventCreation = ({
       setEventId(response.data.eventId);
       const responseEventName = response.data.eventName;
       notifySuccess();
-      reloadEventList();
+      reloadLectureList();
     } catch (error) {
-      console.error("Event failed", error);
+      console.error("Lecture creation failed", error);
     } finally {
       setShowQRCode(true);
     }
@@ -96,6 +120,7 @@ const AdminEventCreation = ({
     aEl.click();
     document.body.removeChild(aEl);
   };
+
   const eventDetails = {
     eventId: eventId,
     eventName: eventName,
@@ -107,6 +132,7 @@ const AdminEventCreation = ({
     eventVenue: eventVenue,
     eventAssignedUserId: userId,
   };
+
   const qrCodeDetails = JSON.stringify(eventDetails);
 
   const handleShareQRCode = () => {
@@ -120,19 +146,38 @@ const AdminEventCreation = ({
 
   const [qrCodeWindow, setQrCodeWindow] = useState(false);
 
+  const [selectedButton, setSelectedButton] = useState(1);
+
+  const handleSelectedButton = (button) => {
+    setSelectedButton(button);
+    if (button === 2) {
+      setEventRole("EVENT");
+      setModuleName(null);
+      setTitle("Event");
+    } else {
+      setEventRole("LECTURE");
+      setTitle("Lecture");
+    }
+  };
+
   return (
     <div className="event-main-container1">
       <Toaster />
       <div
         className="closeCreateEventWindow"
-        onClick={handlecloseCreateEventWindow}
+        onClick={handleCloseCreateLectureWindow}
       >
         <IoMdCloseCircleOutline />
       </div>
-      <h2>Create Event</h2>
+      <h2>Create {` ${title}`}</h2>
       <div className="eventCreation-field">
         <img src={eventCreationImage} className="Create-logo" alt="Logo" />
         <div className="eventCreation-input-field">
+          <DualButtonComponent
+            onSelect={handleSelectedButton}
+            buttonText1={"Lecture"}
+            buttonText2={"Event"}
+          />
           <form onSubmit={handleSubmit}>
             <div className="input-with-icon">
               <input
@@ -140,17 +185,31 @@ const AdminEventCreation = ({
                 type="text"
                 id="eventName"
                 name="eventName"
-                placeholder={"Event Name"}
+                placeholder={`${title} Name`}
                 className="form-control mb-2"
                 value={eventName}
                 onChange={(e) => setEventName(e.target.value)}
               />
             </div>
+            {selectedButton == 1 && (
+              <div className="input-with-icon">
+                <input
+                  required
+                  type="text"
+                  id="moduleName"
+                  name="moduleName"
+                  placeholder={"Module Name"}
+                  className="form-control mb-2"
+                  value={moduleName}
+                  onChange={(e) => setEventName(e.target.value)}
+                />
+              </div>
+            )}
             <div className="date-div">
               <div className="eventCreation-form">
                 <div>
                   <label className="date-label" htmlFor="eventDate">
-                    Event Starting Date
+                    {`${title} Starting Date`}
                   </label>
                   <input
                     required
@@ -164,7 +223,7 @@ const AdminEventCreation = ({
               <div className="eventCreation-form">
                 <div>
                   <label className="date-label" htmlFor="eventDate">
-                    Event Ending Date
+                    {`${title} Ending Date`}
                   </label>
                   <input
                     required
@@ -199,28 +258,28 @@ const AdminEventCreation = ({
             <div className="eventCreation-form">
               <div>
                 <label className="form-label" htmlFor="eventDate">
-                  Event Starting Time
+                  {`${title} Starting Time`}
                 </label>
                 <input
                   required
                   type="time"
                   value={eventTime}
                   onChange={(e) => setEventTime(e.target.value)}
-                  placeholder="Event Time"
+                  placeholder={`${title} Time`}
                   className="form-control mb-2"
                 />
               </div>
               <div className="eventCreation-form">
                 <div>
-                  <label className="form-label" htmlFor="enevtEndTime">
-                    Event Ending Time
+                  <label className="form-label" htmlFor="eventEndTime">
+                    {`${title} End Time`}
                   </label>
                   <input
                     required
                     type="time"
                     value={eventEndTime}
                     onChange={(e) => setEventEndTime(e.target.value)}
-                    placeholder="Event End Time"
+                    placeholder={`${title} End Time`}
                     className="form-control mb-2"
                   />
                 </div>
@@ -231,9 +290,9 @@ const AdminEventCreation = ({
             <button
               onClick={() => setQrCodeWindow(true)}
               type="submit"
-              className="btn btn-primary w-100"
+              className="btn btn-success w-100"
             >
-              Create Event
+              Create {` ${title}`}
             </button>
           </form>
         </div>
@@ -242,7 +301,7 @@ const AdminEventCreation = ({
             <div ref={qrCodeRef} className="event-main-container1">
               <div
                 className="closeCreateEventWindow"
-                onClick={handlecloseCreateEventWindow}
+                onClick={handleCloseCreateLectureWindow}
               >
                 <IoMdCloseCircleOutline />
               </div>
@@ -277,4 +336,4 @@ const AdminEventCreation = ({
   );
 };
 
-export default AdminEventCreation;
+export default LectureCreation;

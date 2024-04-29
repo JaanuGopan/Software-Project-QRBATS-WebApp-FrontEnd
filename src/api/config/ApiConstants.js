@@ -1,6 +1,6 @@
 class ApiConstants {
   static get baseIpUrl() {
-    return "10.50.227.12";
+    return "localhost";
   }
   static get baseUrl() {
     return "http://" + ApiConstants.baseIpUrl + ":8080/api/v1"; // "http://localhost:8080";
@@ -35,6 +35,10 @@ class ApiConstants {
   static get updateStudentUrl() {
     return ApiConstants.baseUrl + "/mobile/updatestudent"; //http://localhost:8080/api/v1/mobile/updatestudent
   }
+  static get getAllEventByUserIdUrl() {
+    return ApiConstants.baseUrl + "/event/geteventbyuserid"; //localhost:8080/api/v1/event/geteventbyuserid
+  }
+
   static get updateUserUrl() {
     return ApiConstants.baseUrl + "/auth/updateuser";
   }

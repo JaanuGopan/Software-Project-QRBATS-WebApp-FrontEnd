@@ -14,6 +14,7 @@ import MainNavigationPage from "./pages/MainNavigation/MainNavigation";
 import EventCreation from "./pages/Event/EventCreation/EventCreation";
 import StaffMainNavigation from "./pages/StaffMainNavigation/StaffMainNavigation";
 import EventReport from "./pages/Event/EventReport";
+import LecturerDashboard from "./pages/LecturerDashboard/LecturerDashboard";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
     path: "id",
     element: <AdminDashboard />,
+  },
+  {
+    path: "lec",
+    element: <LecturerDashboard />,
   },
   {
     path: "mainNavigation",

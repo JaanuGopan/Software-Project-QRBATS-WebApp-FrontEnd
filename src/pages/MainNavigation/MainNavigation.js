@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, selectUser } from "../../redux/features/userSlice";
 import { useNavigate } from "react-router-dom";
 import LecturerSideBar from "../../components/layout/AdminDashboardComponent/LecturerSideBar";
+import LecturerDashboard from "../LecturerDashboard/LecturerDashboard";
 
 function MainNavigationPage() {
   const navigate = useNavigate();
@@ -72,7 +73,7 @@ function MainNavigationPage() {
         )}
         {role === "LECTURER" && (
           <div className="maincontent">
-            {openMenu === 0 && <AdminDashboard />}
+            {openMenu === 0 && <LecturerDashboard />}
             {openMenu === 1 && <EventCreateDashboard />}
             {openMenu === 2 && <EventReport />}
             {openMenu === 3 && <Setting />}

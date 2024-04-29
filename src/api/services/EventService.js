@@ -40,6 +40,17 @@ class EventService {
       console.error("Event creation failed", error);
     }
   }
+
+  static async getEventByUserID(userId) {
+    try {
+      const response = await axios.get(
+        ApiConstants.getAllEventByUserIdUrl + "/" + userId
+      );
+      return response.data;
+    } catch (error) {
+      console.log("Event Get Failed ", error);
+    }
+  }
 }
 
 export default EventService;
