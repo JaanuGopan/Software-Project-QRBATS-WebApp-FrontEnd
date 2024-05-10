@@ -39,6 +39,10 @@ class ApiConstants {
     return ApiConstants.baseUrl + "/event/geteventbyuserid"; //localhost:8080/api/v1/event/geteventbyuserid
   }
 
+  static get getAllModulesByUserIdUrl() {
+    return ApiConstants.baseUrl + "/module/getmodulebylecturerid"; //localhost:8080/api/v1/module/getmodulebylecturerid/{userid}
+  }
+
   static get updateUserUrl() {
     return ApiConstants.baseUrl + "/auth/updateuser";
   }
