@@ -8,6 +8,8 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/userSlice";
 import ModuleUpdate from "./ModuleUpdate";
 import { RiDeleteBin5Fill } from "react-icons/ri";
+import "./ModulePage.css";
+import ModuleCreate from "./ModuleCreate";
 
 const ModulePage = () => {
   const user = useSelector(selectUser);
@@ -44,61 +46,78 @@ const ModulePage = () => {
 
   return (
     <div>
-      <div className="staff-Dash">
-        <div>
-          <div className="staff-SearchEvent">
-            <p className="staff-mainHead">Modules</p>
-            <input
-              type="text"
-              placeholder="Search..."
-              style={{
-                width: "150px",
-                padding: "3px 40px",
-                border: "0.5px solid black",
-                borderRadius: "5px",
-                textAlign: "center",
-              }}
-              onChange={(e) => setSearchModule(e.target.value)}
-            />
-          </div>
-          <div className="staff-EventList">
-            <ModuleTable
-              modulesList={moduleList}
-              onModuleClick={handleModuleClick}
-              searchModule={searchModule}
-              handleDeleteModule={() => {}}
-              handleOpenCreateModuleWindow={() => {}}
-              handleOpenUpdateModuleWindow={() => {
-                setShowUpdateModuleWindow(true);
-              }}
-            />
-
-            <div className="List-Buttons">
-              <NormalButton
-                handleClick={() => {
-                  setShowModuleCreateWindow(true);
-                }}
-                title={"Create"}
-                titlewithiconicon={<MdCreateNewFolder className="buttonIcon" />}
-              />
-              <NormalButton
-                title={"Delete"}
-                handleClick={() => {}}
-                titlewithiconicon={<RiDeleteBin5Fill className="buttonIcon" />}
-              />
-            </div>
-          </div>
-          {showUpdateModuleWindow && (
-            <div className="staff-EventList">
-              <ModuleUpdate
-                selectedModule={selectedModule}
-                handleCloseUpdateWindow={() => {}}
-                handleUpdateModule={() => {}}
-                reloadModuleList={handleReloadModuleList}
-              />
-            </div>
-          )}
+      <div className="module-Dash">
+        <div className="module-SearchEvent">
+          <p className="module-mainHead">Modules</p>
+          <input
+            type="text"
+            placeholder="Search..."
+            style={{
+              width: "150px",
+              padding: "3px 40px",
+              border: "0.5px solid black",
+              borderRadius: "5px",
+              textAlign: "center",
+            }}
+            onChange={(e) => setSearchModule(e.target.value)}
+          />
         </div>
+        <div className="module-EventList">
+          <ModuleTable
+            modulesList={moduleList}
+            onModuleClick={handleModuleClick}
+            searchModule={searchModule}
+            handleDeleteModule={() => {}}
+            handleOpenCreateModuleWindow={() => {}}
+            handleOpenUpdateModuleWindow={() => {
+              setShowUpdateModuleWindow(true);
+            }}
+          />
+
+          <div className="module-List-Buttons">
+            <NormalButton
+              handleClick={() => {
+                setShowModuleCreateWindow(true);
+              }}
+              title={"Create"}
+              titlewithiconicon={<MdCreateNewFolder className="buttonIcon" />}
+            />
+            <NormalButton
+              title={"Delete"}
+              handleClick={() => {}}
+              titlewithiconicon={<RiDeleteBin5Fill className="buttonIcon" />}
+            />
+          </div>
+        </div>
+        {showUpdateModuleWindow && (
+          <div
+            className="event-Create-Event-Dashboard"
+            handleClick={() => {
+              setShowModuleCreateWindow(false);
+            }}
+          >
+            <ModuleUpdate
+              selectedModule={selectedModule}
+              handleCloseUpdateWindow={() => {}}
+              handleUpdateModule={() => {}}
+              reloadModuleList={handleReloadModuleList}
+            />
+          </div>
+        )}
+        {showModuleCreateWindow && (
+          <div
+            className="event-Create-Event-Dashboard"
+            handleClick={() => {
+              setShowUpdateModuleWindow(false);
+            }}
+          >
+            <ModuleCreate
+              handleCloseModuleCreateWindow={() => {
+                setShowModuleCreateWindow(false);
+              }}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
