@@ -20,7 +20,7 @@ const UpdateStudentWindow = ({ handlecloseUpdateStudentWindow, student }) => {
   const [department, setDepartment] = useState();
   const navigate = useNavigate();
 
-  const deparmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA"];
+  const departmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA"];
   const userRoleList = ["ADMIN", "LECTURER", "STAFF"];
 
   const handleSubmit = async (e) => {
@@ -30,11 +30,10 @@ const UpdateStudentWindow = ({ handlecloseUpdateStudentWindow, student }) => {
         studentId,
         studentName,
         studentEmail,
-        userName,
-        deparmentList.indexOf(department) + 1
+        departmentList.indexOf(department) + 1
       );
       console.log(department);
-      console.log(deparmentList.indexOf(department) + 1);
+      console.log(departmentList.indexOf(department) + 1);
     } catch (error) {
       console.error("Login failed", error);
     }
@@ -88,34 +87,23 @@ const UpdateStudentWindow = ({ handlecloseUpdateStudentWindow, student }) => {
               onChange={(e) => setStudentEmail(e.target.value)}
               inputType="text"
             />
-            <InputField
-              placeholder="Enter your user name"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-              inputType="text"
-            />
-            {/* <InputField
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              inputType="password"
-            /> */}
+
             <div className="choice-input mb-3">
               <InputList
                 placeholder="Enter Depatrment"
                 value={department}
                 onChange={(e) => setDepartment(e.target.value)}
                 inputType="text"
-                list={deparmentList}
+                list={departmentList}
                 initialValue={
                   departmentId
-                    ? deparmentList[departmentId - 1]
+                    ? departmentList[departmentId - 1]
                     : "Select Department"
                 }
               />
             </div>
             <div className="d-flex justify-content-between mr-3 mt-3">
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" className="btn btn-success">
                 Save
               </button>
               <button type="reset" className="btn btn-danger">

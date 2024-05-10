@@ -30,7 +30,6 @@ const StudentTable = ({ handleUpdateStudent, selectedStudent }) => {
             <th className="expand">Name</th>
             <th>IndexNo</th>
             <th>Department</th>
-            <th>Username</th>
             <th>Semester</th>
             <th>Edit</th>
           </tr>
@@ -42,7 +41,6 @@ const StudentTable = ({ handleUpdateStudent, selectedStudent }) => {
               <td>{student.studentName}</td>
               <td>{student.indexNumber}</td>
               <td>{deparmentList[student.departmentId - 1]}</td>
-              <td>{student.username}</td>
               <td>{student.currentSemester}</td>
               <td>
                 <button
