@@ -11,7 +11,7 @@ class DeleteEventService {
       return response.data.token;
     } catch (error) {
       throw new Error("Delete Failed ", error);
-    }
+    } 
   }
 }
 

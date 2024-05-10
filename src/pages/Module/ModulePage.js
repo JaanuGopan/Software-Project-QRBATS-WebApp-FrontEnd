@@ -1,58 +1,53 @@
 import React, { useState, useEffect } from "react";
-import "../Staff/StaffA.css";
-import EventReportTable from "../../components/layout/AdminDashboardComponent/EventReportTable";
-import EventAttendancetable from "../../components/layout/AdminDashboardComponent/EventAttendancetable";
 import NormalButton from "../../components/layout/AdminDashboardComponent/NormalButton";
-import { MdArrowBack } from "react-icons/md";
+import { MdArrowBack, MdCreateNewFolder } from "react-icons/md";
 import { BiSolidPrinter } from "react-icons/bi";
-import FetchEventsService from "../../api/services/FetchEventsService";
-import FetchAttendanceByEventIdService from "../../api/services/FetchAttendanceByEventIdService";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
+import ModuleTable from "./ModuleTable";
+import ModuleService from "../../api/services/ModuleService";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/features/userSlice";
+import ModuleUpdate from "./ModuleUpdate";
+import { RiDeleteBin5Fill } from "react-icons/ri";
 
 const ModulePage = () => {
-  const [moduleTable, setModuleTable] = useState(true);
+  const user = useSelector(selectUser);
+  const { userId } = user || {};
+
+  const [showModuleTable, setShowModuleTable] = useState(true);
+  const [showUpdateModuleWindow, setShowUpdateModuleWindow] = useState(false);
+  const [showModuleCreateWindow, setShowModuleCreateWindow] = useState(false);
 
   const [selectedModule, setSelectedModule] = useState(null);
   const [moduleList, setModuleList] = useState([]);
-  const [search, setSearch] = useState("");
-
-  const [selectedEvent, setSelectedEvent] = useState(null);
-  const [eventList, setEventList] = useState([]);
+  const [searchModule, setSearchModule] = useState("");
 
   useEffect(() => {
-    // Fetch the list of events from the API using the new class
     handleReloadModuleList();
   }, []);
 
   const handleModuleClick = (module) => {
-    setSelectedEvent(module);
-    // Do whatever you want with the selected event data
-    console.log("Selected Event:", module);
+    setSelectedModule(module);
+    console.log("Selected Module:", module);
   };
 
   const handleReloadModuleList = async () => {
-    // TODO: Fetch the list of events from the API
-    FetchEventsService.fetchEvents()
-      .then((events) => {
-        setEventList(events);
-      })
-      .catch((error) => {
-        console.error("Error fetching events:", error);
-      });
+    ModuleService.getModulesByUserId(userId).then((modules) => {
+      setModuleList(modules);
+      console.log(modules);
+    });
   };
 
-  const handleEventList = (eventList) => {
-    setEventList(eventList);
+  const handleOpenUpdateModuleWindow = () => {
+    setShowModuleTable(false);
+    setShowUpdateModuleWindow(true);
   };
-
 
   return (
-    <div className="staff-Dash">
-      {moduleTable ? (
+    <div>
+      <div className="staff-Dash">
         <div>
           <div className="staff-SearchEvent">
-            <p className="staff-mainHead">All Event Details</p>
+            <p className="staff-mainHead">Modules</p>
             <input
               type="text"
               placeholder="Search..."
@@ -63,61 +58,50 @@ const ModulePage = () => {
                 borderRadius: "5px",
                 textAlign: "center",
               }}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => setSearchModule(e.target.value)}
             />
           </div>
           <div className="staff-EventList">
             <ModuleTable
-              handleOpenReportWindow={() => setModuleTable(false)}
-              search={search}
-              onEventClick={handleModuleClick}
-              moduleList={moduleList}
-              eventList={handleEventList}
-            />
-          </div>
-        </div>
-      ) : (
-        <div>
-          <div className="staff-SearchEvent">
-            <p className="staff-mainHead">Event Attendance Details</p>
-            <input
-              type="text"
-              placeholder="Search..."
-              style={{
-                width: "150px",
-                padding: "3px 40px",
-                border: "0.5px solid black",
-                borderRadius: "5px",
-                textAlign: "center",
+              modulesList={moduleList}
+              onModuleClick={handleModuleClick}
+              searchModule={searchModule}
+              handleDeleteModule={() => {}}
+              handleOpenCreateModuleWindow={() => {}}
+              handleOpenUpdateModuleWindow={() => {
+                setShowUpdateModuleWindow(true);
               }}
-              onChange={(e) => setSearch(e.target.value)}
             />
-          </div>
 
-          <div id="table-to-print" className="staff-EventList">
-            <EventAttendancetable
-              search={search}
-              attendanceList={attendanceList}
-            />
-            <div className="staff-List-Buttons">
+            <div className="List-Buttons">
               <NormalButton
-                handleClick={() => setEventReportTable(true)}
-                title={"Back"}
-                titlewithiconicon={<MdArrowBack className="staff-buttonIcon" />}
+                handleClick={() => {
+                  setShowModuleCreateWindow(true);
+                }}
+                title={"Create"}
+                titlewithiconicon={<MdCreateNewFolder className="buttonIcon" />}
               />
               <NormalButton
-                title={"Print"}
-                handleClick={handleGeneratePDF}
-                titlewithiconicon={
-                  <BiSolidPrinter className="staff-buttonIcon" />
-                }
+                title={"Delete"}
+                handleClick={() => {}}
+                titlewithiconicon={<RiDeleteBin5Fill className="buttonIcon" />}
               />
             </div>
           </div>
+          {showUpdateModuleWindow && (
+            <div className="staff-EventList">
+              <ModuleUpdate
+                selectedModule={selectedModule}
+                handleCloseUpdateWindow={() => {}}
+                handleUpdateModule={() => {}}
+                reloadModuleList={handleReloadModuleList}
+              />
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };
 
-export default EventReport;
+export default ModulePage;
