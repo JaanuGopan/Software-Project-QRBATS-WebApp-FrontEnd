@@ -56,10 +56,8 @@ const StaffTable = ({
                 <td>{staff.username}</td>
                 <td>********</td>
                 <td>
-                  <button
-                    onClick={() => handleUpdateStaff(staff)}
-                    className="EditButton"
-                  >
+                  <button onClick={() => handleUpdateStaff(staff)}
+                    className="EditButton">
                     <FaEdit className="EditIcon" />
                   </button>
                 </td>
