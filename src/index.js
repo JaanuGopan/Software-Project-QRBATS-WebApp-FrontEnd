@@ -6,7 +6,6 @@ import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/app/store";
-// import pages
 import Signin from "./pages/Signin/Signin";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
 import SignUp from "./pages/SignUp/SignUp";

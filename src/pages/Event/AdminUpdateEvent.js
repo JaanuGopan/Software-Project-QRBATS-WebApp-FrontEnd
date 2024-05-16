@@ -1,6 +1,5 @@
 import "../Event/EventCreation/EventCreation.css";
 import React, { useState, useRef } from "react";
-//import QRCode from "react-qr-code";
 import axios from "axios";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -9,7 +8,6 @@ import toast, { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/userSlice";
 import QRCode from "qrcode.react";
-import profilePic from "../../assets/Images/Profile.png";
 
 const AdminUpdateEvent = ({
   handlecloseCreateEventWindow,
