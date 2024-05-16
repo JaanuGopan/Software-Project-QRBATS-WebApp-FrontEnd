@@ -13,6 +13,7 @@ import AdminUpdateEvent from "../Event/AdminUpdateEvent";
 import AdminEventCreation from "../Event/AdminEventCreation";
 import DeleteEventService from "../../api/services/DeleteEventService";
 import FetchEventsService from "../../api/services/FetchEventsService";
+import LocationService from "../../api/services/LocationService";
 
 const AdminDashboard = () => {
   const [eventCreatePopUpWindow, setEventCreatePopUpWindow] = useState(false);
@@ -20,10 +21,17 @@ const AdminDashboard = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [eventList, setEventList] = useState([]);
   const [search, setSearch] = useState("");
+  const [venuesList, setVenuesList] = useState([]);
+
+  const handleGetLocationNameList = async () => {
+    const response = await LocationService.getAllLocationNames();
+    setVenuesList(response);
+  };
 
   useEffect(() => {
     // Fetch the list of events from the API using the new class
     handleReloadEventList();
+    handleGetLocationNameList();
   }, []);
 
   // Function to handle event click
@@ -143,6 +151,8 @@ const AdminDashboard = () => {
               setEventCreatePopUpWindow(false)
             }
             reloadEventList={handleReloadEventList}
+            locationList={venuesList}
+            showCloseButton={true}
           />
         </div>
       )}

@@ -215,6 +215,7 @@ const AdminUpdateEvent = ({
                   <option value="LT2">LT2</option>
                   <option value="Auditorium">Auditorium</option>
                   <option value="NCC">NCC</option>
+                  <option value="DEIE">DEIE</option>
                   <option value="Other">Other</option>
                 </select>
               </div>

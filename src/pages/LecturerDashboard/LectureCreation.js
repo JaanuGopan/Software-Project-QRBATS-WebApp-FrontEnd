@@ -19,6 +19,7 @@ import DualButtonComponent from "../../components/buttons/DualButtonComponent";
 const LectureCreation = ({
   handleCloseCreateLectureWindow,
   reloadLectureList,
+  hideCloseButton,
 }) => {
   //const [userId, setUserId] = useState(null);
 
@@ -163,12 +164,14 @@ const LectureCreation = ({
   return (
     <div className="event-main-container1">
       <Toaster />
-      <div
-        className="closeCreateEventWindow"
-        onClick={handleCloseCreateLectureWindow}
-      >
-        <IoMdCloseCircleOutline />
-      </div>
+      {!hideCloseButton && (
+        <div
+          className="closeCreateEventWindow"
+          onClick={handleCloseCreateLectureWindow}
+        >
+          <IoMdCloseCircleOutline />
+        </div>
+      )}
       <h2>Create {` ${title}`}</h2>
       <div className="eventCreation-field">
         <img src={eventCreationImage} className="Create-logo" alt="Logo" />
@@ -201,7 +204,7 @@ const LectureCreation = ({
                   placeholder={"Module Name"}
                   className="form-control mb-2"
                   value={moduleName}
-                  onChange={(e) => setEventName(e.target.value)}
+                  onChange={(e) => setModuleName(e.target.value)}
                 />
               </div>
             )}

@@ -154,6 +154,7 @@ const LecturerDashboard = () => {
               setShowCreateLecturePopup(false)
             }
             reloadLectureList={handleReloadLectureList}
+            hideCloseButton={false}
           />
         </div>
       )}
