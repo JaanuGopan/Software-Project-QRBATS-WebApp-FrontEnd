@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<AdminSideBar> should render component 1`] = `
+<div
+  className="Staff-Sidebar"
+>
+  <div
+    className="closeButton"
+  />
+  <img
+    alt="Logo"
+    className="Sidebarlogo"
+    src="logo_white.png"
+  />
+  <div
+    className="SideBar"
+  />
+</div>
+`;

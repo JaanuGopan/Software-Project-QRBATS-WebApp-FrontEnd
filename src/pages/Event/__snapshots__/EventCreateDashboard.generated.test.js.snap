@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<EventCreateDashboard> should render component 1`] = `
+<div
+  className="event-main-container2"
+>
+  <h2>
+    Create Event
+  </h2>
+  <div
+    className="eventCreation-field"
+  >
+    <img
+      alt="Logo"
+      className="Create-logo"
+      src="Signin.jpeg"
+    />
+    <div
+      className="eventCreation-input-field"
+    >
+      <form
+        onSubmit={[Function]}
+      >
+        <div
+          className="input-with-icon"
+        />
+        <div
+          className="date-div"
+        >
+          <div
+            className="eventCreation-form"
+          >
+            <label
+              className="date-label"
+              htmlFor="eventDate"
+            >
+              Event Starting Date
+            </label>
+          </div>
+          <div
+            className="eventCreation-form"
+          >
+            <label
+              className="date-label"
+              htmlFor="eventDate"
+            >
+              Event Ending Date
+            </label>
+          </div>
+        </div>
+        <div
+          className="eventCreation-form"
+        >
+          <label
+            className="date-label"
+            htmlFor="eventDate"
+          >
+            Venue
+          </label>
+        </div>
+        <div
+          className="eventCreation-form"
+        >
+          <label
+            className="form-label"
+            htmlFor="eventDate"
+          >
+            Event Starting Time
+          </label>
+          <div
+            className="eventCreation-form"
+          >
+            <label
+              className="form-label"
+              htmlFor="enevtEndTime"
+            >
+              Event Ending Time
+            </label>
+          </div>
+        </div>
+        <div
+          className="eventCreation-form"
+        />
+        <div
+          className="d-flex justify-content-between mr-3 mt-3"
+        >
+          <button
+            className="btn btn-primary w-90"
+            onClick={[Function]}
+            type="submit"
+          >
+            Create Event
+          </button>
+          <button
+            className="btn btn-danger w-30"
+            onClick={[Function]}
+          >
+            Clear
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+`;

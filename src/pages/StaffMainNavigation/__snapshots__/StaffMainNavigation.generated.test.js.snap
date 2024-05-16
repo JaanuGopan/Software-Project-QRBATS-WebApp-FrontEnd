@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<StaffMainNavigation> should render component 1`] = `
+<div
+  className="staff-Main"
+>
+  <div
+    className="menuButton"
+    onClick={[Function]}
+  />
+  <div
+    class="staff-Submain"
+  >
+    <div
+      className="Staff-Subpage"
+    >
+      <div>
+        SubPages
+      </div>
+    </div>
+  </div>
+</div>
+`;

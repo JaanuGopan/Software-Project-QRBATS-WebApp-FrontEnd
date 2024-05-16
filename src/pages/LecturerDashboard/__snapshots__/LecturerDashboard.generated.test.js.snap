@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LecturerDashboard> should render component 1`] = `
+<div
+  className="admin-Dash"
+>
+  <p
+    className="mainHead"
+  >
+    Staff Dashboard
+  </p>
+  <div
+    className="mainInform"
+  />
+  <div
+    className="SearchEvent"
+  >
+    <select
+      className="mainHead"
+      onChange={[Function]}
+      style={
+        Object {
+          "border": "0px",
+          "cursor": "pointer",
+        }
+      }
+      value="Events"
+    >
+      <option
+        value="Events"
+      >
+        Upcoming Events
+      </option>
+      <option
+        value="Lectures"
+      >
+        Upcoming Lectures
+      </option>
+    </select>
+    <input
+      onChange={[Function]}
+      placeholder="Search..."
+      style={
+        Object {
+          "border": "0.5px solid black",
+          "borderRadius": "5px",
+          "padding": "3px 40px",
+          "textAlign": "center",
+          "width": "150px",
+        }
+      }
+      type="text"
+    />
+  </div>
+  <div
+    className="AdminEventList"
+  >
+    <div
+      className="List-Buttons"
+    />
+  </div>
+</div>
+`;

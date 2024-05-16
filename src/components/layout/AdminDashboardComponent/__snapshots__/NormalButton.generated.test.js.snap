@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<NormalButton> should render component 1`] = `
+<div
+  className="NormalButton"
+>
+  <p
+    className="NormalButtonLabel"
+  />
+</div>
+`;

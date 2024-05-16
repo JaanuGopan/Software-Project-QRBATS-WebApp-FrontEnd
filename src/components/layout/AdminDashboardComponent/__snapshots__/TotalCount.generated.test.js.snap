@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TotalCount> should render component 1`] = `
+<div
+  className="inform"
+>
+  <div
+    className="inform1"
+  >
+    <p
+      style={
+        Object {
+          "color": "white",
+          "fontSize": "large",
+          "fontWeight": "bold",
+          "padding": "5%",
+        }
+      }
+    />
+  </div>
+  <p
+    className="informationText"
+    style={
+      Object {
+        "color": "white",
+        "fontWeight": "bold",
+        "padding": "5%",
+      }
+    }
+  />
+</div>
+`;

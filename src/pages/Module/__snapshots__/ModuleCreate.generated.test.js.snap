@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ModuleCreate> should render component 1`] = `
+<div
+  className="module-signup-main-container"
+>
+  <div
+    className="closeCreateEventWindow"
+  />
+  <p
+    className="module-head1"
+  >
+    Create module
+  </p>
+  <div
+    className="module-login-container"
+  >
+    <div
+      className="module-image-container"
+    >
+      <img
+        alt="Logo"
+        className="module-logo"
+        src="Designer.jpeg"
+      />
+    </div>
+    <div
+      className="form-container"
+    >
+      <form
+        onSubmit={[Function]}
+      >
+        <div
+          className="choice-input mb-3"
+        />
+        <div
+          className="choice-input mb-3"
+        />
+        <button
+          className="btn btn-success w-100"
+          type="submit"
+        >
+          Create module
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+`;

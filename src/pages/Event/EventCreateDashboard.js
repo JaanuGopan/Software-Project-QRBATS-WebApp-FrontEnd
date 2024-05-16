@@ -14,7 +14,6 @@ const EventCreateDashboard = () => {
   // Get the user from Redux state
   const user = useSelector(selectUser);
   const { userId } = user || {};
-
   const [eventId, setEventId] = useState("");
   const [eventName, setEventName] = useState("");
   const [moduleName, setModuleName] = useState(null);
