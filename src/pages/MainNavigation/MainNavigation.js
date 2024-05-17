@@ -16,6 +16,9 @@ import { useNavigate } from "react-router-dom";
 import LecturerSideBar from "../../components/layout/AdminDashboardComponent/LecturerSideBar";
 import LecturerDashboard from "../LecturerDashboard/LecturerDashboard";
 import ModulePage from "../Module/ModulePage";
+import LectureCreationDashboard from "../LecturerDashboard/LectureCreationDashboard";
+import AdminEventCreationDashboard from "../Event/AdminEventCreationDashboard";
+import LocationService from "../../api/services/LocationService";
 
 function MainNavigationPage() {
   const navigate = useNavigate();
@@ -24,11 +27,19 @@ function MainNavigationPage() {
 
   const { role } = user || {};
 
+  const [venuesList, setVenuesList] = useState([]);
+
+  const handleGetLocationNameList = async () => {
+    const response = await LocationService.getAllLocationNames();
+    setVenuesList(response);
+  };
+
   // If user is already logged in, redirect to mainNavigation
   useEffect(() => {
     if (!user) {
       navigate("/signin");
     }
+    handleGetLocationNameList();
   }, [user, navigate]);
 
   const [isHidden, setIsHidden] = useState(false);
@@ -65,7 +76,9 @@ function MainNavigationPage() {
         {role === "ADMIN" && (
           <div className="maincontent">
             {openMenu === 0 && <AdminDashboard />}
-            {openMenu === 1 && <EventCreateDashboard />}
+            {openMenu === 1 && (
+              <AdminEventCreationDashboard locationList={venuesList} />
+            )}
             {openMenu === 2 && <StaffDashboard />}
             {openMenu === 3 && <StudentDashboard />}
             {openMenu === 4 && <EventReport />}
@@ -75,7 +88,7 @@ function MainNavigationPage() {
         {role === "LECTURER" && (
           <div className="maincontent">
             {openMenu === 0 && <LecturerDashboard />}
-            {openMenu === 1 && <EventCreateDashboard />}
+            {openMenu === 1 && <LectureCreationDashboard />}
             {openMenu === 2 && <ModulePage />}
             {openMenu === 3 && <EventReport />}
             {openMenu === 4 && <Setting />}

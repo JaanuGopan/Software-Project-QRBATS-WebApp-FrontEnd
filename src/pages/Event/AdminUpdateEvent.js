@@ -13,6 +13,7 @@ const AdminUpdateEvent = ({
   handlecloseCreateEventWindow,
   selectedEvent,
   reloadEventList,
+  locationNameList,
 }) => {
   const [eventId, setEventId] = useState(selectedEvent.eventId);
   const [eventName, setEventName] = useState(selectedEvent.eventName);
@@ -199,7 +200,7 @@ const AdminUpdateEvent = ({
             </div>
             <div className="eventCreation-form">
               <div>
-                <label className="date-label" htmlFor="eventVenue">
+                <label className="date-label" htmlFor="eventDate">
                   Venue
                 </label>
                 <select
@@ -209,11 +210,11 @@ const AdminUpdateEvent = ({
                   className="form-control mb-2"
                 >
                   <option value="">Select Venue</option>
-                  <option value="LT1">LT1</option>
-                  <option value="LT2">LT2</option>
-                  <option value="Auditorium">Auditorium</option>
-                  <option value="NCC">NCC</option>
-                  <option value="Other">Other</option>
+                  {locationNameList.map((option, index) => (
+                    <option key={index} value={option.locationName}>
+                      {option.locationName}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
