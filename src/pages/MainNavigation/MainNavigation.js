@@ -81,8 +81,8 @@ function MainNavigationPage() {
             )}
             {openMenu === 2 && <StaffDashboard />}
             {openMenu === 3 && <StudentDashboard />}
-            {openMenu === 4 && <EventReport />}
-            {openMenu === 5 && <Setting />}
+            {openMenu === 5 && <EventReport />}
+            {openMenu === 4 && <Setting />}
           </div>
         )}
         {role === "LECTURER" && (

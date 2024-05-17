@@ -1,0 +1,108 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<CreateStaff> should render component 1`] = `
+<div
+  className="staff-signup-main-container"
+>
+  <div
+    className="closeCreateEventWindow"
+  />
+  <p
+    className="staff-head1"
+  >
+    Create Staff
+  </p>
+  <div
+    className="staff-login-container"
+  >
+    <div
+      className="staff-image-container"
+    >
+      <img
+        alt="Logo"
+        className="staff-logo"
+        src="Designer.jpeg"
+      />
+    </div>
+    <div
+      className="form-container"
+    >
+      <form
+        onSubmit={[Function]}
+      >
+        <div
+          className="choice-input mb-3"
+        >
+          <select
+            className="student-select-input"
+            onChange={[Function]}
+            value=""
+          >
+            <option
+              value=""
+            >
+              Select user role
+            </option>
+            <option
+              value="ADMIN"
+            >
+              ADMIN
+            </option>
+            <option
+              value="LECTURER"
+            >
+              LECTURER
+            </option>
+          </select>
+        </div>
+        <div
+          className="choice-input mb-3"
+        >
+          <select
+            className="student-select-input"
+            onChange={[Function]}
+            value=""
+          >
+            <option
+              value=""
+            >
+              Select the department
+            </option>
+            <option
+              value="DEIE"
+            >
+              DEIE
+            </option>
+            <option
+              value="DCOM"
+            >
+              DCOM
+            </option>
+            <option
+              value="DMME"
+            >
+              DMME
+            </option>
+            <option
+              value="DCEE"
+            >
+              DCEE
+            </option>
+            <option
+              value="DMENA"
+            >
+              DMENA
+            </option>
+          </select>
+        </div>
+        <button
+          className="btn btn-primary w-100"
+          type="submit"
+        >
+          Add Staff
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,120 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SignUp> should render component 1`] = `
+<div
+  className="signup-container"
+>
+  <div
+    className="signup-main-container"
+  >
+    <button
+      className="back-button"
+      onClick={[Function]}
+    />
+    <p
+      className="head1"
+    >
+      SIGN UP
+    </p>
+    <div
+      className="login-container"
+    >
+      <div
+        className="image-container"
+      >
+        <img
+          alt="Logo"
+          className="logo"
+          src="Signin.jpeg"
+        />
+      </div>
+      <div
+        className="form-container"
+      >
+        <form
+          onSubmit={[Function]}
+        >
+          <div
+            className="choice-input mb-3"
+          >
+             
+            <select
+              className="select-input"
+              onChange={[Function]}
+              value=""
+            >
+              <option
+                value=""
+              >
+                Select the department
+              </option>
+              <option
+                value="DEIE"
+              >
+                DEIE
+              </option>
+              <option
+                value="DCOM"
+              >
+                DCOM
+              </option>
+              <option
+                value="DMME"
+              >
+                DMME
+              </option>
+              <option
+                value="DCEE"
+              >
+                DCEE
+              </option>
+              <option
+                value="DMENA"
+              >
+                DMENA
+              </option>
+            </select>
+          </div>
+          <div
+            className="choice-input mb-3"
+          >
+             
+            <select
+              className="select-input"
+              onChange={[Function]}
+              value=""
+            >
+              <option
+                value=""
+              >
+                Select user role
+              </option>
+              <option
+                value="ADMIN"
+              >
+                ADMIN
+              </option>
+              <option
+                value="LECTURER"
+              >
+                LECTURER
+              </option>
+              <option
+                value="STAFF"
+              >
+                STAFF
+              </option>
+            </select>
+          </div>
+          <button
+            className="btn btn-primary w-100"
+            type="submit"
+          >
+            Create Account
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+`;

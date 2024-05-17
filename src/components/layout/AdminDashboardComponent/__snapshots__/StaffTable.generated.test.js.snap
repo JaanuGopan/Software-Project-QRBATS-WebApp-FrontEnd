@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<StaffTable> should render component 1`] = `
+<div
+  className="tableDesign"
+>
+  <table
+    className="student-tableArrangement"
+  >
+    <thead>
+      <tr>
+        <th>
+          No
+        </th>
+        <th
+          className="expand"
+        >
+          Name
+        </th>
+        <th>
+          Department
+        </th>
+        <th>
+          Username
+        </th>
+        <th>
+          Password
+        </th>
+        <th>
+          Edit
+        </th>
+      </tr>
+    </thead>
+    <tbody />
+  </table>
+</div>
+`;

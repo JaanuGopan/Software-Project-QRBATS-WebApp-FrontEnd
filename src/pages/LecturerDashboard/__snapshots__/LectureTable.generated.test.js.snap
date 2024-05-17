@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LectureTable> should render component 1`] = `
+<div
+  className="tableDesign"
+>
+  <table
+    className="tableArrangement"
+  >
+    <thead>
+      <tr>
+        <th>
+          No
+        </th>
+        <th
+          className="expand"
+        >
+          Name
+        </th>
+        <th>
+          Start Date
+        </th>
+        <th>
+          End Date
+        </th>
+        <th>
+          Venue
+        </th>
+        <th>
+          Start Time
+        </th>
+        <th>
+          End Time
+        </th>
+        <th>
+          Edit
+        </th>
+      </tr>
+    </thead>
+    <tbody />
+  </table>
+</div>
+`;

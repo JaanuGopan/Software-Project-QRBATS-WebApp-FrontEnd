@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ModuleTable> should render component 1`] = `
+<div
+  className="tableDesign"
+>
+  <table
+    className="event-report-tableArrangement"
+  >
+    <thead>
+      <tr>
+        <th>
+          No
+        </th>
+        <th
+          className="expand"
+        >
+          Module Name
+        </th>
+        <th>
+          Module Code
+        </th>
+        <th>
+          Semester
+        </th>
+        <th>
+          Department
+        </th>
+        <th>
+          Edit
+        </th>
+      </tr>
+    </thead>
+    <tbody />
+  </table>
+</div>
+`;

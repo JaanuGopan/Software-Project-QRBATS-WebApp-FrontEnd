@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DualButtonComponent> should render component 1`] = `
+<div
+  className="row m-2   "
+>
+  <div
+    className="col"
+  >
+    <h6>
+      Select one
+    </h6>
+  </div>
+  <div
+    className="col"
+  >
+    <button
+      className="btn  btn-primary"
+      onClick={[Function]}
+    />
+  </div>
+  <div
+    className="col"
+  >
+    <button
+      className="btn btn-outline-primary"
+      onClick={[Function]}
+    />
+  </div>
+</div>
+`;

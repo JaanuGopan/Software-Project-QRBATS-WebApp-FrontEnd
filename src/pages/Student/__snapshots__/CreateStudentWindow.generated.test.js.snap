@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<CreateStudentWindow> should render component 1`] = `
+<div
+  className="student-signup-main-container"
+>
+  <div
+    className="closeCreateEventWindow"
+  />
+  <p
+    className="student-head1"
+  >
+    Create Student
+  </p>
+  <div
+    className="student-login-container"
+  >
+    <div
+      className="student-image-container"
+    >
+      <img
+        alt="Logo"
+        className="student-logo"
+        src="Designer.jpeg"
+      />
+    </div>
+    <div
+      className="form-container"
+    >
+      <form
+        onSubmit={[Function]}
+      >
+        <div
+          className="eventCreation-form"
+        >
+          <select
+            className="form-control mb-2"
+            onChange={[Function]}
+            value=""
+          >
+            <option
+              value=""
+            >
+              Select the department
+            </option>
+            <option
+              value="DEIE"
+            >
+              DEIE
+            </option>
+            <option
+              value="DCOM"
+            >
+              DCOM
+            </option>
+            <option
+              value="DMME"
+            >
+              DMME
+            </option>
+            <option
+              value="DCEE"
+            >
+              DCEE
+            </option>
+            <option
+              value="DMENA"
+            >
+              DMENA
+            </option>
+          </select>
+        </div>
+        <button
+          className="btn btn-primary w-100"
+          type="submit"
+        >
+          Add Student
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+`;

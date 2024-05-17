@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<StudentDashboard> should render component 1`] = `
+<div
+  className="student-Dash"
+>
+  <div
+    className="student-SearchEvent"
+  >
+    <p
+      className="student-mainHead"
+    >
+      Student Details
+    </p>
+    <input
+      placeholder="Search..."
+      style={
+        Object {
+          "border": "0.5px solid black",
+          "borderRadius": "5px",
+          "padding": "3px 40px",
+          "textAlign": "center",
+          "width": "150px",
+        }
+      }
+      type="text"
+    />
+  </div>
+  <div
+    className="student-EventList"
+  >
+    <div
+      className="student-List-Buttons"
+    />
+  </div>
+</div>
+`;
