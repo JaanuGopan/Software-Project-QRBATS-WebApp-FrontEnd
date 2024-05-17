@@ -43,6 +43,10 @@ class ApiConstants {
     return ApiConstants.baseUrl + "/module/getmodulebylecturerid"; //localhost:8080/api/v1/module/getmodulebylecturerid/{userid}
   }
 
+  static get getAllLocationNameUrl() {
+    return ApiConstants.baseUrl + "/location/getalllocationnames"; //localhost:8080/api/v1/location/getalllocationnames
+  }
+
   static get updateUserUrl() {
     return ApiConstants.baseUrl + "/auth/updateuser";
   }
