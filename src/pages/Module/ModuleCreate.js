@@ -31,10 +31,8 @@ const ModuleCreate = ({ handleCloseModuleCreateWindow }) => {
 
   return (
     <div className="module-signup-main-container">
-      <div
-        className="closeCreateEventWindow"
-        onClick={handleCloseModuleCreateWindow}
-      >
+      <div className="closeCreateEventWindow"
+        onClick={handleCloseModuleCreateWindow}>
         <IoMdCloseCircleOutline />
       </div>
       <p className="module-head1">Create module</p>
@@ -44,15 +42,12 @@ const ModuleCreate = ({ handleCloseModuleCreateWindow }) => {
         </div>
         <div className="form-container">
           <form onSubmit={handleSubmit}>
-            {/* First Name Input */}
             <InputField
               placeholder="Enter The Module Name"
               value={moduleName}
               onChange={(e) => setModuleName(e.target.value)}
               inputType="text"
             />
-
-            {/* Last Name Input */}
             <InputField
               placeholder="Enter the module code"
               value={moduleCode}
@@ -83,8 +78,6 @@ const ModuleCreate = ({ handleCloseModuleCreateWindow }) => {
                 className="student-select-input"
               />
             </div>
-
-            {/* Password Input */}
             <InputField
               placeholder="Enter Module Enrolment Key"
               value={moduleEnrolmentKey}
