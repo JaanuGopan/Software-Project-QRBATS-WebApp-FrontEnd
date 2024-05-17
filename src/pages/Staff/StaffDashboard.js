@@ -99,6 +99,7 @@ const StaffDashboard = () => {
             handlecloseCreateStaffWindow={() =>
               setStaffCreatePopUpWindow(false)
             }
+            reloadStaffList={handleReloadStaffList}
           />
         </div>
       )}

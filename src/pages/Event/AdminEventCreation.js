@@ -55,7 +55,7 @@ const AdminEventCreation = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = SaveEventService.saveEvent(
+      const response = await SaveEventService.saveEvent(
         eventName,
         eventDate,
         eventValidDate,
@@ -66,14 +66,16 @@ const AdminEventCreation = ({
         moduleName,
         userId
       );
-      setEventId(response.data.eventId);
-      const responseEventName = response.data.eventName;
+      setEventId(response.eventId);
+      const responseEventName = response.eventName;
       notifySuccess();
-      reloadEventList();
+      if (response) {
+        reloadEventList();
+        setShowQRCode(true);
+      }
+      clearEventDetails();
     } catch (error) {
       console.error("Event failed", error);
-    } finally {
-      setShowQRCode(true);
     }
   };
 

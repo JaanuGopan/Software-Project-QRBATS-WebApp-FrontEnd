@@ -5,8 +5,9 @@ import Designer from "../../assets/Images/Designer.jpeg";
 import InputField from "../../components/textfields/InputBox/InputField";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import CreateUserService from "../../api/services/CreateUserService";
+import toast, { Toaster } from "react-hot-toast";
 
-const CreateStaff = ({ handlecloseCreateStaffWindow }) => {
+const CreateStaff = ({ handlecloseCreateStaffWindow, reloadStaffList }) => {
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -19,10 +20,12 @@ const CreateStaff = ({ handlecloseCreateStaffWindow }) => {
   const deparmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA"];
   const userRoleList = ["ADMIN", "LECTURER"];
 
+  const notifySuccess = () => toast.success("Successfully Staff Created!");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = CreateUserService.saveUser(
+      const response = await CreateUserService.saveUser(
         firstname,
         lastname,
         email,
@@ -31,9 +34,11 @@ const CreateStaff = ({ handlecloseCreateStaffWindow }) => {
         deparmentList.indexOf(departmentId) + 1,
         userRoleList.indexOf(userRole)
       );
-
-      console.error("Login success...");
-      handlecloseCreateStaffWindow();
+      if (response) {
+        notifySuccess();
+        reloadStaffList();
+        handlecloseCreateStaffWindow();
+      }
     } catch (error) {
       console.error("Login failed", error);
     }
@@ -41,6 +46,7 @@ const CreateStaff = ({ handlecloseCreateStaffWindow }) => {
 
   return (
     <div className="staff-signup-main-container">
+      <Toaster />
       <div
         className="closeCreateEventWindow"
         onClick={handlecloseCreateStaffWindow}
@@ -59,6 +65,7 @@ const CreateStaff = ({ handlecloseCreateStaffWindow }) => {
                 value={userRole}
                 onChange={(e) => setUserRole(e.target.value)}
                 className="student-select-input"
+                required
               >
                 <option value="">Select user role</option>
                 {userRoleList.map((option, index) => (
@@ -118,6 +125,7 @@ const CreateStaff = ({ handlecloseCreateStaffWindow }) => {
                 value={departmentId}
                 onChange={(e) => setDepartmentId(e.target.value)}
                 className="student-select-input"
+                required
               >
                 <option value="">Select the department</option>
                 {deparmentList.map((option, index) => (

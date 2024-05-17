@@ -167,6 +167,7 @@ const AdminDashboard = () => {
             }
             selectedEvent={selectedEvent}
             reloadEventList={handleReloadEventList}
+            locationNameList={venuesList}
           />
         </div>
       )}
