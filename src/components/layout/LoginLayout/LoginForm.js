@@ -29,11 +29,12 @@ const LoginForm = () => {
 
       const decodedToken = JwtService.parseJwt(token);
       const loginUserName = decodedToken.sub;
-      const lodinUserFirstName = decodedToken.firstName;
+      const loginUserFirstName = decodedToken.firstName;
       const loginUserLastName = decodedToken.lastName;
       const loginUserEmail = decodedToken.email;
       const loginUserRole = decodedToken.role;
       const loginUserId = decodedToken.userId;
+      const loginUserDepartmentId = decodedToken.departmentId;
       localStorage.setItem("token", token);
 
       dispatch(
@@ -41,10 +42,11 @@ const LoginForm = () => {
           token: token,
           userId: loginUserId,
           userName: loginUserName,
-          firstName: lodinUserFirstName,
+          firstName: loginUserFirstName,
           lastName: loginUserLastName,
           email: loginUserEmail,
           role: loginUserRole,
+          departmentId: loginUserDepartmentId,
           loggedIn: true,
         })
       );

@@ -18,9 +18,9 @@ const ProfileButton = ({ setIndex }) => {
   return (
     <div className="ProfileButton" onClick={handleClick}>
       <p className="ProfileName">{`${firstName || ""} ${lastName || ""}`}</p>
-      <div className="circle">
+      {/* <div className="circle">
         <img className="ProfilePicture" src={profilePic} alt="Profile" />
-      </div>
+      </div> */}
     </div>
   );
 };

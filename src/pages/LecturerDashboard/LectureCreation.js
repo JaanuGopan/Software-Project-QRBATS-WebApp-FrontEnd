@@ -10,24 +10,21 @@ import jsPDF from "jspdf";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/userSlice";
 import DualButtonComponent from "../../components/buttons/DualButtonComponent";
+import Select from "react-select";
+import ModuleService from "../../api/services/ModuleService";
 
 const LectureCreation = ({
   handleCloseCreateLectureWindow,
   reloadLectureList,
   hideCloseButton,
+  locationNameList,
 }) => {
-  //const [userId, setUserId] = useState(null);
-
   const user = useSelector(selectUser);
-  const { userId } = user || {};
-
-  useEffect(() => {
-    //setUserId(UserDetails.getUserId());
-  });
+  const { userId, departmentId } = user || {};
 
   const [eventId, setEventId] = useState("");
   const [eventName, setEventName] = useState("");
-  const [moduleName, setModuleName] = useState(null);
+  const [moduleName, setModuleName] = useState("");
   const [eventDate, setEventDate] = useState("");
   const [eventValidDate, setEventValidDate] = useState("");
   const [eventTime, setEventTime] = useState("");
@@ -38,17 +35,29 @@ const LectureCreation = ({
   const [eventAssignedUserId, setEventAssignedUserId] = useState(userId);
   const [showModuleNameInput, setShowModuleNameInput] = useState(true);
   const [title, setTitle] = useState("Lecture");
+  const [moduleNameList, setModuleNameList] = useState([]);
 
-  const venueList = [
-    "NCC",
-    "LT1",
-    "LT2",
-    "Auditorium",
-    "DEIE",
-    "DMME",
-    "DCEE",
-    "Other",
-  ];
+  const handleGetModulesList = async () => {
+    const response = await ModuleService.getAllModulesByDepartmentId(
+      departmentId
+    );
+    if (response) {
+      const moduleList = response.map((module) => ({
+        value: module.moduleId,
+        label: module.moduleCode,
+      }));
+      setModuleNameList(moduleList);
+      console.log(moduleList);
+    }
+  };
+
+  useEffect(() => {
+    handleGetModulesList();
+    //setUserId(UserDetails.getUserId());
+  }, []);
+
+  const venueList = ["NCC", "LT1", "LT2", "Auditorium", "DEIE", "DMME", "DCEE"];
+
   const qrCodeRef = useRef(null);
 
   const notifySuccess = () => toast.success("Successfully Lecture Created!");
@@ -89,13 +98,14 @@ const LectureCreation = ({
         eventEndTime,
         eventVenue,
         eventRole,
-        moduleName,
+        moduleName.label,
         userId
       );
-      setEventId(response.data.eventId);
-      const responseEventName = response.data.eventName;
+      setEventId(response.eventId);
+      const responseEventName = response.eventName;
       notifySuccess();
       reloadLectureList();
+      clearEventDetails();
     } catch (error) {
       console.error("Lecture creation failed", error);
     } finally {
@@ -155,6 +165,8 @@ const LectureCreation = ({
     }
   };
 
+  const today = new Date().toISOString().split("T")[0];
+
   return (
     <div className="event-main-container1">
       <Toaster />
@@ -188,17 +200,17 @@ const LectureCreation = ({
                 onChange={(e) => setEventName(e.target.value)}
               />
             </div>
+
             {selectedButton == 1 && (
               <div className="input-with-icon">
-                <input
+                <Select
                   required
-                  type="text"
                   id="moduleName"
                   name="moduleName"
-                  placeholder={"Module Name"}
-                  className="form-control mb-2"
+                  options={moduleNameList}
+                  onChange={(e) => setModuleName(e)}
                   value={moduleName}
-                  onChange={(e) => setModuleName(e.target.value)}
+                  placeholder={"Select Module Name"}
                 />
               </div>
             )}
@@ -211,6 +223,7 @@ const LectureCreation = ({
                   <input
                     required
                     type="date"
+                    min={today}
                     value={eventDate}
                     onChange={(e) => setEventDate(e.target.value)}
                     className="form-control mb-2"
@@ -225,6 +238,7 @@ const LectureCreation = ({
                   <input
                     required
                     type="date"
+                    min={today}
                     value={eventValidDate}
                     onChange={(e) => setEventValidDate(e.target.value)}
                     className="form-control mb-2"
@@ -252,6 +266,7 @@ const LectureCreation = ({
                 </select>
               </div>
             </div>
+
             <div className="eventCreation-form">
               <div>
                 <label className="form-label" htmlFor="eventDate">

@@ -43,6 +43,15 @@ const ModulePage = () => {
     setShowUpdateModuleWindow(true);
   };
 
+  const handleDeleteModule = async () => {
+    const response = await ModuleService.deleteModuleById(
+      selectedModule.moduleId
+    );
+    if (response) {
+      handleReloadModuleList();
+    }
+  };
+
   return (
     <div>
       <div className="module-Dash">
@@ -83,7 +92,7 @@ const ModulePage = () => {
             />
             <NormalButton
               title={"Delete"}
-              handleClick={() => {}}
+              handleClick={handleDeleteModule}
               titlewithiconicon={<RiDeleteBin5Fill className="buttonIcon" />}
             />
           </div>

@@ -18,12 +18,17 @@ import ModulePage from "../Module/ModulePage";
 import LectureCreationDashboard from "../LecturerDashboard/LectureCreationDashboard";
 import AdminEventCreationDashboard from "../Event/AdminEventCreationDashboard";
 import LocationService from "../../api/services/LocationService";
+import {
+  setLocationList,
+  resetLocationList,
+} from "../../redux/features/locationListSlice";
 
 function MainNavigationPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const sideBarIndex = useSelector((state) => state.mainNavigation);
+  const locationList = useSelector((state) => state.locationList);
 
   const { role } = user || {};
 

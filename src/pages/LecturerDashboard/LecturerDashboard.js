@@ -176,6 +176,7 @@ const LecturerDashboard = () => {
             }
             reloadLectureList={handleReloadLectureList}
             hideCloseButton={false}
+            locationNameList={venuesList}
           />
         </div>
       )}

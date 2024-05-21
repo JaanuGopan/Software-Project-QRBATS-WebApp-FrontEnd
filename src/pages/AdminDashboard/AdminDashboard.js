@@ -14,6 +14,7 @@ import AdminEventCreation from "../Event/AdminEventCreation";
 import DeleteEventService from "../../api/services/DeleteEventService";
 import FetchEventsService from "../../api/services/FetchEventsService";
 import LocationService from "../../api/services/LocationService";
+import { useDispatch } from "react-redux";
 
 const AdminDashboard = () => {
   const [eventCreatePopUpWindow, setEventCreatePopUpWindow] = useState(false);
@@ -22,6 +23,7 @@ const AdminDashboard = () => {
   const [eventList, setEventList] = useState([]);
   const [search, setSearch] = useState("");
   const [venuesList, setVenuesList] = useState([]);
+  const dispatch = useDispatch;
 
   const handleGetLocationNameList = async () => {
     const response = await LocationService.getAllLocationNames();
