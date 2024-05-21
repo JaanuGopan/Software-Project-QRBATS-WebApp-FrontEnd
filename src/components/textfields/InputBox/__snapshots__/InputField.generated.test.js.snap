@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<InputField> should render component 1`] = `
+<div
+  className="input-with-icon"
+>
+  <input
+    className="form-control mb-2"
+    required={true}
+  />
+</div>
+`;

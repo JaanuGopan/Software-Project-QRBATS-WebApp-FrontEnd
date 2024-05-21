@@ -1,0 +1,222 @@
+@media screen and (max-width: 1200px) {
+    .event-main-container1 {
+        height: 80vh;
+    }
+}
+
+
+.event-main-container1 {
+    width: 60%;
+    border-top: 6px solid #0077C0;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 3;
+}
+
+.event-main-container2 {
+    margin-top: 10px;
+    width: 100%;
+    border-top: 6px solid #0077C0;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 3;
+}
+
+.eventCreation-field{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.Create-logo{
+    width: 50%;
+    min-width: 150px;
+    max-width: 300px;
+    border-radius: 10px;
+}
+
+.eventCreation-input-field{
+    padding: 5%;
+}
+
+h2 {
+    text-align: center;
+}
+
+.form-container {
+    flex: 1;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    position: relative;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+/*
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-bottom: 3px solid #0077C0;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.input-field {
+    padding-left: 40px;
+}
+
+.input-with-icon {
+    display: flex;
+    align-items: center;
+}
+
+.input-with-icon .input-icon {
+    margin-right: 10px;
+}
+
+.input-with-icon .react-time-picker {
+    width: 100px;
+}*/
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+input[type="text"]:not(:focus),
+input[type="password"]:not(:focus) {
+    border-radius: 5px 5px 0 0;
+}
+
+input[type="text"]::placeholder,
+input[type="password"]::placeholder {
+    color: #aaa;
+}
+
+.back-button {
+    background: #0077C0;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    outline: none;
+    margin-right: 10px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-button:hover {
+    background: rgba(92, 92, 165, 0.8);
+}
+
+.back-button .icon {
+    color: #fff;
+}
+
+.event-login-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    position: relative;
+}
+
+.button-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.eventCreation-switchbutton {
+    margin-right: 30px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #0077C0;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+a {
+    color: #0077C0;
+    text-decoration: none;
+}
+
+button:hover,
+a:hover {
+    background-color: #0056b3;
+}
+
+.date-label text{
+    font-size: small;
+}
+
+.qr-code{
+    margin-top: 10vh;
+    flex: 0 0 85% 0;
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    max-height: 80vh;
+    align-items: center;
+    justify-content: center;
+}
+
+.row-center{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.QRbutton{
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.closeCreateEventWindow{
+  color: red;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 5px;
+  border-radius: 50px;
+  margin-left: 95%;
+  width: 25px;
+}
+.closeCreateEventWindow:hover{
+    color: white;
+  background-color: red;
+}
+
+.QRCode-img{
+    width: 100%;
+    height: 100%;
+    
+}

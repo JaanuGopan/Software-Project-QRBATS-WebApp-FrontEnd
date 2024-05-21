@@ -4,12 +4,16 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Signin from "./components/pages/Signin/Signin";
-import AdminDashboard from "./components/pages/AdminDashboard/AdminDashboard";
-import SignUp from "./components/pages/SignUp/SignUp";
-import MainNavigationPage from "./components/pages/MainNavigation/MainNavigation";
-import EventCreation from "./components/pages/Event/EventCreation/EventCreation";
-import StaffMainNavigation from "./components/pages/StaffMainNavigation/StaffMainNavigation";
+import { Provider } from "react-redux";
+import store from "./redux/app/store";
+import Signin from "./pages/Signin/Signin";
+import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
+import SignUp from "./pages/SignUp/SignUp";
+import MainNavigationPage from "./pages/MainNavigation/MainNavigation";
+import EventCreation from "./pages/Event/EventCreation/EventCreation";
+import StaffMainNavigation from "./pages/StaffMainNavigation/StaffMainNavigation";
+import EventReport from "./pages/Event/EventReport";
+import LecturerDashboard from "./pages/LecturerDashboard/LecturerDashboard";
 
 const router = createBrowserRouter([
   {
@@ -29,14 +33,21 @@ const router = createBrowserRouter([
     element: <AdminDashboard />,
   },
   {
+    path: "lec",
+    element: <LecturerDashboard />,
+  },
+  {
     path: "mainNavigation",
-    element: <MainNavigationPage />,
+    element: store.getState("user") ? <MainNavigationPage /> : <Signin />,
   },
   {
     path: "eventCreation",
     element: <EventCreation />,
   },
-  
+  {
+    path: "eventReport",
+    element: <EventReport />,
+  },
   {
     path: "staffMainNavigation",
     element: <StaffMainNavigation />,
@@ -46,11 +57,10 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

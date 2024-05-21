@@ -1,19 +1,25 @@
-import React, { useState } from "react";
-import "../../pages/StaffMainNavigation/StaffMainNavigation.css";
+import React from "react";
+import "../../../pages/StaffMainNavigation/StaffMainNavigation.css";
 import profilePic from "../../../assets/Images/Profile.png";
-import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../redux/features/userSlice";
 
-const ProfileButton = () => {
+const ProfileButton = ({ setIndex }) => {
+  // Get the user from Redux state
+  const user = useSelector(selectUser);
+
   const handleClick = () => {
-    console.log("We have to design that Show Setting Window");
+    setIndex(4);
   };
-  const location = useLocation();
-  const { userName } = location.state;
+
+  // Destructure user object for cleaner code
+  const { firstName, lastName } = user || {};
+
   return (
     <div className="ProfileButton" onClick={handleClick}>
-      <p className="ProfileName">{userName}</p>
+      <p className="ProfileName">{`${firstName || ""} ${lastName || ""}`}</p>
       <div className="circle">
-        <img className="ProfilePicture" src={profilePic} alt="" />
+        <img className="ProfilePicture" src={profilePic} alt="Profile" />
       </div>
     </div>
   );

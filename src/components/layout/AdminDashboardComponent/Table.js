@@ -1,106 +1,72 @@
-import React from 'react';
-import '../../pages/AdminDashboard/AdminDashboard.css'
+import React, { useState, useEffect } from "react";
+import "../../../pages/AdminDashboard/AdminDashboard.css";
 import { FaEdit } from "react-icons/fa";
 
-const Table = () => {
+const Table = ({ search, handleUpdateEvent, onEventClick, eventList }) => {
+  const [events, setEvents] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+
+  useEffect(() => {
+    // Update events whenever eventList prop changes
+    setEvents(eventList);
+  }, [eventList]);
+
+  const handleEventClick = (event) => {
+    setSelectedEvent(event);
+    onEventClick(event);
+  };
+
   return (
-    <div className='tableDesign'>
-       <table>
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Name</th>
-              <th>Date</th>
-              <th>Venue</th>
-              <th>Time</th>
-              <th>Edit</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Event 1</td>
-              <td>Fri 29 Dec</td>
-              <td>NCC</td>
-              <td>10.00 am</td>
-              <td><button><FaEdit /></button></td>
-            </tr>
-            <tr>
-            <td>2</td>
-              <td>Event 2</td>
-              <td>Tue 25 Dec</td>
-              <td>LT2</td>
-              <td>08.00 am</td>
-              <td><button><FaEdit /></button></td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Event 3</td>
-              <td>Wed 12 Nov</td>
-              <td>OCC</td>
-              <td>02.00 pm</td>
-              <td><button><FaEdit /></button></td>
-            </tr>
-            <tr>
-            <td>4</td>
-              <td>Event 4</td>
-              <td>Thus 29 Dec</td>
-              <td>NCC</td>
-              <td>01.00 pm</td>
-              <td><button><FaEdit /></button></td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>Event 5</td>
-              <td>Mon 29 Dec</td>
-              <td>LT1</td>
-              <td>10.00 am</td>
-              <td><button><FaEdit /></button></td>
-            </tr>
-            <tr>
-              <td>1</td>
-              <td>Event 1</td>
-              <td>Fri 29 Dec</td>
-              <td>NCC</td>
-              <td>10.00 am</td>
-              <td><button><FaEdit /></button></td>
-            </tr>
-            <tr>
-            <td>2</td>
-              <td>Event 2</td>
-              <td>Tue 25 Dec</td>
-              <td>LT2</td>
-              <td>08.00 am</td>
-              <td><button><FaEdit /></button></td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Event 3</td>
-              <td>Wed 12 Nov</td>
-              <td>OCC</td>
-              <td>02.00 pm</td>
-              <td><button><FaEdit /></button></td>
-            </tr>
-            <tr>
-            <td>4</td>
-              <td>Event 4</td>
-              <td>Thus 29 Dec</td>
-              <td>NCC</td>
-              <td>01.00 pm</td>
-              <td><button><FaEdit /></button></td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>Event 5</td>
-              <td>Mon 29 Dec</td>
-              <td>LT1</td>
-              <td>10.00 am</td>
-              <td><button><FaEdit /></button></td>
-            </tr>
-          </tbody>
-        </table>
+    <div className="tableDesign">
+      <table className="tableArrangement">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th className="expand">Name</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Venue</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          {events
+            .filter(
+              (event) =>
+                event.eventName.toLowerCase().includes(search.toLowerCase()) ||
+                event.eventVenue.toLowerCase().includes(search.toLowerCase())
+            )
+            .map((event, index) => (
+              <tr
+                key={index}
+                onClick={() => handleEventClick(event)}
+                className={
+                  selectedEvent === event ? "selected-row" : "event-row"
+                }
+              >
+                <td>{index + 1}</td>
+                <td>{event.eventName}</td>
+                <td>{event.eventDate}</td>
+                <td>{event.eventValidDate}</td>
+                <td>{event.eventVenue}</td>
+                <td>{event.eventTime}</td>
+                <td>{event.eventEndTime}</td>
+                <td>
+                  <button
+                    onClick={() => handleUpdateEvent(event)}
+                    className="EditButton"
+                  >
+                    <FaEdit className="EditIcon" />
+                  </button>
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
     </div>
   );
-}
+};
 
 export default Table;

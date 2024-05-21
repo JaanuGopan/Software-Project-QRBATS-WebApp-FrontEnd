@@ -1,5 +1,5 @@
 import React from "react";
-import "../../pages/UserInterface/UserInterface.css";
+import "../../../pages/UserInterface/UserInterface.css";
 import logo from "../../../assets/Images/logo/logo_white.png";
 import { Button } from "@mui/material";
 
@@ -22,18 +22,20 @@ const Navigator = () => {
           SKY TICKER
         </p>
       </div>
-      
-        <Button
-          style={{
-            color: "#0063A0",
-            backgroundColor: "white",
-            marginRight: "3vw",
-            fontWeight: "bold",
-          }}
-          variant="contained"
-        ><a className="signinbutton" href="/signin">
-          Sign In</a>
-        </Button>
+
+      <Button
+        style={{
+          color: "#0063A0",
+          backgroundColor: "white",
+          marginRight: "3vw",
+          fontWeight: "bold",
+        }}
+        variant="contained"
+      >
+        <a className="signinbutton" href="/signin">
+          Sign In
+        </a>
+      </Button>
     </div>
   );
 };

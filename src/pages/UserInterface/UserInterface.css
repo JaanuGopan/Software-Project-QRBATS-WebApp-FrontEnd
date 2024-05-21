@@ -1,0 +1,156 @@
+.userinterface-mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+ .userinterface-container {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   width: 100%;
+   height: 100%;
+   justify-content: stretch;
+   align-items: center;
+   border: 1px solid #0063A0;
+ }
+  
+ .userinterface-container1 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-top: 3%;
+  width: 100%;
+  justify-content: space-evenly;
+  align-items: stretch;
+}
+
+  .userinterface-row {
+    flex: 1;
+    flex-direction: row;
+    padding: 16px;
+    border: 1px solid #0063A0;
+    width: auto;
+  }
+
+  .userinterface-row1 {
+    flex: 1;
+    flex-direction: row;
+    padding: 16px;
+    width: auto;
+  }
+
+  .navigate {
+    background-color: #0063A0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 11vh;
+    width: 100%;
+    min-height: 75px;
+    margin: auto;
+    position: relative;
+  }
+
+  .navigate1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+    min-height: 75px;
+  }
+  
+  .logo1 {
+    width: 5vw;
+    min-width: 60px;
+    height: 100%;
+    min-height: 45px;
+    padding: 5px;
+    border-radius: 0.5rem;
+    margin-left: 2vw;
+    margin-right: 1vw;
+  }
+
+  .welcomewin {
+    background: linear-gradient(to bottom, rgba(3, 2, 69, 0.8) 10%, rgba(19, 1, 96, 0.7) 20%, rgba(0, 22, 99, 0.6) 30%, rgba(0, 31, 139, 0.5) 40%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 75vh;
+    width: 100%;
+    min-width: 300px;
+    max-height: 500px;
+    min-height: 400px;
+    margin: auto;
+    text-align: center;
+  }
+
+  .userinterface-backgroundimage {
+    background: url("../../assets/Images/back.jpg") center/cover no-repeat;
+    width: 100%;
+  }
+
+  .paragraphStyle {
+    color: white;
+    font-size: 1.5rem;
+    font-family: Arial, sans-serif;
+    padding: 0.1vh 15vw;
+    margin-bottom: 5%;
+    font-weight: bolder;
+  }
+
+  .userinterface-departmentslide {
+    display: flex;
+    flex-direction: column;
+    height: 68vh;
+    width: 55vw;
+    justify-content: center;
+    align-items: normal;
+    min-height: 380px;
+    min-width: 250px;
+  }
+
+  .calender{
+    width: 300px;
+    max-width: 100%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 5%;
+  }
+
+  .userinterface-users {
+    background-color: #0063A0;
+    padding: 2% 0% 2% 0%;
+    width: 100vw;
+  }
+
+  .column{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 0% 2% 5% 2%;
+  }
+
+  a[target="_blank"] {
+    color: blue; /* Set your desired text color */
+    text-decoration: none;
+  }
+  
+  a[target="_blank"]:hover {
+    text-decoration: underline;
+    background-color: transparent;
+  }
+
+  a:hover{
+    background-color: transparent;
+  }
+
+  .signinbutton:hover{
+    background-color: transparent;
+  }

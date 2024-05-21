@@ -1,0 +1,97 @@
+.staff-container {
+    margin: 20px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    /* Center the cards horizontally */
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+    /* Ensure the cards take full width */
+}
+
+.card {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    border-radius: 30px;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.top {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+    color: white;
+    padding: 20px;
+    font-size: 30px;
+}
+
+.icon {
+    padding-top: 20px;
+    padding-left: 50px;
+    width: 20px;
+    height: 20px;
+    font-size: 60px;
+    padding-right: 50px;
+}
+
+.label {
+    font-weight: bold;
+    color: white;
+    padding: 30px;
+    font-size: 20px;
+    padding-right: 90px;
+}
+
+.bottom {
+    padding: 10px;
+}
+
+.heading {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding-bottom: 30px;
+    padding-top: 30px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding-top: 20px;
+
+}
+
+.create-button,
+.delete-button {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #0e7ac8;
+    color: white;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+.create-button:hover,
+.delete-button:hover {
+    background-color: #095e8e;
+}
+
+.create-button svg,
+.delete-button svg {
+    margin-right: 10px;
+}
