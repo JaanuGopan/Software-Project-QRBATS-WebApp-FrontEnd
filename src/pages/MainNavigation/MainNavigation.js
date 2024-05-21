@@ -5,7 +5,6 @@ import AdminDashboard from "../AdminDashboard/AdminDashboard";
 import { PiListDashesFill } from "react-icons/pi";
 import StaffNavBar from "../../components/layout/StaffDashboardComponents/StaffNavBar";
 import AdminSideBar from "../../components/layout/AdminDashboardComponent/AdminSideBar";
-import EventCreateDashboard from "../Event/EventCreateDashboard";
 import StudentDashboard from "../Student/StudentDashboard";
 import Setting from "../Setting/Setting";
 import StaffDashboard from "../Staff/StaffDashboard";
@@ -24,10 +23,12 @@ function MainNavigationPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+  const sideBarIndex = useSelector((state) => state.mainNavigation);
 
   const { role } = user || {};
 
   const [venuesList, setVenuesList] = useState([]);
+  const [openMenu, setOpenMenu] = useState(0);
 
   const handleGetLocationNameList = async () => {
     const response = await LocationService.getAllLocationNames();
@@ -40,6 +41,10 @@ function MainNavigationPage() {
       navigate("/signin");
     }
     handleGetLocationNameList();
+    if (sideBarIndex) {
+      console.log(sideBarIndex);
+      setOpenMenu(parseInt(sideBarIndex.sideBarIndex));
+    }
   }, [user, navigate]);
 
   const [isHidden, setIsHidden] = useState(false);
@@ -49,8 +54,6 @@ function MainNavigationPage() {
   const handleclose = () => {
     setIsHidden(true);
   };
-
-  const [openMenu, setOpenMenu] = useState(0);
 
   return (
     <div className="staff-Main">

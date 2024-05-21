@@ -14,6 +14,7 @@ import EventService from "../../api/services/EventService";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/userSlice";
 import AdminUpdateEvent from "../Event/AdminUpdateEvent";
+import LocationService from "../../api/services/LocationService";
 
 const LecturerDashboard = () => {
   const [showCreateLecturePopup, setShowCreateLecturePopup] = useState(false);
@@ -22,7 +23,7 @@ const LecturerDashboard = () => {
   const [selectedLecture, setSelectedLecture] = useState(null);
   const [searchLecture, setSearchLecture] = useState("");
   const [selectTable, setSelectTable] = useState("Events");
-  //const [userId, setUserId] = useState(UserDetails.getUserId);
+  const [venuesList, setVenuesList] = useState([]);
   const user = useSelector(selectUser);
   const { userId } = user || {};
 
@@ -38,10 +39,15 @@ const LecturerDashboard = () => {
       .finally(() => {});
   };
 
+  const handleGetLocationNameList = async () => {
+    const response = await LocationService.getAllLocationNames();
+    setVenuesList(response);
+  };
+
   useEffect(() => {
-    //setUserId(UserDetails.getUserId);
     console.log("user id is : ", userId);
     handleReloadLectureList();
+    handleGetLocationNameList();
   }, []);
 
   const handleDeleteLecture = async () => {
@@ -61,7 +67,7 @@ const LecturerDashboard = () => {
 
   const handleLectureClick = (lecture) => {
     setSelectedLecture(lecture);
-    console.log(searchLecture);
+    console.log(selectedLecture);
   };
 
   const handleChange = (e) => {
@@ -184,6 +190,7 @@ const LecturerDashboard = () => {
             }
             selectedEvent={selectedLecture}
             reloadEventList={handleReloadLectureList}
+            locationNameList={venuesList}
           />
         </div>
       )}
