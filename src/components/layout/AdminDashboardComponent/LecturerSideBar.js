@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { IoSettings } from "react-icons/io5";
-import { FaUserTie } from "react-icons/fa";
-import { PiStudentBold } from "react-icons/pi";
 import { MdOutlineEventNote } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
 import "../../../pages/StaffMainNavigation/StaffMainNavigation.css";
@@ -12,15 +10,22 @@ import { AiFillDashboard } from "react-icons/ai";
 import Logout from "../../../api/services/logoutService";
 import { useDispatch } from "react-redux";
 import { TbReport } from "react-icons/tb";
+import { MdAssignmentAdd } from "react-icons/md";
+import {
+  setSideBarIndex,
+  resetSideBarIndex,
+} from "../../../redux/features/mainNavigationSlice";
 
 const LecturerSideBar = ({ handleclose, index, setIndex }) => {
+  const dispatch = useDispatch();
   const handleMenuClick = (menuIndex) => {
-    setIndex(index === menuIndex ? 0 : menuIndex);
+    dispatch(setSideBarIndex(menuIndex));
+    setIndex(menuIndex);
   };
 
-  const dispatch = useDispatch();
   const handleLogoutClick = () => {
     Logout.handleLogout(dispatch); // Assuming handleLogout is asynchronous
+    dispatch(resetSideBarIndex());
   };
 
   return (
@@ -38,8 +43,8 @@ const LecturerSideBar = ({ handleclose, index, setIndex }) => {
         />
         <Sidebarbutton
           handleSidebarMenu={() => handleMenuClick(1)}
-          title={"Lecture"}
-          titlewithiconicon={<MdOutlineEventNote className="buttonIcon" />}
+          title={"QR Generate"}
+          titlewithiconicon={<MdAssignmentAdd className="buttonIcon" />}
           isOpen={index === 1}
         />
         <Sidebarbutton

@@ -9,10 +9,14 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/userSlice";
 import QRCode from "qrcode.react";
 import SaveEventService from "../../api/services/SaveEventService";
+import { useEffect } from "react";
+import LocationService from "../../api/services/LocationService";
 
 const AdminEventCreation = ({
   handlecloseCreateEventWindow,
   reloadEventList,
+  locationList,
+  showCloseButton,
 }) => {
   const [eventId, setEventId] = useState("");
   const [eventName, setEventName] = useState("");
@@ -30,17 +34,6 @@ const AdminEventCreation = ({
   const [title, setTitle] = useState("Event");
 
   const qrCodeRef = useRef(null);
-
-  const venueList = [
-    "NCC",
-    "LT1",
-    "LT2",
-    "Auditorium",
-    "DEIE",
-    "DMME",
-    "DCEE",
-    "Other",
-  ];
 
   const notifySuccess = () => toast.success("Successfully Event Created!");
 
@@ -62,7 +55,7 @@ const AdminEventCreation = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = SaveEventService.saveEvent(
+      const response = await SaveEventService.saveEvent(
         eventName,
         eventDate,
         eventValidDate,
@@ -73,14 +66,16 @@ const AdminEventCreation = ({
         moduleName,
         userId
       );
-      setEventId(response.data.eventId);
-      const responseEventName = response.data.eventName;
+      setEventId(response.eventId);
+      const responseEventName = response.eventName;
       notifySuccess();
-      reloadEventList();
+      if (response) {
+        reloadEventList();
+        setShowQRCode(true);
+      }
+      clearEventDetails();
     } catch (error) {
       console.error("Event failed", error);
-    } finally {
-      setShowQRCode(true);
     }
   };
 
@@ -123,12 +118,14 @@ const AdminEventCreation = ({
   return (
     <div className="event-main-container1">
       <Toaster />
-      <div
-        className="closeCreateEventWindow"
-        onClick={handlecloseCreateEventWindow}
-      >
-        <IoMdCloseCircleOutline />
-      </div>
+      {showCloseButton && (
+        <div
+          className="closeCreateEventWindow"
+          onClick={handlecloseCreateEventWindow}
+        >
+          <IoMdCloseCircleOutline />
+        </div>
+      )}
       <h2>Create Event</h2>
       <div className="eventCreation-field">
         <img src={eventCreationImage} className="Create-logo" alt="Logo" />
@@ -188,9 +185,9 @@ const AdminEventCreation = ({
                   className="form-control mb-2"
                 >
                   <option value="">Select Venue</option>
-                  {venueList.map((option, index) => (
-                    <option key={index} value={option}>
-                      {option}
+                  {locationList.map((option, index) => (
+                    <option key={index} value={option.locationName}>
+                      {option.locationName}
                     </option>
                   ))}
                 </select>
@@ -242,7 +239,9 @@ const AdminEventCreation = ({
             <div ref={qrCodeRef} className="event-main-container1">
               <div
                 className="closeCreateEventWindow"
-                onClick={handlecloseCreateEventWindow}
+                onClick={() => {
+                  setQrCodeWindow(false);
+                }}
               >
                 <IoMdCloseCircleOutline />
               </div>

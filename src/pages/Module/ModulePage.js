@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import NormalButton from "../../components/layout/AdminDashboardComponent/NormalButton";
-import { MdArrowBack, MdCreateNewFolder } from "react-icons/md";
-import { BiSolidPrinter } from "react-icons/bi";
+import { MdCreateNewFolder } from "react-icons/md";
 import ModuleTable from "./ModuleTable";
 import ModuleService from "../../api/services/ModuleService";
 import { useSelector } from "react-redux";
@@ -91,7 +90,7 @@ const ModulePage = () => {
         </div>
         {showUpdateModuleWindow && (
           <div
-            className="event-Create-Event-Dashboard"
+            className="Module-Create-Event-Dashboard"
             handleClick={() => {
               setShowModuleCreateWindow(false);
             }}
@@ -106,7 +105,7 @@ const ModulePage = () => {
         )}
         {showModuleCreateWindow && (
           <div
-            className="event-Create-Event-Dashboard"
+            className="Module-Create-Event-Dashboard"
             handleClick={() => {
               setShowUpdateModuleWindow(false);
             }}
@@ -115,6 +114,7 @@ const ModulePage = () => {
               handleCloseModuleCreateWindow={() => {
                 setShowModuleCreateWindow(false);
               }}
+              handleReloadModuleList={handleReloadModuleList}
             />
           </div>
         )}

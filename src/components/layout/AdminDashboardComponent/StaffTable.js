@@ -31,8 +31,7 @@ const StaffTable = ({
             <th>No</th>
             <th className="expand">Name</th>
             <th>Department</th>
-            <th>Username</th>
-            <th>Password</th>
+            <th>Email</th>
             <th>Edit</th>
           </tr>
         </thead>
@@ -53,13 +52,11 @@ const StaffTable = ({
                 <td>{index + 1}</td>
                 <td>{staff.firstName + " " + staff.lastName}</td>
                 <td>{deparmentList[staff.departmentId - 1]}</td>
-                <td>{staff.username}</td>
-                <td>********</td>
+                <td>{staff.email}</td>
+
                 <td>
-                  <button
-                    onClick={() => handleUpdateStaff(staff)}
-                    className="EditButton"
-                  >
+                  <button onClick={() => handleUpdateStaff(staff)}
+                    className="EditButton">
                     <FaEdit className="EditIcon" />
                   </button>
                 </td>

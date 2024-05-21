@@ -99,21 +99,6 @@ const UpdateStaff = ({
               onChange={(e) => setEmail(e.target.value)}
               inputType="text"
             />
-
-            <InputField
-              placeholder="Enter your user name"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-              inputType="text"
-            />
-
-            {/* Password Input */}
-            <InputField
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              inputType="password"
-            />
             <div className="choice-input mb-3">
               <select
                 value={departmentId}
