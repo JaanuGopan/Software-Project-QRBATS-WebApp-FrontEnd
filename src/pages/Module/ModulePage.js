@@ -104,14 +104,17 @@ const ModulePage = () => {
           </div>
         )}
         {showModuleCreateWindow && (
-          <div className="Module-Create-Event-Dashboard"
+          <div
+            className="Module-Create-Event-Dashboard"
             handleClick={() => {
               setShowUpdateModuleWindow(false);
-            }}>
+            }}
+          >
             <ModuleCreate
               handleCloseModuleCreateWindow={() => {
                 setShowModuleCreateWindow(false);
               }}
+              handleReloadModuleList={handleReloadModuleList}
             />
           </div>
         )}

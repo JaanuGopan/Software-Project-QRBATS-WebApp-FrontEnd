@@ -47,6 +47,10 @@ class ApiConstants {
     return ApiConstants.baseUrl + "/location/getalllocationnames"; //localhost:8080/api/v1/location/getalllocationnames
   }
 
+  static get createModuleUrl() {
+    return ApiConstants.baseUrl + "/module/createmodule"; //localhost:8080/api/v1/module/createmodule
+  }
+
   static get updateUserUrl() {
     return ApiConstants.baseUrl + "/auth/updateuser";
   }

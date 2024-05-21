@@ -5,34 +5,58 @@ import InputField from "../../components/textfields/InputBox/InputField";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import CreateUserService from "../../api/services/CreateUserService";
 import InputList from "../../components/textfields/InputList/InputList";
+import ModuleService from "../../api/services/ModuleService";
+import { selectUser } from "../../redux/features/userSlice";
+import { useSelector } from "react-redux";
 
-const ModuleCreate = ({ handleCloseModuleCreateWindow }) => {
+const ModuleCreate = ({
+  handleCloseModuleCreateWindow,
+  handleReloadModuleList,
+}) => {
   const [moduleName, setModuleName] = useState("");
   const [moduleCode, setModuleCode] = useState("");
   const [semester, setSemester] = useState("");
   const [moduleEnrolmentKey, setModuleEnrolmentKey] = useState("");
   const [departmentId, setDepartmentId] = useState("");
-  const [lectureId, setLectureId] = useState("");
+
+  const { userId } = useSelector(selectUser) || {};
 
   const departmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA"];
   const semesterList = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
-  const handleSubmit = async (e) => {
+  const handleCreateModule = async (e) => {
     e.preventDefault();
     try {
-      const response = CreateUserService.saveUser();
-
-      console.error("Login success...");
-      handleCloseModuleCreateWindow();
+      const response = await ModuleService.createModule(
+        moduleCode,
+        moduleName,
+        moduleEnrolmentKey,
+        semester,
+        departmentList.indexOf(departmentId) + 1,
+        userId
+      );
+      console.log(response);
+      handleClearData();
+      handleReloadModuleList();
     } catch (error) {
-      console.error("Login failed", error);
+      console.error("Fail to create modules.", error);
     }
+  };
+
+  const handleClearData = () => {
+    setModuleCode("");
+    setModuleName("");
+    setDepartmentId("");
+    setModuleEnrolmentKey("");
+    setSemester("");
   };
 
   return (
     <div className="module-signup-main-container">
-      <div className="closeCreateEventWindow"
-        onClick={handleCloseModuleCreateWindow}>
+      <div
+        className="closeCreateEventWindow"
+        onClick={handleCloseModuleCreateWindow}
+      >
         <IoMdCloseCircleOutline />
       </div>
       <p className="module-head1">Create module</p>
@@ -41,7 +65,7 @@ const ModuleCreate = ({ handleCloseModuleCreateWindow }) => {
           <img src={Designer} className="module-logo" alt="Logo" />
         </div>
         <div className="form-container">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleCreateModule}>
             <InputField
               placeholder="Enter The Module Name"
               value={moduleName}
