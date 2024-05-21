@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../AdminDashboard/AdminDashboard.css";
 import LectureTable from "./LectureTable";
 import TotalCount from "../../components/layout/AdminDashboardComponent/TotalCount";
-import Select from 'react-select'
+import Select from "react-select";
 import { FaSchool } from "react-icons/fa6";
 import { IoNewspaperSharp } from "react-icons/io5";
 import NormalButton from "../../components/layout/AdminDashboardComponent/NormalButton";
@@ -14,6 +14,7 @@ import EventService from "../../api/services/EventService";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/userSlice";
 import AdminUpdateEvent from "../Event/AdminUpdateEvent";
+import LocationService from "../../api/services/LocationService";
 
 const LecturerDashboard = () => {
   const [showCreateLecturePopup, setShowCreateLecturePopup] = useState(false);
@@ -21,8 +22,8 @@ const LecturerDashboard = () => {
   const [lectureList, setLectureList] = useState([]);
   const [selectedLecture, setSelectedLecture] = useState(null);
   const [searchLecture, setSearchLecture] = useState("");
-  const [selectTable, setSelectTable] = useState('Events');
-  //const [userId, setUserId] = useState(UserDetails.getUserId);
+  const [selectTable, setSelectTable] = useState("Events");
+  const [venuesList, setVenuesList] = useState([]);
   const user = useSelector(selectUser);
   const { userId } = user || {};
 
@@ -38,10 +39,15 @@ const LecturerDashboard = () => {
       .finally(() => {});
   };
 
+  const handleGetLocationNameList = async () => {
+    const response = await LocationService.getAllLocationNames();
+    setVenuesList(response);
+  };
+
   useEffect(() => {
-    //setUserId(UserDetails.getUserId);
     console.log("user id is : ", userId);
     handleReloadLectureList();
+    handleGetLocationNameList();
   }, []);
 
   const handleDeleteLecture = async () => {
@@ -61,12 +67,12 @@ const LecturerDashboard = () => {
 
   const handleLectureClick = (lecture) => {
     setSelectedLecture(lecture);
-    console.log(searchLecture);
+    console.log(selectedLecture);
   };
 
-  const handleChange = (e) =>{
+  const handleChange = (e) => {
     setSelectTable(e.target.value);
-  }
+  };
 
   return (
     <div className="admin-Dash">
@@ -76,7 +82,7 @@ const LecturerDashboard = () => {
           total={"08"}
           countIcon={
             <FaSchool
-              style={{ color: "white", padding: "2%", fontSize: "250%"}}
+              style={{ color: "white", padding: "2%", fontSize: "250%" }}
             />
           }
           countTitle={"Total Departments"}
@@ -92,9 +98,14 @@ const LecturerDashboard = () => {
         />
       </div>
       <div className="SearchEvent">
-        <select style={{border:'0px', cursor:'pointer'}} value={selectTable} onChange={handleChange} className="mainHead">
-          <option value='Events'>Upcoming Events</option>
-          <option value='Lectures'>Upcoming Lectures</option>
+        <select
+          style={{ border: "0px", cursor: "pointer" }}
+          value={selectTable}
+          onChange={handleChange}
+          className="mainHead"
+        >
+          <option value="Events">Upcoming Events</option>
+          <option value="Lectures">Upcoming Lectures</option>
         </select>
         <input
           type="text"
@@ -110,49 +121,50 @@ const LecturerDashboard = () => {
         />
       </div>
       {selectTable === "Events" ? (
-      <div className="AdminEventList">
-        <LectureTable
-          search={searchLecture}
-          handleUpdateLecture={() => setShowUpdateLecturePopup(true)}
-          onLectureClick={handleLectureClick}
-          lectureList={lectureList} // Pass the eventList prop here
-        />
-
-        <div className="List-Buttons">
-          <NormalButton
-            handleClick={() => setShowCreateLecturePopup(true)}
-            title={"Create"}
-            titlewithiconicon={<MdCreateNewFolder className="buttonIcon" />}
-          />
-          <NormalButton
-            title={"Delete"}
-            handleClick={handleDeleteLecture}
-            titlewithiconicon={<RiDeleteBin5Fill className="buttonIcon" />}
-          />
-        </div>
-      </div>):(
         <div className="AdminEventList">
-        <LectureTable
-          search={searchLecture}
-          handleUpdateLecture={() => setShowUpdateLecturePopup(true)}
-          onLectureClick={handleLectureClick}
-          lectureList={lectureList} // Pass the eventList prop here
-        />
+          <LectureTable
+            search={searchLecture}
+            handleUpdateLecture={() => setShowUpdateLecturePopup(true)}
+            onLectureClick={handleLectureClick}
+            lectureList={lectureList} // Pass the eventList prop here
+          />
 
-        <div className="List-Buttons">
-          <NormalButton
-            handleClick={() => setShowCreateLecturePopup(true)}
-            title={"Create"}
-            titlewithiconicon={<MdCreateNewFolder className="buttonIcon" />}
-          />
-          <NormalButton
-            title={"Delete"}
-            handleClick={handleDeleteLecture}
-            titlewithiconicon={<RiDeleteBin5Fill className="buttonIcon" />}
-          />
+          <div className="List-Buttons">
+            <NormalButton
+              handleClick={() => setShowCreateLecturePopup(true)}
+              title={"Create"}
+              titlewithiconicon={<MdCreateNewFolder className="buttonIcon" />}
+            />
+            <NormalButton
+              title={"Delete"}
+              handleClick={handleDeleteLecture}
+              titlewithiconicon={<RiDeleteBin5Fill className="buttonIcon" />}
+            />
+          </div>
         </div>
-      </div>
-        )}
+      ) : (
+        <div className="AdminEventList">
+          <LectureTable
+            search={searchLecture}
+            handleUpdateLecture={() => setShowUpdateLecturePopup(true)}
+            onLectureClick={handleLectureClick}
+            lectureList={lectureList} // Pass the eventList prop here
+          />
+
+          <div className="List-Buttons">
+            <NormalButton
+              handleClick={() => setShowCreateLecturePopup(true)}
+              title={"Create"}
+              titlewithiconicon={<MdCreateNewFolder className="buttonIcon" />}
+            />
+            <NormalButton
+              title={"Delete"}
+              handleClick={handleDeleteLecture}
+              titlewithiconicon={<RiDeleteBin5Fill className="buttonIcon" />}
+            />
+          </div>
+        </div>
+      )}
       {showCreateLecturePopup && (
         <div
           handleClick={() => setShowCreateLecturePopup(false)}
@@ -163,19 +175,22 @@ const LecturerDashboard = () => {
               setShowCreateLecturePopup(false)
             }
             reloadLectureList={handleReloadLectureList}
+            hideCloseButton={false}
           />
         </div>
       )}
       {showUpdateLecturePopup && (
         <div
           handleClick={() => setShowUpdateLecturePopup(false)}
-          className="Admin-Create-Event-Dashboard">
+          className="Admin-Create-Event-Dashboard"
+        >
           <AdminUpdateEvent
             handlecloseCreateEventWindow={() =>
               setShowUpdateLecturePopup(false)
             }
             selectedEvent={selectedLecture}
             reloadEventList={handleReloadLectureList}
+            locationNameList={venuesList}
           />
         </div>
       )}

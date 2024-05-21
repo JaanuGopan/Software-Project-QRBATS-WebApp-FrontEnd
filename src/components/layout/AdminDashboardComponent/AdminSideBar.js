@@ -12,14 +12,20 @@ import { AiFillDashboard } from "react-icons/ai";
 import Logout from "../../../api/services/logoutService";
 import { useDispatch } from "react-redux";
 import { TbReport } from "react-icons/tb";
+import {
+  setSideBarIndex,
+  resetSideBarIndex,
+} from "../../../redux/features/mainNavigationSlice";
 
 const AdminSideBar = ({ handleclose, index, setIndex }) => {
+  const dispatch = useDispatch();
   const handleMenuClick = (menuIndex) => {
-    setIndex(index === menuIndex ? 0 : menuIndex);
+    dispatch(setSideBarIndex(menuIndex));
+    setIndex(menuIndex);
   };
 
-  const dispatch = useDispatch();
   const handleLogoutClick = () => {
+    dispatch(resetSideBarIndex());
     Logout.handleLogout(dispatch); // Assuming handleLogout is asynchronous
   };
 
