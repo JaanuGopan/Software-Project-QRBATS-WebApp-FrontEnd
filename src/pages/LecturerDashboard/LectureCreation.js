@@ -210,7 +210,7 @@ const LectureCreation = ({
                   options={moduleNameList}
                   onChange={(e) => setModuleName(e)}
                   value={moduleName}
-                  placeholder={"Select Module Name"}
+                  placeholder={"Select Module Code"}
                 />
               </div>
             )}

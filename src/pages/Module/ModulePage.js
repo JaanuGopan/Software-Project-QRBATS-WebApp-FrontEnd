@@ -105,10 +105,11 @@ const ModulePage = () => {
             }}
           >
             <ModuleUpdate
+              handleCloseModuleUpdateWindow={() => {
+                setShowUpdateModuleWindow(false);
+              }}
+              handleReloadModuleList={handleReloadModuleList}
               selectedModule={selectedModule}
-              handleCloseUpdateWindow={() => {}}
-              handleUpdateModule={() => {}}
-              reloadModuleList={handleReloadModuleList}
             />
           </div>
         )}

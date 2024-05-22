@@ -1,20 +1,18 @@
 .input-with-icon {
     position: relative;
-    margin-bottom: 15px;
-    /* Add margin bottom */
 }
 
-
-
-.input-field {
-    padding-left: 40px;
-    padding-top: 5px;
-    /* Add padding top */
+.input-with-icon input {
+    padding-right: 30px;
+    /* Add some padding to accommodate the icon */
 }
 
-/* Style placeholder text */
-.input-field::placeholder {
-    color: #aaa;
-    margin-left: 50px;
-    /* Adjust placeholder position */
+.password-toggle-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+    /* You can change the color to fit your design */
 }

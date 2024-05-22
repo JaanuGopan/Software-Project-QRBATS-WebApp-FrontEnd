@@ -20,23 +20,6 @@ const UserInterface = () => {
           <p className="paragraphStyle">
             QR BASED ATTENDANCE TRACKING SYSTEM USING GPS LOCATION
           </p>
-          <a href="/signup">
-            <Button
-              style={{
-                background:
-                  "radial-gradient(circle, rgba(0, 86, 214, 1), rgba(1, 77, 123, 0.81))",
-                border: "2px solid white",
-                borderRadius: "10px",
-                fontWeight: "bold",
-                transition: "background 0.3s",
-                "&:hover": { background: "red" },
-              }}
-              variant="contained"
-              size="large"
-            >
-              Sign Up to the system
-            </Button>
-          </a>
         </div>
       </div>
       <div className="userinterface-container">
