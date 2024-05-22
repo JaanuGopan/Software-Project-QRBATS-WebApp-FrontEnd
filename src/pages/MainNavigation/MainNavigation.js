@@ -18,21 +18,35 @@ import ModulePage from "../Module/ModulePage";
 import LectureCreationDashboard from "../LecturerDashboard/LectureCreationDashboard";
 import AdminEventCreationDashboard from "../Event/AdminEventCreationDashboard";
 import LocationService from "../../api/services/LocationService";
+import {
+  setLocationList,
+  resetLocationList,
+} from "../../redux/features/locationListSlice";
+import LogoutConfirmation from "../LogoutPage/LogoutConfirmation";
+import { resetSideBarIndex } from "../../redux/features/mainNavigationSlice";
+import Logout from "../../api/services/logoutService";
 
 function MainNavigationPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const sideBarIndex = useSelector((state) => state.mainNavigation);
+  const locationList = useSelector((state) => state.locationList);
 
   const { role } = user || {};
 
   const [venuesList, setVenuesList] = useState([]);
   const [openMenu, setOpenMenu] = useState(0);
+  const [handleShowLogoutWindow, setHandleShowLogoutWindow] = useState(false);
 
   const handleGetLocationNameList = async () => {
     const response = await LocationService.getAllLocationNames();
     setVenuesList(response);
+  };
+
+  const handleLogoutClick = () => {
+    Logout.handleLogout(dispatch); // Assuming handleLogout is asynchronous
+    dispatch(resetSideBarIndex());
   };
 
   // If user is already logged in, redirect to mainNavigation
@@ -74,6 +88,9 @@ function MainNavigationPage() {
             handleclose={handleclose}
             index={openMenu}
             setIndex={setOpenMenu}
+            handleShowLogoutWindow={() => {
+              setHandleShowLogoutWindow(true);
+            }}
           />
         )}
         {role === "ADMIN" && (
@@ -95,6 +112,16 @@ function MainNavigationPage() {
             {openMenu === 2 && <ModulePage />}
             {openMenu === 3 && <EventReport />}
             {openMenu === 4 && <Setting />}
+          </div>
+        )}
+        {handleShowLogoutWindow === true && (
+          <div className="logout-window">
+            <LogoutConfirmation
+              handleCloseLogoutWindow={() => {
+                setHandleShowLogoutWindow(false);
+              }}
+              handleLogout={handleLogoutClick}
+            />
           </div>
         )}
       </div>

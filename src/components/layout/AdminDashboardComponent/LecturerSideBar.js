@@ -16,7 +16,12 @@ import {
   resetSideBarIndex,
 } from "../../../redux/features/mainNavigationSlice";
 
-const LecturerSideBar = ({ handleclose, index, setIndex }) => {
+const LecturerSideBar = ({
+  handleclose,
+  index,
+  setIndex,
+  handleShowLogoutWindow,
+}) => {
   const dispatch = useDispatch();
   const handleMenuClick = (menuIndex) => {
     dispatch(setSideBarIndex(menuIndex));
@@ -67,7 +72,7 @@ const LecturerSideBar = ({ handleclose, index, setIndex }) => {
           isOpen={index === 4}
         />
         <Sidebarbutton
-          handleSidebarMenu={handleLogoutClick}
+          handleSidebarMenu={handleShowLogoutWindow}
           title={"Logout"}
           titlewithiconicon={<IoLogOut className="buttonIcon" />}
         />

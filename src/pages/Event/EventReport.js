@@ -5,23 +5,23 @@ import EventAttendancetable from "../../components/layout/AdminDashboardComponen
 import NormalButton from "../../components/layout/AdminDashboardComponent/NormalButton";
 import { MdArrowBack } from "react-icons/md";
 import { BiSolidPrinter } from "react-icons/bi";
-import FetchEventsService from "../../api/services/FetchEventsService";
-import FetchAttendanceByEventIdService from "../../api/services/FetchAttendanceByEventIdService";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-
+import EventService from "../../api/services/EventService";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/features/userSlice";
 const EventReport = () => {
   const [eventReportTable, setEventReportTable] = useState(true);
-
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [eventList, setEventList] = useState([]);
   const [search, setSearch] = useState("");
-
   const [selectedAttendance, setSelectedAttendance] = useState(null);
   const [attendanceList, setAttendanceList] = useState([]);
 
+  const user = useSelector(selectUser);
+  const { userId } = user || {};
+
   useEffect(() => {
-    // Fetch the list of events from the API using the new class
     handleReloadEventList();
   }, []);
 
@@ -32,7 +32,7 @@ const EventReport = () => {
   };
 
   const handleReloadEventList = async () => {
-    FetchEventsService.fetchEvents()
+    EventService.getEventByUserID(userId)
       .then((events) => {
         setEventList(events);
       })

@@ -209,14 +209,15 @@ a:hover {
   border-radius: 50px;
   margin-left: 95%;
   width: 25px;
+  height: 25px;
 }
 .closeCreateEventWindow:hover{
     color: white;
   background-color: red;
+  
 }
 
 .QRCode-img{
     width: 100%;
     height: 100%;
-    
 }

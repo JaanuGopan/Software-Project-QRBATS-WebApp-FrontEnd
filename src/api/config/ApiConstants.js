@@ -51,6 +51,14 @@ class ApiConstants {
     return ApiConstants.baseUrl + "/module/createmodule"; //localhost:8080/api/v1/module/createmodule
   }
 
+  static get deleteModuleUrl() {
+    return ApiConstants.baseUrl + "/module/deletemodule"; //localhost:8080/api/v1/module/deletemodule/{id}
+  }
+
+  static get getAllModulesByDepartmentId() {
+    return ApiConstants.baseUrl + "/module/getallmodulebydepartmentid"; //localhost:8080/api/v1/module/getallmodulebydepartmentid/{departmentId}
+  }
+
   static get updateUserUrl() {
     return ApiConstants.baseUrl + "/auth/updateuser";
   }

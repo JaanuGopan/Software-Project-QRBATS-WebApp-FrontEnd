@@ -64,9 +64,9 @@
   }
   
   .logo1 {
-    width: 5vw;
+    width: 25%;
+    height: 80%;
     min-width: 60px;
-    height: 100%;
     min-height: 45px;
     padding: 5px;
     border-radius: 0.5rem;
