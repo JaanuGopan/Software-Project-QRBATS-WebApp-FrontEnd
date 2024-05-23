@@ -59,6 +59,12 @@ class ApiConstants {
     return ApiConstants.baseUrl + "/module/getallmodulebydepartmentid"; //localhost:8080/api/v1/module/getallmodulebydepartmentid/{departmentId}
   }
 
+  static get getAllStudentsByDepartmentIdAndSemester() {
+    return (
+      ApiConstants.baseUrl + "/report/getallstudentsbydepartmentidandsemester"
+    ); //localhost:8080/api/v1/report/getallstudentsbydepartmentidandsemester?deptId=2&sem=6
+  }
+
   static get updateUserUrl() {
     return ApiConstants.baseUrl + "/auth/updateuser";
   }
