@@ -19,7 +19,7 @@ const UpdateSetting = ({ handlecloseUpdateSettingWindow }) => {
       </div>
       <h2>Update Profile</h2>
       <div className="setting-field">
-        <img src={eventCreationImage} className="Create-logo" alt="Logo" />
+        {/* <img src={eventCreationImage} className="Create-logo" alt="Logo" /> */}
         <div className="eventCreation-input-field">
           <form onSubmit={""}>
             <div className="Setting-input-with-icon">
