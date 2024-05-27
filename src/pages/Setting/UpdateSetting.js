@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import "./Setting.css";
-import eventCreationImage from "../../assets/Images/signin/Signin.jpeg";
 import { IoMdCloseCircleOutline } from "react-icons/io";
-import { CircularProgress, TextField } from "@mui/material";
-import InputField from "../../components/textfields/InputBox/InputField";
 import Select from "react-select";
 import Switch from "@mui/material/Switch";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/userSlice";
 import Department from "../../utils/Department";
 import UserService from "../../api/services/UserService";
+import InputField from "../../components/textfields/InputBox/InputField";
 import InputPassword from "../../components/textfields/InputPassword/InputPassword";
+import toast, { Toaster } from "react-hot-toast";
 
 const UpdateSetting = ({ handlecloseUpdateSettingWindow }) => {
   const dispatch = useDispatch();
@@ -30,10 +29,16 @@ const UpdateSetting = ({ handlecloseUpdateSettingWindow }) => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
+  const [errors, setErrors] = useState({});
+
   const departmentList = Department.departmentList.map((value, index) => ({
     value: index + 1,
     label: value,
   }));
+
+  const notifySuccess = () => toast.success("Successfully Profile Updated!");
+  const notifyPasswordVerify = () =>
+    toast.success("Successfully Password Verified!");
 
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -44,25 +49,75 @@ const UpdateSetting = ({ handlecloseUpdateSettingWindow }) => {
     setOldPassword("");
   };
 
-  const handleValidation = () => {};
+  const validateEmail = (email) => {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  };
+
+  const handleValidation = () => {
+    let formErrors = {};
+    let formIsValid = true;
+
+    if (!firstName) {
+      formIsValid = false;
+      formErrors["firstName"] = "First Name cannot be empty";
+    }
+
+    if (!lastName) {
+      formIsValid = false;
+      formErrors["lastName"] = "Last Name cannot be empty";
+    }
+
+    if (!email) {
+      formIsValid = false;
+      formErrors["email"] = "Email cannot be empty";
+    } else if (!validateEmail(email)) {
+      formIsValid = false;
+      formErrors["email"] = "Email is not valid";
+    }
+
+    if (!userName) {
+      formIsValid = false;
+      formErrors["userName"] = "User Name cannot be empty";
+    }
+
+    if (showNewPassword) {
+      if (!newPassword) {
+        formIsValid = false;
+        formErrors["newPassword"] = "New Password cannot be empty";
+      }
+
+      if (newPassword !== confirmNewPassword) {
+        formIsValid = false;
+        formErrors["confirmNewPassword"] = "Passwords do not match";
+      }
+    }
+
+    setErrors(formErrors);
+    return formIsValid;
+  };
 
   const handleUpdateUser = async (event) => {
     event.preventDefault();
-    const response = await UserService.updateUser(
-      user.userId,
-      firstName,
-      lastName,
-      email,
-      userName,
-      newPassword,
-      departmentId.value
-    );
-    if (response) {
-      handlecloseUpdateSettingWindow();
+    if (handleValidation()) {
+      const response = await UserService.updateUser(
+        user.userId,
+        firstName,
+        lastName,
+        email,
+        userName,
+        newPassword,
+        departmentId.value
+      );
+      if (response) {
+        handlecloseUpdateSettingWindow();
+        notifySuccess();
+      }
     }
   };
 
-  const handleVerifyPassword = async () => {
+  const handleVerifyPassword = async (e) => {
+    e.preventDefault();
     if (oldPassword) {
       setIsLoading(true);
       try {
@@ -73,6 +128,7 @@ const UpdateSetting = ({ handlecloseUpdateSettingWindow }) => {
         console.log(response);
         if (response === true) {
           setShowNewPassword(true);
+          notifyPasswordVerify();
         }
       } catch (error) {
         console.error(error);
@@ -84,6 +140,7 @@ const UpdateSetting = ({ handlecloseUpdateSettingWindow }) => {
 
   return (
     <div className="setting-update-main-container">
+      <Toaster />
       <div
         className="closeCreateEventWindow"
         onClick={handlecloseUpdateSettingWindow}
@@ -98,28 +155,34 @@ const UpdateSetting = ({ handlecloseUpdateSettingWindow }) => {
               <label>First Name</label>
               <InputField
                 required
-                type={"text"}
+                inputType={"text"}
                 placeholder={"Enter First Name"}
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
+                error={!!errors.firstName}
+                helperText={errors.firstName}
               />
             </div>
             <div className="Setting-input-with-icon">
               <label>Last Name</label>
               <InputField
-                type={"text"}
+                inputType={"text"}
                 placeholder={"Enter Last Name"}
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
+                error={!!errors.lastName}
+                helperText={errors.lastName}
               />
             </div>
             <div className="Setting-input-with-icon">
               <label>Email</label>
               <InputField
-                type={"text"}
+                inputType={"text"}
                 placeholder={"Enter Email"}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                error={!!errors.email}
+                helperText={errors.email}
               />
             </div>
             {user.role === "LECTURER" && (
@@ -139,10 +202,12 @@ const UpdateSetting = ({ handlecloseUpdateSettingWindow }) => {
             <div className="Setting-input-with-icon">
               <label>User Name</label>
               <InputField
-                type={"text"}
+                inputType={"text"}
                 placeholder={"Enter UserName"}
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)}
+                error={!!errors.userName}
+                helperText={errors.userName}
               />
             </div>
             <div>
@@ -163,8 +228,10 @@ const UpdateSetting = ({ handlecloseUpdateSettingWindow }) => {
                     value={oldPassword}
                     onChange={(e) => setOldPassword(e.target.value)}
                     buttonText={"verify"}
-                    onButtonClick={handleVerifyPassword}
+                    onButtonClick={(e) => handleVerifyPassword(e)}
                     isLoading={isLoading}
+                    error={!!errors.oldPassword}
+                    helperText={errors.oldPassword}
                   />
                 </div>
               </div>
@@ -177,6 +244,8 @@ const UpdateSetting = ({ handlecloseUpdateSettingWindow }) => {
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   showButton={false}
+                  error={!!errors.newPassword}
+                  helperText={errors.newPassword}
                 />
                 <label>Confirm New Password</label>
                 <InputPassword
@@ -184,6 +253,8 @@ const UpdateSetting = ({ handlecloseUpdateSettingWindow }) => {
                   value={confirmNewPassword}
                   onChange={(e) => setConfirmNewPassword(e.target.value)}
                   showButton={false}
+                  error={!!errors.confirmNewPassword}
+                  helperText={errors.confirmNewPassword}
                 />
               </div>
             )}
