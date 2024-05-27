@@ -18,10 +18,6 @@ import ModulePage from "../Module/ModulePage";
 import LectureCreationDashboard from "../LecturerDashboard/LectureCreationDashboard";
 import AdminEventCreationDashboard from "../Event/AdminEventCreationDashboard";
 import LocationService from "../../api/services/LocationService";
-import {
-  setLocationList,
-  resetLocationList,
-} from "../../redux/features/locationListSlice";
 import LogoutConfirmation from "../LogoutPage/LogoutConfirmation";
 import { resetSideBarIndex } from "../../redux/features/mainNavigationSlice";
 import Logout from "../../api/services/logoutService";
@@ -62,30 +58,53 @@ function MainNavigationPage() {
   }, [user, navigate]);
 
   const [isHidden, setIsHidden] = useState(false);
-  const handleshow = () => {
-    setIsHidden(false);
+  const handleShow = () => {
+    if (isHidden) {
+      setIsHidden(false);
+    } else {
+      setIsHidden(true);
+    }
   };
-  const handleclose = () => {
+  const handleClose = () => {
     setIsHidden(true);
+  };
+
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
   };
 
   return (
     <div className="staff-Main">
-      <div className="menuButton" onClick={handleshow}>
-        <PiListDashesFill size={"30px"} />
+      <div
+        className="menuButton"
+        onClick={handleShow}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        <PiListDashesFill
+          size={"30px"}
+          color={isHovered ? "#0366a4" : "white"}
+        />
       </div>
       <StaffNavBar setIndex={setOpenMenu} />
       <div className="staff-Submain">
         {!isHidden && role === "ADMIN" && (
           <AdminSideBar
-            handleclose={handleclose}
+            handleClose={handleClose}
             index={openMenu}
             setIndex={setOpenMenu}
+            handleLogout={() => setHandleShowLogoutWindow(true)}
           />
         )}
         {!isHidden && role === "LECTURER" && (
           <LecturerSideBar
-            handleclose={handleclose}
+            handleclose={handleClose}
             index={openMenu}
             setIndex={setOpenMenu}
             handleShowLogoutWindow={() => {

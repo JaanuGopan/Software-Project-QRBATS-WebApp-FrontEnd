@@ -226,11 +226,10 @@
 
 .menuButton{
   position: absolute;
-  color:'black';
   margin-top: 5rem;
-  z-index: 1;
+  z-index: 2;
   cursor: pointer;
-  background-color:#ccc;
+  background-color:#0366a4;
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
   padding: 5px;
@@ -238,7 +237,7 @@
 }
 
 .menuButton:hover{
-  background-color: darkgray;
+  background-color: white;
 }
 
 .closeButton{
@@ -247,15 +246,16 @@
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  align-items: center;
-  justify-content: flex-end;
-  margin-left: 75%;
-  margin-top: 10px;
+  align-items:start;
+  justify-content: flex-start;
+  margin-left: -80%;
+  margin-top: 3px;
   padding: 5px;
-  border-radius: 50px;
+  border-radius: 10px;
+  border-color: white;
 }
 .closeButton:hover{
-  background-color: #025587;
+  background-color: white;
 }
 
 .Staff-Subpage{

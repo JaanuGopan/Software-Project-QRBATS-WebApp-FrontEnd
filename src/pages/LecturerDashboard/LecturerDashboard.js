@@ -9,7 +9,6 @@ import NormalButton from "../../components/layout/AdminDashboardComponent/Normal
 import { MdCreateNewFolder } from "react-icons/md";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import LectureCreation from "./LectureCreation";
-import DeleteEventService from "../../api/services/DeleteEventService";
 import EventService from "../../api/services/EventService";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/userSlice";
@@ -51,18 +50,13 @@ const LecturerDashboard = () => {
   }, []);
 
   const handleDeleteLecture = async () => {
-    selectedLecture != null ??
-      DeleteEventService.deleteEvent(selectedLecture.eventId)
-        .then(() => {
-          console.log("Error in deleted successfully ");
-        })
-        .catch((error) => {
-          console.log("Error in delete lecture ", error);
-        })
-        .finally(() => {
-          handleReloadLectureList();
-          setSelectedLecture(null);
-        });
+    if (selectedLecture) {
+      EventService.deleteEvent(selectedLecture.eventId).then(() => {
+        console.log("Error in deleted successfully ");
+        handleReloadLectureList();
+        setSelectedLecture(null);
+      });
+    }
   };
 
   const handleLectureClick = (lecture) => {
@@ -104,8 +98,8 @@ const LecturerDashboard = () => {
           onChange={handleChange}
           className="mainHead"
         >
-          <option value="Events">Upcoming Events</option>
-          <option value="Lectures">Upcoming Lectures</option>
+          <option value="Events">Events List</option>
+          <option value="Lectures">Lectures List</option>
         </select>
         <input
           type="text"
