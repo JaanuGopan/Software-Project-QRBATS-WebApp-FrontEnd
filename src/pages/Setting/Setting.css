@@ -57,3 +57,8 @@
     display: flex;
     flex-direction: row;
 }
+
+.update-setting-input-form{
+    padding: 5%;
+    width: 100%;
+}

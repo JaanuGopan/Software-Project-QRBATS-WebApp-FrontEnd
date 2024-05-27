@@ -11,10 +11,10 @@ import { MdCreateNewFolder } from "react-icons/md";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import AdminUpdateEvent from "../Event/AdminUpdateEvent";
 import AdminEventCreation from "../Event/AdminEventCreation";
-import DeleteEventService from "../../api/services/DeleteEventService";
 import FetchEventsService from "../../api/services/FetchEventsService";
 import LocationService from "../../api/services/LocationService";
 import { useDispatch } from "react-redux";
+import EventService from "../../api/services/EventService";
 
 const AdminDashboard = () => {
   const [eventCreatePopUpWindow, setEventCreatePopUpWindow] = useState(false);
@@ -45,11 +45,7 @@ const AdminDashboard = () => {
 
   const handleDelete = async () => {
     try {
-      const response = await DeleteEventService.deleteEvent(
-        selectedEvent.eventId
-      );
-      // After deleting, you may want to update the event list
-      // Fetch the updated event list
+      const response = await EventService.deleteEvent(selectedEvent.eventId);
       handleReloadEventList();
     } catch (error) {
       console.log("error " + error);

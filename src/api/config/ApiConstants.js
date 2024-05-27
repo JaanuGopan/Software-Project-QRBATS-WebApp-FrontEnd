@@ -5,11 +5,20 @@ class ApiConstants {
   static get baseUrl() {
     return "http://" + ApiConstants.baseIpUrl + ":8080/api/v1"; // "http://localhost:8080";
   }
-  static get loginUrl() {
-    return ApiConstants.baseUrl + "/auth/signin"; //http://localhost:8080/api/v1/auth/signin
+  static loginUrl(userName, password) {
+    return (
+      ApiConstants.baseUrl +
+      `/auth/signin?userName=${userName}&password=${password}`
+    ); //http://localhost:8080/api/v1/auth/signin
   }
   static get signupUrl() {
     return ApiConstants.baseUrl + "/auth/signup";
+  }
+  static verifyPasswordUrl(userName, password) {
+    return (
+      ApiConstants.baseUrl +
+      `/auth/verifypassword?userName=${userName}&password=${password}`
+    ); //localhost:8080/api/v1/auth/verifypassword?userName=----&password=----
   }
   static get createEventUrl() {
     return ApiConstants.baseUrl + "/event/create"; //http://localhost:8080/api/v1/event/create
@@ -18,7 +27,7 @@ class ApiConstants {
     return ApiConstants.baseUrl + "/event/getallevents"; //http://localhost:8080/api/v1/event/getallevents
   }
   static get deleteEventUrl() {
-    return ApiConstants.baseUrl + "/event/deletebyid"; //http://localhost:8080/api/v1/event/deletebyid
+    return ApiConstants.baseUrl + "/event/deletebyid"; //http://localhost:8080/api/v1/event/deletebyid/{eventId}
   }
   static get getAllStaffUrl() {
     return ApiConstants.baseUrl + "/auth/getallstaffs"; //http://localhost:8080/api/v1/auth/getallstaffs

@@ -15,6 +15,11 @@ import {
   setSideBarIndex,
   resetSideBarIndex,
 } from "../../../redux/features/mainNavigationSlice";
+import {
+  PiListDashes,
+  PiListDashesBold,
+  PiListDashesFill,
+} from "react-icons/pi";
 
 const LecturerSideBar = ({
   handleclose,
@@ -35,9 +40,6 @@ const LecturerSideBar = ({
 
   return (
     <div className="Staff-Sidebar">
-      <div className="closeButton" onClick={handleclose}>
-        <IoMdCloseCircleOutline />
-      </div>
       <img src={logo} className="Sidebarlogo" alt="Logo" />
       <div className="SideBar">
         <Sidebarbutton

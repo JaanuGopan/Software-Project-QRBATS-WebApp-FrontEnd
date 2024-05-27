@@ -9,15 +9,11 @@ import "../../../pages/StaffMainNavigation/StaffMainNavigation.css";
 import logo from "../../../assets/Images/logo/logo_white.png";
 import Sidebarbutton from "../StaffDashboardComponents/Sidebarbutton";
 import { AiFillDashboard } from "react-icons/ai";
-import Logout from "../../../api/services/logoutService";
 import { useDispatch } from "react-redux";
 import { TbReport } from "react-icons/tb";
-import {
-  setSideBarIndex,
-  resetSideBarIndex,
-} from "../../../redux/features/mainNavigationSlice";
+import { setSideBarIndex } from "../../../redux/features/mainNavigationSlice";
 
-const AdminSideBar = ({ handleclose, index, setIndex }) => {
+const AdminSideBar = ({ handleClose, index, setIndex, handleLogout }) => {
   const dispatch = useDispatch();
   const handleMenuClick = (menuIndex) => {
     dispatch(setSideBarIndex(menuIndex));
@@ -25,13 +21,12 @@ const AdminSideBar = ({ handleclose, index, setIndex }) => {
   };
 
   const handleLogoutClick = () => {
-    dispatch(resetSideBarIndex());
-    Logout.handleLogout(dispatch); // Assuming handleLogout is asynchronous
+    handleLogout();
   };
 
   return (
     <div className="Staff-Sidebar">
-      <div className="closeButton" onClick={handleclose}>
+      <div className="closeButton" onClick={handleClose}>
         <IoMdCloseCircleOutline />
       </div>
       <img src={logo} className="Sidebarlogo" alt="Logo" />
