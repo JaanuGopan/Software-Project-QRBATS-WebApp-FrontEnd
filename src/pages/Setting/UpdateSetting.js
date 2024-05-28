@@ -11,7 +11,7 @@ import InputField from "../../components/textfields/InputBox/InputField";
 import InputPassword from "../../components/textfields/InputPassword/InputPassword";
 import toast, { Toaster } from "react-hot-toast";
 
-const UpdateSetting = ({ handlecloseUpdateSettingWindow }) => {
+const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
@@ -110,7 +110,7 @@ const UpdateSetting = ({ handlecloseUpdateSettingWindow }) => {
         departmentId.value
       );
       if (response) {
-        handlecloseUpdateSettingWindow();
+        handleCloseUpdateSettingWindow();
         notifySuccess();
       }
     }
@@ -143,7 +143,7 @@ const UpdateSetting = ({ handlecloseUpdateSettingWindow }) => {
       <Toaster />
       <div
         className="closeCreateEventWindow"
-        onClick={handlecloseUpdateSettingWindow}
+        onClick={handleCloseUpdateSettingWindow}
       >
         <IoMdCloseCircleOutline />
       </div>

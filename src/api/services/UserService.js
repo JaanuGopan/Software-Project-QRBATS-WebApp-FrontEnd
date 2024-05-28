@@ -60,6 +60,18 @@ class UserService {
         const loginUserDepartmentId = decodedToken.departmentId;
         localStorage.setItem("token", response.data.token);
 
+        const userData = {
+          token: response.data.token,
+          userId: loginUserId,
+          firstName: loginUserFirstName,
+          lastName: loginUserLastName,
+          email: loginUserEmail,
+          role: loginUserRole,
+          departmentId: loginUserDepartmentId,
+          userName: loginUserName,
+        };
+        localStorage.setItem("user", JSON.stringify(userData));
+
         dispatch(
           login({
             token: response.data.token,

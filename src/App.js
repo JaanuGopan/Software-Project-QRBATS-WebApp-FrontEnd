@@ -6,12 +6,7 @@ import { useSelector } from "react-redux";
 
 function App() {
   const user = useSelector(selectUser);
-  return (
-    <div>
-      {user ? <MainNavigationPage /> : <UserInterface />}
-      {/* <UserInterface /> */}
-    </div>
-  );
+  return <div>{user ? <MainNavigationPage /> : <UserInterface />}</div>;
 }
 
 export default App;

@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { IoSettings } from "react-icons/io5";
-import { MdOutlineEventNote } from "react-icons/md";
+import {
+  MdOutlineEventNote,
+  MdOutlineQrCode,
+  MdOutlineQrCode2,
+  MdQrCode,
+  MdQrCode2,
+  MdQrCodeScanner,
+} from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
 import "../../../pages/StaffMainNavigation/StaffMainNavigation.css";
 import logo from "../../../assets/Images/logo/logo_white.png";
@@ -51,7 +58,7 @@ const LecturerSideBar = ({
         <Sidebarbutton
           handleSidebarMenu={() => handleMenuClick(1)}
           title={"QR Generate"}
-          titlewithiconicon={<MdAssignmentAdd className="buttonIcon" />}
+          titlewithiconicon={<MdQrCode className="buttonIcon" />}
           isOpen={index === 1}
         />
         <Sidebarbutton

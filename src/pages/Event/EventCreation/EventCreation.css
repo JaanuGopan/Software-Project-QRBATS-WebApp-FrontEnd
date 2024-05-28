@@ -13,6 +13,7 @@
     background-color: #ffffff;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 2;
+    overflow: scroll;
 }
 
 .event-main-container2 {
@@ -43,6 +44,7 @@
 
 .eventCreation-input-field{
     padding: 5%;
+    width: 50%;
 }
 
 h2 {

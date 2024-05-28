@@ -4,7 +4,7 @@ import QRCode from "qrcode.react";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import toast, { Toaster } from "react-hot-toast";
 import "../Event/EventCreation/EventCreation.css";
-import eventCreationImage from "../../assets/Images/signin/Signin.jpeg";
+import eventCreationImage from "../../assets/Images/designer_pic/Designer_pic4.jpeg";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useSelector } from "react-redux";
@@ -18,6 +18,7 @@ const LectureCreation = ({
   reloadLectureList,
   hideCloseButton,
   locationNameList,
+  showImage = false,
 }) => {
   const user = useSelector(selectUser);
   const { userId, departmentId } = user || {};
@@ -180,7 +181,9 @@ const LectureCreation = ({
       )}
       <h2>Create {` ${title}`}</h2>
       <div className="eventCreation-field">
-        <img src={eventCreationImage} className="Create-logo" alt="Logo" />
+        {showImage && (
+          <img src={eventCreationImage} className="Create-logo" alt="Logo" />
+        )}
         <div className="eventCreation-input-field">
           <DualButtonComponent
             onSelect={handleSelectedButton}
@@ -189,6 +192,9 @@ const LectureCreation = ({
           />
           <form onSubmit={handleSubmit}>
             <div className="input-with-icon">
+              <label className="date-label" htmlFor="moduleCode">
+                {`Lecture Name`}
+              </label>
               <input
                 required
                 type="text"
@@ -203,6 +209,9 @@ const LectureCreation = ({
 
             {selectedButton == 1 && (
               <div className="input-with-icon">
+                <label className="date-label" htmlFor="moduleCode">
+                  {`Module Code`}
+                </label>
                 <Select
                   required
                   id="moduleName"
