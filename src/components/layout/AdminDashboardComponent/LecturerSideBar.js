@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { IoSettings } from "react-icons/io5";
-import {
-  MdOutlineEventNote,
-  MdOutlineQrCode,
-  MdOutlineQrCode2,
-  MdQrCode,
-  MdQrCode2,
-  MdQrCodeScanner,
-} from "react-icons/md";
+import { MdOutlineEventNote, MdQrCode } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
 import "../../../pages/StaffMainNavigation/StaffMainNavigation.css";
 import logo from "../../../assets/Images/logo/logo_white.png";
@@ -17,19 +10,16 @@ import { AiFillDashboard } from "react-icons/ai";
 import Logout from "../../../api/services/logoutService";
 import { useDispatch } from "react-redux";
 import { TbReport } from "react-icons/tb";
-import { MdAssignmentAdd } from "react-icons/md";
 import {
   setSideBarIndex,
   resetSideBarIndex,
 } from "../../../redux/features/mainNavigationSlice";
-import {
-  PiListDashes,
-  PiListDashesBold,
-  PiListDashesFill,
-} from "react-icons/pi";
+import { FaList } from "react-icons/fa";
+import { CiViewList } from "react-icons/ci";
+import { FaRegListAlt } from "react-icons/fa";
 
 const LecturerSideBar = ({
-  handleclose,
+  handleClose,
   index,
   setIndex,
   handleShowLogoutWindow,
@@ -76,9 +66,15 @@ const LecturerSideBar = ({
         />
         <Sidebarbutton
           handleSidebarMenu={() => handleMenuClick(4)}
+          title={"Module Report"}
+          titlewithiconicon={<FaRegListAlt className="buttonIcon" />}
+          isOpen={index === 4}
+        />
+        <Sidebarbutton
+          handleSidebarMenu={() => handleMenuClick(5)}
           title={"Setting"}
           titlewithiconicon={<IoSettings className="buttonIcon" />}
-          isOpen={index === 4}
+          isOpen={index === 5}
         />
         <Sidebarbutton
           handleSidebarMenu={handleShowLogoutWindow}

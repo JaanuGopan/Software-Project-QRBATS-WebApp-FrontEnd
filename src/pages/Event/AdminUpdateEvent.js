@@ -124,7 +124,7 @@ const AdminUpdateEvent = ({
         className="closeCreateEventWindow"
         onClick={handlecloseCreateEventWindow}
       >
-        <IoMdCloseCircleOutline />
+        <IoMdCloseCircleOutline size={25} />
       </div>
       <h2>Update Event</h2>
       <div className="eventCreation-field">

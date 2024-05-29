@@ -142,10 +142,10 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
     <div className="setting-update-main-container">
       <Toaster />
       <div
-        className="closeCreateEventWindow"
+        className="closeUpdateSettingWindow"
         onClick={handleCloseUpdateSettingWindow}
       >
-        <IoMdCloseCircleOutline />
+        <IoMdCloseCircleOutline size={25} />
       </div>
       <h2>Update Profile</h2>
       <div className="setting-field">

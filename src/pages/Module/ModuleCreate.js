@@ -3,7 +3,7 @@ import "./ModulePage.css";
 import Designer from "../../assets/Images/Designer.jpeg";
 import InputField from "../../components/textfields/InputBox/InputField";
 import { IoMdCloseCircleOutline } from "react-icons/io";
-import CreateUserService from "../../api/services/CreateUserService";
+import { IoIosClose } from "react-icons/io";
 import InputList from "../../components/textfields/InputList/InputList";
 import ModuleService from "../../api/services/ModuleService";
 import { selectUser } from "../../redux/features/userSlice";
@@ -54,31 +54,33 @@ const ModuleCreate = ({
   return (
     <div className="module-signup-main-container">
       <div
-        className="closeCreateEventWindow"
+        className="closeCreateModuleWindow"
         onClick={handleCloseModuleCreateWindow}
       >
-        <IoMdCloseCircleOutline />
+        <IoMdCloseCircleOutline size={25} />
       </div>
       <p className="module-head1">Create module</p>
       <div className="module-login-container">
-        <div className="module-image-container">
+        {/* <div className="module-image-container">
           <img src={Designer} className="module-logo" alt="Logo" />
-        </div>
+        </div> */}
         <div className="form-container">
           <form onSubmit={handleCreateModule}>
+            <label>Module Name</label>
             <InputField
               placeholder="Enter The Module Name"
               value={moduleName}
               onChange={(e) => setModuleName(e.target.value)}
               inputType="text"
             />
+            <label>Module Code</label>
             <InputField
               placeholder="Enter the module code"
               value={moduleCode}
               onChange={(e) => setModuleCode(e.target.value)}
               inputType="text"
             />
-
+            <label>Semester</label>
             <div className="choice-input mb-3">
               <InputList
                 placeholder="Select semester"
@@ -92,6 +94,7 @@ const ModuleCreate = ({
             </div>
 
             <div className="choice-input mb-3">
+              <label>Department</label>
               <InputList
                 placeholder="Select department"
                 value={departmentId}
@@ -102,6 +105,7 @@ const ModuleCreate = ({
                 className="student-select-input"
               />
             </div>
+            <label>Enrolment Key</label>
             <InputField
               placeholder="Enter Module Enrolment Key"
               value={moduleEnrolmentKey}

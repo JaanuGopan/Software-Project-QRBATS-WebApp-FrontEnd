@@ -176,7 +176,7 @@ const LectureCreation = ({
           className="closeCreateEventWindow"
           onClick={handleCloseCreateLectureWindow}
         >
-          <IoMdCloseCircleOutline />
+          <IoMdCloseCircleOutline size={25} />
         </div>
       )}
       <h2>Create {` ${title}`}</h2>

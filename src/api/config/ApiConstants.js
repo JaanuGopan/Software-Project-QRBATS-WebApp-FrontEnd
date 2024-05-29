@@ -47,6 +47,12 @@ class ApiConstants {
   static get getAllEventByUserIdUrl() {
     return ApiConstants.baseUrl + "/event/geteventbyuserid"; //localhost:8080/api/v1/event/geteventbyuserid
   }
+  static getAllLecturesByModuleCode(moduleCode) {
+    return (
+      ApiConstants.baseUrl +
+      `/event/getalleventbymodulecode?moduleCode=${moduleCode}`
+    ); //localhost:8080/api/v1/event/getalleventbymodulecode?moduleCode=EE1234
+  }
 
   static get getAllModulesByUserIdUrl() {
     return ApiConstants.baseUrl + "/module/getmodulebylecturerid"; //localhost:8080/api/v1/module/getmodulebylecturerid/{userid}

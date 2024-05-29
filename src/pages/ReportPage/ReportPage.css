@@ -1,68 +1,68 @@
 @media screen and (max-width: 1800px) {
-    .module-mainHead {
+    .module-report-mainHead {
         font-size: x-large;
         margin-top: 5px;
         padding-left: 35px;
     }
 
-    .module-buttonIcon {
+    .module-report-buttonIcon {
         height: 1.5rem;
         width: 1.5rem;
         size: 1.5rem;
     }
 
-    .module-Dash {
+    .module-report-Dash {
         margin-top: 20px;
     }
 
-    .module-SearchEvent {
+    .module-report-SearchEvent {
         margin-right: 35px;
     }
 }
 
 @media screen and (max-width: 768px) {
-    .module-mainHead {
+    .module-report-mainHead {
         font-size: large;
         margin-top: 10px;
         padding-left: 35px;
     }
 
-    .module-buttonIcon {
+    .module-report-buttonIcon {
         height: 1rem;
         width: 1rem;
         size: 1rem;
     }
 
-    .module-Dash {
+    .module-report-Dash {
         margin-top: 10px;
     }
 
-    .module-SearchEvent {
+    .module-report-SearchEvent {
         margin-right: 35px;
     }
 }
 
 @media screen and (max-width: 426px) {
-    .module-buttonIcon {
+    .module-report-buttonIcon {
         height: 0.5rem;
         width: 0.5rem;
         size: 0.5rem;
     }
 
-    .module-Dash {
+    .module-report-Dash {
         margin-top: 5px;
     }
 
-    .module-SearchEvent {
+    .module-report-SearchEvent {
         margin-right: 0px;
     }
 
-    .module-mainHead {
+    .module-report-mainHead {
         padding-left: 5px;
     }
 }
 
-.Module-Create-module-Dashboard{
+.module-report-Create-module-Dashboard {
     position: fixed;
     z-index: 2;
     left: 0;
@@ -76,22 +76,22 @@
     align-items: center;
     justify-content: center;
     background-color: rgba(0, 0, 0, 0.5);
-  }
+}
 
-.module-Dash {
+.module-report-Dash {
     flex-grow: 1;
     height: 85vh;
     width: 100%;
     z-index: 1;
 }
 
-.module-mainHead {
+.module-report-mainHead {
     color: #0D295E;
     font-weight: bold;
     margin-bottom: 0px;
 }
 
-.module-ModuleList {
+.module-report-ModuleList {
     display: flex;
     flex-direction: column;
     margin-top: 10px;
@@ -106,7 +106,7 @@
     z-index: 1;
 }
 
-.module-List-Buttons {
+.module-report-List-Buttons {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -115,7 +115,7 @@
     padding: 1rem;
 }
 
-.module-SearchEvent {
+.module-report-SearchEvent {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -124,7 +124,7 @@
     padding-right: 10px;
 }
 
-.module-signup-main-container {
+.module-report-signup-main-container {
     position: fixed;
     width: 60%;
     border: 4px solid transparent;
@@ -137,7 +137,7 @@
     z-index: 2;
 }
 
-.module-head1 {
+.module-report-head1 {
     text-align: center;
     color: #0063A0;
     font-weight: bold;
@@ -146,7 +146,7 @@
     margin: 0%;
 }
 
-.module-login-container {
+.module-report-login-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -156,14 +156,14 @@
     position: relative;
 }
 
-.module-image-container {
+.module-report-image-container {
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.module-logo {
+.module-report-logo {
     width: 200px;
     height: auto;
     border-radius: 10px;
