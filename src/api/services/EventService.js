@@ -63,6 +63,20 @@ class EventService {
       throw new Error("Delete Failed ", error);
     }
   }
+
+  static async getAllLectureByModuleCode(moduleCode) {
+    try {
+      const response = await axios.get(
+        ApiConstants.getAllLecturesByModuleCode(moduleCode)
+      );
+      if (response.data) {
+        console.log(response.data);
+        return response.data;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
 
 export default EventService;

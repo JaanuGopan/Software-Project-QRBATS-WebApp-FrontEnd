@@ -10,18 +10,21 @@ const InputPassword = ({
   buttonText,
   showButton = true,
   isLoading = false,
+  error,
+  helperText,
 }) => {
   return (
-    <div className="row mb-3 ">
+    <div className="row mb-3">
       <div className="col-auto">
         <input
           required
           type="password"
-          className="form-control"
+          className={`form-control ${error ? "is-invalid" : ""}`}
           placeholder={placeholder}
           value={value}
           onChange={onChange}
         />
+        {error && <div className="invalid-feedback">{helperText}</div>}
       </div>
       {showButton && (
         <div className="col-auto">

@@ -60,24 +60,26 @@ const ModuleUpdate = ({
   return (
     <div className="module-signup-main-container">
       <div
-        className="closeCreateEventWindow"
+        className="closeCreateModuleWindow"
         onClick={handleCloseModuleUpdateWindow}
       >
-        <IoMdCloseCircleOutline />
+        <IoMdCloseCircleOutline size={25} />
       </div>
       <p className="module-head1">Update module</p>
       <div className="module-login-container">
-        <div className="module-image-container">
+        {/* <div className="module-image-container">
           <img src={Designer} className="module-logo" alt="Logo" />
-        </div>
+        </div> */}
         <div className="form-container">
           <form onSubmit={handleCreateModule}>
+            <label>Module Name</label>
             <InputField
               placeholder="Enter The Module Name"
               value={moduleName}
               onChange={(e) => setModuleName(e.target.value)}
               inputType="text"
             />
+            <label>Module Code</label>
             <InputField
               placeholder="Enter the module code"
               value={moduleCode}
@@ -86,6 +88,7 @@ const ModuleUpdate = ({
             />
 
             <div className="choice-input mb-3">
+              <label>Semester</label>
               <InputList
                 placeholder="Select semester"
                 value={semester}
@@ -98,6 +101,7 @@ const ModuleUpdate = ({
             </div>
 
             <div className="choice-input mb-3">
+              <label>Department</label>
               <InputList
                 placeholder="Select department"
                 value={departmentId}
@@ -108,6 +112,7 @@ const ModuleUpdate = ({
                 className="student-select-input"
               />
             </div>
+            <label>Enrolment Key</label>
             <InputField
               placeholder="Enter Module Enrolment Key"
               value={moduleEnrolmentKey}

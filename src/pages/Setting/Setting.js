@@ -36,7 +36,7 @@ const Setting = () => {
           className="student-Create-Event-Dashboard"
         >
           <UpdateSetting
-            handlecloseUpdateSettingWindow={() =>
+            handleCloseUpdateSettingWindow={() =>
               setAdminUpdateSettingPopUpWindow(false)
             }
           />

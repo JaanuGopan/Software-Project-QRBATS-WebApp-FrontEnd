@@ -70,7 +70,7 @@ const ModulePage = () => {
             onChange={(e) => setSearchModule(e.target.value)}
           />
         </div>
-        <div className="module-EventList">
+        <div className="module-ModuleList">
           <ModuleTable
             modulesList={moduleList}
             onModuleClick={handleModuleClick}
@@ -99,7 +99,7 @@ const ModulePage = () => {
         </div>
         {showUpdateModuleWindow && (
           <div
-            className="Module-Create-Event-Dashboard"
+            className="Module-Create-module-Dashboard"
             handleClick={() => {
               setShowModuleCreateWindow(false);
             }}
@@ -115,7 +115,7 @@ const ModulePage = () => {
         )}
         {showModuleCreateWindow && (
           <div
-            className="Module-Create-Event-Dashboard"
+            className="Module-Create-module-Dashboard"
             handleClick={() => {
               setShowUpdateModuleWindow(false);
             }}
