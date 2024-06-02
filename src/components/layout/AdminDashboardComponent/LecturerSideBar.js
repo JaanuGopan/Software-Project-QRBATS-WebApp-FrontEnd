@@ -60,21 +60,27 @@ const LecturerSideBar = ({
 
         <Sidebarbutton
           handleSidebarMenu={() => handleMenuClick(3)}
-          title={"Report"}
+          title={"Lecture"}
           titlewithiconicon={<TbReport className="buttonIcon" />}
           isOpen={index === 3}
         />
         <Sidebarbutton
           handleSidebarMenu={() => handleMenuClick(4)}
-          title={"Module Report"}
-          titlewithiconicon={<FaRegListAlt className="buttonIcon" />}
+          title={"Report"}
+          titlewithiconicon={<TbReport className="buttonIcon" />}
           isOpen={index === 4}
         />
         <Sidebarbutton
           handleSidebarMenu={() => handleMenuClick(5)}
+          title={"Module Report"}
+          titlewithiconicon={<FaRegListAlt className="buttonIcon" />}
+          isOpen={index === 5}
+        />
+        <Sidebarbutton
+          handleSidebarMenu={() => handleMenuClick(6)}
           title={"Setting"}
           titlewithiconicon={<IoSettings className="buttonIcon" />}
-          isOpen={index === 5}
+          isOpen={index === 6}
         />
         <Sidebarbutton
           handleSidebarMenu={handleShowLogoutWindow}

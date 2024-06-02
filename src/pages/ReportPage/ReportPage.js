@@ -10,6 +10,7 @@ import EventService from "../../api/services/EventService";
 import { MdArrowBack } from "react-icons/md";
 import NormalButton from "../../components/layout/AdminDashboardComponent/NormalButton";
 import { BiSolidPrinter } from "react-icons/bi";
+import LectureStudentsAttendanceTable from "./LectureStudentsAttendanceTable";
 
 const ReportPage = () => {
   const user = useSelector(selectUser);
@@ -28,6 +29,10 @@ const ReportPage = () => {
   const [searchLecturesReport, setSearchLecturesReport] = useState("");
   const [selectedLectureReport, setSelectedLectureReport] = useState(null);
   const [lecturesReportList, setLecturesReportList] = useState([]);
+  const [lectureStudentAttendanceList, setLectureStudentAttendanceList] =
+    useState([]);
+  const [searchLectureStudentAttendance, setSearchLectureStudentAttendance] =
+    useState("");
 
   useEffect(() => {
     handleReloadModuleReportList();
@@ -104,11 +109,16 @@ const ReportPage = () => {
           </div>
         )}
         {showLectureReportWindow && (
-          <div className="Module-report-Create-module-Dashboard">
+          <div className="module-report-ModuleList">
             <LectureReportTable
-              handleOpenLectureAttendanceReportWindow={() => {}}
+              handleOpenLectureAttendanceReportWindow={() => {
+                setShowLectureStudentAttendanceReportWindow(true);
+                setShowLectureReportWindow(false);
+                setShowModuleReportWindow(false);
+                setShowOverallReportWindow(false);
+              }}
               lecturesReportList={lecturesReportList}
-              attendedStudentList={() => {}}
+              attendedStudentList={(e) => setLectureStudentAttendanceList(e)}
               onLecturesReportClick={(e) => setSelectedLectureReport(e)}
               searchLecturesReport={searchLecturesReport}
             />
@@ -118,6 +128,33 @@ const ReportPage = () => {
                   setShowLectureReportWindow(false);
                   setShowModuleReportWindow(true);
                   setShowOverallReportWindow(false);
+                }}
+                title={"Back"}
+                titlewithiconicon={<MdArrowBack className="staff-buttonIcon" />}
+              />
+              <NormalButton
+                title={"Print"}
+                handleClick={() => {}}
+                titlewithiconicon={
+                  <BiSolidPrinter className="staff-buttonIcon" />
+                }
+              />
+            </div>
+          </div>
+        )}
+        {showLectureStudentAttendanceReportWindow && (
+          <div className="module-report-ModuleList">
+            <LectureStudentsAttendanceTable
+              attendanceList={lectureStudentAttendanceList}
+              search={searchLectureStudentAttendance}
+            />
+            <div className="staff-List-Buttons">
+              <NormalButton
+                handleClick={() => {
+                  setShowLectureReportWindow(true);
+                  setShowModuleReportWindow(false);
+                  setShowOverallReportWindow(false);
+                  setShowLectureStudentAttendanceReportWindow(false);
                 }}
                 title={"Back"}
                 titlewithiconicon={<MdArrowBack className="staff-buttonIcon" />}
