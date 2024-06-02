@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
-import "../../../pages/AdminDashboard/AdminDashboard.css";
+import "../../pages/AdminDashboard/AdminDashboard.css";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
-const LectureStudentsAttendanceTable = ({
-  search,
-  attendanceList,
-  handleGeneratePDF,
-}) => {
+const LectureStudentsAttendanceTable = ({ search, attendanceList }) => {
   const [attendance, setAttendance] = useState([]);
   const [selectedAttendance, setSelectedAttendance] = useState(null);
 

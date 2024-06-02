@@ -80,6 +80,14 @@ class ApiConstants {
     ); //localhost:8080/api/v1/report/getallstudentsbydepartmentidandsemester?deptId=2&sem=6
   }
 
+  static getAllLecturesByUserId(userId) {
+    return ApiConstants.baseUrl + `/lecture/getalllecturebyuserid/${userId}`; //http://localhost:8080/api/v1/lecture/getalllecturebyuserid/{id}
+  }
+
+  static updateLectureUrl(lectureId) {
+    return ApiConstants.baseUrl + `/lecture/updatelecture/${lectureId}`; //http://localhost:8080/api/v1/lecture/updatelecture/${lectureId}
+  }
+
   static get updateUserUrl() {
     return ApiConstants.baseUrl + "/auth/updateuser";
   }

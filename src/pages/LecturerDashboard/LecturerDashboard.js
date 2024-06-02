@@ -14,29 +14,54 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/userSlice";
 import AdminUpdateEvent from "../Event/AdminUpdateEvent";
 import LocationService from "../../api/services/LocationService";
+import LectureService from "../../api/services/LectureService";
+import LecturesTable from "../Lectures/LecturesTable";
+import LecturesEdit from "../Lectures/LecturesEdit";
 
 const LecturerDashboard = () => {
   const [showCreateLecturePopup, setShowCreateLecturePopup] = useState(false);
   const [showUpdateLecturePopup, setShowUpdateLecturePopup] = useState(false);
-  const [lectureList, setLectureList] = useState([]);
+  const [eventLectureList, setEventLectureList] = useState([]);
   const [selectedLecture, setSelectedLecture] = useState(null);
   const [searchLecture, setSearchLecture] = useState("");
-  const [selectTable, setSelectTable] = useState("Events");
+  const [selectTable, setSelectTable] = useState("Lectures");
   const [venuesList, setVenuesList] = useState([]);
   const user = useSelector(selectUser);
   const { userId } = user || {};
 
-  const handleReloadLectureList = async () => {
+  const [lectureList, setLectureList] = useState([]);
+
+  const handleReloadEventLectureList = async () => {
     EventService.getEventByUserID(userId)
       .then((list) => {
-        setLectureList(list);
-        console.log(lectureList);
+        setEventLectureList(list);
+        console.log(eventLectureList);
       })
       .catch((error) => {
         console.log("Error in getting lecture list ", error);
       })
       .finally(() => {});
   };
+  //=====================================================================================
+  const [showEditLectureWindow, setShowEditLectureWindow] = useState(false);
+  const [editLecture, setEditLecture] = useState(null);
+
+  const handleReloadLectureList = async () => {
+    const response = await LectureService.getAllLecturesByUserId(userId);
+    if (response) {
+      setLectureList(response);
+      console.log("lecture list : ", response);
+    }
+  };
+
+  const handleEditLecture = (lecture) => {
+    if (lecture) {
+      setEditLecture(lecture);
+      setShowEditLectureWindow(true);
+    }
+  };
+
+  //=====================================================================================
 
   const handleGetLocationNameList = async () => {
     const response = await LocationService.getAllLocationNames();
@@ -45,15 +70,16 @@ const LecturerDashboard = () => {
 
   useEffect(() => {
     console.log("user id is : ", userId);
-    handleReloadLectureList();
+    handleReloadEventLectureList();
     handleGetLocationNameList();
+    handleReloadLectureList();
   }, []);
 
   const handleDeleteLecture = async () => {
     if (selectedLecture) {
       EventService.deleteEvent(selectedLecture.eventId).then(() => {
         console.log("Error in deleted successfully ");
-        handleReloadLectureList();
+        handleReloadEventLectureList();
         setSelectedLecture(null);
       });
     }
@@ -70,7 +96,7 @@ const LecturerDashboard = () => {
 
   return (
     <div className="admin-Dash">
-      <p className="mainHead">Staff Dashboard</p>
+      <p className="mainHead">{"Lecturer Dashboard"}</p>
       <div className="mainInform">
         <TotalCount
           total={"08"}
@@ -98,8 +124,8 @@ const LecturerDashboard = () => {
           onChange={handleChange}
           className="mainHead"
         >
-          <option value="Events">Events List</option>
           <option value="Lectures">Lectures List</option>
+          <option value="Events">Events List</option>
         </select>
         <input
           type="text"
@@ -114,13 +140,15 @@ const LecturerDashboard = () => {
           onChange={(e) => setSearchLecture(e.target.value)}
         />
       </div>
-      {selectTable === "Events" ? (
+      {selectTable === "Lectures" ? (
         <div className="AdminEventList">
-          <LectureTable
+          <LecturesTable
+            lecturesList={lectureList}
             search={searchLecture}
-            handleUpdateLecture={() => setShowUpdateLecturePopup(true)}
-            onLectureClick={handleLectureClick}
-            lectureList={lectureList} // Pass the eventList prop here
+            onLectureClick={() => {}}
+            handleLectureUpdate={(lecture) => {
+              handleEditLecture(lecture);
+            }}
           />
 
           <div className="List-Buttons">
@@ -142,7 +170,7 @@ const LecturerDashboard = () => {
             search={searchLecture}
             handleUpdateLecture={() => setShowUpdateLecturePopup(true)}
             onLectureClick={handleLectureClick}
-            lectureList={lectureList} // Pass the eventList prop here
+            lectureList={eventLectureList} // Pass the eventList prop here
           />
 
           <div className="List-Buttons">
@@ -168,7 +196,7 @@ const LecturerDashboard = () => {
             handleCloseCreateLectureWindow={() =>
               setShowCreateLecturePopup(false)
             }
-            reloadLectureList={handleReloadLectureList}
+            reloadLectureList={handleReloadEventLectureList}
             hideCloseButton={false}
             locationNameList={venuesList}
           />
@@ -184,8 +212,22 @@ const LecturerDashboard = () => {
               setShowUpdateLecturePopup(false)
             }
             selectedEvent={selectedLecture}
-            reloadEventList={handleReloadLectureList}
+            reloadEventList={handleReloadEventLectureList}
             locationNameList={venuesList}
+          />
+        </div>
+      )}
+      {showEditLectureWindow && (
+        <div className="Admin-Create-Event-Dashboard">
+          <LecturesEdit
+            selectedLecture={editLecture}
+            handleCloseUpdateLectureWindow={() => {
+              setShowEditLectureWindow(false);
+              setEditLecture(null);
+            }}
+            handleReload={handleReloadLectureList}
+            locationNameList={venuesList}
+            reloadLecturesList={handleReloadLectureList}
           />
         </div>
       )}

@@ -22,6 +22,7 @@ import LogoutConfirmation from "../LogoutPage/LogoutConfirmation";
 import { resetSideBarIndex } from "../../redux/features/mainNavigationSlice";
 import Logout from "../../api/services/logoutService";
 import ReportPage from "../ReportPage/ReportPage";
+import LectureCreationPage from "../LactureCreation/LectureCreationPage";
 
 function MainNavigationPage() {
   const navigate = useNavigate();
@@ -130,9 +131,10 @@ function MainNavigationPage() {
             {openMenu === 0 && <LecturerDashboard />}
             {openMenu === 1 && <LectureCreationDashboard />}
             {openMenu === 2 && <ModulePage />}
-            {openMenu === 3 && <EventReport />}
-            {openMenu === 4 && <ReportPage />}
-            {openMenu === 5 && <Setting />}
+            {openMenu === 3 && <LectureCreationPage />}
+            {openMenu === 4 && <EventReport />}
+            {openMenu === 5 && <ReportPage />}
+            {openMenu === 6 && <Setting />}
           </div>
         )}
         {handleShowLogoutWindow === true && (
