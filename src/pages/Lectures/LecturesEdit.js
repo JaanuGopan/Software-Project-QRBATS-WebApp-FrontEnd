@@ -56,8 +56,8 @@ const LecturesEdit = ({
       lectureModuleCode,
       lectureVenue,
       lectureDay,
-      lectureStartTime,
-      lectureEndTime
+      `${lectureStartTime}:00`,
+      `${lectureEndTime}:00`
     );
     if (response) {
       console.log(response);

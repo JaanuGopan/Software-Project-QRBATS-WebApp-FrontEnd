@@ -88,6 +88,24 @@ class ApiConstants {
     return ApiConstants.baseUrl + `/lecture/updatelecture/${lectureId}`; //http://localhost:8080/api/v1/lecture/updatelecture/${lectureId}
   }
 
+  static deleteLectureUrl(lectureId) {
+    return ApiConstants.baseUrl + `/lecture/deletelecture/${lectureId}`; //http://lecalhost:8080/api/v1/lecture/deletelecture/${lectureId}
+  }
+
+  static getAllLectureByModuleCode(moduleCode) {
+    return (
+      ApiConstants.baseUrl +
+      `/lecture/getalllecturebymodulecode?moduleCode=${moduleCode}`
+    );
+  }
+
+  static getAllLectureAttendanceByLectureIdUrl(lectureId) {
+    return (
+      ApiConstants.baseUrl +
+      `/lectureattendance/getallattendancebylectureid/${lectureId}`
+    );
+  }
+
   static get updateUserUrl() {
     return ApiConstants.baseUrl + "/auth/updateuser";
   }

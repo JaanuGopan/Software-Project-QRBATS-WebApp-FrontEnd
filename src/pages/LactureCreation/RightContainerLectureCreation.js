@@ -9,12 +9,28 @@ import InputField from "../../components/textfields/InputBox/InputField";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { pink } from "@mui/material/colors";
 import axios from "axios";
+import LocationService from "../../api/services/LocationService";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const RightContainerLectureCreation = ({ moduleCode, dayList, userId }) => {
   const [selectedDay, setSelectedDay] = useState(dayList[0]);
   const [times, setTimes] = useState({});
   const maxTimeSlots = 5;
-  const venueList = ["NCC", "LT1", "LT2", "Auditorium", "DEIE", "DMME", "DCEE"];
+  const [venueList, setVenuesList] = useState([
+    "NCC",
+    "LT1",
+    "LT2",
+    "Auditorium",
+    "DEIE",
+    "DMME",
+    "DCEE",
+  ]);
+
+  const handleGetLocationNameList = async () => {
+    const response = await LocationService.getAllLocationNames();
+    setVenuesList(response);
+  };
 
   useEffect(() => {
     setTimes((prevTimes) => {
@@ -38,6 +54,7 @@ const RightContainerLectureCreation = ({ moduleCode, dayList, userId }) => {
       );
       setSelectedDay(dayWithoutTimes || dayList[dayList.length - 1]);
     }
+    handleGetLocationNameList();
   }, [dayList]);
 
   const handleDaySelect = (event, newDay) => {
@@ -64,23 +81,68 @@ const RightContainerLectureCreation = ({ moduleCode, dayList, userId }) => {
     }));
   };
 
+  const validateTimeSlots = (timeSlots) => {
+    for (let i = 0; i < timeSlots.length; i++) {
+      const slot = timeSlots[i];
+      const startTime = `${slot.startTime}:00`;
+      const endTime = `${slot.endTime}:00`;
+
+      if (startTime === endTime) {
+        toast.error("Start time and end time cannot be the same.");
+        return false;
+      }
+
+      if (startTime > endTime) {
+        toast.error("End time cannot be before start time.");
+        return false;
+      }
+
+      for (let j = 0; j < timeSlots.length; j++) {
+        if (i !== j) {
+          const otherSlot = timeSlots[j];
+          const otherStartTime = `${otherSlot.startTime}:00`;
+          const otherEndTime = `${otherSlot.endTime}:00`;
+
+          if (
+            (startTime >= otherStartTime && startTime < otherEndTime) ||
+            (endTime > otherStartTime && endTime <= otherEndTime) ||
+            (startTime <= otherStartTime && endTime >= otherEndTime)
+          ) {
+            toast.error("Time slots cannot overlap.");
+            return false;
+          }
+        }
+      }
+    }
+    return true;
+  };
+
   const handleSaveClick = async () => {
     const formattedTimes = dayList.reduce((acc, day) => {
       if (times[day]) {
-        acc[day] = times[day]
+        const validSlots = times[day]
           .filter((slot) => slot.startTime && slot.endTime && slot.venue)
-          .map((slot) => ({
-            ...slot,
-            startTime: new Date(`1970-01-01T${slot.startTime}:00`)
-              .toISOString()
-              .substr(11, 8),
-            endTime: new Date(`1970-01-01T${slot.endTime}:00`)
-              .toISOString()
-              .substr(11, 8),
-          }));
+          .map((slot) => {
+            return {
+              ...slot,
+              startTime: `${slot.startTime}:00`,
+              endTime: `${slot.endTime}:00`,
+            };
+          });
+
+        if (validateTimeSlots(validSlots)) {
+          acc[day] = validSlots;
+        } else {
+          acc[day] = [];
+        }
       }
       return acc;
     }, {});
+
+    if (Object.values(formattedTimes).some((slots) => slots.length === 0)) {
+      toast.error("Please fix the errors before saving.");
+      return;
+    }
 
     const requestData = {
       lectureAssignedUserId: userId,
@@ -102,8 +164,28 @@ const RightContainerLectureCreation = ({ moduleCode, dayList, userId }) => {
 
       const data = response.data;
       console.log("Save successful:", data);
+
+      const savedLectures = data.filter((lecture) => lecture.lectureId);
+      const failedLectures = data.filter((lecture) => !lecture.lectureId);
+
+      if (savedLectures.length > 0) {
+        toast.success(
+          `Lectures saved successfully: ${savedLectures
+            .map((lecture) => lecture.lectureName)
+            .join(", ")}`
+        );
+      }
+
+      if (failedLectures.length > 0) {
+        toast.error(
+          `Failed to save lectures: ${failedLectures
+            .map((lecture) => lecture.lectureName)
+            .join(", ")}`
+        );
+      }
     } catch (error) {
       console.error("Save failed:", error);
+      toast.error("Save failed.");
     }
   };
 
@@ -136,6 +218,7 @@ const RightContainerLectureCreation = ({ moduleCode, dayList, userId }) => {
 
   return (
     <div className="right-container-lecture-creation">
+      <ToastContainer />
       <div className="right-container-lecture-creation-heading">
         <label>{`Module Code: ${moduleCode}`}</label>
       </div>
@@ -226,8 +309,8 @@ const RightContainerLectureCreation = ({ moduleCode, dayList, userId }) => {
                       >
                         <option value="">Select Venue</option>
                         {venueList.map((option, index) => (
-                          <option key={index} value={option}>
-                            {option}
+                          <option key={index} value={option.locationName}>
+                            {option.locationName}
                           </option>
                         ))}
                       </select>

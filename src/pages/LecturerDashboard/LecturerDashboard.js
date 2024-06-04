@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../AdminDashboard/AdminDashboard.css";
+import "./LectureDashboard.css";
 import LectureTable from "./LectureTable";
 import TotalCount from "../../components/layout/AdminDashboardComponent/TotalCount";
 import Select from "react-select";
@@ -17,14 +18,17 @@ import LocationService from "../../api/services/LocationService";
 import LectureService from "../../api/services/LectureService";
 import LecturesTable from "../Lectures/LecturesTable";
 import LecturesEdit from "../Lectures/LecturesEdit";
+import LectureCreationPage from "../LactureCreation/LectureCreationPage";
 
 const LecturerDashboard = () => {
   const [showCreateLecturePopup, setShowCreateLecturePopup] = useState(false);
   const [showUpdateLecturePopup, setShowUpdateLecturePopup] = useState(false);
   const [eventLectureList, setEventLectureList] = useState([]);
   const [selectedLecture, setSelectedLecture] = useState(null);
+  const [selectedEventLecture, setSelectedEventLecture] = useState(null);
   const [searchLecture, setSearchLecture] = useState("");
   const [selectTable, setSelectTable] = useState("Lectures");
+  const [title, setTitle] = useState("Lecture");
   const [venuesList, setVenuesList] = useState([]);
   const user = useSelector(selectUser);
   const { userId } = user || {};
@@ -61,6 +65,13 @@ const LecturerDashboard = () => {
     }
   };
 
+  const handleDeleteLecture = async () => {
+    const response = await LectureService.deleteLecture(
+      selectedLecture.lectureId
+    );
+    handleReloadLectureList();
+  };
+
   //=====================================================================================
 
   const handleGetLocationNameList = async () => {
@@ -69,25 +80,23 @@ const LecturerDashboard = () => {
   };
 
   useEffect(() => {
-    console.log("user id is : ", userId);
     handleReloadEventLectureList();
     handleGetLocationNameList();
     handleReloadLectureList();
   }, []);
 
-  const handleDeleteLecture = async () => {
-    if (selectedLecture) {
-      EventService.deleteEvent(selectedLecture.eventId).then(() => {
-        console.log("Error in deleted successfully ");
+  const handleDeleteEventLecture = async () => {
+    if (selectedEventLecture) {
+      EventService.deleteEvent(selectedEventLecture.eventId).then(() => {
+        console.log("deleted successfully ");
         handleReloadEventLectureList();
-        setSelectedLecture(null);
+        setSelectedEventLecture(null);
       });
     }
   };
 
-  const handleLectureClick = (lecture) => {
-    setSelectedLecture(lecture);
-    console.log(selectedLecture);
+  const handleEventLectureClick = (lecture) => {
+    setSelectedEventLecture(lecture);
   };
 
   const handleChange = (e) => {
@@ -121,7 +130,9 @@ const LecturerDashboard = () => {
         <select
           style={{ border: "0px", cursor: "pointer" }}
           value={selectTable}
-          onChange={handleChange}
+          onChange={(e) => {
+            handleChange(e);
+          }}
           className="mainHead"
         >
           <option value="Lectures">Lectures List</option>
@@ -145,7 +156,9 @@ const LecturerDashboard = () => {
           <LecturesTable
             lecturesList={lectureList}
             search={searchLecture}
-            onLectureClick={() => {}}
+            onLectureClick={(e) => {
+              setSelectedLecture(e);
+            }}
             handleLectureUpdate={(lecture) => {
               handleEditLecture(lecture);
             }}
@@ -154,7 +167,7 @@ const LecturerDashboard = () => {
           <div className="List-Buttons">
             <NormalButton
               handleClick={() => setShowCreateLecturePopup(true)}
-              title={"Create"}
+              title={"Create Lecture"}
               titlewithiconicon={<MdCreateNewFolder className="buttonIcon" />}
             />
             <NormalButton
@@ -169,19 +182,19 @@ const LecturerDashboard = () => {
           <LectureTable
             search={searchLecture}
             handleUpdateLecture={() => setShowUpdateLecturePopup(true)}
-            onLectureClick={handleLectureClick}
+            onLectureClick={handleEventLectureClick}
             lectureList={eventLectureList} // Pass the eventList prop here
           />
 
           <div className="List-Buttons">
             <NormalButton
               handleClick={() => setShowCreateLecturePopup(true)}
-              title={"Create"}
+              title={"Create Event"}
               titlewithiconicon={<MdCreateNewFolder className="buttonIcon" />}
             />
             <NormalButton
               title={"Delete"}
-              handleClick={handleDeleteLecture}
+              handleClick={handleDeleteEventLecture}
               titlewithiconicon={<RiDeleteBin5Fill className="buttonIcon" />}
             />
           </div>
@@ -190,16 +203,27 @@ const LecturerDashboard = () => {
       {showCreateLecturePopup && (
         <div
           handleClick={() => setShowCreateLecturePopup(false)}
-          className="Admin-Create-Event-Dashboard"
+          className="Create-Lecture-Window"
         >
-          <LectureCreation
-            handleCloseCreateLectureWindow={() =>
-              setShowCreateLecturePopup(false)
-            }
-            reloadLectureList={handleReloadEventLectureList}
-            hideCloseButton={false}
-            locationNameList={venuesList}
-          />
+          {selectTable === "Events" && (
+            <LectureCreation
+              handleCloseCreateLectureWindow={() =>
+                setShowCreateLecturePopup(false)
+              }
+              reloadLectureList={handleReloadEventLectureList}
+              hideCloseButton={false}
+              locationNameList={venuesList}
+            />
+          )}
+          {selectTable === "Lectures" && (
+            <LectureCreationPage
+              handleCloseCreateLectureWindow={() =>
+                setShowCreateLecturePopup(false)
+              }
+              handleReloadLectureList={handleReloadLectureList}
+              hideCloseButton={false}
+            />
+          )}
         </div>
       )}
       {showUpdateLecturePopup && (
@@ -211,7 +235,7 @@ const LecturerDashboard = () => {
             handlecloseCreateEventWindow={() =>
               setShowUpdateLecturePopup(false)
             }
-            selectedEvent={selectedLecture}
+            selectedEvent={selectedEventLecture}
             reloadEventList={handleReloadEventLectureList}
             locationNameList={venuesList}
           />

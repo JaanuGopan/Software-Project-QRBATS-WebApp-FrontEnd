@@ -130,10 +130,10 @@ function MainNavigationPage() {
           <div className="maincontent">
             {openMenu === 0 && <LecturerDashboard />}
             {openMenu === 1 && <LectureCreationDashboard />}
-            {openMenu === 2 && <ModulePage />}
-            {openMenu === 3 && <LectureCreationPage />}
-            {openMenu === 4 && <EventReport />}
-            {openMenu === 5 && <ReportPage />}
+            {openMenu === 2 && <LectureCreationPage />}
+            {openMenu === 3 && <ModulePage />}
+            {openMenu === 4 && <ReportPage />}
+            {openMenu === 5 && <EventReport />}
             {openMenu === 6 && <Setting />}
           </div>
         )}

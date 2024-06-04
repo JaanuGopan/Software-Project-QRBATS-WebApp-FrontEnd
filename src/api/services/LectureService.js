@@ -45,6 +45,34 @@ class LectureService {
       console.error("Fail to update lecture.", error);
     }
   };
+
+  static deleteLecture = async (lectureId) => {
+    try {
+      const response = await axios.delete(
+        ApiConstants.deleteLectureUrl(lectureId)
+      );
+      if (response) {
+        return response.data;
+      }
+    } catch (error) {
+      console.error("Error in Delete Lecture. ", error);
+    }
+  };
+
+  static getAllLecturesByModuleCode = async (moduleCode) => {
+    try {
+      const response = await axios.get(
+        ApiConstants.getAllLectureByModuleCode(moduleCode)
+      );
+      if (response.status === 200) {
+        return response.data;
+      } else if (response.status === 400) {
+        return response.data;
+      }
+    } catch (error) {
+      console.error("failed to fetch lectures by moduleCode. ", error);
+    }
+  };
 }
 
 export default LectureService;
