@@ -1,3 +1,21 @@
 .lecture-creation-dashboard{
  overflow: scroll;   
 }
+
+.Create-Lecture-Window {
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    overflow-y: scroll;
+    width: 100%;
+    padding-left: 5%;
+    padding-right: 5%;
+    height: 100vh;
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}

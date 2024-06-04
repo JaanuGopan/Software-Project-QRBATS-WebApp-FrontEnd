@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../../pages/AdminDashboard/AdminDashboard.css";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
+import { FaCheck } from "react-icons/fa6";
+import { AiOutlineClose } from "react-icons/ai";
 
 const LectureStudentsAttendanceTable = ({ search, attendanceList }) => {
   const [attendance, setAttendance] = useState([]);
@@ -10,6 +10,7 @@ const LectureStudentsAttendanceTable = ({ search, attendanceList }) => {
   useEffect(() => {
     // Update events whenever eventList prop changes
     setAttendance(attendanceList);
+    console.log("Attendance report : ", attendanceList);
   }, [attendanceList]);
 
   const handleAttendanceClick = (attendance) => {
@@ -26,17 +27,18 @@ const LectureStudentsAttendanceTable = ({ search, attendanceList }) => {
             <th>Registration Number</th>
             <th>Attendance Date</th>
             <th>Attendance Time</th>
+            <th>Attendance Status</th>
           </tr>
         </thead>
 
         <tbody>
-          {attendance
+          {attendanceList
             .filter(
               (attendance) =>
                 attendance.studentName
                   .toLowerCase()
                   .includes(search.toLowerCase()) ||
-                attendance.indexNumber
+                attendance.studentIndexNumber
                   .toLowerCase()
                   .includes(search.toLowerCase())
             )
@@ -51,9 +53,16 @@ const LectureStudentsAttendanceTable = ({ search, attendanceList }) => {
               >
                 <td>{index + 1}</td>
                 <td>{attendance.studentName}</td>
-                <td>{attendance.indexNumber}</td>
+                <td>{attendance.studentIndexNumber}</td>
                 <td>{attendance.attendedDate}</td>
                 <td>{attendance.attendedTime}</td>
+                <td>
+                  {attendance.attendanceStatus ? (
+                    <FaCheck color="green" />
+                  ) : (
+                    <AiOutlineClose color="red" />
+                  )}
+                </td>
               </tr>
             ))}
         </tbody>

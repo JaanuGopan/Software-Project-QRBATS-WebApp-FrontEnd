@@ -11,6 +11,8 @@ import { MdArrowBack } from "react-icons/md";
 import NormalButton from "../../components/layout/AdminDashboardComponent/NormalButton";
 import { BiSolidPrinter } from "react-icons/bi";
 import LectureStudentsAttendanceTable from "./LectureStudentsAttendanceTable";
+import LectureService from "../../api/services/LectureService";
+import AttendanceService from "../../api/services/AttendanceService";
 
 const ReportPage = () => {
   const user = useSelector(selectUser);
@@ -52,7 +54,9 @@ const ReportPage = () => {
 
   const handleLoadLectureReport = async (moduleCode) => {
     try {
-      const response = await EventService.getAllLectureByModuleCode(moduleCode);
+      const response = await LectureService.getAllLecturesByModuleCode(
+        moduleCode
+      );
       if (response) {
         setLecturesReportList(response);
         setShowModuleReportWindow(false);
@@ -61,6 +65,24 @@ const ReportPage = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleLoadStudentAttendanceReport = async (lectureId) => {
+    await AttendanceService.getAllAttendanceByLectureId(lectureId)
+      .then((attendanceList) => {
+        setLectureStudentAttendanceList(attendanceList);
+      })
+      .catch((error) => {
+        console.error("Error fetching attendance:", error);
+      })
+      .finally(() => {
+        if (lectureStudentAttendanceList.length > 0) {
+          setShowLectureStudentAttendanceReportWindow(true);
+          setShowLectureReportWindow(false);
+          setShowModuleReportWindow(false);
+          setShowOverallReportWindow(false);
+        }
+      });
   };
 
   const handleOpenLectureReportWindow = async (e) => {
@@ -111,14 +133,11 @@ const ReportPage = () => {
         {showLectureReportWindow && (
           <div className="module-report-ModuleList">
             <LectureReportTable
-              handleOpenLectureAttendanceReportWindow={() => {
-                setShowLectureStudentAttendanceReportWindow(true);
-                setShowLectureReportWindow(false);
-                setShowModuleReportWindow(false);
-                setShowOverallReportWindow(false);
+              handleOpenLectureAttendanceReportWindow={(lectureId) => {
+                handleLoadStudentAttendanceReport(lectureId);
               }}
               lecturesReportList={lecturesReportList}
-              attendedStudentList={(e) => setLectureStudentAttendanceList(e)}
+              //attendedStudentList={(e) => setLectureStudentAttendanceList(e)}
               onLecturesReportClick={(e) => setSelectedLectureReport(e)}
               searchLecturesReport={searchLecturesReport}
             />

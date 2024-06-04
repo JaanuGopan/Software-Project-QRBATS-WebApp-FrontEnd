@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/userSlice";
 import { Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import ButtonComponent from "../../components/buttons/ButtonComponent";
+import InputField from "../../components/textfields/InputBox/InputField";
 
 const LeftContainerLectureCreation = ({
   getModuleCode,
@@ -15,13 +16,12 @@ const LeftContainerLectureCreation = ({
   const { userId, departmentId } = user || {};
 
   const handleGetModulesList = async () => {
-    const response = await ModuleService.getAllModulesByDepartmentId(
-      departmentId
-    );
+    const response = await ModuleService.getModulesByUserId(userId);
     if (response) {
       const moduleList = response.map((module) => ({
         value: module.moduleId,
         label: module.moduleCode,
+        name: module.moduleName,
       }));
       setModuleList(moduleList);
       console.log(moduleList);
@@ -32,6 +32,7 @@ const LeftContainerLectureCreation = ({
   const [moduleList, setModuleList] = useState([]);
   const [day, setDay] = useState([]);
   const [isToggleButtonDisabled, setIsToggleButtonDisabled] = useState(true);
+  const [moduleName, setModuleName] = useState("");
 
   const handleChange = (e) => {
     const newDay = e;
@@ -58,10 +59,13 @@ const LeftContainerLectureCreation = ({
           setModuleCode(e);
           getModuleCode(e.label);
           setIsToggleButtonDisabled(false);
+          setModuleName(e.name);
         }}
         options={moduleList}
         value={moduleCode}
       />
+      <label>Module Name</label>
+      <InputField type="text" value={moduleName} />
 
       <label>Select Date</label>
       <ToggleButtonGroup
