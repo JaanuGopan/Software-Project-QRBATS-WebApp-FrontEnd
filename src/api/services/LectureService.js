@@ -38,11 +38,12 @@ class LectureService {
           lectureEndTime: lectureEndTime,
         }
       );
-      if (response.data) {
-        return response.data;
+      if (response.status === 200) {
+        return response;
       }
     } catch (error) {
-      console.error("Fail to update lecture.", error);
+      console.error("Fail to update lecture.", error.response.data);
+      return error.response.data;
     }
   };
 

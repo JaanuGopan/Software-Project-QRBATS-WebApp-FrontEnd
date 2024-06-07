@@ -128,7 +128,7 @@
 
 .staff-head1 {
   text-align: center;
-  color: #0063A0;
+  color: black;
   font-weight: bold;
   font-size: x-large;
   padding: 1%;
@@ -165,3 +165,84 @@
   width: 100%;
   border-bottom:3px solid #0063A0;
 }
+
+.staff-creation-input{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  align-self: center;
+  justify-self: center;
+  margin: auto;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.staff-creation-input label{
+  width: 30%;
+  
+}
+
+.staff-creation-input-field{
+  width: 60%;
+}
+
+.create-staff-create-button{
+  width: 50%;
+  align-self: center;
+  justify-self: center;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.create-staff-create-button button{
+  width: 100%;
+}
+
+.staff-update-title-close-button{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.staff-update-title{
+  align-self: center;
+  justify-self: center;
+  margin-left: auto;
+}
+
+.staff-update-close-button{
+  align-self: center;
+  justify-self: flex-end;
+  margin-left: auto;
+  height: 30px;
+  width: 30px;
+  align-items: center;
+  justify-content: center;
+}
+
+.staff-update-close-button #close-icon{
+  align-self: center;
+  justify-self: center;
+  color: red;
+  height: 90%;
+  width: 90%;
+}
+
+.staff-update-close-button #close-icon:hover{
+  align-self: center;
+  justify-self: center;
+  color: white;
+  height: 90%;
+  width: 90%;
+  background-color: red;
+  border-radius: 100%;
+}
+
+
+

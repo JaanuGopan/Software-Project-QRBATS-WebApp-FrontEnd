@@ -41,6 +41,11 @@ class ApiConstants {
   static get getAllStudentUrl() {
     return ApiConstants.baseUrl + "/mobile/getallstudents"; //http://localhost:8080/api/v1/mobile/getallstudents
   }
+  static deleteStudentUrl(studentId) {
+    return (
+      ApiConstants.baseUrl + `/mobile/deletestudentbystudentid/${studentId}`
+    ); //http://localhost:8080/api/v1/mobile/deletestudentbystudentid
+  }
   static get updateStudentUrl() {
     return ApiConstants.baseUrl + "/mobile/updatestudent"; //http://localhost:8080/api/v1/mobile/updatestudent
   }
@@ -104,6 +109,10 @@ class ApiConstants {
       ApiConstants.baseUrl +
       `/lectureattendance/getallattendancebylectureid/${lectureId}`
     );
+  }
+
+  static get createStudentByAdminUrl() {
+    return ApiConstants.baseUrl + "/mobile/createstudentbyadmin"; //http://lecalhost:8080/api/v1/mobile/createstudentbyadmin
   }
 
   static get updateUserUrl() {
