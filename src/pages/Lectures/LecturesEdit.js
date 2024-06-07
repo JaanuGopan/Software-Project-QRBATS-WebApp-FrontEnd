@@ -43,28 +43,29 @@ const LecturesEdit = ({
   const qrCodeRef = useRef(null);
 
   const notifySuccess = () => toast.success("Successfully Lecture Updated!");
-  const notifyFailToUpdate = () => toast.error("Fail to Updated Lecture!");
+  const notifyFailToUpdate = (errorMsg) => toast.error(`${errorMsg}`);
 
   const user = useSelector(selectUser);
   const { userId } = user || {};
 
   const handleSaveLecture = async (e) => {
     e.preventDefault();
+
     const response = await LectureService.updateLecture(
       lectureId,
       lectureName,
       lectureModuleCode,
       lectureVenue,
       lectureDay,
-      `${lectureStartTime}:00`,
-      `${lectureEndTime}:00`
+      lectureStartTime,
+      lectureEndTime
     );
-    if (response) {
+    if (response.status === 200) {
       console.log(response);
       reloadLecturesList();
       notifySuccess();
     } else {
-      notifyFailToUpdate();
+      notifyFailToUpdate(response);
     }
   };
 
@@ -158,7 +159,12 @@ const LecturesEdit = ({
                   <select
                     required
                     value={lectureDay}
-                    onChange={(e) => setLectureDay(e.target.value)}
+                    onChange={(e) => {
+                      setLectureDay(e.target.value);
+                      setLectureName(
+                        `${lectureModuleCode}_${e.target.value}_${lectureStartTime}_Lecture`
+                      );
+                    }}
                     className="form-control mb-2"
                   >
                     <option value="">Select Day</option>
@@ -200,7 +206,12 @@ const LecturesEdit = ({
                   required
                   type="time"
                   value={lectureStartTime}
-                  onChange={(e) => setLectureStartTime(e.target.value)}
+                  onChange={(e) => {
+                    setLectureStartTime(`${e.target.value}:00`);
+                    setLectureName(
+                      `${lectureModuleCode}_${lectureDay}_${e.target.value}:00_Lecture`
+                    );
+                  }}
                   placeholder="Event Time"
                   className="form-control mb-2"
                 />
@@ -214,7 +225,7 @@ const LecturesEdit = ({
                     required
                     type="time"
                     value={lectureEndTime}
-                    onChange={(e) => setLectureEndTime(e.target.value)}
+                    onChange={(e) => setLectureEndTime(`${e.target.value}:00`)}
                     placeholder="Event End Time"
                     className="form-control mb-2"
                   />

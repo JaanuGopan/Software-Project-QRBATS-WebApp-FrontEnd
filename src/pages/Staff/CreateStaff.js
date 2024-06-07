@@ -6,10 +6,12 @@ import InputField from "../../components/textfields/InputBox/InputField";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import CreateUserService from "../../api/services/CreateUserService";
 import toast, { Toaster } from "react-hot-toast";
+import InputList from "../../components/textfields/InputList/InputList";
+import Select from "react-select";
 
-const CreateStaff = ({ handlecloseCreateStaffWindow, reloadStaffList }) => {
-  const [firstname, setFirstName] = useState("");
-  const [lastname, setLastName] = useState("");
+const CreateStaff = ({ handleCloseCreateStaffWindow, reloadStaffList }) => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -17,7 +19,7 @@ const CreateStaff = ({ handlecloseCreateStaffWindow, reloadStaffList }) => {
   const [userRole, setUserRole] = useState("");
   const [departmentId, setDepartmentId] = useState("");
 
-  const deparmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA"];
+  const departmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA", "DIS"];
   const userRoleList = ["ADMIN", "LECTURER"];
 
   const notifySuccess = () => toast.success("Successfully Staff Created!");
@@ -26,18 +28,18 @@ const CreateStaff = ({ handlecloseCreateStaffWindow, reloadStaffList }) => {
     e.preventDefault();
     try {
       const response = await CreateUserService.saveUser(
-        firstname,
-        lastname,
+        firstName,
+        lastName,
         email,
         password,
         userName,
-        deparmentList.indexOf(departmentId) + 1,
-        userRoleList.indexOf(userRole)
+        departmentList.indexOf(departmentId.value) + 1,
+        userRoleList.indexOf(userRole.value)
       );
       if (response) {
         notifySuccess();
         reloadStaffList();
-        handlecloseCreateStaffWindow();
+        handleCloseCreateStaffWindow();
       }
     } catch (error) {
       console.error("Login failed", error);
@@ -47,97 +49,125 @@ const CreateStaff = ({ handlecloseCreateStaffWindow, reloadStaffList }) => {
   return (
     <div className="staff-signup-main-container">
       <Toaster />
-      <div
-        className="closeCreateEventWindow"
-        onClick={handlecloseCreateStaffWindow}
-      >
-        <IoMdCloseCircleOutline />
-      </div>
-      <p className="staff-head1">Create Staff</p>
-      <div className="staff-login-container">
-        <div className="staff-image-container">
-          <img src={Designer} className="staff-logo" alt="Logo" />
+      <div className="staff-update-title-close-button">
+        <h3 className="staff-update-title">Create User</h3>
+        <div
+          className="staff-update-close-button"
+          onClick={handleCloseCreateStaffWindow}
+        >
+          <IoMdCloseCircleOutline id="close-icon" />
         </div>
+      </div>
+
+      <div className="staff-login-container">
+        {/* <div className="staff-image-container">
+          <img src={Designer} className="staff-logo" alt="Logo" />
+        </div> */}
         <div className="form-container">
           <form onSubmit={handleSubmit}>
-            <div className="choice-input mb-3">
-              <select
-                value={userRole}
-                onChange={(e) => setUserRole(e.target.value)}
-                className="student-select-input"
-                required
-              >
-                <option value="">Select user role</option>
-                {userRoleList.map((option, index) => (
-                  <option key={index} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
+            <div className="staff-creation-input">
+              <label>User Role</label>
+              <div className="staff-creation-input-field">
+                <Select
+                  required
+                  value={userRole}
+                  onChange={(e) => setUserRole(e)}
+                  options={userRoleList.map((role) => ({
+                    value: role,
+                    label: role,
+                  }))}
+                  placeholder={"Select User Role"}
+                />
+              </div>
             </div>
-            {/* First Name Input */}
-            <InputField
-              placeholder="Enter your first name"
-              value={firstname}
-              onChange={(e) => setFirstName(e.target.value)}
-              inputType="text"
-            />
-
-            {/* Last Name Input */}
-            <InputField
-              placeholder="Enter your last name"
-              value={lastname}
-              onChange={(e) => setLastName(e.target.value)}
-              inputType="text"
-            />
-
-            {/* Email Input */}
-            <InputField
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              inputType="text"
-            />
-
-            <InputField
-              placeholder="Enter your user name"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-              inputType="text"
-            />
-
-            {/* Password Input */}
-            <InputField
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              inputType="password"
-            />
-            <InputField
-              placeholder="Confirm password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              inputType="password"
-            />
-
-            <div className="choice-input mb-3">
-              <select
-                value={departmentId}
-                onChange={(e) => setDepartmentId(e.target.value)}
-                className="student-select-input"
-                required
-              >
-                <option value="">Select the department</option>
-                {deparmentList.map((option, index) => (
-                  <option key={index} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
+            <div className="staff-creation-input">
+              <label>First Name</label>
+              <div className="staff-creation-input-field">
+                <InputField
+                  placeholder="Enter your first name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  inputType="text"
+                />
+              </div>
             </div>
-            <button type="submit" className="btn btn-primary w-100">
-              Add Staff
-            </button>
+            <div className="staff-creation-input">
+              <label>Last Name</label>
+              <div className="staff-creation-input-field">
+                <InputField
+                  placeholder="Enter your last name"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  inputType="text"
+                />
+              </div>
+            </div>
+
+            <div className="staff-creation-input">
+              <label>Email</label>
+              <div className="staff-creation-input-field">
+                <InputField
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  inputType="text"
+                />
+              </div>
+            </div>
+            <div className="staff-creation-input">
+              <label>User Name</label>
+              <div className="staff-creation-input-field">
+                <InputField
+                  placeholder="Enter your user name"
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  inputType="text"
+                />
+              </div>
+            </div>
+
+            <div className="staff-creation-input">
+              <label>Password</label>
+              <div className="staff-creation-input-field">
+                <InputField
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  inputType="password"
+                />
+              </div>
+            </div>
+            <div className="staff-creation-input">
+              <label>Confirm Password</label>
+              <div className="staff-creation-input-field">
+                <InputField
+                  placeholder="Confirm password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  inputType="password"
+                />
+              </div>
+            </div>
+            <div className="staff-creation-input">
+              <label>Department</label>
+              <div className="staff-creation-input-field">
+                <Select
+                  required
+                  value={departmentId}
+                  onChange={(e) => setDepartmentId(e)}
+                  options={departmentList.map((dept) => ({
+                    value: dept,
+                    label: dept,
+                  }))}
+                  placeholder={"Select Department"}
+                />
+              </div>
+            </div>
+            <div className="create-staff-create-button">
+              <button type="submit" className="btn btn-success">
+                Create Staff
+              </button>
+            </div>
           </form>
         </div>
       </div>
