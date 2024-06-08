@@ -111,6 +111,13 @@ class ApiConstants {
     );
   }
 
+  static getAllLectureByDayAndVenueUrl(day, venue) {
+    return (
+      ApiConstants.baseUrl +
+      `/lecture/getalllecturesbydayandvenue?venue=${venue}&day=${day}`
+    );
+  }
+
   static get createStudentByAdminUrl() {
     return ApiConstants.baseUrl + "/mobile/createstudentbyadmin"; //http://lecalhost:8080/api/v1/mobile/createstudentbyadmin
   }

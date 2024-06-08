@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/userSlice";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import LectureQRCodeWindow from "./LectureQRCodeWindow";
+import AvailableLectureList from "./AvailableLectureList";
+import LectureService from "../../api/services/LectureService";
 const LectureCreationPage = ({
   handleCloseCreateLectureWindow,
   handleReloadLectureList,
@@ -14,9 +16,62 @@ const LectureCreationPage = ({
   const user = useSelector(selectUser);
   const { userId, departmentId } = user || {};
   const [dayList, setDayList] = useState([]);
+  const [day, setDay] = useState("");
+  const [venue, setVenue] = useState("");
   const [moduleCode, setModuleCode] = useState("");
   const [showRightSideWindow, setShowRightSideWindow] = useState(false);
   const [showQRCodeWindow, setShowQRCodeWindow] = useState(false);
+  const [availableLectureList, setAvailableLectureList] = useState([]);
+  const [showAvailableLecture, setShowAvailableLecture] = useState(false);
+  const [moduleLectureList, setModuleLectureList] = useState([]);
+  const [timesList, setTimesList] = useState([]);
+
+  const handleGetAvailableLectureList = async (selectedVenue, selectedDay) => {
+    try {
+      const response = await LectureService.getAllLecturesByDayAndVenue(
+        selectedDay,
+        selectedVenue
+      );
+      if (response.status === 200) {
+        setAvailableLectureList(response.data);
+      }
+    } catch (error) {
+    } finally {
+      setShowAvailableLecture(true);
+    }
+  };
+
+  const handleGetLecturesListByModuleCode = async (moduleCode) => {
+    try {
+      const response = await LectureService.getAllLecturesByModuleCode(
+        moduleCode
+      );
+      if (response) {
+        setModuleLectureList(response);
+        setTimesList(transformLecturesByDay(response));
+      }
+    } catch (error) {
+      // Handle error
+    }
+  };
+
+  const transformLecturesByDay = (lectures) => {
+    return lectures.reduce((acc, lecture) => {
+      const day = lecture.lectureDay;
+      const lectureDetails = {
+        startTime: lecture.lectureStartTime,
+        endTime: lecture.lectureEndTime,
+        venue: lecture.lectureVenue,
+      };
+
+      if (!acc[day]) {
+        acc[day] = [];
+      }
+      acc[day].push(lectureDetails);
+
+      return acc;
+    }, {});
+  };
 
   return (
     <div className="lecture-creation-main-container">
@@ -35,9 +90,21 @@ const LectureCreationPage = ({
         <div className="lecture-creation-container-left">
           <LeftContainerLectureCreation
             getDayList={(e) => setDayList(e)}
-            getModuleCode={(e) => setModuleCode(e)}
+            getModuleCode={(e) => {
+              setModuleCode(e);
+              handleGetLecturesListByModuleCode(e);
+            }}
             showRightSideWindow={() => setShowRightSideWindow(true)}
           />
+          {showAvailableLecture && (
+            <div className="available-lectures-container">
+              <AvailableLectureList
+                availableLectureList={availableLectureList}
+                day={day}
+                venue={venue}
+              />
+            </div>
+          )}
         </div>
         <div className="lecture-creation-container-right">
           {showRightSideWindow && (
@@ -45,6 +112,12 @@ const LectureCreationPage = ({
               dayList={dayList}
               moduleCode={moduleCode}
               userId={userId}
+              handelShowAvailableLectures={(venue, day) => {
+                setDay(day);
+                setVenue(venue);
+                handleGetAvailableLectureList(venue, day);
+              }}
+              timesList={timesList}
             />
           )}
         </div>

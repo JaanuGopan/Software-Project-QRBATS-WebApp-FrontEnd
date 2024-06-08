@@ -70,7 +70,7 @@
 }
 .left-container-lecture-creation{
     width: 100%;
-    height: 100%;
+    height: auto;
     display: flex;
     flex-direction: column;
     padding-left: 10%;
@@ -216,4 +216,85 @@
     align-items: center;
     justify-content: center;
     background-color: white;
+}
+
+.available-lectures-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    background-color: white;
+    width: 100%;
+    height: 45%;
+}
+
+.available-lecture-list{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 95%;
+    height: 100%;
+    border-top: 2px solid #0365A1;
+    box-shadow: 0.5px 2px 0.5px 0.5px rgba(25, 65, 85, 0.5);
+    border-radius: 10px;
+    background-color: #FAFAFA
+    
+
+}
+.available-lecture-list-table{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    width: 95%;
+    height: 100%;
+    overflow: scroll;
+    
+}
+
+.available-lecture-list-table-arrangement{
+    box-shadow: 0px 5px 5px #ccc;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-bottom: 2px solid #0176bf;
+    overflow: scroll;
+    margin-top: 10px;
+    overflow: scroll;
+
+}
+
+.available-lecture-list-table-arrangement thead{
+    position: sticky;
+    top: 0;
+    background-color: #c1e2f9;
+    color: #0D295E;
+    border-bottom: 3px solid #0063A0;
+    text-align: center;
+    border-radius: 20px;
+}
+
+.available-lecture-list-table-arrangement tr{
+    border: 0.01px solid rgba(91, 178, 255, 0.608);
+    border-radius: 5px;
+    max-height: 10vh;
+}
+
+.available-lecture-list-table-arrangement tbody{
+    overflow: scroll;
+}
+
+.available-lecture-list-table-arrangement td{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    padding: 0.5rem;
+    
+}
+
+.available-lecture-list-table-arrangement th{
+    padding: 0.8rem;
+    text-align: center;
 }
