@@ -6,7 +6,7 @@ import { selectUser } from "../../redux/features/userSlice";
 import { Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import ButtonComponent from "../../components/buttons/ButtonComponent";
 import InputField from "../../components/textfields/InputBox/InputField";
-
+import LectureService from "../../api/services/LectureService";
 const LeftContainerLectureCreation = ({
   getModuleCode,
   getDayList,
@@ -24,7 +24,6 @@ const LeftContainerLectureCreation = ({
         name: module.moduleName,
       }));
       setModuleList(moduleList);
-      console.log(moduleList);
     }
   };
 
@@ -45,6 +44,23 @@ const LeftContainerLectureCreation = ({
     });
   };
 
+  const handelModuleChange = async (e) => {
+    const response = await LectureService.getAllLecturesByModuleCode(e);
+    if (response) {
+      setDay(() => {
+        const list = [];
+        for (const i in response) {
+          if (list.includes(response[i].lectureDay)) {
+            continue;
+          }
+          list.push(response[i].lectureDay);
+        }
+        getDayList(list);
+        return list;
+      });
+    }
+  };
+
   useEffect(() => {
     handleGetModulesList();
   }, []);
@@ -56,6 +72,7 @@ const LeftContainerLectureCreation = ({
         id="selectModule"
         placeholder={"Select Module Code"}
         onChange={(e) => {
+          handelModuleChange(e.label);
           setModuleCode(e);
           getModuleCode(e.label);
           setIsToggleButtonDisabled(false);

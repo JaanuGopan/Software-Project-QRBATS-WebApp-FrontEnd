@@ -74,6 +74,21 @@ class LectureService {
       console.error("failed to fetch lectures by moduleCode. ", error);
     }
   };
+
+  static async getAllLecturesByDayAndVenue(day, venue) {
+    try {
+      const response = await axios.get(
+        ApiConstants.getAllLectureByDayAndVenueUrl(day, venue)
+      );
+      if (response.status === 200) {
+        console.log(response.data);
+        return response;
+      }
+    } catch (error) {
+      console.error(error);
+      return error;
+    }
+  }
 }
 
 export default LectureService;

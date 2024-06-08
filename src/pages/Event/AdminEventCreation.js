@@ -10,7 +10,6 @@ import { selectUser } from "../../redux/features/userSlice";
 import QRCode from "qrcode.react";
 import SaveEventService from "../../api/services/SaveEventService";
 import { useEffect } from "react";
-import LocationService from "../../api/services/LocationService";
 
 const AdminEventCreation = ({
   handlecloseCreateEventWindow,
@@ -119,19 +118,22 @@ const AdminEventCreation = ({
     <div className="event-main-container1">
       <Toaster />
       {showCloseButton && (
-        <div
-          className="closeCreateEventWindow"
-          onClick={handlecloseCreateEventWindow}
-        >
-          <IoMdCloseCircleOutline />
+        <div className="event-create-title-close-button">
+          <h3 className="event-create-title">Create Event</h3>
+          <div
+            className="event-create-close-button"
+            onClick={handlecloseCreateEventWindow}
+          >
+            <IoMdCloseCircleOutline id="close-icon" />
+          </div>
         </div>
       )}
-      <h2>Create Event</h2>
       <div className="eventCreation-field">
         <img src={eventCreationImage} className="Create-logo" alt="Logo" />
         <div className="eventCreation-input-field">
           <form onSubmit={handleSubmit}>
             <div className="input-with-icon">
+              <label className="date-label">Event Name</label>
               <input
                 required
                 type="text"
@@ -228,7 +230,7 @@ const AdminEventCreation = ({
             <button
               onClick={() => setQrCodeWindow(true)}
               type="submit"
-              className="btn btn-primary w-100"
+              className="btn btn-success mt-2 w-100"
             >
               Create Event
             </button>

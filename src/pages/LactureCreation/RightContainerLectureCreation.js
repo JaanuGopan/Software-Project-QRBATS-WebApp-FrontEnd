@@ -13,10 +13,16 @@ import LocationService from "../../api/services/LocationService";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const RightContainerLectureCreation = ({ moduleCode, dayList, userId }) => {
+const RightContainerLectureCreation = ({
+  moduleCode,
+  dayList,
+  userId,
+  handelShowAvailableLectures,
+  timesList,
+}) => {
   const [selectedDay, setSelectedDay] = useState(dayList[0]);
-  const [times, setTimes] = useState({});
-  const maxTimeSlots = 5;
+  const [times, setTimes] = useState(timesList);
+  const maxTimeSlots = 20;
   const [venueList, setVenuesList] = useState([
     "NCC",
     "LT1",
@@ -60,6 +66,7 @@ const RightContainerLectureCreation = ({ moduleCode, dayList, userId }) => {
   const handleDaySelect = (event, newDay) => {
     if (newDay !== null) {
       setSelectedDay(newDay);
+      handelShowAvailableLectures(times[newDay][0].venue, newDay);
     }
   };
 
@@ -79,6 +86,7 @@ const RightContainerLectureCreation = ({ moduleCode, dayList, userId }) => {
         index === slotIndex ? { ...slot, venue: value } : slot
       ),
     }));
+    handelShowAvailableLectures(value, selectedDay);
   };
 
   const validateTimeSlots = (timeSlots) => {
