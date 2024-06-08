@@ -120,13 +120,17 @@ const AdminUpdateEvent = ({
 
   return (
     <div className="event-main-container1">
-      <div
-        className="closeCreateEventWindow"
-        onClick={handlecloseCreateEventWindow}
-      >
-        <IoMdCloseCircleOutline size={25} />
-      </div>
-      <h2>Update Event</h2>
+      {
+        <div className="event-create-title-close-button">
+          <h3 className="event-create-title">Update Event</h3>
+          <div
+            className="event-create-close-button"
+            onClick={handlecloseCreateEventWindow}
+          >
+            <IoMdCloseCircleOutline id="close-icon" />
+          </div>
+        </div>
+      }
       <div className="eventCreation-field">
         <div ref={qrCodeRef}>
           <div className="row-center">
@@ -249,7 +253,7 @@ const AdminUpdateEvent = ({
               </div>
             </div>
             <div className="eventCreation-form"></div>
-            <button type="submit" className="btn btn-primary w-100">
+            <button type="submit" className="btn btn-warning w-100">
               Update
             </button>
           </form>

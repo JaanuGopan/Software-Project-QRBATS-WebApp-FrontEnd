@@ -117,12 +117,12 @@ function MainNavigationPage() {
         {role === "ADMIN" && (
           <div className="maincontent">
             {openMenu === 0 && <AdminDashboard />}
-            {openMenu === 1 && (
+            {/* {openMenu === 1 && (
               <AdminEventCreationDashboard locationList={venuesList} />
-            )}
-            {openMenu === 2 && <StaffDashboard />}
-            {openMenu === 3 && <StudentDashboard />}
-            {openMenu === 5 && <EventReport />}
+            )} */}
+            {openMenu === 1 && <StaffDashboard />}
+            {openMenu === 2 && <StudentDashboard />}
+            {openMenu === 3 && <EventReport />}
             {openMenu === 4 && <Setting />}
           </div>
         )}

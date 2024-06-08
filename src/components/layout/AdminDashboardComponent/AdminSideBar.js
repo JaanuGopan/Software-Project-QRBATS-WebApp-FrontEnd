@@ -37,29 +37,29 @@ const AdminSideBar = ({ handleClose, index, setIndex, handleLogout }) => {
           titlewithiconicon={<AiFillDashboard className="buttonIcon" />}
           isOpen={index === 0}
         />
-        <Sidebarbutton
+        {/* <Sidebarbutton
           handleSidebarMenu={() => handleMenuClick(1)}
           title={"Event"}
           titlewithiconicon={<MdOutlineEventNote className="buttonIcon" />}
           isOpen={index === 1}
+        /> */}
+        <Sidebarbutton
+          handleSidebarMenu={() => handleMenuClick(1)}
+          title={"Staff"}
+          titlewithiconicon={<FaUserTie className="buttonIcon" />}
+          isOpen={index === 1}
         />
         <Sidebarbutton
           handleSidebarMenu={() => handleMenuClick(2)}
-          title={"Staff"}
-          titlewithiconicon={<FaUserTie className="buttonIcon" />}
+          title={"Student"}
+          titlewithiconicon={<PiStudentBold className="buttonIcon" />}
           isOpen={index === 2}
         />
         <Sidebarbutton
           handleSidebarMenu={() => handleMenuClick(3)}
-          title={"Student"}
-          titlewithiconicon={<PiStudentBold className="buttonIcon" />}
-          isOpen={index === 3}
-        />
-        <Sidebarbutton
-          handleSidebarMenu={() => handleMenuClick(5)}
           title={"Report"}
           titlewithiconicon={<TbReport className="buttonIcon" />}
-          isOpen={index === 5}
+          isOpen={index === 3}
         />
         <Sidebarbutton
           handleSidebarMenu={() => handleMenuClick(4)}
@@ -67,6 +67,7 @@ const AdminSideBar = ({ handleClose, index, setIndex, handleLogout }) => {
           titlewithiconicon={<IoSettings className="buttonIcon" />}
           isOpen={index === 4}
         />
+
         <Sidebarbutton
           handleSidebarMenu={handleLogoutClick}
           title={"Logout"}

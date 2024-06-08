@@ -13,8 +13,9 @@ import AdminUpdateEvent from "../Event/AdminUpdateEvent";
 import AdminEventCreation from "../Event/AdminEventCreation";
 import FetchEventsService from "../../api/services/FetchEventsService";
 import LocationService from "../../api/services/LocationService";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import EventService from "../../api/services/EventService";
+import { selectUser } from "../../redux/features/userSlice";
 
 const AdminDashboard = () => {
   const [eventCreatePopUpWindow, setEventCreatePopUpWindow] = useState(false);
@@ -24,6 +25,8 @@ const AdminDashboard = () => {
   const [search, setSearch] = useState("");
   const [venuesList, setVenuesList] = useState([]);
   const dispatch = useDispatch;
+
+  const { userId } = useSelector(selectUser);
 
   const handleGetLocationNameList = async () => {
     const response = await LocationService.getAllLocationNames();
@@ -53,7 +56,7 @@ const AdminDashboard = () => {
   };
 
   const handleReloadEventList = async () => {
-    FetchEventsService.fetchEvents()
+    EventService.getEventByUserID(userId)
       .then((events) => {
         setEventList(events);
       })
