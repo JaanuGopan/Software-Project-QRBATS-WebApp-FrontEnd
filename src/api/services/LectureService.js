@@ -2,7 +2,19 @@ import axios from "axios";
 import ApiConstants from "../config/ApiConstants";
 
 class LectureService {
-  static createLecture = async () => {};
+  static createLecture = async (requestData) => {
+    try {
+      console.log(requestData);
+
+      const response = await axios.post(
+        ApiConstants.createLectureUrl,
+        requestData
+      );
+      return response;
+    } catch (error) {
+      console.error("Fail to create lecture.", error);
+    }
+  };
 
   static getAllLecturesByUserId = async (userId) => {
     try {

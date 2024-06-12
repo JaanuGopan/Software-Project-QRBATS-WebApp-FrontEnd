@@ -49,9 +49,7 @@
     object-fit: cover;
 }
 
-.setting-content{
 
-}
 
 .setting-content-label{
     display: flex;
@@ -82,4 +80,38 @@
     color: white;
     background-color: red;
 
+}
+.setting-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    height: initial;
+}
+
+.setting-label{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+}
+
+.setting-label #setting-label-1{
+    font-weight: bold;
+    font-size: large;
+}
+
+.setting-page-button-container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.setting-page-button-container button{
+    margin: 1% 40% 1% 40%;
 }

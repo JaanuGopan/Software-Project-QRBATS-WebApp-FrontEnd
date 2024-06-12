@@ -13,6 +13,7 @@ import { BiSolidPrinter } from "react-icons/bi";
 import LectureStudentsAttendanceTable from "./LectureStudentsAttendanceTable";
 import LectureService from "../../api/services/LectureService";
 import AttendanceService from "../../api/services/AttendanceService";
+import { ToastContainer, toast } from "react-toastify";
 
 const ReportPage = () => {
   const user = useSelector(selectUser);
@@ -68,7 +69,19 @@ const ReportPage = () => {
   };
 
   const handleLoadStudentAttendanceReport = async (lectureId) => {
-    await AttendanceService.getAllAttendanceByLectureId(lectureId)
+    const response = await AttendanceService.getAllAttendanceByLectureId(
+      lectureId
+    );
+    if (response.status === 200) {
+      setLectureStudentAttendanceList(response.data);
+      setShowLectureStudentAttendanceReportWindow(true);
+      setShowLectureReportWindow(false);
+      setShowModuleReportWindow(false);
+      setShowOverallReportWindow(false);
+    } else {
+      console.error("Error fetching attendance:", response);
+    }
+    /* await AttendanceService.getAllAttendanceByLectureId(lectureId)
       .then((attendanceList) => {
         setLectureStudentAttendanceList(attendanceList);
       })
@@ -82,7 +95,41 @@ const ReportPage = () => {
           setShowModuleReportWindow(false);
           setShowOverallReportWindow(false);
         }
-      });
+      }); */
+  };
+
+  const handleDownloadReport = async (lectureId) => {
+    try {
+      const response = await AttendanceService.downloadLectureAttendance(
+        lectureId
+      );
+      if (response.status === 200) {
+        const data = response.data;
+
+        // Create a Blob from the CSV string
+        const blob = new Blob([data], { type: "text/csv" });
+
+        // Create a link element
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+
+        // Set the download attribute with a filename
+        link.download = `lecture_${lectureId}_attendance.csv`;
+
+        // Append the link to the document body
+        document.body.appendChild(link);
+
+        // Trigger the download by clicking the link
+        link.click();
+
+        // Remove the link from the document
+        document.body.removeChild(link);
+      } else {
+        toast.error(response);
+      }
+    } catch (error) {
+      toast.error("An error occurred while downloading the report.");
+    }
   };
 
   const handleOpenLectureReportWindow = async (e) => {
@@ -93,6 +140,7 @@ const ReportPage = () => {
 
   return (
     <div>
+      <ToastContainer />
       <div className="module-report-Dash">
         <div className="module-report-SearchEvent">
           <p className="module-report-mainHead">Modules Report</p>
@@ -180,7 +228,9 @@ const ReportPage = () => {
               />
               <NormalButton
                 title={"Print"}
-                handleClick={() => {}}
+                handleClick={() => {
+                  handleDownloadReport(selectedLectureReport.lectureId);
+                }}
                 titlewithiconicon={
                   <BiSolidPrinter className="staff-buttonIcon" />
                 }

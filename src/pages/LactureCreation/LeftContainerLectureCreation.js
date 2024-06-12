@@ -7,10 +7,12 @@ import { Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import ButtonComponent from "../../components/buttons/ButtonComponent";
 import InputField from "../../components/textfields/InputBox/InputField";
 import LectureService from "../../api/services/LectureService";
+import { ToastContainer, toast } from "react-toastify";
 const LeftContainerLectureCreation = ({
   getModuleCode,
   getDayList,
   showRightSideWindow,
+  handleUpdateAvailableLectures,
 }) => {
   const user = useSelector(selectUser);
   const { userId, departmentId } = user || {};
@@ -44,6 +46,18 @@ const LeftContainerLectureCreation = ({
     });
   };
 
+  const handleShowRightSideWindow = () => {
+    if (moduleCode === null) {
+      toast.error("Please Select Module.");
+    } else if (day.length === 0) {
+      toast.error("Please Select Dates.");
+      return;
+    } else {
+      handleUpdateAvailableLectures("", day[0]);
+      showRightSideWindow();
+    }
+  };
+
   const handelModuleChange = async (e) => {
     const response = await LectureService.getAllLecturesByModuleCode(e);
     if (response) {
@@ -67,6 +81,7 @@ const LeftContainerLectureCreation = ({
 
   return (
     <div className="left-container-lecture-creation">
+      <ToastContainer />
       <label>Module Code</label>
       <Select
         id="selectModule"
@@ -109,7 +124,7 @@ const LeftContainerLectureCreation = ({
           variant="contained"
           color="primary"
           fullWidth
-          onClick={showRightSideWindow}
+          onClick={handleShowRightSideWindow}
         >
           Create Time Slot
         </Button>
