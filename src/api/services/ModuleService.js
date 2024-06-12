@@ -21,7 +21,7 @@ class ModuleService {
     departmentId,
     userId
   ) => {
-    const departmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA"];
+    const departmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA", "DIS"];
 
     try {
       const response = await axios.post(ApiConstants.createModuleUrl, {
@@ -32,9 +32,10 @@ class ModuleService {
         departmentId: departmentId,
         userId: userId,
       });
-      return response.data;
+      return response;
     } catch (error) {
       console.log("Fail to create modules. " + error);
+      return error.response.data;
     }
   };
 
@@ -43,11 +44,10 @@ class ModuleService {
       const response = await axios.delete(
         ApiConstants.deleteModuleUrl + "/" + `${moduleId}`
       );
-      if (response.status == 200) {
-        return response.status;
-      }
-    } catch (e) {
-      console.log("fail to delete module : " + e);
+      return response;
+    } catch (error) {
+      console.error("fail to delete module : " + error);
+      return error.response.data;
     }
   };
 

@@ -12,6 +12,7 @@ import axios from "axios";
 import LocationService from "../../api/services/LocationService";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import LectureService from "../../api/services/LectureService";
 
 const RightContainerLectureCreation = ({
   moduleCode,
@@ -19,6 +20,7 @@ const RightContainerLectureCreation = ({
   userId,
   handelShowAvailableLectures,
   timesList,
+  handleReloadLecturesList,
 }) => {
   const [selectedDay, setSelectedDay] = useState(dayList[0]);
   const [times, setTimes] = useState(timesList);
@@ -92,8 +94,9 @@ const RightContainerLectureCreation = ({
   const validateTimeSlots = (timeSlots) => {
     for (let i = 0; i < timeSlots.length; i++) {
       const slot = timeSlots[i];
-      const startTime = `${slot.startTime}:00`;
-      const endTime = `${slot.endTime}:00`;
+      const startTime = `${slot.startTime}`;
+      const endTime = `${slot.endTime}`;
+      const venue = slot.venue;
 
       if (startTime === endTime) {
         toast.error("Start time and end time cannot be the same.");
@@ -108,13 +111,15 @@ const RightContainerLectureCreation = ({
       for (let j = 0; j < timeSlots.length; j++) {
         if (i !== j) {
           const otherSlot = timeSlots[j];
-          const otherStartTime = `${otherSlot.startTime}:00`;
-          const otherEndTime = `${otherSlot.endTime}:00`;
+          const otherStartTime = `${otherSlot.startTime}`;
+          const otherEndTime = `${otherSlot.endTime}`;
+          const otherVenue = otherSlot.venue;
 
           if (
-            (startTime >= otherStartTime && startTime < otherEndTime) ||
-            (endTime > otherStartTime && endTime <= otherEndTime) ||
-            (startTime <= otherStartTime && endTime >= otherEndTime)
+            ((startTime >= otherStartTime && startTime < otherEndTime) ||
+              (endTime > otherStartTime && endTime <= otherEndTime) ||
+              (startTime <= otherStartTime && endTime >= otherEndTime)) &&
+            (venue === null || venue === otherVenue || otherVenue === null)
           ) {
             toast.error("Time slots cannot overlap.");
             return false;
@@ -130,13 +135,12 @@ const RightContainerLectureCreation = ({
       if (times[day]) {
         const validSlots = times[day]
           .filter((slot) => slot.startTime && slot.endTime && slot.venue)
-          .map((slot) => {
-            return {
-              ...slot,
-              startTime: `${slot.startTime}:00`,
-              endTime: `${slot.endTime}:00`,
-            };
-          });
+          .map((slot) => ({
+            ...slot,
+            startTime: `${slot.startTime}`,
+            endTime: `${slot.endTime}`,
+            venue: `${slot.venue}`,
+          }));
 
         if (validateTimeSlots(validSlots)) {
           acc[day] = validSlots;
@@ -158,42 +162,26 @@ const RightContainerLectureCreation = ({
       times: formattedTimes,
     };
 
-    console.log(requestData);
-
-    try {
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/lecture/createlecture",
-        requestData
+    const response = await LectureService.createLecture(requestData);
+    if (response.status === 200) {
+      const createdLecturesList = response.data.filter(
+        (lecture) => lecture.lectureId
       );
-
-      if (response.status !== 200) {
-        throw new Error("Network response was not ok");
-      }
-
-      const data = response.data;
-      console.log("Save successful:", data);
-
-      const savedLectures = data.filter((lecture) => lecture.lectureId);
-      const failedLectures = data.filter((lecture) => !lecture.lectureId);
-
-      if (savedLectures.length > 0) {
+      if (createdLecturesList.length > 0) {
         toast.success(
-          `Lectures saved successfully: ${savedLectures
+          `Lectures saved successfully: ${createdLecturesList
             .map((lecture) => lecture.lectureName)
             .join(", ")}`
         );
+      } else {
+        toast.error("Lectures not saved or already exist.");
       }
-
-      if (failedLectures.length > 0) {
-        toast.error(
-          `Failed to save lectures: ${failedLectures
-            .map((lecture) => lecture.lectureName)
-            .join(", ")}`
-        );
-      }
-    } catch (error) {
-      console.error("Save failed:", error);
-      toast.error("Save failed.");
+      handleReloadLecturesList();
+      handelShowAvailableLectures(times[selectedDay][0].venue, selectedDay);
+    } else if (response.status === 400) {
+      toast.error(response);
+    } else {
+      toast.error("Error while saving lectures.");
     }
   };
 
@@ -285,26 +273,6 @@ const RightContainerLectureCreation = ({
                     </IconButton>
                   </div>
                   <div className="right-container-lecture-creation-time-selection">
-                    <label>Start Time</label>
-                    <InputField
-                      inputType={"time"}
-                      onChange={(e) => {
-                        handleTimeChange(index, "startTime", e.target.value);
-                      }}
-                      value={slot.startTime || ""}
-                    />
-                  </div>
-                  <div className="right-container-lecture-creation-time-selection">
-                    <label>End Time</label>
-                    <InputField
-                      inputType={"time"}
-                      onChange={(e) => {
-                        handleTimeChange(index, "endTime", e.target.value);
-                      }}
-                      value={slot.endTime || ""}
-                    />
-                  </div>
-                  <div className="right-container-lecture-creation-time-selection">
                     <label>Venue</label>
                     <div className="right-container-lecture-creation-venue-selection-select">
                       <select
@@ -323,6 +291,34 @@ const RightContainerLectureCreation = ({
                         ))}
                       </select>
                     </div>
+                  </div>
+                  <div className="right-container-lecture-creation-time-selection">
+                    <label>Start Time</label>
+                    <InputField
+                      inputType={"time"}
+                      onChange={(e) => {
+                        handleTimeChange(
+                          index,
+                          "startTime",
+                          `${e.target.value}:00`
+                        );
+                      }}
+                      value={slot.startTime || ""}
+                    />
+                  </div>
+                  <div className="right-container-lecture-creation-time-selection">
+                    <label>End Time</label>
+                    <InputField
+                      inputType={"time"}
+                      onChange={(e) => {
+                        handleTimeChange(
+                          index,
+                          "endTime",
+                          `${e.target.value}:00`
+                        );
+                      }}
+                      value={slot.endTime || ""}
+                    />
                   </div>
                 </div>
               ))}

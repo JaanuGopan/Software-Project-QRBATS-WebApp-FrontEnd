@@ -49,6 +49,9 @@ const LectureCreationPage = ({
       if (response) {
         setModuleLectureList(response);
         setTimesList(transformLecturesByDay(response));
+        const lecturesList = response.filter((lecture) => lecture.lectureId);
+        setAvailableLectureList(response);
+        setShowAvailableLecture(true);
       }
     } catch (error) {
       // Handle error
@@ -95,6 +98,11 @@ const LectureCreationPage = ({
               handleGetLecturesListByModuleCode(e);
             }}
             showRightSideWindow={() => setShowRightSideWindow(true)}
+            handleUpdateAvailableLectures={(venue, day) => {
+              setDay(day);
+              setVenue(venue);
+              handleGetAvailableLectureList(venue, day);
+            }}
           />
           {showAvailableLecture && (
             <div className="available-lectures-container">
@@ -102,6 +110,7 @@ const LectureCreationPage = ({
                 availableLectureList={availableLectureList}
                 day={day}
                 venue={venue}
+                moduleName={moduleCode}
               />
             </div>
           )}
@@ -118,6 +127,9 @@ const LectureCreationPage = ({
                 handleGetAvailableLectureList(venue, day);
               }}
               timesList={timesList}
+              handleReloadLecturesList={
+                !hideCloseButton && handleReloadLectureList
+              }
             />
           )}
         </div>

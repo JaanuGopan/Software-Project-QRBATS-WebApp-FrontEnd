@@ -5,11 +5,8 @@ import ApiConstants from "../config/ApiConstants";
 class FetchAttendanceByEventIdService {
   static async fetchAttendance(eventId) {
     try {
-      const response = await axios.post(
-        ApiConstants.getAttendanceByEventIdUrl,
-        {
-          eventId: eventId,
-        }
+      const response = await axios.get(
+        ApiConstants.getAttendanceByEventIdUrl(eventId)
       );
 
       return response.data;

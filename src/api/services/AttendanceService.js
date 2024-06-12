@@ -8,12 +8,27 @@ class AttendanceService {
         ApiConstants.getAllLectureAttendanceByLectureIdUrl(lectureId)
       );
       if (response.status === 200) {
-        return response.data;
-      } else if (response.status === 400) {
+        return response;
+      }
+    } catch (error) {
+      console.error(
+        "Error in getting attendance for this lecture. ",
+        error.response.data
+      );
+    }
+  };
+
+  static downloadLectureAttendance = async (lectureId) => {
+    try {
+      const response = await axios.get(
+        ApiConstants.downloadLectureAttendanceByLectureIdUrl(lectureId)
+      );
+      if (response.status === 200) {
         return response;
       }
     } catch (error) {
       console.error("Error in getting attendance for this lecture. ", error);
+      return error.response.data;
     }
   };
 }

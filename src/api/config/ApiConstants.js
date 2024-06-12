@@ -35,8 +35,10 @@ class ApiConstants {
   static get deleteStaffUrl() {
     return ApiConstants.baseUrl + "/auth/deleteuserbyuserid"; //http://localhost:8080/api/v1/auth/deleteuserbyuserid
   }
-  static get getAttendanceByEventIdUrl() {
-    return ApiConstants.baseUrl + "/attendance/getallattendancebyeventid"; //http://localhost:8080/api/v1/attendance/getallattendancebyeventid
+  static getAttendanceByEventIdUrl(eventId) {
+    return (
+      ApiConstants.baseUrl + `/attendance/getallattendancebyeventid/${eventId}`
+    ); //http://localhost:8080/api/v1/attendance/getallattendancebyeventid
   }
   static get getAllStudentUrl() {
     return ApiConstants.baseUrl + "/mobile/getallstudents"; //http://localhost:8080/api/v1/mobile/getallstudents
@@ -85,6 +87,10 @@ class ApiConstants {
     ); //localhost:8080/api/v1/report/getallstudentsbydepartmentidandsemester?deptId=2&sem=6
   }
 
+  static get createLectureUrl() {
+    return ApiConstants.baseUrl + "/lecture/createlecture"; //http://localhost:8080/api/v1/lecture/createlecture
+  }
+
   static getAllLecturesByUserId(userId) {
     return ApiConstants.baseUrl + `/lecture/getalllecturebyuserid/${userId}`; //http://localhost:8080/api/v1/lecture/getalllecturebyuserid/{id}
   }
@@ -109,6 +115,9 @@ class ApiConstants {
       ApiConstants.baseUrl +
       `/lectureattendance/getallattendancebylectureid/${lectureId}`
     );
+  }
+  static downloadLectureAttendanceByLectureIdUrl(lectureId) {
+    return ApiConstants.baseUrl + `/export/getcsv/${lectureId}`;
   }
 
   static getAllLectureByDayAndVenueUrl(day, venue) {
