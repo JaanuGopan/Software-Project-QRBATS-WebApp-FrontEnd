@@ -21,8 +21,6 @@ class ModuleService {
     departmentId,
     userId
   ) => {
-    const departmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA"];
-
     try {
       const response = await axios.post(ApiConstants.createModuleUrl, {
         moduleCode: moduleCode,
@@ -32,9 +30,42 @@ class ModuleService {
         departmentId: departmentId,
         userId: userId,
       });
-      return response.data;
+      return response;
     } catch (error) {
       console.log("Fail to create modules. " + error);
+      if (error.response.status === 400) {
+        console.log("Error Response is ", error.response);
+        return error.response;
+      }
+    }
+  };
+
+  static updateModule = async (
+    moduleId,
+    moduleCode,
+    moduleName,
+    moduleEnrolmentKey,
+    semester,
+    departmentId,
+    userId
+  ) => {
+    try {
+      const response = await axios.put(ApiConstants.updateModuleUrl, {
+        moduleId: moduleId,
+        moduleCode: moduleCode,
+        moduleName: moduleName,
+        moduleEnrolmentKey: moduleEnrolmentKey,
+        semester: semester,
+        departmentId: departmentId,
+        lectureId: userId,
+      });
+      return response;
+    } catch (error) {
+      console.error("Error In Updating Module.", error);
+      if (error.response.status === 400) {
+        console.log("Error Response is ", error.response);
+        return error.response;
+      }
     }
   };
 
@@ -43,11 +74,10 @@ class ModuleService {
       const response = await axios.delete(
         ApiConstants.deleteModuleUrl + "/" + `${moduleId}`
       );
-      if (response.status == 200) {
-        return response.status;
-      }
-    } catch (e) {
-      console.log("fail to delete module : " + e);
+      return response;
+    } catch (error) {
+      console.error("fail to delete module : " + error);
+      return error.response.data;
     }
   };
 

@@ -5,127 +5,179 @@ import Designer from "../../assets/Images/Designer.jpeg";
 import { useNavigate } from "react-router-dom";
 import InputField from "../../components/textfields/InputBox/InputField";
 import { IoMdCloseCircleOutline } from "react-icons/io";
+import Select from "react-select";
+import StudentService from "../../api/services/StudentService";
+import { ToastContainer, toast } from "react-toastify";
 
-const CreateStudentWindow = ({ handlecloseCreateStudentWindow }) => {
-  const [firstname, setFirstName] = useState("");
-  const [lastname, setLastName] = useState("");
+const CreateStudentWindow = ({
+  handleCloseCreateStudentWindow,
+  handleReloadStudentList,
+}) => {
+  const [studentName, setStudentName] = useState("");
+  const [studentIndexNo, setStudentIndexNo] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [userName, setUserName] = useState("");
   const [userRole, setUserRole] = useState("");
+  const [semester, setSemester] = useState();
   const [departmentId, setDepartmentId] = useState("");
-  const navigate = useNavigate();
 
-  const deparmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA"];
-  const userRoleList = ["ADMIN", "LECTURER", "STAFF"];
+  const semesterList = ["1", "2", "3", "4", "5", "6", "7", "8"];
+  const departmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA"];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/auth/signin",
-        {
-          firstName: firstname,
-          lastName: lastname,
-          email: email,
-          password: password,
-          userName: userName,
-          departmentId: deparmentList.indexOf(departmentId) + 1,
-        }
-      );
-      const token = response.data.token;
-      const decodedToken = parseJwt(token);
-      const userName = decodedToken.sub;
-      localStorage.setItem("token", token);
-      navigate("/mainNavigation", { state: { userName } });
-    } catch (error) {
-      console.error("Login failed", error);
+    if (password !== confirmPassword) {
+      toast.error("Password does not match");
+      return;
     }
-  };
-
-  const parseJwt = (token) => {
-    const base64Url = token.split(".")[1];
-    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-    const jsonPayload = decodeURIComponent(
-      atob(base64)
-        .split("")
-        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-        .join("")
+    const response = await StudentService.createStudentByAdmin(
+      -1,
+      studentName,
+      studentIndexNo,
+      email,
+      userName,
+      password,
+      semesterList.indexOf(semester.value) + 1,
+      departmentList.indexOf(departmentId.value) + 1
     );
-    return JSON.parse(jsonPayload);
+    if (response.status === 200) {
+      toast.success("Successfully Student Created.");
+      handleReloadStudentList();
+      handleCloseCreateStudentWindow();
+    } else {
+      toast.error(response);
+    }
   };
 
   return (
     <div className="student-signup-main-container">
-      <div
-        className="closeCreateEventWindow"
-        onClick={handlecloseCreateStudentWindow}
-      >
-        <IoMdCloseCircleOutline />
-      </div>
-      <p className="student-head1">Create Student</p>
-      <div className="student-login-container">
-        <div className="student-image-container">
-          <img src={Designer} className="student-logo" alt="Logo" />
+      <ToastContainer />
+      <div className="student-create-title-close-button">
+        <h3 className="student-create-title">Create Student</h3>
+        <div
+          className="student-create-close-button"
+          onClick={handleCloseCreateStudentWindow}
+        >
+          <IoMdCloseCircleOutline id="close-icon" />
         </div>
+      </div>
+      <div className="student-login-container">
         <div className="form-container">
           <form onSubmit={handleSubmit}>
-            {/* First Name Input */}
-            <InputField
-              placeholder="Enter your first name"
-              value={firstname}
-              onChange={(e) => setFirstName(e.target.value)}
-              inputType="text"
-            />
-
-            {/* Last Name Input */}
-            <InputField
-              placeholder="Enter your last name"
-              value={lastname}
-              onChange={(e) => setLastName(e.target.value)}
-              inputType="text"
-            />
-
-            {/* Email Input */}
-            <InputField
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              inputType="text"
-            />
-
-            <InputField
-              placeholder="Enter your user name"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-              inputType="text"
-            />
-
-            {/* Password Input */}
-            <InputField
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              inputType="password"
-            />
-
-            <div className="eventCreation-form">
-              <select
-                value={departmentId}
-                onChange={(e) => setDepartmentId(e.target.value)}
-                className="form-control mb-2"
-              >
-                <option value="">Select the department</option>
-                {deparmentList.map((option, index) => (
-                  <option key={index} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
+            <div className="student-creation-input">
+              <label>Student Name</label>
+              <div className="student-creation-input-field">
+                <InputField
+                  placeholder="Enter Student Name"
+                  value={studentName}
+                  onChange={(e) => setStudentName(e.target.value)}
+                  inputType="text"
+                />
+              </div>
             </div>
-            <button type="submit" className="btn btn-success w-100">
-              Add Student
-            </button>
+
+            <div className="student-creation-input">
+              <label>Student IndexNo</label>
+              <div className="student-creation-input-field">
+                <InputField
+                  placeholder="Enter Student IndexNo"
+                  value={studentIndexNo}
+                  onChange={(e) => setStudentIndexNo(e.target.value)}
+                  inputType="text"
+                />
+              </div>
+            </div>
+
+            <div className="student-creation-input">
+              <label>Student Email</label>
+              <div className="student-creation-input-field">
+                <InputField
+                  placeholder="Enter Student Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  inputType="text"
+                />
+              </div>
+            </div>
+
+            <div className="student-creation-input">
+              <label>Student UserName</label>
+              <div className="student-creation-input-field">
+                <InputField
+                  placeholder="Enter Student UserName"
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  inputType="text"
+                />
+              </div>
+            </div>
+
+            <div className="student-creation-input">
+              <label>Password</label>
+              <div className="student-creation-input-field">
+                <InputField
+                  placeholder="Enter Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  inputType="password"
+                />
+              </div>
+            </div>
+            <div className="student-creation-input">
+              <label>Confirm Password</label>
+              <div className="student-creation-input-field">
+                <InputField
+                  placeholder="Re-enter Password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  inputType="password"
+                />
+              </div>
+            </div>
+            <div className="student-creation-input">
+              <label>Current Semester</label>
+              <div className="student-creation-input-field">
+                <div className="eventCreation-form">
+                  <Select
+                    required
+                    value={semester}
+                    onChange={(e) => setSemester(e)}
+                    options={semesterList.map((sem) => ({
+                      value: sem,
+                      label: sem,
+                    }))}
+                    placeholder={"Select Semester"}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="student-creation-input">
+              <label>Student Department</label>
+              <div className="student-creation-input-field">
+                <div className="eventCreation-form">
+                  <Select
+                    required
+                    value={departmentId}
+                    onChange={(e) => setDepartmentId(e)}
+                    options={departmentList.map((dept) => ({
+                      value: dept,
+                      label: dept,
+                    }))}
+                    placeholder={"Select Department"}
+                  />
+                </div>
+              </div>
+            </div>
+            <di className="student-creation-save-button-container">
+              <button
+                type="submit"
+                className="btn btn-success student-creation-save-button"
+              >
+                Create Student
+              </button>
+            </di>
           </form>
         </div>
       </div>

@@ -8,7 +8,6 @@
 }
 
 .maincontent {
-
     flex-grow: 1; 
     padding: 2px;
     overflow-y: auto;
@@ -20,7 +19,7 @@
 
 .logout-window {
   position: fixed;
-  z-index: 2;
+  z-index: 4;
   left: 0;
   top: 0;
   overflow-y: scroll;

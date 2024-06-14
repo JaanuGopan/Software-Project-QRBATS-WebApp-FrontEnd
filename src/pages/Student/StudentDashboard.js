@@ -1,26 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Student.css";
 import NormalButton from "../../components/layout/AdminDashboardComponent/NormalButton";
 import { MdCreateNewFolder } from "react-icons/md";
 import { RiDeleteBin5Fill } from "react-icons/ri";
-import StudentTable from "../../components/layout/AdminDashboardComponent/StudentTable";
+import StudentTable from "./StudentTable";
 import CreateStudentWindow from "./CreateStudentWindow";
 import UpdateStudentWindow from "./UpdateStudentWindow";
+import StudentService from "../../api/services/StudentService";
+import WarningPopup from "../../components/warningPopup/WarningPopup";
+import { ToastContainer, toast } from "react-toastify";
 
 const StudentDashboard = () => {
   const [studentCreatePopUpWindow, setStudentCreatePopUpWindow] =
     useState(false);
   const [studentUpdatePopUpWindow, setStudentUpdatePopUpWindow] =
     useState(false);
+  const [showDeletePopUpWindow, setShowDeletePopUpWindow] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
+  const [studentList, setStudentList] = useState([]);
 
   const handleSelectedStudent = (student) => {
     setSelectedStudent(student);
     console.log(selectedStudent);
   };
 
+  const handleReloadStudentList = async () => {
+    const response = await StudentService.getAllStudent();
+    if (response) {
+      setStudentList(response);
+    }
+  };
+
+  useEffect(() => {
+    handleReloadStudentList();
+  }, []);
+
+  const handelDeleteStudent = async () => {
+    const response = await StudentService.deleteStudent(
+      selectedStudent.studentId
+    );
+    if (response) {
+      handleReloadStudentList();
+    }
+  };
+
   return (
     <div className="student-Dash">
+      <ToastContainer />
       <div className="student-SearchEvent">
         <p className="student-mainHead">Student Details</p>
         <input
@@ -41,7 +67,8 @@ const StudentDashboard = () => {
             setSelectedStudent(e);
             setStudentUpdatePopUpWindow(true);
           }}
-          selectedStudent={(e) => handleSelectedStudent(e)}
+          onStudentClick={(e) => handleSelectedStudent(e)}
+          studentList={studentList}
         />
         <div className="student-List-Buttons">
           <NormalButton
@@ -56,31 +83,44 @@ const StudentDashboard = () => {
             titlewithiconicon={
               <RiDeleteBin5Fill className="student-buttonIcon" />
             }
+            handleClick={() => {
+              if (!selectedStudent) {
+                toast.error("Please select a student to delete.");
+              } else {
+                setShowDeletePopUpWindow(true);
+              }
+            }}
           />
         </div>
       </div>
       {studentCreatePopUpWindow && (
-        <div
-          handleClick={() => setStudentCreatePopUpWindow(false)}
-          className="student-Create-Event-Dashboard"
-        >
+        <div className="student-Create-Event-Dashboard">
           <CreateStudentWindow
-            handlecloseCreateStudentWindow={() =>
+            handleCloseCreateStudentWindow={() =>
               setStudentCreatePopUpWindow(false)
             }
+            handleReloadStudentList={handleReloadStudentList}
           />
         </div>
       )}
       {studentUpdatePopUpWindow && (
-        <div
-          handleClick={() => setStudentCreatePopUpWindow(false)}
-          className="student-Create-Event-Dashboard"
-        >
+        <div className="student-Create-Event-Dashboard">
           <UpdateStudentWindow
-            handlecloseUpdateStudentWindow={() =>
+            handleCloseUpdateStudentWindow={() =>
               setStudentUpdatePopUpWindow(false)
             }
             student={selectedStudent}
+            handleReloadStudentList={handleReloadStudentList}
+          />
+        </div>
+      )}
+      {showDeletePopUpWindow && selectedStudent && (
+        <div className="student-creation-delete-popup-window">
+          <WarningPopup
+            handleOk={handelDeleteStudent}
+            handleCloseWarningWindow={() => setShowDeletePopUpWindow(false)}
+            buttonText={"Delete"}
+            titleText={"Are you sure you want to delete this student?"}
           />
         </div>
       )}

@@ -7,6 +7,7 @@ import LoginService from "../../../api/services/LoginService";
 import JwtService from "../../../api/services/JwtService";
 import { useDispatch, useSelector } from "react-redux";
 import { login, selectUser } from "../../../redux/features/userSlice";
+import UserService from "../../../api/services/UserService";
 
 const LoginForm = () => {
   const [userName, setUserName] = useState("");
@@ -25,33 +26,14 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const token = await LoginService.loginUser(userName, password);
-
-      const decodedToken = JwtService.parseJwt(token);
-      const loginUserName = decodedToken.sub;
-      const loginUserFirstName = decodedToken.firstName;
-      const loginUserLastName = decodedToken.lastName;
-      const loginUserEmail = decodedToken.email;
-      const loginUserRole = decodedToken.role;
-      const loginUserId = decodedToken.userId;
-      const loginUserDepartmentId = decodedToken.departmentId;
-      localStorage.setItem("token", token);
-
-      dispatch(
-        login({
-          token: token,
-          userId: loginUserId,
-          userName: loginUserName,
-          firstName: loginUserFirstName,
-          lastName: loginUserLastName,
-          email: loginUserEmail,
-          role: loginUserRole,
-          departmentId: loginUserDepartmentId,
-          loggedIn: true,
-        })
+      const response = await UserService.loginUser(
+        userName,
+        password,
+        dispatch
       );
-
-      navigate("/mainNavigation");
+      if (response) {
+        navigate("/mainNavigation");
+      }
     } catch (error) {
       console.error("Login failed", error);
     }

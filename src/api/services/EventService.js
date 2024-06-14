@@ -51,6 +51,32 @@ class EventService {
       console.log("Event Get Failed ", error);
     }
   }
+
+  static async deleteEvent(eventId) {
+    try {
+      const response = await axios.delete(
+        ApiConstants.deleteEventUrl + "/" + `${eventId}`
+      );
+      console.log("deleted Successfully..");
+      return response.data.token;
+    } catch (error) {
+      throw new Error("Delete Failed ", error);
+    }
+  }
+
+  static async getAllLectureByModuleCode(moduleCode) {
+    try {
+      const response = await axios.get(
+        ApiConstants.getAllLecturesByModuleCode(moduleCode)
+      );
+      if (response.data) {
+        console.log(response.data);
+        return response.data;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
 
 export default EventService;

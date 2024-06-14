@@ -11,10 +11,11 @@ import { MdCreateNewFolder } from "react-icons/md";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import AdminUpdateEvent from "../Event/AdminUpdateEvent";
 import AdminEventCreation from "../Event/AdminEventCreation";
-import DeleteEventService from "../../api/services/DeleteEventService";
 import FetchEventsService from "../../api/services/FetchEventsService";
 import LocationService from "../../api/services/LocationService";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import EventService from "../../api/services/EventService";
+import { selectUser } from "../../redux/features/userSlice";
 
 const AdminDashboard = () => {
   const [eventCreatePopUpWindow, setEventCreatePopUpWindow] = useState(false);
@@ -24,6 +25,8 @@ const AdminDashboard = () => {
   const [search, setSearch] = useState("");
   const [venuesList, setVenuesList] = useState([]);
   const dispatch = useDispatch;
+
+  const { userId } = useSelector(selectUser);
 
   const handleGetLocationNameList = async () => {
     const response = await LocationService.getAllLocationNames();
@@ -45,11 +48,7 @@ const AdminDashboard = () => {
 
   const handleDelete = async () => {
     try {
-      const response = await DeleteEventService.deleteEvent(
-        selectedEvent.eventId
-      );
-      // After deleting, you may want to update the event list
-      // Fetch the updated event list
+      const response = await EventService.deleteEvent(selectedEvent.eventId);
       handleReloadEventList();
     } catch (error) {
       console.log("error " + error);
@@ -57,7 +56,7 @@ const AdminDashboard = () => {
   };
 
   const handleReloadEventList = async () => {
-    FetchEventsService.fetchEvents()
+    EventService.getEventByUserID(userId)
       .then((events) => {
         setEventList(events);
       })

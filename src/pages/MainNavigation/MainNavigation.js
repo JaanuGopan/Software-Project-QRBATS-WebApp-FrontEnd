@@ -18,13 +18,11 @@ import ModulePage from "../Module/ModulePage";
 import LectureCreationDashboard from "../LecturerDashboard/LectureCreationDashboard";
 import AdminEventCreationDashboard from "../Event/AdminEventCreationDashboard";
 import LocationService from "../../api/services/LocationService";
-import {
-  setLocationList,
-  resetLocationList,
-} from "../../redux/features/locationListSlice";
 import LogoutConfirmation from "../LogoutPage/LogoutConfirmation";
 import { resetSideBarIndex } from "../../redux/features/mainNavigationSlice";
 import Logout from "../../api/services/logoutService";
+import ReportPage from "../ReportPage/ReportPage";
+import LectureCreationPage from "../LactureCreation/LectureCreationPage";
 
 function MainNavigationPage() {
   const navigate = useNavigate();
@@ -62,30 +60,53 @@ function MainNavigationPage() {
   }, [user, navigate]);
 
   const [isHidden, setIsHidden] = useState(false);
-  const handleshow = () => {
-    setIsHidden(false);
+  const handleShow = () => {
+    if (isHidden) {
+      setIsHidden(false);
+    } else {
+      setIsHidden(true);
+    }
   };
-  const handleclose = () => {
+  const handleClose = () => {
     setIsHidden(true);
+  };
+
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
   };
 
   return (
     <div className="staff-Main">
-      <div className="menuButton" onClick={handleshow}>
-        <PiListDashesFill size={"30px"} />
+      <div
+        className="menuButton"
+        onClick={handleShow}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        <PiListDashesFill
+          size={"30px"}
+          color={isHovered ? "#0366a4" : "white"}
+        />
       </div>
       <StaffNavBar setIndex={setOpenMenu} />
       <div className="staff-Submain">
         {!isHidden && role === "ADMIN" && (
           <AdminSideBar
-            handleclose={handleclose}
+            handleClose={handleClose}
             index={openMenu}
             setIndex={setOpenMenu}
+            handleLogout={() => setHandleShowLogoutWindow(true)}
           />
         )}
         {!isHidden && role === "LECTURER" && (
           <LecturerSideBar
-            handleclose={handleclose}
+            handleClose={handleClose}
             index={openMenu}
             setIndex={setOpenMenu}
             handleShowLogoutWindow={() => {
@@ -96,12 +117,12 @@ function MainNavigationPage() {
         {role === "ADMIN" && (
           <div className="maincontent">
             {openMenu === 0 && <AdminDashboard />}
-            {openMenu === 1 && (
+            {/* {openMenu === 1 && (
               <AdminEventCreationDashboard locationList={venuesList} />
-            )}
-            {openMenu === 2 && <StaffDashboard />}
-            {openMenu === 3 && <StudentDashboard />}
-            {openMenu === 5 && <EventReport />}
+            )} */}
+            {openMenu === 1 && <StaffDashboard />}
+            {openMenu === 2 && <StudentDashboard />}
+            {openMenu === 3 && <EventReport />}
             {openMenu === 4 && <Setting />}
           </div>
         )}
@@ -109,9 +130,11 @@ function MainNavigationPage() {
           <div className="maincontent">
             {openMenu === 0 && <LecturerDashboard />}
             {openMenu === 1 && <LectureCreationDashboard />}
-            {openMenu === 2 && <ModulePage />}
-            {openMenu === 3 && <EventReport />}
-            {openMenu === 4 && <Setting />}
+            {openMenu === 2 && <LectureCreationPage />}
+            {openMenu === 3 && <ModulePage />}
+            {openMenu === 4 && <ReportPage />}
+            {openMenu === 5 && <EventReport />}
+            {openMenu === 6 && <Setting />}
           </div>
         )}
         {handleShowLogoutWindow === true && (

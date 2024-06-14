@@ -5,48 +5,30 @@ import Designer from "../../assets/Images/Designer.jpeg";
 import { useNavigate } from "react-router-dom";
 import InputField from "../../components/textfields/InputBox/InputField";
 import { IoMdCloseCircleOutline } from "react-icons/io";
+import Select from "react-select";
+import { Label } from "@mui/icons-material";
 
 const UpdateStaff = ({
-  handlecloseUpdateStaffWindow,
+  handleCloseUpdateStaffWindow,
   selectedStaff,
   handleReloadStaffList,
 }) => {
   const [userId, setUserId] = useState(selectedStaff.userId);
-  const [firstname, setFirstName] = useState(selectedStaff.firstName);
-  const [lastname, setLastName] = useState(selectedStaff.lastName);
+  const [firstName, setFirstName] = useState(selectedStaff.firstName);
+  const [lastName, setLastName] = useState(selectedStaff.lastName);
   const [email, setEmail] = useState(selectedStaff.email);
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState(selectedStaff.username);
   const [userRole, setUserRole] = useState(selectedStaff.role);
   const [departmentId, setDepartmentId] = useState(selectedStaff.departmentId);
+  const [department, setDepartment] = useState();
   const navigate = useNavigate();
 
-  const deparmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA"];
-  const userRoleList = ["ADMIN", "LECTURER", "STAFF"];
+  const departmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA", "DIS"];
+  const userRoleList = ["ADMIN", "LECTURER"];
 
-  const handleSubmit = async (e) => {
+  const handleSaveUser = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/auth/signin",
-        {
-          userId: userId,
-          firstName: firstname,
-          lastName: lastname,
-          email: email,
-          password: password,
-          userName: userName,
-          departmentId: deparmentList.indexOf(departmentId) + 1,
-        }
-      );
-      const token = response.data.token;
-      const decodedToken = parseJwt(token);
-      const userName = decodedToken.sub;
-      localStorage.setItem("token", token);
-      navigate("/mainNavigation", { state: { userName } });
-    } catch (error) {
-      console.error("Login failed", error);
-    }
   };
 
   const parseJwt = (token) => {
@@ -63,59 +45,79 @@ const UpdateStaff = ({
 
   return (
     <div className="staff-signup-main-container">
-      <div
-        className="closeCreateEventWindow"
-        onClick={handlecloseUpdateStaffWindow}
-      >
-        <IoMdCloseCircleOutline />
-      </div>
-      <p className="staff-head1">Update Staff Details</p>
-      <div className="staff-login-container">
-        <div className="staff-image-container">
-          <img src={Designer} className="staff-logo" alt="Logo" />
+      <div className="staff-update-title-close-button">
+        <h3 className="staff-update-title">Update User</h3>
+        <div
+          className="staff-update-close-button"
+          onClick={handleCloseUpdateStaffWindow}
+        >
+          <IoMdCloseCircleOutline id="close-icon" />
         </div>
+      </div>
+      <div className="staff-login-container">
+        {/* <div className="staff-image-container">
+          <img src={Designer} className="staff-logo" alt="Logo" />
+        </div> */}
         <div className="form-container">
-          <form onSubmit={handleSubmit}>
-            {/* First Name Input */}
-            <InputField
-              placeholder="Enter your first name"
-              value={firstname}
-              onChange={(e) => setFirstName(e.target.value)}
-              inputType="text"
-            />
-
-            {/* Last Name Input */}
-            <InputField
-              placeholder="Enter your last name"
-              value={lastname}
-              onChange={(e) => setLastName(e.target.value)}
-              inputType="text"
-            />
-
-            {/* Email Input */}
-            <InputField
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              inputType="text"
-            />
-            <div className="choice-input mb-3">
-              <select
-                value={departmentId}
-                onChange={(e) => setDepartmentId(e.target.value)}
-                className="staff-select-input"
-              >
-                <option value="">Select the department</option>
-                {deparmentList.map((option, index) => (
-                  <option key={index} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
+          <form onSubmit={handleSaveUser}>
+            <div className="staff-creation-input">
+              <label>First Name</label>
+              <div className="staff-creation-input-field">
+                <InputField
+                  placeholder="Enter your first name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  inputType="text"
+                />
+              </div>
             </div>
-            <button type="submit" className="btn btn-primary w-100">
-              Save
-            </button>
+            <div className="staff-creation-input">
+              <label>Last Name</label>
+              <div className="staff-creation-input-field">
+                <InputField
+                  placeholder="Enter your last name"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  inputType="text"
+                />
+              </div>
+            </div>
+            <div className="staff-creation-input">
+              <label>Email</label>
+              <div className="staff-creation-input-field">
+                <InputField
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  inputType="text"
+                />
+              </div>
+            </div>
+            <div className="staff-creation-input">
+              <label>Department</label>
+              <div className="staff-creation-input-field">
+                <Select
+                  required
+                  value={{
+                    value: departmentList[departmentId - 1],
+                    label: departmentList[departmentId - 1],
+                  }}
+                  onChange={(e) =>
+                    setDepartmentId(departmentList.indexOf(e.value) + 1)
+                  }
+                  options={departmentList.map((dept) => ({
+                    value: dept,
+                    label: dept,
+                  }))}
+                  placeholder={"Select Department"}
+                />
+              </div>
+            </div>
+            <div className="create-staff-create-button">
+              <button type="submit" className="btn btn-warning">
+                <label>Update</label>
+              </button>
+            </div>
           </form>
         </div>
       </div>

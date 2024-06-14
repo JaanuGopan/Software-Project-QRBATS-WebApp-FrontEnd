@@ -8,20 +8,14 @@ const StaffTable = ({
   onStaffClick,
   staffsList,
 }) => {
-  const [staffs, setStaffs] = useState([]);
   const [selectedStaff, setSelectedStaff] = useState(null);
-
-  useEffect(() => {
-    // Fetch the list of staffs from the API
-    setStaffs(staffsList);
-  }, [staffsList]);
 
   const handleStaffClick = (staff) => {
     setSelectedStaff(staff);
     onStaffClick(staff);
   };
 
-  const deparmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA"];
+  const departmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA", "DIS"];
 
   return (
     <div className="tableDesign">
@@ -36,7 +30,7 @@ const StaffTable = ({
           </tr>
         </thead>
         <tbody>
-          {staffs
+          {staffsList
             .filter(
               (staff) =>
                 staff.firstName.toLowerCase().includes(search.toLowerCase()) ||
@@ -51,12 +45,14 @@ const StaffTable = ({
               >
                 <td>{index + 1}</td>
                 <td>{staff.firstName + " " + staff.lastName}</td>
-                <td>{deparmentList[staff.departmentId - 1]}</td>
+                <td>{departmentList[staff.departmentId - 1]}</td>
                 <td>{staff.email}</td>
 
                 <td>
-                  <button onClick={() => handleUpdateStaff(staff)}
-                    className="EditButton">
+                  <button
+                    onClick={() => handleUpdateStaff(staff)}
+                    className="EditButton"
+                  >
                     <FaEdit className="EditIcon" />
                   </button>
                 </td>
