@@ -31,6 +31,19 @@ class AttendanceService {
       return error.response.data;
     }
   };
+  static downloadEventAttendance = async (eventId) => {
+    try {
+      const response = await axios.get(
+        ApiConstants.downloadEventAttendanceByEventIdUrl(eventId)
+      );
+      return response;
+    } catch (error) {
+      console.error("Error in getting attendance for this lecture. ", error);
+      if (error.response.status === 400) {
+        return error.response;
+      }
+    }
+  };
 }
 
 export default AttendanceService;

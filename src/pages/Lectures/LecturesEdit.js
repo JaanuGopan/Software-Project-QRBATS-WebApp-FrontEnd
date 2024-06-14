@@ -1,4 +1,5 @@
 import "../Event/EventCreation/EventCreation.css";
+import "./Lectures.css";
 import React, { useState, useRef } from "react";
 import axios from "axios";
 import html2canvas from "html2canvas";
@@ -99,13 +100,15 @@ const LecturesEdit = ({
   return (
     <div className="event-main-container1">
       <Toaster />
-      <div
-        className="closeCreateEventWindow"
-        onClick={handleCloseUpdateLectureWindow}
-      >
-        <IoMdCloseCircleOutline size={25} />
+      <div className="lecture-update-title-close-button">
+        <h3 className="lecture-update-title">Update Lecture</h3>
+        <div
+          className="lecture-update-close-button"
+          onClick={handleCloseUpdateLectureWindow}
+        >
+          <IoMdCloseCircleOutline id="close-icon" />
+        </div>
       </div>
-      <h2>Update Lecture</h2>
       <div className="eventCreation-field">
         <div ref={qrCodeRef}>
           <div className="row-center">

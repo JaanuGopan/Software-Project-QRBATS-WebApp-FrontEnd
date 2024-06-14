@@ -17,7 +17,7 @@ import {
 import { FaList } from "react-icons/fa";
 import { CiViewList } from "react-icons/ci";
 import { FaRegListAlt } from "react-icons/fa";
-
+import LectureIcon from "../../../assets/Icons/lecture_Icon.png";
 const LecturerSideBar = ({
   handleClose,
   index,
@@ -67,7 +67,7 @@ const LecturerSideBar = ({
         <Sidebarbutton
           handleSidebarMenu={() => handleMenuClick(4)}
           title={"Lecture Report"}
-          titlewithiconicon={<FaRegListAlt className="buttonIcon" />}
+          titlewithiconicon={<TbReport className="buttonIcon" />}
           isOpen={index === 4}
         />
         <Sidebarbutton

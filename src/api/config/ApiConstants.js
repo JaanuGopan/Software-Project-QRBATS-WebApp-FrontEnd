@@ -72,7 +72,9 @@ class ApiConstants {
   static get createModuleUrl() {
     return ApiConstants.baseUrl + "/module/createmodule"; //localhost:8080/api/v1/module/createmodule
   }
-
+  static get updateModuleUrl() {
+    return ApiConstants.baseUrl + "/module/updatemodule"; //localhost:8080/api/v1/module/updatemodule
+  }
   static get deleteModuleUrl() {
     return ApiConstants.baseUrl + "/module/deletemodule"; //localhost:8080/api/v1/module/deletemodule/{id}
   }
@@ -118,6 +120,9 @@ class ApiConstants {
   }
   static downloadLectureAttendanceByLectureIdUrl(lectureId) {
     return ApiConstants.baseUrl + `/export/getcsv/${lectureId}`;
+  }
+  static downloadEventAttendanceByEventIdUrl(eventId) {
+    return ApiConstants.baseUrl + `/export/geteventreport/${eventId}`;
   }
 
   static getAllLectureByDayAndVenueUrl(day, venue) {

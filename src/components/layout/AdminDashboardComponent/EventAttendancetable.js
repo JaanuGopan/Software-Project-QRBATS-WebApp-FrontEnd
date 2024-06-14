@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import "../../../pages/AdminDashboard/AdminDashboard.css";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { FaCheck } from "react-icons/fa";
+import { AiOutlineClose } from "react-icons/ai";
 
-const EventAttendancetable = ({
+const EventAttendanceTable = ({
   search,
   attendanceList,
   handleGeneratePDF,
@@ -30,6 +32,7 @@ const EventAttendancetable = ({
             <th>Registration Number</th>
             <th>Attendance Date</th>
             <th>Attendance Time</th>
+            <th>Attendance Status</th>
           </tr>
         </thead>
 
@@ -58,6 +61,13 @@ const EventAttendancetable = ({
                 <td>{attendance.indexNumber}</td>
                 <td>{attendance.attendedDate}</td>
                 <td>{attendance.attendedTime}</td>
+                <td>
+                  {attendance.attendanceStatus ? (
+                    <FaCheck color="green" />
+                  ) : (
+                    <AiOutlineClose color="red" />
+                  )}
+                </td>
               </tr>
             ))}
         </tbody>
@@ -66,4 +76,4 @@ const EventAttendancetable = ({
   );
 };
 
-export default EventAttendancetable;
+export default EventAttendanceTable;

@@ -141,13 +141,15 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
   return (
     <div className="setting-update-main-container">
       <Toaster />
-      <div
-        className="closeUpdateSettingWindow"
-        onClick={handleCloseUpdateSettingWindow}
-      >
-        <IoMdCloseCircleOutline size={25} />
+      <div className="setting-update-title-close-button">
+        <h3 className="setting-update-title">Update Profile</h3>
+        <div
+          className="setting-update-close-button"
+          onClick={handleCloseUpdateSettingWindow}
+        >
+          <IoMdCloseCircleOutline id="close-icon" />
+        </div>
       </div>
-      <h2>Update Profile</h2>
       <div className="setting-field">
         <div className="update-setting-input-form">
           <form onSubmit={handleUpdateUser}>
