@@ -115,3 +115,47 @@
 .setting-page-button-container button{
     margin: 1% 40% 1% 40%;
 }
+
+
+.setting-update-title-close-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.setting-update-title {
+    align-self: center;
+    justify-self: center;
+    margin-left: auto;
+}
+
+.setting-update-close-button {
+    align-self: center;
+    justify-self: flex-end;
+    margin-left: auto;
+    height: 30px;
+    width: 30px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.setting-update-close-button #close-icon {
+    align-self: center;
+    justify-self: center;
+    color: red;
+    height: 90%;
+    width: 90%;
+}
+
+.setting-update-close-button #close-icon:hover {
+    align-self: center;
+    justify-self: center;
+    color: white;
+    height: 90%;
+    width: 90%;
+    background-color: red;
+    border-radius: 100%;
+}

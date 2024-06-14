@@ -25,12 +25,19 @@ const LeftContainerLectureCreation = ({
         label: module.moduleCode,
         name: module.moduleName,
       }));
+      const moduleNameList = response.map((module) => ({
+        value: module.moduleId,
+        label: module.moduleName,
+        moduleCode: module.moduleCode,
+      }));
       setModuleList(moduleList);
+      setModuleNameList(moduleNameList);
     }
   };
 
   const [moduleCode, setModuleCode] = useState(null);
   const [moduleList, setModuleList] = useState([]);
+  const [moduleNameList, setModuleNameList] = useState([]);
   const [day, setDay] = useState([]);
   const [isToggleButtonDisabled, setIsToggleButtonDisabled] = useState(true);
   const [moduleName, setModuleName] = useState("");
@@ -97,7 +104,24 @@ const LeftContainerLectureCreation = ({
         value={moduleCode}
       />
       <label>Module Name</label>
-      <InputField type="text" value={moduleName} />
+      {/* <Select
+        id="selectModule"
+        placeholder={"Select Module Code"}
+        onChange={(e) => {
+          handelModuleChange(e.label);
+          setModuleCode((e) => ({
+            value: e.moduleId,
+            label: e.moduleCode,
+            name: e.moduleName,
+          }));
+          getModuleCode(e.label);
+          setIsToggleButtonDisabled(false);
+          setModuleName(e.name);
+        }}
+        options={moduleNameList}
+        value={moduleName}
+      /> */}
+      <InputField type="text" value={moduleName} onChange={() => {}} />
 
       <label>Select Date</label>
       <ToggleButtonGroup

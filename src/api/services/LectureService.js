@@ -64,11 +64,12 @@ class LectureService {
       const response = await axios.delete(
         ApiConstants.deleteLectureUrl(lectureId)
       );
-      if (response) {
-        return response.data;
-      }
+      return response;
     } catch (error) {
       console.error("Error in Delete Lecture. ", error);
+      if (error.response.status === 400) {
+        return error.response;
+      }
     }
   };
 

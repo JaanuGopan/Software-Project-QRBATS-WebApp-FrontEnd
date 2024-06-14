@@ -15,6 +15,7 @@ const ModuleUpdate = ({
   handleReloadModuleList,
   selectedModule,
 }) => {
+  const [moduleId, setModuleId] = useState(selectedModule.moduleId);
   const [moduleName, setModuleName] = useState(selectedModule.moduleName);
   const [moduleCode, setModuleCode] = useState(selectedModule.moduleCode);
   const [semester, setSemester] = useState(selectedModule.semester);
@@ -31,10 +32,11 @@ const ModuleUpdate = ({
 
   const semesterList = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
-  const handleCreateModule = async (e) => {
+  const handleUpdateModule = async (e) => {
     e.preventDefault();
     try {
-      const response = await ModuleService.createModule(
+      const response = await ModuleService.updateModule(
+        moduleId,
         moduleCode,
         moduleName,
         moduleEnrolmentKey,
@@ -43,18 +45,18 @@ const ModuleUpdate = ({
         userId
       );
       if (response.status === 200) {
-        toast.success("Module Created Successfully ", response.data.moduleName);
+        toast.success("Module Updated Successfully ", response.data.moduleName);
         console.log(response);
-        handleClearData();
         handleReloadModuleList();
       } else if (response.status === 400) {
-        toast.error(response.data.message);
+        toast.error(response.data);
       } else {
-        toast.error("Something went wrong. Please try again later.");
+        console.log(response.status);
+        toast.error("Failed To Update Module.");
       }
     } catch (error) {
-      console.error("Fail to create modules.", error);
-      toast.error("Something went wrong. Please try again later.");
+      console.error("Fail To Update modules.", error);
+      toast.error("Error In Updating Module.");
     }
   };
 
@@ -80,7 +82,7 @@ const ModuleUpdate = ({
       </div>
       <div className="module-login-container">
         <div className="form-container">
-          <form onSubmit={handleCreateModule}>
+          <form onSubmit={handleUpdateModule}>
             <div className="module-creation-input">
               <label>Module Name</label>
               <div className="module-creation-input-field">
@@ -143,7 +145,7 @@ const ModuleUpdate = ({
                   placeholder="Enter Module Enrolment Key"
                   value={moduleEnrolmentKey}
                   onChange={(e) => setModuleEnrolmentKey(e.target.value)}
-                  inputType="password"
+                  inputType="text"
                 />
               </div>
             </div>

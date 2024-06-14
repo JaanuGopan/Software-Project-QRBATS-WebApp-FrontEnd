@@ -19,10 +19,13 @@ import LectureService from "../../api/services/LectureService";
 import LecturesTable from "../Lectures/LecturesTable";
 import LecturesEdit from "../Lectures/LecturesEdit";
 import LectureCreationPage from "../LactureCreation/LectureCreationPage";
+import { ToastContainer, toast } from "react-toastify";
+import WarningPopup from "../../components/warningPopup/WarningPopup";
 
 const LecturerDashboard = () => {
   const [showCreateLecturePopup, setShowCreateLecturePopup] = useState(false);
   const [showUpdateLecturePopup, setShowUpdateLecturePopup] = useState(false);
+  const [showDeleteLecturePopup, setShowDeleteLecturePopup] = useState(false);
   const [eventLectureList, setEventLectureList] = useState([]);
   const [selectedLecture, setSelectedLecture] = useState(null);
   const [selectedEventLecture, setSelectedEventLecture] = useState(null);
@@ -65,11 +68,30 @@ const LecturerDashboard = () => {
     }
   };
 
+  const handleShowDeleteWindow = () => {
+    if (selectedLecture === null) {
+      toast.error("Please Select Lecture To Delete.");
+      return;
+    }
+    setShowDeleteLecturePopup(true);
+  };
+
   const handleDeleteLecture = async () => {
     const response = await LectureService.deleteLecture(
       selectedLecture.lectureId
     );
-    handleReloadLectureList();
+    if (response.status === 200) {
+      handleReloadLectureList();
+      setSelectedLecture(null);
+      toast.success(
+        `Successfully ${selectedLecture.lectureName} Lecture Deleted.`
+      );
+      setShowDeleteLecturePopup(false);
+    } else if (response.status === 400) {
+      toast.error(response.data);
+    } else {
+      toast.error(`Error In Deleting Lecture ${selectedLecture.lectureName}.`);
+    }
   };
 
   //=====================================================================================
@@ -105,6 +127,7 @@ const LecturerDashboard = () => {
 
   return (
     <div className="admin-Dash">
+      <ToastContainer />
       <p className="mainHead">{"Lecturer Dashboard"}</p>
       <div className="mainInform">
         <TotalCount
@@ -172,7 +195,7 @@ const LecturerDashboard = () => {
             />
             <NormalButton
               title={"Delete"}
-              handleClick={handleDeleteLecture}
+              handleClick={handleShowDeleteWindow}
               titlewithiconicon={<RiDeleteBin5Fill className="buttonIcon" />}
             />
           </div>
@@ -252,6 +275,16 @@ const LecturerDashboard = () => {
             handleReload={handleReloadLectureList}
             locationNameList={venuesList}
             reloadLecturesList={handleReloadLectureList}
+          />
+        </div>
+      )}
+      {showDeleteLecturePopup && (
+        <div className="delete-lecture-container">
+          <WarningPopup
+            handleCloseWarningWindow={() => setShowDeleteLecturePopup(false)}
+            handleOk={handleDeleteLecture}
+            titleText={"Are You Sure You Want To Delete This Lecture?"}
+            buttonText={"Delete"}
           />
         </div>
       )}

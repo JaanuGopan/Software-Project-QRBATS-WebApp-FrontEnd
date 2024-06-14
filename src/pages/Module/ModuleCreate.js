@@ -9,6 +9,7 @@ import ModuleService from "../../api/services/ModuleService";
 import { selectUser } from "../../redux/features/userSlice";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import Select from "react-select";
 
 const ModuleCreate = ({
   handleCloseModuleCreateWindow,
@@ -22,7 +23,7 @@ const ModuleCreate = ({
 
   const { userId } = useSelector(selectUser) || {};
 
-  const departmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA"];
+  const departmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA", "DIS"];
   const semesterList = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
   const handleCreateModule = async (e) => {
@@ -42,7 +43,7 @@ const ModuleCreate = ({
         handleClearData();
         handleReloadModuleList();
       } else if (response.status === 400) {
-        toast.error(response.data.message);
+        toast.error(response.data);
       } else {
         toast.error("Something went wrong. Please try again later.");
       }
@@ -139,7 +140,7 @@ const ModuleCreate = ({
                   placeholder="Enter Module Enrolment Key"
                   value={moduleEnrolmentKey}
                   onChange={(e) => setModuleEnrolmentKey(e.target.value)}
-                  inputType="password"
+                  inputType="text"
                 />
               </div>
             </div>
