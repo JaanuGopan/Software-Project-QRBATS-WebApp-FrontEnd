@@ -8,9 +8,10 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import LectureQRCodeWindow from "./LectureQRCodeWindow";
 import AvailableLectureList from "./AvailableLectureList";
 import LectureService from "../../api/services/LectureService";
+import { ToastContainer, toast } from "react-toastify";
 const LectureCreationPage = ({
   handleCloseCreateLectureWindow,
-  handleReloadLectureList,
+  handleReloadLectureList = () => {},
   hideCloseButton = true,
 }) => {
   const user = useSelector(selectUser);
@@ -76,8 +77,13 @@ const LectureCreationPage = ({
     }, {});
   };
 
+  const handleLectureShowQRCode = () => {
+    setShowQRCodeWindow(true);
+  };
+
   return (
     <div className="lecture-creation-main-container">
+      <ToastContainer />
       {!hideCloseButton && (
         <div
           className="lecture-creation-icon-close-button"
@@ -127,17 +133,18 @@ const LectureCreationPage = ({
                 handleGetAvailableLectureList(venue, day);
               }}
               timesList={timesList}
-              handleReloadLecturesList={
-                !hideCloseButton && handleReloadLectureList
-              }
+              handleReloadLecturesList={handleReloadLectureList}
+              handleShowQrCode={handleLectureShowQRCode}
             />
           )}
         </div>
         {showQRCodeWindow && (
           <div className="lecture-creation-qrCode-popup">
             <LectureQRCodeWindow
-              lectureDetails={""}
-              handleCloseQrCodeWindow={() => {}}
+              lectureDetails={moduleCode}
+              handleCloseQrCodeWindow={() => {
+                setShowQRCodeWindow(false);
+              }}
             />
           </div>
         )}

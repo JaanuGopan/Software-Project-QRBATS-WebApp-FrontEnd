@@ -16,28 +16,25 @@ import LectureService from "../../api/services/LectureService";
 
 const RightContainerLectureCreation = ({
   moduleCode,
-  dayList,
+  dayList = [],
   userId,
   handelShowAvailableLectures,
-  timesList,
+  timesList = {},
   handleReloadLecturesList,
+  handleShowQrCode,
 }) => {
-  const [selectedDay, setSelectedDay] = useState(dayList[0]);
+  const [selectedDay, setSelectedDay] = useState(dayList[0] || "");
   const [times, setTimes] = useState(timesList);
   const maxTimeSlots = 20;
-  const [venueList, setVenuesList] = useState([
-    "NCC",
-    "LT1",
-    "LT2",
-    "Auditorium",
-    "DEIE",
-    "DMME",
-    "DCEE",
-  ]);
+  const [venueList, setVenuesList] = useState([]);
 
   const handleGetLocationNameList = async () => {
-    const response = await LocationService.getAllLocationNames();
-    setVenuesList(response);
+    try {
+      const response = await LocationService.getAllLocationNames();
+      setVenuesList(response);
+    } catch (error) {
+      console.error("Error fetching location names:", error);
+    }
   };
 
   useEffect(() => {
@@ -68,7 +65,7 @@ const RightContainerLectureCreation = ({
   const handleDaySelect = (event, newDay) => {
     if (newDay !== null) {
       setSelectedDay(newDay);
-      handelShowAvailableLectures(times[newDay][0].venue, newDay);
+      handelShowAvailableLectures(times[newDay]?.[0]?.venue || "", newDay);
     }
   };
 
@@ -119,7 +116,7 @@ const RightContainerLectureCreation = ({
             ((startTime >= otherStartTime && startTime < otherEndTime) ||
               (endTime > otherStartTime && endTime <= otherEndTime) ||
               (startTime <= otherStartTime && endTime >= otherEndTime)) &&
-            (venue === null || venue === otherVenue || otherVenue === null)
+            venue === otherVenue
           ) {
             toast.error("Time slots cannot overlap.");
             return false;
@@ -162,25 +159,33 @@ const RightContainerLectureCreation = ({
       times: formattedTimes,
     };
 
-    const response = await LectureService.createLecture(requestData);
-    if (response.status === 200) {
-      const createdLecturesList = response.data.filter(
-        (lecture) => lecture.lectureId
-      );
-      if (createdLecturesList.length > 0) {
-        toast.success(
-          `Lectures saved successfully: ${createdLecturesList
-            .map((lecture) => lecture.lectureName)
-            .join(", ")}`
+    try {
+      const response = await LectureService.createLecture(requestData);
+      if (response.status === 200) {
+        const createdLecturesList = response.data.filter(
+          (lecture) => lecture.lectureId
         );
+        if (createdLecturesList.length > 0) {
+          toast.success(
+            `Lectures saved successfully: ${createdLecturesList
+              .map((lecture) => lecture.lectureName)
+              .join(", ")}`
+          );
+        } else {
+          toast.error("Lectures not saved or already exist.");
+        }
+        handleReloadLecturesList();
+        handelShowAvailableLectures(
+          times[selectedDay]?.[0]?.venue || "",
+          selectedDay
+        );
+        handleShowQrCode();
+      } else if (response.status === 400) {
+        toast.error(response.data);
       } else {
-        toast.error("Lectures not saved or already exist.");
+        toast.error("Error while saving lectures.");
       }
-      handleReloadLecturesList();
-      handelShowAvailableLectures(times[selectedDay][0].venue, selectedDay);
-    } else if (response.status === 400) {
-      toast.error(response);
-    } else {
+    } catch (error) {
       toast.error("Error while saving lectures.");
     }
   };

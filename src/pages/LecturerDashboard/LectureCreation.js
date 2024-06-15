@@ -168,6 +168,11 @@ const LectureCreation = ({
 
   const today = new Date().toISOString().split("T")[0];
 
+  const handleCloseQrCodeWindow = () => {
+    setShowQRCode(false);
+    clearEventDetails();
+  };
+
   return (
     <div className="event-main-container1">
       <Toaster />
@@ -322,7 +327,7 @@ const LectureCreation = ({
             <div ref={qrCodeRef} className="event-main-container1">
               <div
                 className="closeCreateEventWindow"
-                onClick={handleCloseCreateLectureWindow}
+                onClick={handleCloseQrCodeWindow}
               >
                 <IoMdCloseCircleOutline />
               </div>
