@@ -26,6 +26,7 @@ const LectureCreationPage = ({
   const [showAvailableLecture, setShowAvailableLecture] = useState(false);
   const [moduleLectureList, setModuleLectureList] = useState([]);
   const [timesList, setTimesList] = useState([]);
+  const [createdLectureDetails, setCreatedLectureDetails] = useState([]);
 
   const handleGetAvailableLectureList = async (selectedVenue, selectedDay) => {
     try {
@@ -77,13 +78,15 @@ const LectureCreationPage = ({
     }, {});
   };
 
-  const handleLectureShowQRCode = () => {
+  const handleLectureShowQRCode = (moduleLectures) => {
+    setCreatedLectureDetails(moduleLectures);
+    console.log("Created Lecture List is : ", moduleLectures);
     setShowQRCodeWindow(true);
   };
 
   return (
     <div className="lecture-creation-main-container">
-      <ToastContainer />
+      {/*  <ToastContainer /> */}
       {!hideCloseButton && (
         <div
           className="lecture-creation-icon-close-button"
@@ -134,17 +137,20 @@ const LectureCreationPage = ({
               }}
               timesList={timesList}
               handleReloadLecturesList={handleReloadLectureList}
-              handleShowQrCode={handleLectureShowQRCode}
+              handleShowQrCode={(moduleLectures) =>
+                handleLectureShowQRCode(moduleLectures)
+              }
             />
           )}
         </div>
         {showQRCodeWindow && (
           <div className="lecture-creation-qrCode-popup">
             <LectureQRCodeWindow
-              lectureDetails={moduleCode}
+              createdLectureDetails={createdLectureDetails}
               handleCloseQrCodeWindow={() => {
                 setShowQRCodeWindow(false);
               }}
+              moduleCode={moduleCode}
             />
           </div>
         )}

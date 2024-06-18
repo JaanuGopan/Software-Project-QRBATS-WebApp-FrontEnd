@@ -33,6 +33,58 @@
     }
 }
 
+@media screen and (max-width: 1200px) {
+    .Webname {
+        font-size: large;
+    }
+    .Staff-Logo{
+      height: 3.5rem;
+    }
+    .ProfileButton{
+      height: 2.5rem;
+    }
+    .ProfileName{
+      font-weight: bold;
+    }
+    .Staff-Sidebar{
+      width: 20%;
+    }
+    .buttonIcon{
+      height: 1.5rem;
+      width: 1.5rem;
+    }
+  }
+
+@media screen and (max-width: 1024px) {
+    .Webname {
+        font-size: large;
+    }
+    .Staff-Logo{
+      height: 3.5rem;
+    }
+    .ProfileButton{
+      height: 2.5rem;
+    }
+    .ProfileName{
+      font-weight: bold;
+    }
+    .Staff-Sidebar{
+      width: 20%;
+    }
+    .buttonIcon{
+      height: 1.5rem;
+      width: 1.5rem;
+    }
+    .SideBarLabel{
+      font-size: medium;
+      padding: 1vw;
+      margin-bottom: 0px;
+    }
+    .Staff-Logo{
+      height: 4rem;
+    }
+
+}
 @media screen and (max-width: 768px) {
     .Webname {
         font-size: large;
@@ -63,7 +115,7 @@
       margin-bottom: 0px;
     }
     .SideBar{
-      margin-top: 5vh;
+      margin-top: 6vh;
       width: 100%;
       position: absolute;
       display: flex;
@@ -72,7 +124,7 @@
     }
 }
 
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 425px) {
     .Webname {
         font-size: small;
     }
@@ -87,6 +139,9 @@
     }
     .ProfileName{
       font-weight: normal;
+    }
+    .SideBar{
+      width: 70%;
     }
 }
 

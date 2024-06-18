@@ -4,8 +4,6 @@ import ModuleService from "../../api/services/ModuleService";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/userSlice";
 import { Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
-import ButtonComponent from "../../components/buttons/ButtonComponent";
-import InputField from "../../components/textfields/InputBox/InputField";
 import LectureService from "../../api/services/LectureService";
 import { ToastContainer, toast } from "react-toastify";
 const LeftContainerLectureCreation = ({
@@ -112,7 +110,7 @@ const LeftContainerLectureCreation = ({
 
   return (
     <div className="left-container-lecture-creation">
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <label>Module Name</label>
       <Select
         id="selectModule"

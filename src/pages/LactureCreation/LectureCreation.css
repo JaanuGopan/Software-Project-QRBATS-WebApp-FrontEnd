@@ -276,6 +276,37 @@
     border-radius: 100%;
 }
 
+.lecture-qrCode-lecture-details-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 10px;
+}
+
+.lecture-qrCode-container{
+    display: flex;
+    flex-direction: column;
+    padding: auto;
+    align-items: center;
+    justify-content: center;
+}
+
+.lecture-qrCode-lectures-details{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+}
+
+.lecture-qrCode-lectures-details-content{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:start;
+}
+
 .available-lectures-container{
     display: flex;
     flex-direction: column;

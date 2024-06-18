@@ -13,6 +13,7 @@ import LocationService from "../../api/services/LocationService";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LectureService from "../../api/services/LectureService";
+import { Toaster } from "react-hot-toast";
 
 const RightContainerLectureCreation = ({
   moduleCode,
@@ -127,7 +128,16 @@ const RightContainerLectureCreation = ({
     return true;
   };
 
-  const handleSaveClick = async () => {
+  /* const handleGetLecturesListByModuleCode = async () => {
+    const response = await LectureService.getAllLecturesByModuleCode(
+      moduleCode
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+  }; */
+
+  const handleCreateLecture = async () => {
     const formattedTimes = dayList.reduce((acc, day) => {
       if (times[day]) {
         const validSlots = times[day]
@@ -171,6 +181,7 @@ const RightContainerLectureCreation = ({
               .map((lecture) => lecture.lectureName)
               .join(", ")}`
           );
+          handleShowQrCode(createdLecturesList);
         } else {
           toast.error("Lectures not saved or already exist.");
         }
@@ -179,7 +190,6 @@ const RightContainerLectureCreation = ({
           times[selectedDay]?.[0]?.venue || "",
           selectedDay
         );
-        handleShowQrCode();
       } else if (response.status === 400) {
         toast.error(response.data);
       } else {
@@ -219,7 +229,7 @@ const RightContainerLectureCreation = ({
 
   return (
     <div className="right-container-lecture-creation">
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <div className="right-container-lecture-creation-heading">
         <label>{`Module Code: ${moduleCode}`}</label>
       </div>
@@ -345,7 +355,7 @@ const RightContainerLectureCreation = ({
             <Button
               variant="contained"
               color="success"
-              onClick={handleSaveClick}
+              onClick={handleCreateLecture}
               fullWidth
               disabled={isSaveDisabled}
             >
