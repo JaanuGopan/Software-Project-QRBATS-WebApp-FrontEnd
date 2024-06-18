@@ -8,9 +8,10 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import LectureQRCodeWindow from "./LectureQRCodeWindow";
 import AvailableLectureList from "./AvailableLectureList";
 import LectureService from "../../api/services/LectureService";
+import { ToastContainer, toast } from "react-toastify";
 const LectureCreationPage = ({
   handleCloseCreateLectureWindow,
-  handleReloadLectureList,
+  handleReloadLectureList = () => {},
   hideCloseButton = true,
 }) => {
   const user = useSelector(selectUser);
@@ -25,6 +26,7 @@ const LectureCreationPage = ({
   const [showAvailableLecture, setShowAvailableLecture] = useState(false);
   const [moduleLectureList, setModuleLectureList] = useState([]);
   const [timesList, setTimesList] = useState([]);
+  const [createdLectureDetails, setCreatedLectureDetails] = useState([]);
 
   const handleGetAvailableLectureList = async (selectedVenue, selectedDay) => {
     try {
@@ -76,8 +78,15 @@ const LectureCreationPage = ({
     }, {});
   };
 
+  const handleLectureShowQRCode = (moduleLectures) => {
+    setCreatedLectureDetails(moduleLectures);
+    console.log("Created Lecture List is : ", moduleLectures);
+    setShowQRCodeWindow(true);
+  };
+
   return (
     <div className="lecture-creation-main-container">
+      {/*  <ToastContainer /> */}
       {!hideCloseButton && (
         <div
           className="lecture-creation-icon-close-button"
@@ -127,8 +136,9 @@ const LectureCreationPage = ({
                 handleGetAvailableLectureList(venue, day);
               }}
               timesList={timesList}
-              handleReloadLecturesList={
-                !hideCloseButton && handleReloadLectureList
+              handleReloadLecturesList={handleReloadLectureList}
+              handleShowQrCode={(moduleLectures) =>
+                handleLectureShowQRCode(moduleLectures)
               }
             />
           )}
@@ -136,8 +146,11 @@ const LectureCreationPage = ({
         {showQRCodeWindow && (
           <div className="lecture-creation-qrCode-popup">
             <LectureQRCodeWindow
-              lectureDetails={""}
-              handleCloseQrCodeWindow={() => {}}
+              createdLectureDetails={createdLectureDetails}
+              handleCloseQrCodeWindow={() => {
+                setShowQRCodeWindow(false);
+              }}
+              moduleCode={moduleCode}
             />
           </div>
         )}

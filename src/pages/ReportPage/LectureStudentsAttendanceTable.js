@@ -54,8 +54,12 @@ const LectureStudentsAttendanceTable = ({ search, attendanceList }) => {
                 <td>{index + 1}</td>
                 <td>{attendance.studentName}</td>
                 <td>{attendance.studentIndexNumber}</td>
-                <td>{attendance.attendedDate}</td>
-                <td>{attendance.attendedTime}</td>
+                <td>
+                  {attendance.attendanceStatus ? attendance.attendedDate : "-"}
+                </td>
+                <td>
+                  {attendance.attendanceStatus ? attendance.attendedTime : "-"}
+                </td>
                 <td>
                   {attendance.attendanceStatus ? (
                     <FaCheck color="green" />

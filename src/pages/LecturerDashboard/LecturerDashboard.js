@@ -3,7 +3,6 @@ import "../AdminDashboard/AdminDashboard.css";
 import "./LectureDashboard.css";
 import LectureTable from "./LectureTable";
 import TotalCount from "../../components/layout/AdminDashboardComponent/TotalCount";
-import Select from "react-select";
 import { FaSchool } from "react-icons/fa6";
 import { IoNewspaperSharp } from "react-icons/io5";
 import NormalButton from "../../components/layout/AdminDashboardComponent/NormalButton";

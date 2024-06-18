@@ -8,6 +8,7 @@ import JwtService from "../../../api/services/JwtService";
 import { useDispatch, useSelector } from "react-redux";
 import { login, selectUser } from "../../../redux/features/userSlice";
 import UserService from "../../../api/services/UserService";
+import { ToastContainer, toast } from "react-toastify";
 
 const LoginForm = () => {
   const [userName, setUserName] = useState("");
@@ -31,16 +32,23 @@ const LoginForm = () => {
         password,
         dispatch
       );
-      if (response) {
+      if (response.status === 200) {
+        toast.success("Successfully LogIn.");
         navigate("/mainNavigation");
+      } else if (response.status === 400) {
+        toast.error(response.data);
+      } else {
+        toast.error("Error In LogIn Service.");
       }
     } catch (error) {
+      toast.error("Error In LogIn Service.");
       console.error("Login failed", error);
     }
   };
 
   return (
     <div className="form-container">
+      <ToastContainer />
       <form onSubmit={handleSubmit}>
         <div className="signin-form-group">
           <div className="signin-input-with-icon">

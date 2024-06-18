@@ -5,8 +5,6 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import toast, { Toaster } from "react-hot-toast";
 import "../Event/EventCreation/EventCreation.css";
 import eventCreationImage from "../../assets/Images/designer_pic/Designer_pic4.jpeg";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/userSlice";
 import DualButtonComponent from "../../components/buttons/DualButtonComponent";
@@ -34,7 +32,6 @@ const LectureCreation = ({
   const [showQRCode, setShowQRCode] = useState(false);
   const [eventRole, setEventRole] = useState("LECTURE");
   const [eventAssignedUserId, setEventAssignedUserId] = useState(userId);
-  const [showModuleNameInput, setShowModuleNameInput] = useState(true);
   const [title, setTitle] = useState("Lecture");
   const [moduleNameList, setModuleNameList] = useState([]);
 
@@ -63,20 +60,6 @@ const LectureCreation = ({
 
   const notifySuccess = () => toast.success("Successfully Lecture Created!");
 
-  const handleInputValidation = () => {
-    if (
-      !eventName ||
-      !eventDate ||
-      !eventValidDate ||
-      !eventTime ||
-      !eventEndTime ||
-      !eventVenue
-    ) {
-      return false;
-    }
-    return true;
-  };
-
   const clearEventDetails = () => {
     setEventName("");
     setEventDate("");
@@ -103,7 +86,6 @@ const LectureCreation = ({
         userId
       );
       setEventId(response.eventId);
-      const responseEventName = response.eventName;
       notifySuccess();
       reloadLectureList();
       clearEventDetails();
@@ -141,15 +123,6 @@ const LectureCreation = ({
 
   const qrCodeDetails = JSON.stringify(eventDetails);
 
-  const handleShareQRCode = () => {
-    html2canvas(qrCodeRef.current).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF();
-      pdf.addImage(imgData, "PNG", 0, 0);
-      pdf.save("qr_code.pdf");
-    });
-  };
-
   const [qrCodeWindow, setQrCodeWindow] = useState(false);
 
   const [selectedButton, setSelectedButton] = useState(1);
@@ -167,6 +140,11 @@ const LectureCreation = ({
   };
 
   const today = new Date().toISOString().split("T")[0];
+
+  const handleCloseQrCodeWindow = () => {
+    setShowQRCode(false);
+    clearEventDetails();
+  };
 
   return (
     <div className="event-main-container1">
@@ -207,7 +185,7 @@ const LectureCreation = ({
               />
             </div>
 
-            {selectedButton == 1 && (
+            {selectedButton === 1 && (
               <div className="input-with-icon">
                 <label className="date-label" htmlFor="moduleCode">
                   {`Module Code`}
@@ -322,7 +300,7 @@ const LectureCreation = ({
             <div ref={qrCodeRef} className="event-main-container1">
               <div
                 className="closeCreateEventWindow"
-                onClick={handleCloseCreateLectureWindow}
+                onClick={handleCloseQrCodeWindow}
               >
                 <IoMdCloseCircleOutline />
               </div>

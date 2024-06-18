@@ -49,46 +49,49 @@ class UserService {
       const response = await axios.get(
         ApiConstants.loginUrl(userName, password)
       );
-      if (response.data.token) {
-        const decodedToken = JwtService.parseJwt(response.data.token);
-        const loginUserName = decodedToken.sub;
-        const loginUserFirstName = decodedToken.firstName;
-        const loginUserLastName = decodedToken.lastName;
-        const loginUserEmail = decodedToken.email;
-        const loginUserRole = decodedToken.role;
-        const loginUserId = decodedToken.userId;
-        const loginUserDepartmentId = decodedToken.departmentId;
-        localStorage.setItem("token", response.data.token);
+      if (response.status === 200) {
+        if (response.data.token) {
+          const decodedToken = JwtService.parseJwt(response.data.token);
+          const loginUserName = decodedToken.sub;
+          const loginUserFirstName = decodedToken.firstName;
+          const loginUserLastName = decodedToken.lastName;
+          const loginUserEmail = decodedToken.email;
+          const loginUserRole = decodedToken.role;
+          const loginUserId = decodedToken.userId;
+          const loginUserDepartmentId = decodedToken.departmentId;
+          localStorage.setItem("token", response.data.token);
 
-        const userData = {
-          token: response.data.token,
-          userId: loginUserId,
-          firstName: loginUserFirstName,
-          lastName: loginUserLastName,
-          email: loginUserEmail,
-          role: loginUserRole,
-          departmentId: loginUserDepartmentId,
-          userName: loginUserName,
-        };
-        localStorage.setItem("user", JSON.stringify(userData));
-
-        dispatch(
-          login({
+          const userData = {
             token: response.data.token,
             userId: loginUserId,
-            userName: loginUserName,
             firstName: loginUserFirstName,
             lastName: loginUserLastName,
             email: loginUserEmail,
             role: loginUserRole,
             departmentId: loginUserDepartmentId,
-            loggedIn: true,
-          })
-        );
-        return response.data;
+            userName: loginUserName,
+          };
+          localStorage.setItem("user", JSON.stringify(userData));
+
+          dispatch(
+            login({
+              token: response.data.token,
+              userId: loginUserId,
+              userName: loginUserName,
+              firstName: loginUserFirstName,
+              lastName: loginUserLastName,
+              email: loginUserEmail,
+              role: loginUserRole,
+              departmentId: loginUserDepartmentId,
+              loggedIn: true,
+            })
+          );
+          return response;
+        }
       }
     } catch (error) {
-      throw new Error("Login failed", error);
+      console.error("Login failed", error);
+      return error.response;
     }
   }
 }
