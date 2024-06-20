@@ -26,6 +26,16 @@ const LectureQRCodeWindow = ({
   };
   const qrCodeDetails = JSON.stringify(lectureDetails);
 
+  const dayNames = {
+    Mon: "Monday",
+    Tue: "Tuesday",
+    Wed: "Wednesday",
+    Thu: "Thursday",
+    Fri: "Friday",
+    Sat: "Saturday",
+    Sun: "Sunday",
+  };
+
   return (
     <div className="lecture-qrCode-window">
       <div className="lecture-qrCode-title-close-button">
@@ -58,16 +68,16 @@ const LectureQRCodeWindow = ({
           </div>
         </div>
         <div className="lecture-qrCode-lectures-details">
-          <label>Lecture Details</label>
+          <h5>Created Lecture Details</h5>
           {createdLectureDetails.map((lecture, index) => (
             <div>
               <div className="lecture-qrCode-lectures-details-content">
-                <label>Lecture Name</label>
+                <label>Lecture Name :</label>
                 <label key={index}>{lecture.lectureName}</label>
               </div>
               <div className="lecture-qrCode-lectures-details-content">
-                <label>Lecture Day</label>
-                <label key={index}>{lecture.lectureDay}</label>
+                <label>Lecture Day :</label>
+                <label key={index}>{dayNames[lecture.lectureDay]}</label>
               </div>
             </div>
           ))}
