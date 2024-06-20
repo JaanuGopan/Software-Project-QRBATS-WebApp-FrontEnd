@@ -26,9 +26,9 @@ const UserInterface = () => {
         <div className="userinterface-row">
           <AvailableDepartment />
         </div>
-        <div className="userinterface-row1" style={{ minHeight: "450px" }}>
+        {/* <div className="userinterface-row1" style={{ minHeight: "450px" }}>
           <Calender />
-        </div>
+        </div> */}
       </div>
       <div className="userinterface-users">
         <h2 style={{ color: "white", textAlign: "center" }}>USERS</h2>
@@ -153,7 +153,7 @@ const UserInterface = () => {
           >
             Mail :-{" "}
             <a target="_blank" href="">
-              leodash@gmail.com
+              skyticker@gmail.com
             </a>
           </p>
           <div

@@ -12,9 +12,10 @@
    flex-wrap: wrap;
    width: 100%;
    height: 100%;
-   justify-content: stretch;
    align-items: center;
    border: 1px solid #0063A0;
+   align-items: center;
+   justify-content: center;
  }
   
  .userinterface-container1 {
@@ -28,11 +29,11 @@
 }
 
   .userinterface-row {
-    flex: 1;
     flex-direction: row;
     padding: 16px;
-    border: 1px solid #0063A0;
     width: auto;
+    align-items: center;
+    justify-self: center;
   }
 
   .userinterface-row1 {
