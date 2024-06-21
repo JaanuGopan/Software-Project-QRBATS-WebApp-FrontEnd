@@ -4,7 +4,7 @@ import "./UserInterface.css";
 import AvailableDepartment from "../../components/layout/UserInterfaceCom/AvailableDepartment";
 import { Button } from "@mui/material";
 import Calender from "../../components/layout/UserInterfaceCom/Calender";
-import { FaStar, FaMapLocationDot } from "react-icons/fa6";
+import { FaStar, FaMapLocationDot, FaUsers, FaUser } from "react-icons/fa6";
 import { FaFacebook, FaGooglePlus, FaLinkedin } from "react-icons/fa";
 import { IoLogoYoutube } from "react-icons/io";
 
@@ -53,8 +53,8 @@ const UserInterface = () => {
               alignItems: "center",
             }}
           >
-            <FaStar />
-            <h2 style={{ marginLeft: "1rem" }}>Staff</h2>
+            <FaUsers />
+            <h2 style={{ marginLeft: "1rem" }}>LECTURE</h2>
           </div>
           <div
             style={{
@@ -63,8 +63,8 @@ const UserInterface = () => {
               alignItems: "center",
             }}
           >
-            <FaStar />
-            <h2 style={{ marginLeft: "1rem" }}>Admin</h2>
+            <FaUser />
+            <h2 style={{ marginLeft: "1rem" }}>ADMIN</h2>
           </div>
         </div>
       </div>
@@ -154,7 +154,7 @@ const UserInterface = () => {
           >
             Mail :-{" "}
             <a target="_blank" href="">
-              skyticker@gmail.com
+              skyticker.uor@gmail.com
             </a>
           </p>
           <div

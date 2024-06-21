@@ -9,7 +9,7 @@ const ProfileButton = ({ setIndex }) => {
   const user = useSelector(selectUser);
 
   const handleClick = () => {
-    setIndex(4);
+    setIndex(6);
   };
 
   // Destructure user object for cleaner code
