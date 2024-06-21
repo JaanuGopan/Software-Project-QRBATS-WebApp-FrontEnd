@@ -33,7 +33,7 @@ const UserInterface = () => {
       <div className="userinterface-users">
         <h2 style={{ color: "white", textAlign: "center" }}>USERS</h2>
         <h5 style={{ color: "#FFFFFF", textAlign: "center" }}>
-          The Website Useful for
+          The Website Useful For
         </h5>
         <div
           style={{
@@ -80,11 +80,12 @@ const UserInterface = () => {
             SKYTICKER
           </h2>
           <p style={{ textAlign: "justify", margin: "0px" }}>
-            Attendance management system keeps track of daily attendance,
-            working hours, breaks, login, and logout time. It prevents staff's
-            time theft. An attendance management system integrates all
-            attendance devices such as smart cards, biometric, and facial
-            recognition devices in real-time.
+            Our QR-Code Based Attendance Tracking System for university students
+            leverages GPS location to streamline attendance management.
+            Administrators can effortlessly create and oversee lectures and
+            events, while students mark attendance by scanning a QR code with a
+            mobile app. GPS verification ensures accurate logging, making the
+            process efficient and reliable.
           </p>
         </div>
         <div className="column">
