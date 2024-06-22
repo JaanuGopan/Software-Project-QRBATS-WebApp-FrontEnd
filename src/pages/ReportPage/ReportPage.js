@@ -30,6 +30,7 @@ const ReportPage = () => {
   const [moduleReportList, setModuleReportList] = useState([]);
   const [searchModuleReport, setSearchModuleReport] = useState("");
   const [searchLecturesReport, setSearchLecturesReport] = useState("");
+  const [searchStudentReport, setSearchStudentReport] = useState("");
   const [selectedLectureReport, setSelectedLectureReport] = useState(null);
   const [lecturesReportList, setLecturesReportList] = useState([]);
   const [lectureStudentAttendanceList, setLectureStudentAttendanceList] =
@@ -138,6 +139,35 @@ const ReportPage = () => {
 
   const handleOpenLectureAttendanceReportWindow = () => {};
 
+  const [studentAttendanceDetails, setStudentAttendanceDetails] = useState([]);
+
+  const handleOpenOverallReportWindow = async (moduleId) => {
+    setStudentAttendanceDetails([]);
+    await getAllStudentsAttendanceReport(moduleId);
+  };
+
+  const getAllStudentsAttendanceReport = async (moduleId) => {
+    try {
+      const response = await AttendanceService.getStudentsAttendanceDetails(
+        moduleId
+      );
+      if (response.status === 200) {
+        console.log("Student Attendance Details : " + response.data);
+        setStudentAttendanceDetails(response.data);
+        setShowLectureStudentAttendanceReportWindow(false);
+        setShowLectureReportWindow(false);
+        setShowModuleReportWindow(false);
+        setShowOverallReportWindow(true);
+      } else if (response.status === 400) {
+        toast.error(response.data);
+      } else {
+        toast.error("Error In Getting Overall Report");
+      }
+    } catch (error) {
+      toast.error("Error In Getting Overall Report");
+    }
+  };
+
   return (
     <div>
       <ToastContainer />
@@ -164,8 +194,8 @@ const ReportPage = () => {
               onModuleReportClick={handleModuleReportClick}
               searchModuleReport={searchModuleReport}
               handleModuleReportReload={handleReloadModuleReportList}
-              handleOpenOverallReportWindow={() =>
-                setShowOverallReportWindow(true)
+              handleOpenOverallReportWindow={(moduleId) =>
+                handleOpenOverallReportWindow(moduleId)
               }
               handleOpenLecturesReportWindow={(e) =>
                 handleOpenLectureReportWindow(e)
@@ -174,8 +204,29 @@ const ReportPage = () => {
           </div>
         )}
         {showOverallReportWindow && (
-          <div className="Module-report-Create-module-Dashboard">
-            <OverallReportTable />
+          <div className="module-report-ModuleList">
+            <OverallReportTable
+              search={searchStudentReport}
+              studentAttendanceDetails={studentAttendanceDetails}
+            />
+            <div className="staff-List-Buttons">
+              <NormalButton
+                handleClick={() => {
+                  setShowLectureReportWindow(false);
+                  setShowModuleReportWindow(true);
+                  setShowOverallReportWindow(false);
+                }}
+                title={"Back"}
+                titlewithiconicon={<MdArrowBack className="staff-buttonIcon" />}
+              />
+              <NormalButton
+                title={"Print"}
+                handleClick={() => {}}
+                titlewithiconicon={
+                  <BiSolidPrinter className="staff-buttonIcon" />
+                }
+              />
+            </div>
           </div>
         )}
         {showLectureReportWindow && (

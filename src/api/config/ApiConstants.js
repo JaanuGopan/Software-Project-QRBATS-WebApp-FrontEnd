@@ -136,6 +136,13 @@ class ApiConstants {
     return ApiConstants.baseUrl + "/mobile/createstudentbyadmin"; //http://lecalhost:8080/api/v1/mobile/createstudentbyadmin
   }
 
+  static getStudentAttendanceDetails(moduleId) {
+    return (
+      ApiConstants.baseUrl +
+      `/lectureattendance/getallstudentattendancebymoduleId/${moduleId}`
+    );
+  }
+
   static get updateUserUrl() {
     return ApiConstants.baseUrl + "/auth/updateuser";
   }

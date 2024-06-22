@@ -44,6 +44,21 @@ class AttendanceService {
       }
     }
   };
+
+  static getStudentsAttendanceDetails = async (moduleId) => {
+    try {
+      const response = await axios.get(
+        ApiConstants.getStudentAttendanceDetails(moduleId)
+      );
+
+      return response;
+    } catch (error) {
+      console.error("Error in getting students attendance details", error);
+      if (error.response.status === 400) {
+        return error.response;
+      }
+    }
+  };
 }
 
 export default AttendanceService;

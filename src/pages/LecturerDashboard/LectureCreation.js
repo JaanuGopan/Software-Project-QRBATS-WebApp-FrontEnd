@@ -106,7 +106,7 @@ const LectureCreation = ({
         eventEndTime,
         eventVenue,
         eventRole,
-        moduleName.label,
+        eventRole === "LECTURE" ? moduleName.label : "",
         userId
       );
       setEventId(response.eventId);
