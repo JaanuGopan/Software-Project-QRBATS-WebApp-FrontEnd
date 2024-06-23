@@ -60,7 +60,9 @@ const ModuleReportTable = ({
                 <td>{module.semester}</td>
                 <td>
                   <button
-                    onClick={handleOpenOverallReportWindow}
+                    onClick={() =>
+                      handleOpenOverallReportWindow(module.moduleId)
+                    }
                     className="ViewButton"
                   >
                     <TbReportAnalytics className="EditIcon" />

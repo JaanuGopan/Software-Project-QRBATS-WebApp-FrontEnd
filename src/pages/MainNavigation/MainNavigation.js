@@ -129,8 +129,8 @@ function MainNavigationPage() {
         {role === "LECTURER" && (
           <div className="maincontent">
             {openMenu === 0 && <LecturerDashboard />}
-            {openMenu === 1 && <LectureCreationDashboard />}
-            {openMenu === 2 && <LectureCreationPage />}
+            {openMenu === 1 && <LectureCreationPage />}
+            {openMenu === 2 && <LectureCreationDashboard />}
             {openMenu === 3 && <ModulePage />}
             {openMenu === 4 && <ReportPage />}
             {openMenu === 5 && <EventReport />}

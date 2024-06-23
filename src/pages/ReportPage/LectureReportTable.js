@@ -3,7 +3,7 @@ import "../../pages/AdminDashboard/AdminDashboard.css";
 import { CiViewList } from "react-icons/ci";
 
 const LectureReportTable = ({
-  handleOpenLectureAttendanceReportWindow,
+  handleOpenLectureWithDateWindow,
   searchLecturesReport,
   onLecturesReportClick,
   lecturesReportList,
@@ -61,12 +61,12 @@ const LectureReportTable = ({
                 <td>
                   <button
                     onClick={() =>
-                      handleOpenLectureAttendanceReportWindow(lecture.lectureId)
+                      handleOpenLectureWithDateWindow(lecture.lectureId)
                     }
                     className="ViewButton"
                   >
                     <CiViewList className="EditIcon" />
-                    <p className="ViewButtonLabel">View Report</p>
+                    <p className="ViewButtonLabel">View Lecture</p>
                   </button>
                 </td>
               </tr>

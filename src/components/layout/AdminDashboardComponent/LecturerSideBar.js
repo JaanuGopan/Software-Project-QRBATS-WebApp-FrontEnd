@@ -18,6 +18,7 @@ import { FaList } from "react-icons/fa";
 import { CiViewList } from "react-icons/ci";
 import { FaRegListAlt } from "react-icons/fa";
 import LectureIcon from "../../../assets/Icons/lecture_Icon.png";
+import { School } from "@mui/icons-material";
 const LecturerSideBar = ({
   handleClose,
   index,
@@ -47,14 +48,14 @@ const LecturerSideBar = ({
         />
         <Sidebarbutton
           handleSidebarMenu={() => handleMenuClick(1)}
-          title={"QR Generate"}
-          titlewithiconicon={<MdQrCode className="buttonIcon" />}
+          title={"Lecture"}
+          titlewithiconicon={<School className="buttonIcon" />}
           isOpen={index === 1}
         />
         <Sidebarbutton
           handleSidebarMenu={() => handleMenuClick(2)}
-          title={"Lecture"}
-          titlewithiconicon={<TbReport className="buttonIcon" />}
+          title={"Event"}
+          titlewithiconicon={<MdQrCode className="buttonIcon" />}
           isOpen={index === 2}
         />
         <Sidebarbutton

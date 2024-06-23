@@ -118,8 +118,20 @@ class ApiConstants {
       `/lectureattendance/getallattendancebylectureid/${lectureId}`
     );
   }
+  static getAllLectureAttendanceByLectureIdAndDateUrl(lectureId, date) {
+    return (
+      ApiConstants.baseUrl +
+      `/lectureattendance/getallattendancebylectureidanddate?lectureId=${lectureId}&date=${date}`
+    );
+  }
   static downloadLectureAttendanceByLectureIdUrl(lectureId) {
     return ApiConstants.baseUrl + `/export/getcsv/${lectureId}`;
+  }
+  static downloadLectureAttendanceByLectureIdAndDateUrl(lectureId, date) {
+    return (
+      ApiConstants.baseUrl +
+      `/export/donwloadattendancebylectureidanddate?lectureId=${lectureId}&date=${date}`
+    );
   }
   static downloadEventAttendanceByEventIdUrl(eventId) {
     return ApiConstants.baseUrl + `/export/geteventreport/${eventId}`;
@@ -134,6 +146,20 @@ class ApiConstants {
 
   static get createStudentByAdminUrl() {
     return ApiConstants.baseUrl + "/mobile/createstudentbyadmin"; //http://lecalhost:8080/api/v1/mobile/createstudentbyadmin
+  }
+
+  static getStudentAttendanceDetails(moduleId) {
+    return (
+      ApiConstants.baseUrl +
+      `/lectureattendance/getallstudentattendancebymoduleId/${moduleId}`
+    );
+  }
+
+  static getAllLectureWithDateList(lectureId) {
+    return (
+      ApiConstants.baseUrl +
+      `/lectureattendance/getalllecturewithdatefordaylecture/${lectureId}`
+    );
   }
 
   static get updateUserUrl() {
