@@ -14,6 +14,7 @@ import LectureStudentsAttendanceTable from "./LectureStudentsAttendanceTable";
 import LectureService from "../../api/services/LectureService";
 import AttendanceService from "../../api/services/AttendanceService";
 import { ToastContainer, toast } from "react-toastify";
+import LectureWithDateReportTable from "./LectureWithDateReportTable";
 
 const ReportPage = () => {
   const user = useSelector(selectUser);
@@ -25,6 +26,8 @@ const ReportPage = () => {
     showLectureStudentAttendanceReportWindow,
     setShowLectureStudentAttendanceReportWindow,
   ] = useState(false);
+  const [showLectureWithDateWindow, setShowLectureWithDateWindow] =
+    useState(false);
 
   const [selectedModuleReport, setSelectedModuleReport] = useState(null);
   const [moduleReportList, setModuleReportList] = useState([]);
@@ -37,6 +40,7 @@ const ReportPage = () => {
     useState([]);
   const [searchLectureStudentAttendance, setSearchLectureStudentAttendance] =
     useState("");
+  const [studentAttendanceDetails, setStudentAttendanceDetails] = useState([]);
 
   useEffect(() => {
     handleReloadModuleReportList();
@@ -48,10 +52,13 @@ const ReportPage = () => {
   };
 
   const handleReloadModuleReportList = async () => {
-    await ModuleService.getModulesByUserId(userId).then((modulesList) => {
+    try {
+      const modulesList = await ModuleService.getModulesByUserId(userId);
       setModuleReportList(modulesList);
       console.log(modulesList);
-    });
+    } catch (error) {
+      console.error("Error reloading module report list:", error);
+    }
   };
 
   const handleLoadLectureReport = async (moduleCode) => {
@@ -69,77 +76,53 @@ const ReportPage = () => {
     }
   };
 
-  const handleLoadStudentAttendanceReport = async (lectureId) => {
-    const response = await AttendanceService.getAllAttendanceByLectureId(
-      lectureId
-    );
-    if (response.status === 200) {
-      setLectureStudentAttendanceList(response.data);
-      setShowLectureStudentAttendanceReportWindow(true);
-      setShowLectureReportWindow(false);
-      setShowModuleReportWindow(false);
-      setShowOverallReportWindow(false);
-    } else {
-      console.error("Error fetching attendance:", response);
+  const handleLoadStudentAttendanceReport = async (lectureId, date) => {
+    try {
+      const response =
+        await AttendanceService.getAllAttendanceByLectureIdAndDate(
+          lectureId,
+          date
+        );
+      if (response.status === 200) {
+        setLectureStudentAttendanceList(response.data);
+        setShowLectureStudentAttendanceReportWindow(true);
+        setShowLectureReportWindow(false);
+        setShowModuleReportWindow(false);
+        setShowOverallReportWindow(false);
+        setShowLectureWithDateWindow(false);
+      } else {
+        console.error("Error fetching attendance:", response);
+      }
+    } catch (error) {
+      console.error("Error fetching attendance:", error);
     }
-    /* await AttendanceService.getAllAttendanceByLectureId(lectureId)
-      .then((attendanceList) => {
-        setLectureStudentAttendanceList(attendanceList);
-      })
-      .catch((error) => {
-        console.error("Error fetching attendance:", error);
-      })
-      .finally(() => {
-        if (lectureStudentAttendanceList.length > 0) {
-          setShowLectureStudentAttendanceReportWindow(true);
-          setShowLectureReportWindow(false);
-          setShowModuleReportWindow(false);
-          setShowOverallReportWindow(false);
-        }
-      }); */
   };
 
-  const handleDownloadReport = async (lectureId) => {
+  const handleDownloadReport = async (lectureId, date) => {
     try {
-      const response = await AttendanceService.downloadLectureAttendance(
-        lectureId
-      );
+      const response =
+        await AttendanceService.downloadLectureAttendanceByLectureIdAndDate(
+          lectureId,
+          date
+        );
       if (response.status === 200) {
         const data = response.data;
-
-        // Create a Blob from the CSV string
         const blob = new Blob([data], { type: "text/csv" });
-
-        // Create a link element
         const link = document.createElement("a");
         link.href = URL.createObjectURL(blob);
-
-        // Set the download attribute with a filename
-        link.download = `lecture_${lectureId}_attendance.csv`;
-
-        // Append the link to the document body
+        link.download = `lecture_${selectedLectureWithDate.lectureModuleCode}_attendance_${date}.csv`;
         document.body.appendChild(link);
-
-        // Trigger the download by clicking the link
         link.click();
-
-        // Remove the link from the document
         document.body.removeChild(link);
+      } else if (response.status === 400) {
+        toast.error(response.data);
       } else {
-        toast.error(response);
+        toast.error("Error in downloading the report.");
       }
     } catch (error) {
       toast.error("An error occurred while downloading the report.");
     }
   };
-
-  const handleOpenLectureReportWindow = async (e) => {
-    await handleLoadLectureReport(e);
-  };
-
-  const handleOpenLectureAttendanceReportWindow = () => {};
-
-  const [studentAttendanceDetails, setStudentAttendanceDetails] = useState([]);
 
   const handleOpenOverallReportWindow = async (moduleId) => {
     setStudentAttendanceDetails([]);
@@ -152,7 +135,6 @@ const ReportPage = () => {
         moduleId
       );
       if (response.status === 200) {
-        console.log("Student Attendance Details : " + response.data);
         setStudentAttendanceDetails(response.data);
         setShowLectureStudentAttendanceReportWindow(false);
         setShowLectureReportWindow(false);
@@ -161,10 +143,37 @@ const ReportPage = () => {
       } else if (response.status === 400) {
         toast.error(response.data);
       } else {
-        toast.error("Error In Getting Overall Report");
+        toast.error("Error in getting overall report.");
       }
     } catch (error) {
-      toast.error("Error In Getting Overall Report");
+      toast.error("Error in getting overall report.");
+    }
+  };
+
+  const [lectureWithDateList, setLectureWithDateList] = useState([]);
+  const [searchLectureWithDate, setSearchLectureWithDate] = useState("");
+  const [selectedLectureWithDate, setSelectedLectureWithDate] = useState(null);
+
+  const handleLoadLectureWithDateList = async (lectureId) => {
+    try {
+      setLectureWithDateList([]);
+      const response = await LectureService.getAllLectureWithDateByLectureId(
+        lectureId
+      );
+      if (response.status === 200) {
+        setLectureWithDateList(response.data);
+        setShowLectureStudentAttendanceReportWindow(false);
+        setShowLectureReportWindow(false);
+        setShowModuleReportWindow(false);
+        setShowOverallReportWindow(false);
+        setShowLectureWithDateWindow(true);
+      } else if (response.status === 400) {
+        toast.error(response.data);
+      } else {
+        toast.error("Error In Getting Lecture With Date List.");
+      }
+    } catch (error) {
+      toast.error("Error In Getting Lecture With Date List.");
     }
   };
 
@@ -197,9 +206,7 @@ const ReportPage = () => {
               handleOpenOverallReportWindow={(moduleId) =>
                 handleOpenOverallReportWindow(moduleId)
               }
-              handleOpenLecturesReportWindow={(e) =>
-                handleOpenLectureReportWindow(e)
-              }
+              handleOpenLecturesReportWindow={(e) => handleLoadLectureReport(e)}
             />
           </div>
         )}
@@ -215,6 +222,7 @@ const ReportPage = () => {
                   setShowLectureReportWindow(false);
                   setShowModuleReportWindow(true);
                   setShowOverallReportWindow(false);
+                  setShowLectureWithDateWindow(false);
                 }}
                 title={"Back"}
                 titlewithiconicon={<MdArrowBack className="staff-buttonIcon" />}
@@ -232,11 +240,10 @@ const ReportPage = () => {
         {showLectureReportWindow && (
           <div className="module-report-ModuleList">
             <LectureReportTable
-              handleOpenLectureAttendanceReportWindow={(lectureId) => {
-                handleLoadStudentAttendanceReport(lectureId);
-              }}
+              handleOpenLectureWithDateWindow={(lectureId) =>
+                handleLoadLectureWithDateList(lectureId)
+              }
               lecturesReportList={lecturesReportList}
-              //attendedStudentList={(e) => setLectureStudentAttendanceList(e)}
               onLecturesReportClick={(e) => setSelectedLectureReport(e)}
               searchLecturesReport={searchLecturesReport}
             />
@@ -246,6 +253,38 @@ const ReportPage = () => {
                   setShowLectureReportWindow(false);
                   setShowModuleReportWindow(true);
                   setShowOverallReportWindow(false);
+                  setShowLectureWithDateWindow(false);
+                }}
+                title={"Back"}
+                titlewithiconicon={<MdArrowBack className="staff-buttonIcon" />}
+              />
+              <NormalButton
+                title={"Print"}
+                handleClick={() => {}}
+                titlewithiconicon={
+                  <BiSolidPrinter className="staff-buttonIcon" />
+                }
+              />
+            </div>
+          </div>
+        )}
+        {showLectureWithDateWindow && (
+          <div className="module-report-ModuleList">
+            <LectureWithDateReportTable
+              handleOpenLectureAttendanceReportWindow={(lectureId, date) =>
+                handleLoadStudentAttendanceReport(lectureId, date)
+              }
+              lectureWithDateList={lectureWithDateList}
+              onLectureWithDateClick={(e) => setSelectedLectureWithDate(e)}
+              searchLectureWithDate={searchLectureWithDate}
+            />
+            <div className="staff-List-Buttons">
+              <NormalButton
+                handleClick={() => {
+                  setShowLectureReportWindow(true);
+                  setShowModuleReportWindow(false);
+                  setShowOverallReportWindow(false);
+                  setShowLectureWithDateWindow(false);
                 }}
                 title={"Back"}
                 titlewithiconicon={<MdArrowBack className="staff-buttonIcon" />}
@@ -269,19 +308,23 @@ const ReportPage = () => {
             <div className="staff-List-Buttons">
               <NormalButton
                 handleClick={() => {
-                  setShowLectureReportWindow(true);
+                  setShowLectureReportWindow(false);
                   setShowModuleReportWindow(false);
                   setShowOverallReportWindow(false);
                   setShowLectureStudentAttendanceReportWindow(false);
+                  setShowLectureWithDateWindow(true);
                 }}
                 title={"Back"}
                 titlewithiconicon={<MdArrowBack className="staff-buttonIcon" />}
               />
               <NormalButton
                 title={"Print"}
-                handleClick={() => {
-                  handleDownloadReport(selectedLectureReport.lectureId);
-                }}
+                handleClick={() =>
+                  handleDownloadReport(
+                    selectedLectureWithDate.lectureId,
+                    selectedLectureWithDate.lectureDate
+                  )
+                }
                 titlewithiconicon={
                   <BiSolidPrinter className="staff-buttonIcon" />
                 }

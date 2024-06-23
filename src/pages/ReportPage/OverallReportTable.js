@@ -3,12 +3,7 @@ import "../../pages/AdminDashboard/AdminDashboard.css";
 
 const OverallReportTable = ({ search, studentAttendanceDetails }) => {
   const [selectedStudent, setSelectedStudent] = useState(null);
-  const [studentAttendanceDetailList, setStudentAttendanceDetailList] =
-    useState([]);
 
-  useEffect(() => {
-    setStudentAttendanceDetailList(studentAttendanceDetailList);
-  });
   return (
     <div className="tableDesign">
       <table className="student-tableArrangement">
@@ -23,7 +18,7 @@ const OverallReportTable = ({ search, studentAttendanceDetails }) => {
         </thead>
 
         <tbody>
-          {studentAttendanceDetailList
+          {studentAttendanceDetails
             .filter(
               (details) =>
                 details.studentName
@@ -45,7 +40,7 @@ const OverallReportTable = ({ search, studentAttendanceDetails }) => {
                   {details.attendedLectureCount} /{" "}
                   {details.attendedLectureCount + details.missedLectureCount}
                 </td>
-                <td>{details.attendancePercentage}</td>
+                <td>{details.attendancePercentage} %</td>
               </tr>
             ))}
         </tbody>

@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import "../../pages/AdminDashboard/AdminDashboard.css";
 import { CiViewList } from "react-icons/ci";
 
-const LectureReportTable = ({
-  handleOpenLectureWithDateWindow,
-  searchLecturesReport,
-  onLecturesReportClick,
-  lecturesReportList,
+const LectureWithDateReportTable = ({
+  handleOpenLectureAttendanceReportWindow,
+  searchLectureWithDate,
+  onLectureWithDateClick,
+  lectureWithDateList,
 }) => {
-  const [selectedLectureReport, setSelectedLectureReport] = useState(null);
+  const [selectedLectureWithDate, setSelectedLectureWithDate] = useState(null);
 
   const handleLectureReportClick = (e) => {
-    setSelectedLectureReport(e);
-    onLecturesReportClick(e);
+    setSelectedLectureWithDate(e);
+    onLectureWithDateClick(e);
   };
 
   return (
@@ -23,7 +23,7 @@ const LectureReportTable = ({
             <th>No</th>
             <th className="expand">Name</th>
             <th>Module Code</th>
-            <th>Day</th>
+            <th>Date</th>
             <th>Venue</th>
             <th>Start Time</th>
             <th>End Time</th>
@@ -31,42 +31,48 @@ const LectureReportTable = ({
           </tr>
         </thead>
         <tbody>
-          {lecturesReportList
+          {lectureWithDateList
             .filter(
               (lecture) =>
-                lecture.lectureName
-                  .toLowerCase()
-                  .includes(searchLecturesReport.toLowerCase()) ||
-                lecture.lectureDay
-                  .toLowerCase()
-                  .includes(searchLecturesReport.toLowerCase())
+                (lecture.lectureName &&
+                  lecture.lectureName
+                    .toLowerCase()
+                    .includes(searchLectureWithDate.toLowerCase())) ||
+                (lecture.lectureDate &&
+                  lecture.lectureDate
+                    .toLowerCase()
+                    .includes(searchLectureWithDate.toLowerCase()))
             )
             .map((lecture, index) => (
               <tr
                 key={index}
                 onClick={() => handleLectureReportClick(lecture)}
                 className={
-                  selectedLectureReport === lecture
+                  selectedLectureWithDate === lecture
                     ? "selected-row"
                     : "event-row"
                 }
               >
                 <td>{index + 1}</td>
-                <td>{lecture.lectureName}</td>
+                <td>{`Lecture_${lecture.lectureDate}`}</td>
                 <td>{lecture.lectureModuleCode}</td>
-                <td>{lecture.lectureDay}</td>
+                <td>{lecture.lectureDate}</td>
                 <td>{lecture.lectureVenue}</td>
                 <td>{lecture.lectureStartTime}</td>
                 <td>{lecture.lectureEndTime}</td>
                 <td>
                   <button
-                    onClick={() =>
-                      handleOpenLectureWithDateWindow(lecture.lectureId)
-                    }
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleOpenLectureAttendanceReportWindow(
+                        lecture.lectureId,
+                        lecture.lectureDate
+                      );
+                    }}
                     className="ViewButton"
                   >
                     <CiViewList className="EditIcon" />
-                    <p className="ViewButtonLabel">View Lecture</p>
+                    <p className="ViewButtonLabel">View Report</p>
                   </button>
                 </td>
               </tr>
@@ -77,4 +83,4 @@ const LectureReportTable = ({
   );
 };
 
-export default LectureReportTable;
+export default LectureWithDateReportTable;

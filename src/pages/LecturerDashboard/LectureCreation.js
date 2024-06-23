@@ -180,14 +180,16 @@ const LectureCreation = ({
     <div className="event-main-container1">
       <Toaster />
       {!hideCloseButton && (
-        <div
-          className="closeCreateEventWindow"
-          onClick={handleCloseCreateLectureWindow}
-        >
-          <IoMdCloseCircleOutline size={25} />
+        <div className="event-create-title-close-button">
+          <h3 className="event-create-title">Create {` ${title}`}</h3>
+          <div
+            className="event-create-close-button"
+            onClick={handleCloseCreateLectureWindow}
+          >
+            <IoMdCloseCircleOutline id="close-icon" />
+          </div>
         </div>
       )}
-      <h2>Create {` ${title}`}</h2>
       <div className="eventCreation-field">
         {showImage && (
           <img src={eventCreationImage} className="Create-logo" alt="Logo" />
