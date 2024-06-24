@@ -68,6 +68,7 @@ const LectureWithDateReportTable = ({
                         lecture.lectureId,
                         lecture.lectureDate
                       );
+                      handleLectureReportClick(lecture);
                     }}
                     className="ViewButton"
                   >
