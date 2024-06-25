@@ -1,0 +1,169 @@
+import React, { useEffect, useState } from "react";
+import Select from "react-select";
+import ModuleService from "../../api/services/ModuleService";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/features/userSlice";
+import { Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import LectureService from "../../api/services/LectureService";
+import { ToastContainer, toast } from "react-toastify";
+const LeftContainerLectureCreation = ({
+  getModuleCode,
+  getDayList,
+  showRightSideWindow,
+  handleUpdateAvailableLectures,
+}) => {
+  const user = useSelector(selectUser);
+  const { userId, departmentId } = user || {};
+
+  const handleGetModulesList = async () => {
+    const response = await ModuleService.getModulesByUserId(userId);
+    if (response) {
+      const moduleList = response.map((module) => ({
+        value: module.moduleId,
+        label: module.moduleCode,
+        name: module.moduleName,
+      }));
+      const moduleNameList = response.map((module) => ({
+        value: module.moduleId,
+        label: module.moduleName,
+        moduleCode: module.moduleCode,
+      }));
+      setModuleList(moduleList);
+      setModuleNameList(moduleNameList);
+    }
+  };
+
+  const [moduleCode, setModuleCode] = useState(null);
+  const [moduleList, setModuleList] = useState([]);
+  const [moduleNameList, setModuleNameList] = useState([]);
+  const [day, setDay] = useState([]);
+  const [isToggleButtonDisabled, setIsToggleButtonDisabled] = useState(true);
+  const [moduleName, setModuleName] = useState("");
+
+  const handleChange = (e) => {
+    const newDay = e;
+    setDay((prevDay) => {
+      const updatedDay = prevDay.includes(newDay)
+        ? prevDay.filter((d) => d !== newDay)
+        : [...prevDay, newDay];
+      getDayList(updatedDay); // Pass the updated day list to the parent
+      return updatedDay;
+    });
+  };
+
+  const handleShowRightSideWindow = () => {
+    if (moduleCode === null) {
+      toast.error("Please Select Module.");
+    } else if (day.length === 0) {
+      toast.error("Please Select Dates.");
+      return;
+    } else {
+      handleUpdateAvailableLectures("", day[0]);
+      showRightSideWindow();
+    }
+  };
+
+  const handelModuleChange = async (e) => {
+    const response = await LectureService.getAllLecturesByModuleCode(e);
+    if (response) {
+      setDay(() => {
+        const list = [];
+        for (const i in response) {
+          if (list.includes(response[i].lectureDay)) {
+            continue;
+          }
+          list.push(response[i].lectureDay);
+        }
+        getDayList(list);
+        return list;
+      });
+    }
+  };
+
+  useEffect(() => {
+    handleGetModulesList();
+  }, []);
+
+  const handleModuleCodeChange = (e) => {
+    handelModuleChange(e.label);
+    setModuleCode(e);
+    getModuleCode(e.label);
+    setIsToggleButtonDisabled(false);
+    setModuleName({
+      value: e.value,
+      label: e.name,
+      moduleCode: e.label,
+    });
+  };
+
+  const handleModuleNameChange = (e) => {
+    handelModuleChange(e.moduleCode);
+    setModuleCode({
+      value: e.value,
+      label: e.moduleCode,
+      name: e.label,
+    });
+    getModuleCode(e.moduleCode);
+    setIsToggleButtonDisabled(false);
+    setModuleName(e);
+  };
+
+  return (
+    <div className="left-container-lecture-creation">
+      {/* <ToastContainer /> */}
+      <label>Module Name</label>
+      <Select
+        id="selectModule"
+        placeholder={"Select Module Code"}
+        onChange={(e) => {
+          handleModuleNameChange(e);
+        }}
+        options={moduleNameList}
+        value={moduleName}
+      />
+      <label>Module Code</label>
+      <Select
+        id="selectModule"
+        placeholder={"Select Module Code"}
+        onChange={(e) => {
+          handleModuleCodeChange(e);
+        }}
+        options={moduleList}
+        value={moduleCode}
+      />
+
+      <label>Select Date</label>
+      <ToggleButtonGroup
+        color="primary"
+        value={day}
+        onChange={(e) => {
+          handleChange(e.target.value);
+        }}
+        aria-label="Platform"
+        id="toggle-button"
+        disabled={isToggleButtonDisabled}
+      >
+        <ToggleButton value="Mon">Mon</ToggleButton>
+        <ToggleButton value="Tue">Tue</ToggleButton>
+        <ToggleButton value="Wed">Wed</ToggleButton>
+        <ToggleButton value="Thu">Thu</ToggleButton>
+        <ToggleButton value="Fri">Fri</ToggleButton>
+        <ToggleButton value="Sat">Sat</ToggleButton>
+        <ToggleButton value="Sun">Sun</ToggleButton>
+      </ToggleButtonGroup>
+
+      <div className="left-container-lecture-creation-submit-button">
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          onClick={handleShowRightSideWindow}
+        >
+          Create Time Slot
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+export default LeftContainerLectureCreation;

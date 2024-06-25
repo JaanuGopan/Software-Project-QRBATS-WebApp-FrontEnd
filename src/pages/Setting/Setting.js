@@ -1,86 +1,67 @@
 import "./Setting.css";
-import eventCreationImage from "../../assets/Images/signin/Signin.jpeg";
 import React, { useState } from "react";
 import UpdateSetting from "./UpdateSetting";
-
+import Avatar from "@mui/material/Avatar";
+import PersonIcon from "../../assets/Images/personIcon/person_icon.png";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/features/userSlice";
+import Department from "../../utils/Department";
 const Setting = () => {
   const [adminUpdateSettingPopUpWindow, setAdminUpdateSettingPopUpWindow] =
     useState(false);
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
+  const { userId, firstName, lastName, email, userName, departmentId, role } =
+    useSelector(selectUser);
+
+  const department = Department.departmentList[departmentId - 1];
 
   return (
     <div className="setting-main-container2">
-      <h2>Profile</h2>
       <div className="setting-field">
-        <img src={eventCreationImage} className="Create-logo" alt="Logo" />
-        <div className="eventCreation-input-field">
-          <div className="Setting-input-with-icon">
-            <label>First Name</label>
-            <input
-              type="text"
-              id="eventName"
-              name="eventName"
-              placeholder={"Admin Name"}
-              className="form-control mb-2"
-              value={firstName}
-              onChange={""}
-            />
+        <div className="setting-person-icon-container">
+          <Avatar
+            alt="Remy Sharp"
+            sx={{ width: 150, height: 150 }}
+            src={PersonIcon}
+          ></Avatar>
+        </div>
+        <div className="setting-content">
+          <div className="setting-label">
+            <label id="setting-label-1">First Name</label>
+            <label id="setting-label-2">{`: ${firstName}`}</label>
           </div>
-          <div className="Setting-input-with-icon">
-            <label>Last Name</label>
-            <input
-              type="text"
-              id="eventName"
-              name="eventName"
-              placeholder={"Admin Name"}
-              className="form-control mb-2"
-              value={lastName}
-              onChange={""}
-            />
+          <div className="setting-label">
+            <label id="setting-label-1">Last Name</label>
+            <label id="setting-label-2">{`: ${lastName}`}</label>
           </div>
-          <div className="Setting-input-with-icon">
-            <label>Username</label>
-            <input
-              type="text"
-              id="eventName"
-              name="eventName"
-              placeholder={"Username"}
-              className="form-control mb-2"
-              value={userName}
-              onChange={""}
-            />
+          <div className="setting-label">
+            <label id="setting-label-1">Email</label>
+            <label id="setting-label-2">{`: ${email}`}</label>
           </div>
-          <div className="Setting-input-with-icon">
-            <label>Password</label>
-            <input
-              type="text"
-              id="eventName"
-              name="eventName"
-              placeholder={"Password"}
-              className="form-control mb-2"
-              value={password}
-              onChange={""}
-            />
+          {role === "LECTURER" && (
+            <div className="setting-label">
+              <label id="setting-label-1">Department</label>
+              <label id="setting-label-2">{`: ${department}`}</label>
+            </div>
+          )}
+          <div className="setting-label">
+            <label id="setting-label-1">Role</label>
+            <label id="setting-label-2">{`: ${role}`}</label>
           </div>
+        </div>
+        <div className="setting-page-button-container">
           <button
             onClick={() => setAdminUpdateSettingPopUpWindow(true)}
-            className="btn btn-primary w-100"
+            className="btn btn-warning"
           >
             Update
           </button>
         </div>
       </div>
       {adminUpdateSettingPopUpWindow && (
-        <div
-          handleClick={() => setAdminUpdateSettingPopUpWindow(false)}
-          className="student-Create-Event-Dashboard"
-        >
+        <div className="student-Create-Event-Dashboard">
           <UpdateSetting
-            handlecloseUpdateSettingWindow={() =>
+            handleCloseUpdateSettingWindow={() =>
               setAdminUpdateSettingPopUpWindow(false)
             }
           />

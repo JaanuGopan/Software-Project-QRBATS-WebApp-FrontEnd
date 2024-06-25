@@ -1,27 +1,29 @@
 import React, { useState, useEffect } from "react";
 import "../Staff/StaffA.css";
 import EventReportTable from "../../components/layout/AdminDashboardComponent/EventReportTable";
-import EventAttendancetable from "../../components/layout/AdminDashboardComponent/EventAttendancetable";
+import EventAttendanceTable from "../../components/layout/AdminDashboardComponent/EventAttendancetable";
 import NormalButton from "../../components/layout/AdminDashboardComponent/NormalButton";
 import { MdArrowBack } from "react-icons/md";
 import { BiSolidPrinter } from "react-icons/bi";
-import FetchEventsService from "../../api/services/FetchEventsService";
-import FetchAttendanceByEventIdService from "../../api/services/FetchAttendanceByEventIdService";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-
+import EventService from "../../api/services/EventService";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/features/userSlice";
+import AttendanceService from "../../api/services/AttendanceService";
+import { toast } from "react-toastify";
 const EventReport = () => {
   const [eventReportTable, setEventReportTable] = useState(true);
-
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [eventList, setEventList] = useState([]);
   const [search, setSearch] = useState("");
-
   const [selectedAttendance, setSelectedAttendance] = useState(null);
   const [attendanceList, setAttendanceList] = useState([]);
 
+  const user = useSelector(selectUser);
+  const { userId } = user || {};
+
   useEffect(() => {
-    // Fetch the list of events from the API using the new class
     handleReloadEventList();
   }, []);
 
@@ -32,7 +34,7 @@ const EventReport = () => {
   };
 
   const handleReloadEventList = async () => {
-    FetchEventsService.fetchEvents()
+    EventService.getEventByUserID(userId)
       .then((events) => {
         setEventList(events);
       })
@@ -41,7 +43,7 @@ const EventReport = () => {
       });
   };
 
-  const handleAttendenceList = (attendanceStudentList) => {
+  const handleAttendanceList = (attendanceStudentList) => {
     setAttendanceList(attendanceStudentList);
   };
 
@@ -55,8 +57,22 @@ const EventReport = () => {
     });
   };
 
-  const handleGeneratePDF = () => {
-    generatePDF();
+  const handleDownloadAttendanceEventReport = async (eventId) => {
+    const response = await AttendanceService.downloadEventAttendance(eventId);
+    if (response.status === 200) {
+      const data = response.data;
+      const blob = new Blob([data], { type: "text/csv" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `event_${eventId}_attendance.csv`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else if (response.status === 400) {
+      toast.error(response.data);
+    } else {
+      toast.error("Error In Downloading Report.");
+    }
   };
 
   return (
@@ -84,7 +100,7 @@ const EventReport = () => {
               search={search}
               onEventClick={handleEventClick}
               eventList={eventList}
-              attendedStudentList={handleAttendenceList}
+              attendedStudentList={handleAttendanceList}
             />
           </div>
         </div>
@@ -107,7 +123,7 @@ const EventReport = () => {
           </div>
 
           <div id="table-to-print" className="staff-EventList">
-            <EventAttendancetable
+            <EventAttendanceTable
               search={search}
               attendanceList={attendanceList}
             />
@@ -119,7 +135,9 @@ const EventReport = () => {
               />
               <NormalButton
                 title={"Print"}
-                handleClick={handleGeneratePDF}
+                handleClick={() =>
+                  handleDownloadAttendanceEventReport(selectedEvent.eventId)
+                }
                 titlewithiconicon={
                   <BiSolidPrinter className="staff-buttonIcon" />
                 }

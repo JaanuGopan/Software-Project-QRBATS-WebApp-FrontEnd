@@ -12,7 +12,7 @@
 
 .setting-field{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
@@ -28,4 +28,134 @@
     background-color: #ffffff;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 3;
+}
+
+.setting-person-icon-container{
+    width: 200px;        
+    height: 200px;      
+    border-radius: 50%;        
+    background-color: white;
+    display: flex;        
+    align-items: center;        
+    justify-content: center;
+    border-color: #0077C0;
+    border-width: 1px;
+    
+}
+
+.setting-person-icon-container img {
+    width: 50%;
+    height: 50%;
+    object-fit: cover;
+}
+
+
+
+.setting-content-label{
+    display: flex;
+    flex-direction: row;
+}
+
+.update-setting-input-form{
+    padding: 5%;
+    width: 100%;
+}
+
+.closeUpdateSettingWindow {
+    color: red;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 50px;
+    margin-left: 95%;
+    width: 30px;
+    height: 30px;
+}
+
+.closeUpdateSettingWindow:hover {
+    color: white;
+    background-color: red;
+
+}
+.setting-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    height: initial;
+}
+
+.setting-label{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+}
+
+.setting-label #setting-label-1{
+    font-weight: bold;
+    font-size: large;
+}
+
+.setting-page-button-container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.setting-page-button-container button{
+    margin: 1% 40% 1% 40%;
+}
+
+
+.setting-update-title-close-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.setting-update-title {
+    align-self: center;
+    justify-self: center;
+    margin-left: auto;
+}
+
+.setting-update-close-button {
+    align-self: center;
+    justify-self: flex-end;
+    margin-left: auto;
+    height: 30px;
+    width: 30px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.setting-update-close-button #close-icon {
+    align-self: center;
+    justify-self: center;
+    color: red;
+    height: 90%;
+    width: 90%;
+}
+
+.setting-update-close-button #close-icon:hover {
+    align-self: center;
+    justify-self: center;
+    color: white;
+    height: 90%;
+    width: 90%;
+    background-color: red;
+    border-radius: 100%;
 }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { IoSettings } from "react-icons/io5";
-import { MdOutlineEventNote } from "react-icons/md";
+import { MdOutlineEventNote, MdQrCode } from "react-icons/md";
 import { IoLogOut } from "react-icons/io5";
 import "../../../pages/StaffMainNavigation/StaffMainNavigation.css";
 import logo from "../../../assets/Images/logo/logo_white.png";
@@ -10,13 +10,21 @@ import { AiFillDashboard } from "react-icons/ai";
 import Logout from "../../../api/services/logoutService";
 import { useDispatch } from "react-redux";
 import { TbReport } from "react-icons/tb";
-import { MdAssignmentAdd } from "react-icons/md";
 import {
   setSideBarIndex,
   resetSideBarIndex,
 } from "../../../redux/features/mainNavigationSlice";
-
-const LecturerSideBar = ({ handleclose, index, setIndex }) => {
+import { FaList } from "react-icons/fa";
+import { CiViewList } from "react-icons/ci";
+import { FaRegListAlt } from "react-icons/fa";
+import LectureIcon from "../../../assets/Icons/lecture_Icon.png";
+import { School } from "@mui/icons-material";
+const LecturerSideBar = ({
+  handleClose,
+  index,
+  setIndex,
+  handleShowLogoutWindow,
+}) => {
   const dispatch = useDispatch();
   const handleMenuClick = (menuIndex) => {
     dispatch(setSideBarIndex(menuIndex));
@@ -30,9 +38,6 @@ const LecturerSideBar = ({ handleclose, index, setIndex }) => {
 
   return (
     <div className="Staff-Sidebar">
-      <div className="closeButton" onClick={handleclose}>
-        <IoMdCloseCircleOutline />
-      </div>
       <img src={logo} className="Sidebarlogo" alt="Logo" />
       <div className="SideBar">
         <Sidebarbutton
@@ -43,31 +48,43 @@ const LecturerSideBar = ({ handleclose, index, setIndex }) => {
         />
         <Sidebarbutton
           handleSidebarMenu={() => handleMenuClick(1)}
-          title={"QR Generate"}
-          titlewithiconicon={<MdAssignmentAdd className="buttonIcon" />}
+          title={"Lecture"}
+          titlewithiconicon={<School className="buttonIcon" />}
           isOpen={index === 1}
         />
         <Sidebarbutton
           handleSidebarMenu={() => handleMenuClick(2)}
+          title={"Event"}
+          titlewithiconicon={<MdQrCode className="buttonIcon" />}
+          isOpen={index === 2}
+        />
+        <Sidebarbutton
+          handleSidebarMenu={() => handleMenuClick(3)}
           title={"Module"}
           titlewithiconicon={<MdOutlineEventNote className="buttonIcon" />}
-          isOpen={index === 2}
+          isOpen={index === 3}
         />
 
         <Sidebarbutton
-          handleSidebarMenu={() => handleMenuClick(3)}
-          title={"Report"}
-          titlewithiconicon={<TbReport className="buttonIcon" />}
-          isOpen={index === 3}
-        />
-        <Sidebarbutton
           handleSidebarMenu={() => handleMenuClick(4)}
-          title={"Setting"}
-          titlewithiconicon={<IoSettings className="buttonIcon" />}
+          title={"Lecture Report"}
+          titlewithiconicon={<TbReport className="buttonIcon" />}
           isOpen={index === 4}
         />
         <Sidebarbutton
-          handleSidebarMenu={handleLogoutClick}
+          handleSidebarMenu={() => handleMenuClick(5)}
+          title={"Event Report"}
+          titlewithiconicon={<TbReport className="buttonIcon" />}
+          isOpen={index === 5}
+        />
+        <Sidebarbutton
+          handleSidebarMenu={() => handleMenuClick(6)}
+          title={"Settings"}
+          titlewithiconicon={<IoSettings className="buttonIcon" />}
+          isOpen={index === 6}
+        />
+        <Sidebarbutton
+          handleSidebarMenu={handleShowLogoutWindow}
           title={"Logout"}
           titlewithiconicon={<IoLogOut className="buttonIcon" />}
         />

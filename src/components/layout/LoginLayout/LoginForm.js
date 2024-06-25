@@ -3,10 +3,10 @@ import "../../../pages/Signin/Signin.css";
 import { FaUser, FaLock } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import LoginService from "../../../api/services/LoginService";
-import JwtService from "../../../api/services/JwtService";
 import { useDispatch, useSelector } from "react-redux";
 import { login, selectUser } from "../../../redux/features/userSlice";
+import UserService from "../../../api/services/UserService";
+import { ToastContainer, toast } from "react-toastify";
 
 const LoginForm = () => {
   const [userName, setUserName] = useState("");
@@ -25,38 +25,28 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const token = await LoginService.loginUser(userName, password);
-
-      const decodedToken = JwtService.parseJwt(token);
-      const loginUserName = decodedToken.sub;
-      const lodinUserFirstName = decodedToken.firstName;
-      const loginUserLastName = decodedToken.lastName;
-      const loginUserEmail = decodedToken.email;
-      const loginUserRole = decodedToken.role;
-      const loginUserId = decodedToken.userId;
-      localStorage.setItem("token", token);
-
-      dispatch(
-        login({
-          token: token,
-          userId: loginUserId,
-          userName: loginUserName,
-          firstName: lodinUserFirstName,
-          lastName: loginUserLastName,
-          email: loginUserEmail,
-          role: loginUserRole,
-          loggedIn: true,
-        })
+      const response = await UserService.loginUser(
+        userName,
+        password,
+        dispatch
       );
-
-      navigate("/mainNavigation");
+      if (response.status === 200) {
+        toast.success("Successfully LogIn.");
+        navigate("/mainNavigation");
+      } else if (response.status === 400) {
+        toast.error(response.data);
+      } else {
+        toast.error("Error In LogIn Service.");
+      }
     } catch (error) {
+      toast.error("Error In LogIn Service.");
       console.error("Login failed", error);
     }
   };
 
   return (
     <div className="form-container">
+      <ToastContainer />
       <form onSubmit={handleSubmit}>
         <div className="signin-form-group">
           <div className="signin-input-with-icon">

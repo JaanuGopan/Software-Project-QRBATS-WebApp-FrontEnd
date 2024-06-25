@@ -3,11 +3,13 @@ import "./ModulePage.css";
 import Designer from "../../assets/Images/Designer.jpeg";
 import InputField from "../../components/textfields/InputBox/InputField";
 import { IoMdCloseCircleOutline } from "react-icons/io";
-import CreateUserService from "../../api/services/CreateUserService";
+import { IoIosClose } from "react-icons/io";
 import InputList from "../../components/textfields/InputList/InputList";
 import ModuleService from "../../api/services/ModuleService";
 import { selectUser } from "../../redux/features/userSlice";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import Select from "react-select";
 
 const ModuleCreate = ({
   handleCloseModuleCreateWindow,
@@ -21,7 +23,7 @@ const ModuleCreate = ({
 
   const { userId } = useSelector(selectUser) || {};
 
-  const departmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA"];
+  const departmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA", "DIS"];
   const semesterList = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
   const handleCreateModule = async (e) => {
@@ -35,11 +37,19 @@ const ModuleCreate = ({
         departmentList.indexOf(departmentId) + 1,
         userId
       );
-      console.log(response);
-      handleClearData();
-      handleReloadModuleList();
+      if (response.status === 200) {
+        toast.success("Module Created Successfully ", response.data.moduleName);
+        console.log(response);
+        handleClearData();
+        handleReloadModuleList();
+      } else if (response.status === 400) {
+        toast.error(response.data);
+      } else {
+        toast.error("Something went wrong. Please try again later.");
+      }
     } catch (error) {
       console.error("Fail to create modules.", error);
+      toast.error("Something went wrong. Please try again later.");
     }
   };
 
@@ -52,66 +62,93 @@ const ModuleCreate = ({
   };
 
   return (
-    <div className="module-signup-main-container">
-      <div
-        className="closeCreateEventWindow"
-        onClick={handleCloseModuleCreateWindow}
-      >
-        <IoMdCloseCircleOutline />
-      </div>
-      <p className="module-head1">Create module</p>
-      <div className="module-login-container">
-        <div className="module-image-container">
-          <img src={Designer} className="module-logo" alt="Logo" />
+    <div className="module-create-main-container">
+      <div className="module-create-title-close-button">
+        <h3 className="module-create-title">Create Module</h3>
+        <div
+          className="module-create-close-button"
+          onClick={handleCloseModuleCreateWindow}
+        >
+          <IoMdCloseCircleOutline id="close-icon" />
         </div>
+      </div>
+      <div className="module-login-container">
         <div className="form-container">
           <form onSubmit={handleCreateModule}>
-            <InputField
-              placeholder="Enter The Module Name"
-              value={moduleName}
-              onChange={(e) => setModuleName(e.target.value)}
-              inputType="text"
-            />
-            <InputField
-              placeholder="Enter the module code"
-              value={moduleCode}
-              onChange={(e) => setModuleCode(e.target.value)}
-              inputType="text"
-            />
-
-            <div className="choice-input mb-3">
-              <InputList
-                placeholder="Select semester"
-                value={semester}
-                onChange={(e) => setSemester(e.target.value)}
-                list={semesterList}
-                inputType="text"
-                initialValue="Select semester"
-                className="student-select-input"
-              />
+            <div className="module-creation-input">
+              <label>Module Name</label>
+              <div className="module-creation-input-field">
+                <InputField
+                  placeholder="Enter The Module Name"
+                  value={moduleName}
+                  onChange={(e) => setModuleName(e.target.value)}
+                  inputType="text"
+                />
+              </div>
             </div>
 
-            <div className="choice-input mb-3">
-              <InputList
-                placeholder="Select department"
-                value={departmentId}
-                onChange={(e) => setDepartmentId(e.target.value)}
-                list={departmentList}
-                inputType="text"
-                initialValue="Select department"
-                className="student-select-input"
-              />
+            <div className="module-creation-input">
+              <label>Module Code</label>
+              <div className="module-creation-input-field">
+                <InputField
+                  placeholder="Enter the module code"
+                  value={moduleCode}
+                  onChange={(e) => setModuleCode(e.target.value)}
+                  inputType="text"
+                />
+              </div>
             </div>
-            <InputField
-              placeholder="Enter Module Enrolment Key"
-              value={moduleEnrolmentKey}
-              onChange={(e) => setModuleEnrolmentKey(e.target.value)}
-              inputType="password"
-            />
 
-            <button type="submit" className="btn btn-success w-100">
-              Create module
-            </button>
+            <div className="module-creation-input">
+              <label>Semester</label>
+              <div className="module-creation-input-field">
+                <div className="choice-input mb-3">
+                  <InputList
+                    placeholder="Select semester"
+                    value={semester}
+                    onChange={(e) => setSemester(e.target.value)}
+                    list={semesterList}
+                    inputType="text"
+                    initialValue="Select semester"
+                    className="student-select-input"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="module-creation-input">
+              <label>Department</label>
+              <div className="module-creation-input-field">
+                <div className="choice-input mb-3">
+                  <InputList
+                    placeholder="Select department"
+                    value={departmentId}
+                    onChange={(e) => setDepartmentId(e.target.value)}
+                    list={departmentList}
+                    inputType="text"
+                    initialValue="Select department"
+                    className="student-select-input"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="module-creation-input">
+              <label>Enrolment Key</label>
+              <div className="module-creation-input-field">
+                <InputField
+                  placeholder="Enter Module Enrolment Key"
+                  value={moduleEnrolmentKey}
+                  onChange={(e) => setModuleEnrolmentKey(e.target.value)}
+                  inputType="text"
+                />
+              </div>
+            </div>
+            <div className="create-module-create-button">
+              <button type="submit" className="btn btn-success">
+                Create module
+              </button>
+            </div>
           </form>
         </div>
       </div>

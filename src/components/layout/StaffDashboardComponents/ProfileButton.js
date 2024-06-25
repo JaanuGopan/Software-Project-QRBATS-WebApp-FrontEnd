@@ -9,7 +9,7 @@ const ProfileButton = ({ setIndex }) => {
   const user = useSelector(selectUser);
 
   const handleClick = () => {
-    setIndex(4);
+    setIndex(6);
   };
 
   // Destructure user object for cleaner code
@@ -18,9 +18,9 @@ const ProfileButton = ({ setIndex }) => {
   return (
     <div className="ProfileButton" onClick={handleClick}>
       <p className="ProfileName">{`${firstName || ""} ${lastName || ""}`}</p>
-      <div className="circle">
+      {/* <div className="circle">
         <img className="ProfilePicture" src={profilePic} alt="Profile" />
-      </div>
+      </div> */}
     </div>
   );
 };

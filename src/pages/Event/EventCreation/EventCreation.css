@@ -12,7 +12,8 @@
     padding: 20px;
     background-color: #ffffff;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 3;
+    z-index: 2;
+    overflow: scroll;
 }
 
 .event-main-container2 {
@@ -43,6 +44,7 @@
 
 .eventCreation-input-field{
     padding: 5%;
+    width: 50%;
 }
 
 h2 {
@@ -204,19 +206,66 @@ a:hover {
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   padding: 5px;
   border-radius: 50px;
   margin-left: 95%;
-  width: 25px;
+  width: 30px;
+  height: 30px;
 }
 .closeCreateEventWindow:hover{
     color: white;
   background-color: red;
+  
 }
 
 .QRCode-img{
     width: 100%;
     height: 100%;
-    
 }
+
+
+.event-create-title-close-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.event-create-title {
+    align-self: center;
+    justify-self: center;
+    margin-left: auto;
+}
+
+.event-create-close-button {
+    align-self: center;
+    justify-self: flex-end;
+    margin-left: auto;
+    height: 30px;
+    width: 30px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.event-create-close-button #close-icon {
+    align-self: center;
+    justify-self: center;
+    color: red;
+    height: 90%;
+    width: 90%;
+}
+
+.event-create-close-button #close-icon:hover {
+    align-self: center;
+    justify-self: center;
+    color: white;
+    height: 90%;
+    width: 90%;
+    background-color: red;
+    border-radius: 100%;
+}
+
+

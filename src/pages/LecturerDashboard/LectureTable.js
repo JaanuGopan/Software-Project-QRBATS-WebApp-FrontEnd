@@ -27,8 +27,7 @@ const LectureTable = ({
           <tr>
             <th>No</th>
             <th className="expand">Name</th>
-            <th>Start Date</th>
-            <th>End Date</th>
+            <th>Date</th>
             <th>Venue</th>
             <th>Start Time</th>
             <th>End Time</th>
@@ -55,7 +54,6 @@ const LectureTable = ({
                 <td>{index + 1}</td>
                 <td>{lecture.eventName}</td>
                 <td>{lecture.eventDate}</td>
-                <td>{lecture.eventValidDate}</td>
                 <td>{lecture.eventVenue}</td>
                 <td>{lecture.eventTime}</td>
                 <td>{lecture.eventEndTime}</td>

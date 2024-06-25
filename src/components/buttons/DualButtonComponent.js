@@ -9,9 +9,9 @@ const DualButtonComponent = ({ onSelect, buttonText1, buttonText2 }) => {
   };
 
   return (
-    <div className="row m-2   ">
-      <div className="col">
-        <h6>Select one</h6>
+    <div className="row align-items-center">
+      <div className="col align-self-center">
+        <label>{`Select one`}</label>
       </div>
       <div className="col">
         <button

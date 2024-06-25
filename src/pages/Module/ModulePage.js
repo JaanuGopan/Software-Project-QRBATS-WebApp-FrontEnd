@@ -9,6 +9,8 @@ import ModuleUpdate from "./ModuleUpdate";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import "./ModulePage.css";
 import ModuleCreate from "./ModuleCreate";
+import { ToastContainer, toast } from "react-toastify";
+import WarningPopup from "../../components/warningPopup/WarningPopup";
 
 const ModulePage = () => {
   const user = useSelector(selectUser);
@@ -17,6 +19,7 @@ const ModulePage = () => {
   const [showModuleTable, setShowModuleTable] = useState(true);
   const [showUpdateModuleWindow, setShowUpdateModuleWindow] = useState(false);
   const [showModuleCreateWindow, setShowModuleCreateWindow] = useState(false);
+  const [showDeleteModuleWindow, setShowDeleteModuleWindow] = useState(false);
 
   const [selectedModule, setSelectedModule] = useState(null);
   const [moduleList, setModuleList] = useState([]);
@@ -43,8 +46,34 @@ const ModulePage = () => {
     setShowUpdateModuleWindow(true);
   };
 
+  const handleDeleteModule = async () => {
+    const response = await ModuleService.deleteModuleById(
+      selectedModule.moduleId
+    );
+    if (response.status === 200) {
+      handleReloadModuleList();
+      toast.success("Module Deleted Successfully!");
+      setSelectedModule(null);
+    } else if (response.status === 400) {
+      toast.error(response.data);
+      toast.error("Module Deletion Failed!");
+    } else {
+      toast.error("Error In Module Deletion!");
+    }
+    setShowDeleteModuleWindow(false);
+  };
+
+  const handleOpenDeletePopUpWindow = () => {
+    if (!selectedModule) {
+      toast.error("Please select a module to delete.");
+      return;
+    }
+    setShowDeleteModuleWindow(true);
+  };
+
   return (
     <div>
+      <ToastContainer />
       <div className="module-Dash">
         <div className="module-SearchEvent">
           <p className="module-mainHead">Modules</p>
@@ -61,7 +90,7 @@ const ModulePage = () => {
             onChange={(e) => setSearchModule(e.target.value)}
           />
         </div>
-        <div className="module-EventList">
+        <div className="module-ModuleList">
           <ModuleTable
             modulesList={moduleList}
             onModuleClick={handleModuleClick}
@@ -83,29 +112,30 @@ const ModulePage = () => {
             />
             <NormalButton
               title={"Delete"}
-              handleClick={() => {}}
+              handleClick={handleOpenDeletePopUpWindow}
               titlewithiconicon={<RiDeleteBin5Fill className="buttonIcon" />}
             />
           </div>
         </div>
         {showUpdateModuleWindow && (
           <div
-            className="Module-Create-Event-Dashboard"
+            className="Module-Create-module-Dashboard"
             handleClick={() => {
               setShowModuleCreateWindow(false);
             }}
           >
             <ModuleUpdate
+              handleCloseModuleUpdateWindow={() => {
+                setShowUpdateModuleWindow(false);
+              }}
+              handleReloadModuleList={handleReloadModuleList}
               selectedModule={selectedModule}
-              handleCloseUpdateWindow={() => {}}
-              handleUpdateModule={() => {}}
-              reloadModuleList={handleReloadModuleList}
             />
           </div>
         )}
         {showModuleCreateWindow && (
           <div
-            className="Module-Create-Event-Dashboard"
+            className="Module-Create-module-Dashboard"
             handleClick={() => {
               setShowUpdateModuleWindow(false);
             }}
@@ -115,6 +145,20 @@ const ModulePage = () => {
                 setShowModuleCreateWindow(false);
               }}
               handleReloadModuleList={handleReloadModuleList}
+            />
+          </div>
+        )}
+        {showDeleteModuleWindow && selectedModule && (
+          <div className="module-delete-window-container">
+            <WarningPopup
+              handleOk={handleDeleteModule}
+              handleCancel={() => {}}
+              handleCloseWarningWindow={() => {
+                setShowDeleteModuleWindow(false);
+                handleReloadModuleList();
+              }}
+              titleText={"Are You Sure You Want To Delete This Module?"}
+              buttonText={"Delete"}
             />
           </div>
         )}

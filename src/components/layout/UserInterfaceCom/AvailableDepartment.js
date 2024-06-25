@@ -8,7 +8,7 @@ import "../../../pages/UserInterface/UserInterface.css";
 const AvailableDepartment = () => {
   const responsive = {
     0: { items: 1 },
-    1000: { items: 2 },
+    900: { items: 2 },
     1400: { items: 3 },
   };
 

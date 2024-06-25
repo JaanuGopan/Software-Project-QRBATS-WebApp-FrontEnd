@@ -1,6 +1,10 @@
 import axios from "axios";
 import ApiConstants from "../config/ApiConstants";
-
+import { useDispatch } from "react-redux";
+import {
+  setLocationList,
+  resetLocationList,
+} from "../../redux/features/locationListSlice";
 class LocationService {
   static getAllLocationNames = async () => {
     try {

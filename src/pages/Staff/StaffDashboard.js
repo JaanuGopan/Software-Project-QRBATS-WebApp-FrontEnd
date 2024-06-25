@@ -96,7 +96,7 @@ const StaffDashboard = () => {
           className="staff-Create-Event-Dashboard"
         >
           <CreateStaff
-            handlecloseCreateStaffWindow={() =>
+            handleCloseCreateStaffWindow={() =>
               setStaffCreatePopUpWindow(false)
             }
             reloadStaffList={handleReloadStaffList}
@@ -109,7 +109,7 @@ const StaffDashboard = () => {
           className="staff-Create-Event-Dashboard"
         >
           <UpdateStaff
-            handlecloseUpdateStaffWindow={() =>
+            handleCloseUpdateStaffWindow={() =>
               setStaffUpdatePopUpWindow(false)
             }
             selectedStaff={selectedStaff}

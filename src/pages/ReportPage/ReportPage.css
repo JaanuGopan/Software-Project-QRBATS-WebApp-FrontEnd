@@ -1,0 +1,199 @@
+@media screen and (max-width: 1800px) {
+    .module-report-mainHead {
+        font-size: x-large;
+        margin-top: 5px;
+        padding-left: 35px;
+    }
+
+    .module-report-buttonIcon {
+        height: 1.5rem;
+        width: 1.5rem;
+        size: 1.5rem;
+    }
+
+    .module-report-Dash {
+        margin-top: 20px;
+    }
+
+    .module-report-SearchEvent {
+        margin-right: 35px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .module-report-mainHead {
+        font-size: large;
+        margin-top: 10px;
+        padding-left: 35px;
+    }
+
+    .module-report-buttonIcon {
+        height: 1rem;
+        width: 1rem;
+        size: 1rem;
+    }
+
+    .module-report-Dash {
+        margin-top: 10px;
+    }
+
+    .module-report-SearchEvent {
+        margin-right: 35px;
+    }
+}
+
+@media screen and (max-width: 426px) {
+    .module-report-buttonIcon {
+        height: 0.5rem;
+        width: 0.5rem;
+        size: 0.5rem;
+    }
+
+    .module-report-Dash {
+        margin-top: 5px;
+    }
+
+    .module-report-SearchEvent {
+        margin-right: 0px;
+    }
+
+    .module-report-mainHead {
+        padding-left: 5px;
+    }
+}
+
+.module-report-Create-module-Dashboard {
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    overflow-y: scroll;
+    width: 100%;
+    height: 100vh;
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.module-report-Dash {
+    flex-grow: 1;
+    height: 85vh;
+    width: 100%;
+    z-index: 1;
+}
+
+.module-report-mainHead {
+    color: #0D295E;
+    font-weight: bold;
+    margin-bottom: 0px;
+}
+
+.module-report-ModuleList {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding: 10px;
+    width: 100%;
+    border-top: 5px solid #0365A1;
+    box-shadow: 0.5px 2px 0.5px 0.5px rgba(25, 65, 85, 0.5);
+    border-radius: 10px;
+    background-color: #FAFAFA;
+    z-index: 1;
+}
+
+.module-report-List-Buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-around;
+    padding: 1rem;
+}
+
+.module-report-SearchEvent {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 10px;
+}
+
+.module-report-signup-main-container {
+    position: fixed;
+    width: 60%;
+    border: 4px solid transparent;
+    border-top: 6px solid #0077C0;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    min-width: 250px;
+    z-index: 2;
+}
+
+.module-report-head1 {
+    text-align: center;
+    color: #0063A0;
+    font-weight: bold;
+    font-size: x-large;
+    padding: 1%;
+    margin: 0%;
+}
+
+.module-report-login-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    position: relative;
+}
+
+.module-report-image-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.module-report-logo {
+    width: 200px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.module-select-input {
+    border-radius: 10px;
+    word-wrap: normal;
+    padding: 5px;
+    width: 100%;
+    border-bottom: 3px solid #0063A0;
+}
+
+.closeCreateModuleWindow {
+    color: red;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 50px;
+    margin-left: 95%;
+    width: 30px;
+    height: 30px;
+}
+
+.closeCreateModuleWindow:hover {
+    color: white;
+    background-color: red;
+
+}
