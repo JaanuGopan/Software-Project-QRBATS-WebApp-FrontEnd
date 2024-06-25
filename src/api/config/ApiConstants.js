@@ -2,6 +2,9 @@ class ApiConstants {
   static get baseIpUrl() {
     return "localhost";
   }
+  static get awsBaseIpUrl() {
+    return "13.51.170.30";
+  }
   static get baseUrl() {
     return "http://" + ApiConstants.baseIpUrl + ":8080/api/v1"; // "http://localhost:8080";
   }
@@ -131,6 +134,12 @@ class ApiConstants {
     return (
       ApiConstants.baseUrl +
       `/export/donwloadattendancebylectureidanddate?lectureId=${lectureId}&date=${date}`
+    );
+  }
+
+  static downloadOverallStudentReportByModuleIdUrl(moduleId) {
+    return (
+      ApiConstants.baseUrl + `/export/getstudentsoverallreport/${moduleId}`
     );
   }
   static downloadEventAttendanceByEventIdUrl(eventId) {

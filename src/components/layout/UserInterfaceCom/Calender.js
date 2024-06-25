@@ -22,7 +22,7 @@ const MyLiveCalendar = () => {
   };*/
 
   return (
-    <div style={{ height: "50vh" }}>
+    <div style={{ height:"65vh", width:"100%" }}>
       <h2 style={{ color: "#025587" }}>Calendar</h2>
       <Calendar
         localizer={localizer}

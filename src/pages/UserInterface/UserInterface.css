@@ -1,18 +1,70 @@
+@media screen and (max-width: 2000px) {
+  .paragraphStyle {
+    font-size: 1.8vw;
+    padding: 0.1vh 20vw;
+  }
+  .userinterface-container{
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 100%;
+    height: 85vh;
+    justify-content: stretch;
+    align-items: center;
+  }
+  .userinterface-departmentslide {
+    width: 55vw;
+    height: 75vh;
+  }
+  .userinterface-row1 {
+    width: 40vw;
+    height: 75vh;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .paragraphStyle {
+    font-size: 3vw;
+  }
+  .userinterface-container{
+    flex-direction: column;
+    width: 100%;
+    height: 150vh;
+    justify-content: stretch;
+    align-items: center;
+  }
+  .userinterface-row {
+    border-bottom:1px solid #0063A0;
+    width: 100%;
+  }
+  .userinterface-departmentslide {
+    width: 80%;
+  }
+  .userinterface-row1 {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .signinbutton{
+    font-size: x-small;
+  }
+  .paragraphStyle {
+    font-size: 20px;
+    padding: 0.1vh 15vw;
+  }
+}
+
 .userinterface-mainContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  width: 100%;
+  width: 100vw;
 }
 
  .userinterface-container {
    display: flex;
-   flex-direction: row;
-   flex-wrap: wrap;
-   width: 100%;
-   height: 100%;
-   align-items: center;
+
    border: 1px solid #0063A0;
    align-items: center;
    justify-content: center;
@@ -29,30 +81,32 @@
 }
 
   .userinterface-row {
-    flex-direction: row;
-    padding: 16px;
-    width: auto;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-self: center;
+    justify-content: center;
+    padding: 0px 16px;
   }
 
   .userinterface-row1 {
-    flex: 1;
-    flex-direction: row;
-    padding: 16px;
-    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 16px;
   }
 
   .navigate {
     background-color: #0063A0;
     display: flex;
     flex-direction: row;
+    flex-wrap: nowrap;
     justify-content: space-between;
     align-items: center;
     height: 11vh;
     width: 100%;
     min-height: 75px;
-    margin: auto;
+    margin: 0px;
     position: relative;
   }
 
@@ -65,7 +119,6 @@
   }
   
   .logo1 {
-    width: 25%;
     height: 80%;
     min-width: 60px;
     min-height: 45px;
@@ -86,20 +139,20 @@
     min-width: 300px;
     max-height: 500px;
     min-height: 400px;
-    margin: auto;
+    margin: 0px;
     text-align: center;
+    padding: 10px;
   }
 
   .userinterface-backgroundimage {
     background: url("../../assets/Images/back.jpg") center/cover no-repeat;
     width: 100%;
+    height: 100%;
   }
 
   .paragraphStyle {
     color: white;
-    font-size: 1.5rem;
     font-family: Arial, sans-serif;
-    padding: 0.1vh 15vw;
     margin-bottom: 5%;
     font-weight: bolder;
   }
@@ -108,7 +161,6 @@
     display: flex;
     flex-direction: column;
     height: 68vh;
-    width: 55vw;
     justify-content: center;
     align-items: normal;
     min-height: 380px;
