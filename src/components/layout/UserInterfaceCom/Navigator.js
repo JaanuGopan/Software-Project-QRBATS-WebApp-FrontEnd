@@ -20,7 +20,7 @@ const Navigator = () => {
           SKY TICKER
         </p>
       </div>
-      <Button style={{
+      <Button id="loginID" style={{
         color: "#0063A0",
         backgroundColor: "white",
         marginRight: "3vw",
