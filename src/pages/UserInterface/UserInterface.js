@@ -57,6 +57,7 @@ const UserInterface = () => {
               }} >
               <FaUser size={20}/>
               <h5 style={{paddingLeft: "5px"}}>Admin</h5>
+
             </div>
           </div>
         </div>
@@ -110,6 +111,7 @@ const UserInterface = () => {
             </div>
           </div>
           <div id="contact-us" className="column">
+
             <h2
               style={{
                 color: "#305599",

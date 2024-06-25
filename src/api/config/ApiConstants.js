@@ -6,7 +6,7 @@ class ApiConstants {
     return "13.51.170.30";
   }
   static get baseUrl() {
-    return "http://" + ApiConstants.awsBaseIpUrl + ":8082/api/v1"; // "http://localhost:8080";
+    return "http://" + ApiConstants.baseIpUrl + ":8080/api/v1"; // "http://localhost:8080";
   }
   static loginUrl(userName, password) {
     return (
@@ -134,6 +134,12 @@ class ApiConstants {
     return (
       ApiConstants.baseUrl +
       `/export/donwloadattendancebylectureidanddate?lectureId=${lectureId}&date=${date}`
+    );
+  }
+
+  static downloadOverallStudentReportByModuleIdUrl(moduleId) {
+    return (
+      ApiConstants.baseUrl + `/export/getstudentsoverallreport/${moduleId}`
     );
   }
   static downloadEventAttendanceByEventIdUrl(eventId) {

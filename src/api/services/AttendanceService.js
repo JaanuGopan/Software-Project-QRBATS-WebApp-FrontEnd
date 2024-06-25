@@ -97,6 +97,23 @@ class AttendanceService {
       return error.response;
     }
   };
+
+  static downloadOverallStudentReportByModuleId = async (moduleId) => {
+    try {
+      const response = await axios.get(
+        ApiConstants.downloadOverallStudentReportByModuleIdUrl(moduleId)
+      );
+      if (response.status === 200) {
+        return response;
+      }
+    } catch (error) {
+      console.error(
+        "Error In Getting Overall Student Report For This Module. ",
+        error
+      );
+      return error.response;
+    }
+  };
 }
 
 export default AttendanceService;
