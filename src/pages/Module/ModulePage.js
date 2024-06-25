@@ -73,7 +73,6 @@ const ModulePage = () => {
 
   return (
     <div>
-      <ToastContainer />
       <div className="module-Dash">
         <div className="module-SearchEvent">
           <p className="module-mainHead">Modules</p>
