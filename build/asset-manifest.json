@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.7715fb3d.css",
-    "main.js": "/static/js/main.c8103900.js",
+    "main.js": "/static/js/main.700fa460.js",
     "static/js/213.45085862.chunk.js": "/static/js/213.45085862.chunk.js",
     "static/js/455.d75b5a57.chunk.js": "/static/js/455.d75b5a57.chunk.js",
     "static/js/453.19d025ea.chunk.js": "/static/js/453.19d025ea.chunk.js",
@@ -14,13 +14,13 @@
     "static/media/lecture_Icon.png": "/static/media/lecture_Icon.22b5c1c310938a8d7d12.png",
     "index.html": "/index.html",
     "main.7715fb3d.css.map": "/static/css/main.7715fb3d.css.map",
-    "main.c8103900.js.map": "/static/js/main.c8103900.js.map",
+    "main.700fa460.js.map": "/static/js/main.700fa460.js.map",
     "213.45085862.chunk.js.map": "/static/js/213.45085862.chunk.js.map",
     "455.d75b5a57.chunk.js.map": "/static/js/455.d75b5a57.chunk.js.map",
     "453.19d025ea.chunk.js.map": "/static/js/453.19d025ea.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7715fb3d.css",
-    "static/js/main.c8103900.js"
+    "static/js/main.700fa460.js"
   ]
 }
