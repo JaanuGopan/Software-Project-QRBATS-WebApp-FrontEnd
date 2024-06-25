@@ -159,3 +159,19 @@
     background-color: red;
     border-radius: 100%;
 }
+
+.setting-update-warning-container {
+    position: fixed;
+    z-index: 4;
+    left: 0;
+    top: 0;
+    overflow-y: scroll;
+    width: 100%;
+    height: 100vh;
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
