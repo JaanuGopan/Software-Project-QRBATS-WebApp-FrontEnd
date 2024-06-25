@@ -143,6 +143,7 @@ const ReportPage = () => {
         setShowLectureReportWindow(false);
         setShowModuleReportWindow(false);
         setShowOverallReportWindow(true);
+        setShowLectureWithDateWindow(false);
       } else if (response.status === 400) {
         toast.error(response.data);
       } else {

@@ -40,7 +40,7 @@ const OverallReportTable = ({ search, studentAttendanceDetails }) => {
                   {details.attendedLectureCount} /{" "}
                   {details.attendedLectureCount + details.missedLectureCount}
                 </td>
-                <td>{details.attendancePercentage.toFixed(2)} %</td>
+                <td>{Number(details.attendancePercentage).toFixed(2)} %</td>
               </tr>
             ))}
         </tbody>
