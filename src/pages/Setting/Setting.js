@@ -6,6 +6,7 @@ import PersonIcon from "../../assets/Images/personIcon/person_icon.png";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/userSlice";
 import Department from "../../utils/Department";
+import WarningPopup from "../../components/warningPopup/WarningPopup";
 const Setting = () => {
   const [adminUpdateSettingPopUpWindow, setAdminUpdateSettingPopUpWindow] =
     useState(false);

@@ -10,6 +10,9 @@ import UserService from "../../api/services/UserService";
 import InputField from "../../components/textfields/InputBox/InputField";
 import InputPassword from "../../components/textfields/InputPassword/InputPassword";
 import toast, { Toaster } from "react-hot-toast";
+import WarningPopup from "../../components/warningPopup/WarningPopup";
+import Logout from "../../api/services/logoutService";
+import { resetSideBarIndex } from "../../redux/features/mainNavigationSlice";
 
 const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
   const dispatch = useDispatch();
@@ -97,6 +100,10 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
     return formIsValid;
   };
 
+  const handleLogoutClick = () => {
+    Logout.handleLogout(dispatch); // Assuming handleLogout is asynchronous
+    dispatch(resetSideBarIndex());
+  };
   const handleUpdateUser = async (event) => {
     event.preventDefault();
     if (handleValidation()) {
@@ -109,9 +116,12 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
         newPassword,
         departmentId.value
       );
-      if (response) {
+      if (response.status === 200) {
         handleCloseUpdateSettingWindow();
         notifySuccess();
+        handleLogoutClick();
+      } else if (response.status === 400) {
+        setErrors(response.data);
       }
     }
   };
@@ -138,6 +148,13 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
     }
   };
 
+  const [showUpdateWarning, setShowUpdateWarning] = useState(false);
+
+  const handleShowUpdateWarning = (e) => {
+    e.preventDefault();
+    setShowUpdateWarning(true);
+  };
+
   return (
     <div className="setting-update-main-container">
       <Toaster />
@@ -152,7 +169,7 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
       </div>
       <div className="setting-field">
         <div className="update-setting-input-form">
-          <form onSubmit={handleUpdateUser}>
+          <form onSubmit={handleShowUpdateWarning}>
             <div className="Setting-input-with-icon">
               <label>First Name</label>
               <InputField
@@ -261,12 +278,22 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
               </div>
             )}
 
-            <button type="submit" className="btn btn-primary w-100">
+            <button type="submit" className="btn btn-success w-100">
               Save
             </button>
           </form>
         </div>
       </div>
+      {showUpdateWarning && (
+        <div className="setting-update-warning-container">
+          <WarningPopup
+            handleOk={handleUpdateUser}
+            titleText={"If You Update, You Need To Login Again"}
+            buttonText={"Update"}
+            handleCloseWarningWindow={() => setShowUpdateWarning(false)}
+          />
+        </div>
+      )}
     </div>
   );
 };
