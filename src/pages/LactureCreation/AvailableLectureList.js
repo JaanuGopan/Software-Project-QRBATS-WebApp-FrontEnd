@@ -6,24 +6,23 @@ const AvailableLectureList = ({
   venue,
   moduleName = "",
 }) => {
+  const dayNames = {
+    Mon: "Monday",
+    Tue: "Tuesday",
+    Wed: "Wednesday",
+    Thu: "Thursday",
+    Fri: "Friday",
+    Sat: "Saturday",
+    Sun: "Sunday",
+  };
+
   return (
     <>
       {availableLectureList.length > 0 ? (
         <div className="available-lecture-list">
           <div className="available-lecture-list-heading">
             <h5>
-              Lectures for{" "}
-              {day
-                ? day === "Tue"
-                  ? "Tuesday"
-                  : day === "Thu"
-                  ? "Thursday"
-                  : day === "Sat"
-                  ? "Saturday"
-                  : day === "Wed"
-                  ? "Wednesday"
-                  : day + "day"
-                : moduleName}{" "}
+              Lectures for {day ? dayNames[day] : moduleName}{" "}
               {venue && `at ${venue}`}
             </h5>
           </div>
@@ -40,9 +39,9 @@ const AvailableLectureList = ({
               </thead>
               <tbody>
                 {availableLectureList.map((lecture, index) => (
-                  <tr>
+                  <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{lecture.lectureDay}</td>
+                    <td>{dayNames[lecture.lectureDay]}</td>
                     <td>{lecture.lectureVenue}</td>
                     <td>{lecture.lectureStartTime}</td>
                     <td>{lecture.lectureEndTime}</td>
@@ -55,18 +54,7 @@ const AvailableLectureList = ({
       ) : (
         <div className="available-lecture-list-empty">
           <h5>
-            No Lecture Available for{" "}
-            {day
-              ? day === "Tue"
-                ? "Tuesday"
-                : day === "Thu"
-                ? "Thursday"
-                : day === "Sat"
-                ? "Saturday"
-                : day === "Wed"
-                ? "Wednesday"
-                : day + "day"
-              : moduleName}{" "}
+            No Lecture Available for {day ? dayNames[day] : moduleName}{" "}
             {venue && `at ${venue}`}
           </h5>
         </div>

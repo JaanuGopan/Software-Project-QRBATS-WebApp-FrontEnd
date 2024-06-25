@@ -3,7 +3,6 @@ import "../AdminDashboard/AdminDashboard.css";
 import "./LectureDashboard.css";
 import LectureTable from "./LectureTable";
 import TotalCount from "../../components/layout/AdminDashboardComponent/TotalCount";
-import Select from "react-select";
 import { FaSchool } from "react-icons/fa6";
 import { IoNewspaperSharp } from "react-icons/io5";
 import NormalButton from "../../components/layout/AdminDashboardComponent/NormalButton";
@@ -130,7 +129,7 @@ const LecturerDashboard = () => {
       <ToastContainer />
       <p className="mainHead">{"Lecturer Dashboard"}</p>
       <div className="mainInform">
-        <TotalCount
+        {/* <TotalCount
           total={"08"}
           countIcon={
             <FaSchool
@@ -147,7 +146,7 @@ const LecturerDashboard = () => {
             />
           }
           countTitle={"Total Modules"}
-        />
+        /> */}
       </div>
       <div className="SearchEvent">
         <select
@@ -175,17 +174,19 @@ const LecturerDashboard = () => {
         />
       </div>
       {selectTable === "Lectures" ? (
-        <div className="AdminEventList">
-          <LecturesTable
-            lecturesList={lectureList}
-            search={searchLecture}
-            onLectureClick={(e) => {
-              setSelectedLecture(e);
-            }}
-            handleLectureUpdate={(lecture) => {
-              handleEditLecture(lecture);
-            }}
-          />
+        <div className="lecture-dashboard-container">
+          <div className="lecture-dashboard-table">
+            <LecturesTable
+              lecturesList={lectureList}
+              search={searchLecture}
+              onLectureClick={(e) => {
+                setSelectedLecture(e);
+              }}
+              handleLectureUpdate={(lecture) => {
+                handleEditLecture(lecture);
+              }}
+            />
+          </div>
 
           <div className="List-Buttons">
             <NormalButton
@@ -201,13 +202,15 @@ const LecturerDashboard = () => {
           </div>
         </div>
       ) : (
-        <div className="AdminEventList">
-          <LectureTable
-            search={searchLecture}
-            handleUpdateLecture={() => setShowUpdateLecturePopup(true)}
-            onLectureClick={handleEventLectureClick}
-            lectureList={eventLectureList} // Pass the eventList prop here
-          />
+        <div className="lecture-dashboard-event-table">
+          <div className="lecture-dashboard-table">
+            <LectureTable
+              search={searchLecture}
+              handleUpdateLecture={() => setShowUpdateLecturePopup(true)}
+              onLectureClick={handleEventLectureClick}
+              lectureList={eventLectureList} // Pass the eventList prop here
+            />
+          </div>
 
           <div className="List-Buttons">
             <NormalButton

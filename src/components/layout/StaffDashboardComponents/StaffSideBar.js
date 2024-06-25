@@ -35,7 +35,7 @@ const StaffSideBar = ({ handleclose }) => {
           titlewithiconicon={<PiStudentBold className="buttonIcon" />}
         />
         <Sidebarbutton
-          title={"Setting"}
+          title={"Settings"}
           titlewithiconicon={<IoSettings className="buttonIcon" />}
         />
         <Sidebarbutton

@@ -102,6 +102,20 @@ class LectureService {
       return error;
     }
   }
+
+  static async getAllLectureWithDateByLectureId(lectureId) {
+    try {
+      const response = await axios.get(
+        ApiConstants.getAllLectureWithDateList(lectureId)
+      );
+
+      return response;
+    } catch (error) {
+      if (error.response.status === 400) {
+        return error.response;
+      }
+    }
+  }
 }
 
 export default LectureService;

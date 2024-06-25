@@ -69,7 +69,7 @@ const AdminDashboard = () => {
     <div className="admin-Dash">
       <p className="mainHead">Admin Dashboard</p>
       <div className="mainInform">
-        <TotalCount
+        {/* <TotalCount
           total={"20"}
           countIcon={
             <FaUsers
@@ -104,7 +104,7 @@ const AdminDashboard = () => {
             />
           }
           countTitle={"Total Modules"}
-        />
+        /> */}
       </div>
       <div className="SearchEvent">
         <p className="mainHead">Upcoming Events</p>

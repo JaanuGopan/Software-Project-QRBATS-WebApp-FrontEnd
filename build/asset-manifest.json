@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.7715fb3d.css",
+    "main.js": "/static/js/main.700fa460.js",
+    "static/js/213.45085862.chunk.js": "/static/js/213.45085862.chunk.js",
+    "static/js/455.d75b5a57.chunk.js": "/static/js/455.d75b5a57.chunk.js",
+    "static/js/453.19d025ea.chunk.js": "/static/js/453.19d025ea.chunk.js",
+    "static/media/Designer.jpeg": "/static/media/Designer.4b61204dc52de4ee44d7.jpeg",
+    "static/media/Signin.jpeg": "/static/media/Signin.4b61204dc52de4ee44d7.jpeg",
+    "static/media/back.jpg": "/static/media/back.9849c3658f4aa043d6c4.jpg",
+    "static/media/Designer_pic4.jpeg": "/static/media/Designer_pic4.db6aa4999b66daecb6d5.jpeg",
+    "static/media/logo_white.png": "/static/media/logo_white.d536b98195168089f758.png",
+    "static/media/Profile.png": "/static/media/Profile.3eb35042e0adc47c0d92.png",
+    "static/media/lecture_Icon.png": "/static/media/lecture_Icon.22b5c1c310938a8d7d12.png",
+    "index.html": "/index.html",
+    "main.7715fb3d.css.map": "/static/css/main.7715fb3d.css.map",
+    "main.700fa460.js.map": "/static/js/main.700fa460.js.map",
+    "213.45085862.chunk.js.map": "/static/js/213.45085862.chunk.js.map",
+    "455.d75b5a57.chunk.js.map": "/static/js/455.d75b5a57.chunk.js.map",
+    "453.19d025ea.chunk.js.map": "/static/js/453.19d025ea.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7715fb3d.css",
+    "static/js/main.700fa460.js"
+  ]
+}

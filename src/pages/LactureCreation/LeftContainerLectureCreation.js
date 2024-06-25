@@ -4,8 +4,6 @@ import ModuleService from "../../api/services/ModuleService";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/userSlice";
 import { Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
-import ButtonComponent from "../../components/buttons/ButtonComponent";
-import InputField from "../../components/textfields/InputBox/InputField";
 import LectureService from "../../api/services/LectureService";
 import { ToastContainer, toast } from "react-toastify";
 const LeftContainerLectureCreation = ({
@@ -86,42 +84,53 @@ const LeftContainerLectureCreation = ({
     handleGetModulesList();
   }, []);
 
+  const handleModuleCodeChange = (e) => {
+    handelModuleChange(e.label);
+    setModuleCode(e);
+    getModuleCode(e.label);
+    setIsToggleButtonDisabled(false);
+    setModuleName({
+      value: e.value,
+      label: e.name,
+      moduleCode: e.label,
+    });
+  };
+
+  const handleModuleNameChange = (e) => {
+    handelModuleChange(e.moduleCode);
+    setModuleCode({
+      value: e.value,
+      label: e.moduleCode,
+      name: e.label,
+    });
+    getModuleCode(e.moduleCode);
+    setIsToggleButtonDisabled(false);
+    setModuleName(e);
+  };
+
   return (
     <div className="left-container-lecture-creation">
-      <ToastContainer />
+      {/* <ToastContainer /> */}
+      <label>Module Name</label>
+      <Select
+        id="selectModule"
+        placeholder={"Select Module Code"}
+        onChange={(e) => {
+          handleModuleNameChange(e);
+        }}
+        options={moduleNameList}
+        value={moduleName}
+      />
       <label>Module Code</label>
       <Select
         id="selectModule"
         placeholder={"Select Module Code"}
         onChange={(e) => {
-          handelModuleChange(e.label);
-          setModuleCode(e);
-          getModuleCode(e.label);
-          setIsToggleButtonDisabled(false);
-          setModuleName(e.name);
+          handleModuleCodeChange(e);
         }}
         options={moduleList}
         value={moduleCode}
       />
-      <label>Module Name</label>
-      {/* <Select
-        id="selectModule"
-        placeholder={"Select Module Code"}
-        onChange={(e) => {
-          handelModuleChange(e.label);
-          setModuleCode((e) => ({
-            value: e.moduleId,
-            label: e.moduleCode,
-            name: e.moduleName,
-          }));
-          getModuleCode(e.label);
-          setIsToggleButtonDisabled(false);
-          setModuleName(e.name);
-        }}
-        options={moduleNameList}
-        value={moduleName}
-      /> */}
-      <InputField type="text" value={moduleName} onChange={() => {}} />
 
       <label>Select Date</label>
       <ToggleButtonGroup

@@ -64,7 +64,10 @@
 
  .userinterface-container {
    display: flex;
+
    border: 1px solid #0063A0;
+   align-items: center;
+   justify-content: center;
  }
   
  .userinterface-container1 {

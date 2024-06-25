@@ -135,7 +135,7 @@
   padding-right: 10px;
   padding: 10px;
   width: 100%;
-  height: 55vh;
+  height: 75vh;
   border-top: 5px solid #0365A1;
   box-shadow: 0.5px 2px 0.5px 0.5px rgba(25, 65, 85, 0.5);
   border-radius: 10px;
@@ -148,6 +148,7 @@
   display: block;*/
   width: 100%;
   height: -webkit-fill-available;
+  height: 100%;
 }
 
 .tableArrangement {
@@ -162,7 +163,7 @@
   max-width: 90%;
   margin: auto;
   overflow-x: auto;
-  height: 45vh;
+  height: 65vh;
   overflow-y: auto;
   border-bottom: 2px solid #0063A0;
 }
