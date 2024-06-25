@@ -2,7 +2,6 @@ import React from "react";
 import Navigator from "../../components/layout/UserInterfaceCom/Navigator";
 import "./UserInterface.css";
 import AvailableDepartment from "../../components/layout/UserInterfaceCom/AvailableDepartment";
-import { Button } from "@mui/material";
 import Calender from "../../components/layout/UserInterfaceCom/Calender";
 import { FaStar, FaMapLocationDot, FaUsers, FaUser } from "react-icons/fa6";
 import { FaFacebook, FaGooglePlus, FaLinkedin } from "react-icons/fa";
@@ -26,9 +25,7 @@ const UserInterface = () => {
         <div className="userinterface-row">
           <AvailableDepartment />
         </div>
-        {/* <div className="userinterface-row1" style={{ minHeight: "450px" }}>
-          <Calender />
-        </div> */}
+        <div className="userinterface-row1">
       </div>
       <div className="userinterface-users">
         <h2 style={{ color: "white", textAlign: "center" }}>USERS</h2>
