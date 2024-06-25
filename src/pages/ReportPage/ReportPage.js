@@ -124,8 +124,11 @@ const ReportPage = () => {
     }
   };
 
+  const [moduleId, setModuleId] = useState(null);
+
   const handleOpenOverallReportWindow = async (moduleId) => {
     setStudentAttendanceDetails([]);
+    setModuleId(moduleId); // new
     await getAllStudentsAttendanceReport(moduleId);
   };
 
@@ -140,6 +143,7 @@ const ReportPage = () => {
         setShowLectureReportWindow(false);
         setShowModuleReportWindow(false);
         setShowOverallReportWindow(true);
+        setShowLectureWithDateWindow(false);
       } else if (response.status === 400) {
         toast.error(response.data);
       } else {
@@ -174,6 +178,31 @@ const ReportPage = () => {
       }
     } catch (error) {
       toast.error("Error In Getting Lecture With Date List.");
+    }
+  };
+
+  const handleOverallReportDownload = async () => {
+    try {
+      const response =
+        await AttendanceService.downloadOverallStudentReportByModuleId(
+          moduleId
+        );
+      if (response.status === 200) {
+        const data = response.data;
+        const blob = new Blob([data], { type: "text/csv" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = `module_${selectedModuleReport.moduleCode}_students_report.csv`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } else if (response.status === 400) {
+        toast.error(response.data);
+      } else {
+        toast.error("Error in downloading the report.");
+      }
+    } catch (error) {
+      toast.error("An error occurred while downloading the report.");
     }
   };
 
@@ -229,7 +258,9 @@ const ReportPage = () => {
               />
               <NormalButton
                 title={"Print"}
-                handleClick={() => {}}
+                handleClick={() => {
+                  handleOverallReportDownload();
+                }}
                 titlewithiconicon={
                   <BiSolidPrinter className="staff-buttonIcon" />
                 }

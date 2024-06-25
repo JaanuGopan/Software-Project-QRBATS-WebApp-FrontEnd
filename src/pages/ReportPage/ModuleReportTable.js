@@ -60,9 +60,10 @@ const ModuleReportTable = ({
                 <td>{module.semester}</td>
                 <td>
                   <button
-                    onClick={() =>
-                      handleOpenOverallReportWindow(module.moduleId)
-                    }
+                    onClick={() => {
+                      onModuleReportClick(module);
+                      handleOpenOverallReportWindow(module.moduleId);
+                    }}
                     className="ViewButton"
                   >
                     <TbReportAnalytics className="EditIcon" />
@@ -71,9 +72,10 @@ const ModuleReportTable = ({
                 </td>
                 <td>
                   <button
-                    onClick={() =>
-                      handleOpenLecturesReportWindow(module.moduleCode)
-                    }
+                    onClick={() => {
+                      onModuleReportClick(module);
+                      handleOpenLecturesReportWindow(module.moduleCode);
+                    }}
                     className="ViewButton"
                   >
                     <GiTeacher className="EditIcon" />
