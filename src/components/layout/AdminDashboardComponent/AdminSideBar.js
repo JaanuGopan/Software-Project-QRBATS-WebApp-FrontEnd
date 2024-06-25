@@ -62,10 +62,10 @@ const AdminSideBar = ({ handleClose, index, setIndex, handleLogout }) => {
           isOpen={index === 3}
         />
         <Sidebarbutton
-          handleSidebarMenu={() => handleMenuClick(4)}
+          handleSidebarMenu={() => handleMenuClick(6)}
           title={"Settings"}
           titlewithiconicon={<IoSettings className="buttonIcon" />}
-          isOpen={index === 4}
+          isOpen={index === 6}
         />
 
         <Sidebarbutton

@@ -25,42 +25,39 @@ const UserInterface = () => {
         <div className="userinterface-row">
           <AvailableDepartment />
         </div>
-        <div className="userinterface-row1"></div>
         <div className="userinterface-users">
           <h2 style={{ color: "white", textAlign: "center" }}>USERS</h2>
           <h5 style={{ color: "#FFFFFF", textAlign: "center" }}>
             The Website Useful For
           </h5>
-          <div
-            style={{
+          <div style={{
               display: "flex",
               color: "yellow",
               flexDirection: "row",
+              flexWrap:"wrap",
               alignItems: "center",
-              justifyContent: "space-between",
-              paddingLeft: "20%",
-              paddingRight: "20%",
+              justifyContent: "space-around",
             }}
           >
-            <div
-              style={{
+            <div style={{
                 display: "flex",
                 flexDirection: "row",
+                flex: "nowrap",
                 alignItems: "center",
               }}
             >
-              <FaUsers />
-              <h2 style={{ marginLeft: "1rem" }}>LECTURE</h2>
+              <FaUsers size={20}/>
+              <h4 style={{paddingLeft: "5px"}}>Lecture</h4>
             </div>
-            <div
-              style={{
+            <div style={{
                 display: "flex",
                 flexDirection: "row",
+                flex: "nowrap",
                 alignItems: "center",
-              }}
-            >
-              <FaUser />
-              <h2 style={{ marginLeft: "1rem" }}>ADMIN</h2>
+              }} >
+              <FaUser size={20}/>
+              <h5 style={{paddingLeft: "5px"}}>Admin</h5>
+
             </div>
           </div>
         </div>
@@ -76,12 +73,12 @@ const UserInterface = () => {
               SKYTICKER
             </h2>
             <p style={{ textAlign: "justify", margin: "0px" }}>
-              Our QR-Code Based Attendance Tracking System for university
-              students leverages GPS location to streamline attendance
-              management. Administrators can effortlessly create and oversee
-              lectures and events, while students mark attendance by scanning a
-              QR code with a mobile app. GPS verification ensures accurate
-              logging, making the process efficient and reliable.
+              Our QR-Code Based Attendance Tracking System for university students
+              leverages GPS location to streamline attendance management.
+              Administrators can effortlessly create and oversee lectures and
+              events, while students mark attendance by scanning a QR code with a
+              mobile app. GPS verification ensures accurate logging, making the
+              process efficient and reliable.
             </p>
           </div>
           <div className="column">
@@ -113,7 +110,8 @@ const UserInterface = () => {
               </a>
             </div>
           </div>
-          <div className="column">
+          <div id="contact-us" className="column">
+
             <h2
               style={{
                 color: "#305599",
