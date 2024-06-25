@@ -123,7 +123,7 @@ function MainNavigationPage() {
             {openMenu === 1 && <StaffDashboard />}
             {openMenu === 2 && <StudentDashboard />}
             {openMenu === 3 && <EventReport />}
-            {openMenu === 4 && <Setting />}
+            {openMenu === 6 && <Setting />}
           </div>
         )}
         {role === "LECTURER" && (
