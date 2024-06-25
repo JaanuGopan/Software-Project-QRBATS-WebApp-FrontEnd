@@ -79,7 +79,7 @@ const LecturerSideBar = ({
         />
         <Sidebarbutton
           handleSidebarMenu={() => handleMenuClick(6)}
-          title={"Setting"}
+          title={"Settings"}
           titlewithiconicon={<IoSettings className="buttonIcon" />}
           isOpen={index === 6}
         />
