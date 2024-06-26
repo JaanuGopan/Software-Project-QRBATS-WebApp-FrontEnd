@@ -31,9 +31,9 @@ const LectureCreation = ({
   const [eventEndTime, setEventEndTime] = useState("");
   const [eventVenue, setEventVenue] = useState("");
   const [showQRCode, setShowQRCode] = useState(false);
-  const [eventRole, setEventRole] = useState("LECTURE");
+  const [eventRole, setEventRole] = useState("EVENT");
   const [eventAssignedUserId, setEventAssignedUserId] = useState(userId);
-  const [title, setTitle] = useState("Lecture");
+  const [title, setTitle] = useState("Event");
   const [moduleNameList, setModuleNameList] = useState([]);
 
   const [venueList, setVenuesList] = useState([
@@ -149,7 +149,7 @@ const LectureCreation = ({
 
   const [qrCodeWindow, setQrCodeWindow] = useState(false);
 
-  const [selectedButton, setSelectedButton] = useState(1);
+  const [selectedButton, setSelectedButton] = useState(2);
 
   const handleSelectedButton = (button) => {
     setSelectedButton(button);
@@ -195,11 +195,11 @@ const LectureCreation = ({
           <img src={eventCreationImage} className="Create-logo" alt="Logo" />
         )}
         <div className="eventCreation-input-field">
-          <DualButtonComponent
+          {/* <DualButtonComponent
             onSelect={handleSelectedButton}
             buttonText1={"Lecture"}
             buttonText2={"Event"}
-          />
+          /> */}
           <form onSubmit={handleSubmit}>
             <div className="input-with-icon">
               <label className="date-label" htmlFor="moduleCode">
