@@ -63,6 +63,37 @@ const RightContainerLectureCreation = ({
     handleGetLocationNameList();
   }, [dayList]);
 
+  const handleGetAvailableLectureForDay = async (moduleCode, day) => {
+    try {
+      const response = await LectureService.getAllLecturesByModuleCode(
+        moduleCode
+      );
+      const dayLectureList = response
+        .filter((lecture) => lecture.lectureId)
+        .find((lecture) => lecture.lectureDay === day);
+
+      if (!dayLectureList) {
+        return;
+      }
+
+      const dayLectureTimesList = [];
+      for (let i = 0; i < dayLectureList.length; i++) {
+        dayLectureTimesList.push({
+          startTime: dayLectureList[i].lectureStartTime,
+          endTime: dayLectureList[i].lectureEndTime,
+          venue: dayLectureList[i].lectureVenue,
+        });
+      }
+
+      setTimes((prevTimes) => ({
+        ...prevTimes,
+        [day]: dayLectureTimesList,
+      }));
+    } catch (error) {
+      console.error("Error fetching available lectures for day:", error);
+    }
+  };
+
   const handleDaySelect = (event, newDay) => {
     if (newDay !== null) {
       setSelectedDay(newDay);
@@ -127,15 +158,6 @@ const RightContainerLectureCreation = ({
     }
     return true;
   };
-
-  /* const handleGetLecturesListByModuleCode = async () => {
-    const response = await LectureService.getAllLecturesByModuleCode(
-      moduleCode
-    );
-    if (response.status === 200) {
-      return response.data;
-    }
-  }; */
 
   const handleCreateLecture = async () => {
     const formattedTimes = dayList.reduce((acc, day) => {

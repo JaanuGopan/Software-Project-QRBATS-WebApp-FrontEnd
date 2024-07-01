@@ -10,7 +10,11 @@ const LeftContainerLectureCreation = ({
   getModuleCode,
   getDayList,
   showRightSideWindow,
+  hideRightSideWindow,
   handleUpdateAvailableLectures,
+  onModuleChange,
+  onDayChange,
+  handleGetAvailableLecturesForModule,
 }) => {
   const user = useSelector(selectUser);
   const { userId, departmentId } = user || {};
@@ -28,19 +32,22 @@ const LeftContainerLectureCreation = ({
         label: module.moduleName,
         moduleCode: module.moduleCode,
       }));
-      setModuleList(moduleList);
+      setModuleCodeList(moduleList);
       setModuleNameList(moduleNameList);
+      setModuleList(response);
     }
   };
 
-  const [moduleCode, setModuleCode] = useState(null);
+  const [selectedModuleCode, setSelectedModuleCode] = useState(null);
   const [moduleList, setModuleList] = useState([]);
+  const [moduleCodeList, setModuleCodeList] = useState([]);
   const [moduleNameList, setModuleNameList] = useState([]);
   const [day, setDay] = useState([]);
   const [isToggleButtonDisabled, setIsToggleButtonDisabled] = useState(true);
-  const [moduleName, setModuleName] = useState("");
+  const [selectedModuleName, setSelectedModuleName] = useState("");
+  const [selectedModule, setSelectedModule] = useState([]);
 
-  const handleChange = (e) => {
+  const handleDayChange = (e) => {
     const newDay = e;
     setDay((prevDay) => {
       const updatedDay = prevDay.includes(newDay)
@@ -52,10 +59,10 @@ const LeftContainerLectureCreation = ({
   };
 
   const handleShowRightSideWindow = () => {
-    if (moduleCode === null) {
+    if (selectedModuleCode === null) {
       toast.error("Please Select Module.");
     } else if (day.length === 0) {
-      toast.error("Please Select Dates.");
+      toast.error("Please Select Days.");
       return;
     } else {
       handleUpdateAvailableLectures("", day[0]);
@@ -63,7 +70,7 @@ const LeftContainerLectureCreation = ({
     }
   };
 
-  const handelModuleChange = async (e) => {
+  /* const handelModuleChange = async (e) => {
     const response = await LectureService.getAllLecturesByModuleCode(e);
     if (response) {
       setDay(() => {
@@ -78,34 +85,31 @@ const LeftContainerLectureCreation = ({
         return list;
       });
     }
-  };
+  }; */
 
   useEffect(() => {
     handleGetModulesList();
   }, []);
 
-  const handleModuleCodeChange = (e) => {
-    handelModuleChange(e.label);
-    setModuleCode(e);
-    getModuleCode(e.label);
-    setIsToggleButtonDisabled(false);
-    setModuleName({
-      value: e.value,
-      label: e.name,
-      moduleCode: e.label,
+  const handleModuleChange = (module) => {
+    setSelectedModule(module);
+    onModuleChange(module);
+    setSelectedModuleName({
+      value: module.moduleId,
+      label: module.moduleName,
+      moduleCode: module.moduleCode,
     });
-  };
-
-  const handleModuleNameChange = (e) => {
-    handelModuleChange(e.moduleCode);
-    setModuleCode({
-      value: e.value,
-      label: e.moduleCode,
-      name: e.label,
+    setSelectedModuleCode({
+      value: module.moduleId,
+      label: module.moduleCode,
+      name: module.moduleName,
     });
-    getModuleCode(e.moduleCode);
     setIsToggleButtonDisabled(false);
-    setModuleName(e);
+    getModuleCode(module.moduleCode);
+    handleGetAvailableLecturesForModule(module.moduleCode);
+    setDay([]);
+    getDayList([]);
+    hideRightSideWindow();
   };
 
   return (
@@ -116,20 +120,26 @@ const LeftContainerLectureCreation = ({
         id="selectModule"
         placeholder={"Select Module Code"}
         onChange={(e) => {
-          handleModuleNameChange(e);
+          const selectedModule = moduleList.find(
+            (module) => module.moduleId === e.value
+          );
+          handleModuleChange(selectedModule);
         }}
         options={moduleNameList}
-        value={moduleName}
+        value={selectedModuleName}
       />
       <label>Module Code</label>
       <Select
         id="selectModule"
         placeholder={"Select Module Code"}
         onChange={(e) => {
-          handleModuleCodeChange(e);
+          const selectedModule = moduleList.find(
+            (module) => module.moduleId === e.value
+          );
+          handleModuleChange(selectedModule);
         }}
-        options={moduleList}
-        value={moduleCode}
+        options={moduleCodeList}
+        value={selectedModuleCode}
       />
 
       <label>Select Date</label>
@@ -137,7 +147,7 @@ const LeftContainerLectureCreation = ({
         color="primary"
         value={day}
         onChange={(e) => {
-          handleChange(e.target.value);
+          handleDayChange(e.target.value);
         }}
         aria-label="Platform"
         id="toggle-button"

@@ -190,6 +190,11 @@ const LectureCreation = ({
           </div>
         </div>
       )}
+      {hideCloseButton && (
+        <h3 className="event-create-title-without-close">
+          Create {` ${title}`}
+        </h3>
+      )}
       <div className="eventCreation-field">
         {showImage && (
           <img src={eventCreationImage} className="Create-logo" alt="Logo" />

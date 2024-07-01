@@ -1,11 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 
-const AvailableLectureList = ({
-  availableLectureList,
-  day,
-  venue,
-  moduleName = "",
-}) => {
+const AvailableLectureList = ({ availableLectureList, day, venue }) => {
   const dayNames = {
     Mon: "Monday",
     Tue: "Tuesday",
@@ -18,16 +13,16 @@ const AvailableLectureList = ({
 
   return (
     <>
-      {availableLectureList.length > 0 ? (
+      {availableLectureList.length > 0 && day ? (
         <div className="available-lecture-list">
           <div className="available-lecture-list-heading">
             <h5>
-              Lectures for {day ? dayNames[day] : moduleName}{" "}
-              {venue && `at ${venue}`}
+              Available Lectures for {dayNames[day]} {venue && `at ${venue}`}{" "}
+              {" For All Modules"}
             </h5>
           </div>
           <div className="available-lecture-list-table">
-            <table className="available-lecture-list-table-arrangement">
+            <table className="available-lecture-list-table-arrangement-for-creation">
               <thead>
                 <tr>
                   <th>No</th>
@@ -54,8 +49,7 @@ const AvailableLectureList = ({
       ) : (
         <div className="available-lecture-list-empty">
           <h5>
-            No Lecture Available for {day ? dayNames[day] : moduleName}{" "}
-            {venue && `at ${venue}`}
+            No Lecture Available for {dayNames[day]} {venue && `at ${venue}`}
           </h5>
         </div>
       )}
