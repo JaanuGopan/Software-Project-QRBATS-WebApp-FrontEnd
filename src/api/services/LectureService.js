@@ -13,6 +13,7 @@ class LectureService {
       return response;
     } catch (error) {
       console.error("Fail to create lecture.", error);
+      return error.response;
     }
   };
 
