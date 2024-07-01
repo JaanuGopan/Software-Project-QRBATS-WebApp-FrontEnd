@@ -239,6 +239,14 @@ a:hover {
     margin-left: auto;
 }
 
+.event-create-title-without-close{
+    display: flex;
+        flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%
+}
+
 .event-create-close-button {
     align-self: center;
     justify-self: flex-end;

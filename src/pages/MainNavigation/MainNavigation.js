@@ -23,7 +23,6 @@ import { resetSideBarIndex } from "../../redux/features/mainNavigationSlice";
 import Logout from "../../api/services/logoutService";
 import ReportPage from "../ReportPage/ReportPage";
 import LectureCreationPage from "../LactureCreation/LectureCreationPage";
-import { ToastContainer } from "react-toastify";
 
 function MainNavigationPage() {
   const navigate = useNavigate();
@@ -84,7 +83,6 @@ function MainNavigationPage() {
 
   return (
     <div className="staff-Main">
-      <ToastContainer />
       <div
         className="menuButton"
         onClick={handleShow}

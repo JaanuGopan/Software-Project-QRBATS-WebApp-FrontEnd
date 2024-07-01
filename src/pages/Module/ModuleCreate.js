@@ -8,12 +8,13 @@ import InputList from "../../components/textfields/InputList/InputList";
 import ModuleService from "../../api/services/ModuleService";
 import { selectUser } from "../../redux/features/userSlice";
 import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import Select from "react-select";
 
 const ModuleCreate = ({
   handleCloseModuleCreateWindow,
   handleReloadModuleList,
+  handleModuleCreate,
 }) => {
   const [moduleName, setModuleName] = useState("");
   const [moduleCode, setModuleCode] = useState("");
@@ -28,29 +29,15 @@ const ModuleCreate = ({
 
   const handleCreateModule = async (e) => {
     e.preventDefault();
-    try {
-      const response = await ModuleService.createModule(
-        moduleCode,
-        moduleName,
-        moduleEnrolmentKey,
-        semester,
-        departmentList.indexOf(departmentId) + 1,
-        userId
-      );
-      if (response.status === 200) {
-        toast.success("Module Created Successfully ", response.data.moduleName);
-        console.log(response);
-        handleClearData();
-        handleReloadModuleList();
-      } else if (response.status === 400) {
-        toast.error(response.data);
-      } else {
-        toast.error("Something went wrong. Please try again later.");
-      }
-    } catch (error) {
-      console.error("Fail to create modules.", error);
-      toast.error("Something went wrong. Please try again later.");
-    }
+    const moduleData = {
+      moduleCode: moduleCode,
+      moduleName: moduleName,
+      semester: semester,
+      moduleEnrolmentKey: moduleEnrolmentKey,
+      departmentId: departmentList.indexOf(departmentId) + 1,
+      userId,
+    };
+    handleModuleCreate(moduleData);
   };
 
   const handleClearData = () => {
@@ -63,6 +50,7 @@ const ModuleCreate = ({
 
   return (
     <div className="module-create-main-container">
+      <ToastContainer />
       <div className="module-create-title-close-button">
         <h3 className="module-create-title">Create Module</h3>
         <div

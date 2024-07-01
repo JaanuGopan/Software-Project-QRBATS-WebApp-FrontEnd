@@ -9,6 +9,8 @@ import LectureQRCodeWindow from "./LectureQRCodeWindow";
 import AvailableLectureList from "./AvailableLectureList";
 import LectureService from "../../api/services/LectureService";
 import { ToastContainer, toast } from "react-toastify";
+import CircularProgress from "@mui/material/CircularProgress";
+import AvailableLectureListForModule from "./AvailableLectureListForModule";
 const LectureCreationPage = ({
   handleCloseCreateLectureWindow,
   handleReloadLectureList = () => {},
@@ -20,10 +22,16 @@ const LectureCreationPage = ({
   const [day, setDay] = useState("");
   const [venue, setVenue] = useState("");
   const [moduleCode, setModuleCode] = useState("");
+  const [module, setModule] = useState("");
   const [showRightSideWindow, setShowRightSideWindow] = useState(false);
   const [showQRCodeWindow, setShowQRCodeWindow] = useState(false);
   const [availableLectureList, setAvailableLectureList] = useState([]);
+  const [availableModuleLectureList, setAvailableModuleLectureList] = useState(
+    []
+  );
   const [showAvailableLecture, setShowAvailableLecture] = useState(false);
+  const [showAvailableModuleLecture, setShowAvailableModuleLecture] =
+    useState(false);
   const [moduleLectureList, setModuleLectureList] = useState([]);
   const [timesList, setTimesList] = useState([]);
   const [createdLectureDetails, setCreatedLectureDetails] = useState([]);
@@ -35,11 +43,14 @@ const LectureCreationPage = ({
         selectedVenue
       );
       if (response.status === 200) {
+        setDay(selectedDay);
+        setVenue(selectedVenue);
         setAvailableLectureList(response.data);
       }
     } catch (error) {
     } finally {
       setShowAvailableLecture(true);
+      setShowAvailableModuleLecture(false);
     }
   };
 
@@ -52,8 +63,9 @@ const LectureCreationPage = ({
         setModuleLectureList(response);
         setTimesList(transformLecturesByDay(response));
         const lecturesList = response.filter((lecture) => lecture.lectureId);
-        setAvailableLectureList(response);
-        setShowAvailableLecture(true);
+        setAvailableModuleLectureList(lecturesList);
+        setShowAvailableLecture(false);
+        setShowAvailableModuleLecture(true);
       }
     } catch (error) {
       // Handle error
@@ -84,43 +96,82 @@ const LectureCreationPage = ({
     setShowQRCodeWindow(true);
   };
 
+  const handleDayListChange = (dayList) => {
+    if (dayList.length > 0) {
+      setDayList(dayList);
+      handleGetAvailableLectureList("", dayList[dayList.length - 1]);
+    } else {
+      setDayList([]);
+      setAvailableLectureList([]);
+      setShowAvailableLecture(false);
+    }
+  };
+
   return (
     <div className="lecture-creation-main-container">
-      {/*  <ToastContainer /> */}
+      {hideCloseButton && <ToastContainer />}
       {!hideCloseButton && (
-        <div
-          className="lecture-creation-icon-close-button"
-          onClick={handleCloseCreateLectureWindow}
-        >
-          <IoMdCloseCircleOutline size={25} />
+        <div className="lecture-create-title-close-button">
+          <h3 className="lecture-create-title">Create Lecture Time Table</h3>
+          <div
+            className="lecture-create-close-button"
+            onClick={handleCloseCreateLectureWindow}
+          >
+            <IoMdCloseCircleOutline id="close-icon" />
+          </div>
         </div>
       )}
-      <div className="lecture-creation-title-icon-close-button">
-        <h3>Lecture Creation</h3>
-      </div>
+      {hideCloseButton && (
+        <div className="lecture-creation-title-icon-close-button">
+          <h3>Create Lecture Time Table</h3>
+        </div>
+      )}
       <div className="lecture-creation-container">
         <div className="lecture-creation-container-left">
           <LeftContainerLectureCreation
-            getDayList={(e) => setDayList(e)}
+            getDayList={(dayList) => handleDayListChange(dayList)}
             getModuleCode={(e) => {
               setModuleCode(e);
-              handleGetLecturesListByModuleCode(e);
             }}
             showRightSideWindow={() => setShowRightSideWindow(true)}
+            hideRightSideWindow={() => setShowRightSideWindow(false)}
             handleUpdateAvailableLectures={(venue, day) => {
               setDay(day);
               setVenue(venue);
               handleGetAvailableLectureList(venue, day);
             }}
+            onModuleChange={(e) => setModule(e)}
+            handleGetAvailableLecturesForModule={(moduleCode) => {
+              handleGetLecturesListByModuleCode(moduleCode);
+            }}
           />
-          {showAvailableLecture && (
+          {showAvailableLecture && !showAvailableModuleLecture && (
             <div className="available-lectures-container">
-              <AvailableLectureList
-                availableLectureList={availableLectureList}
-                day={day}
-                venue={venue}
-                moduleName={moduleCode}
-              />
+              {availableLectureList ? (
+                <AvailableLectureList
+                  availableLectureList={availableLectureList}
+                  day={day}
+                  venue={venue}
+                />
+              ) : (
+                <div className="available-lectures-container-loading">
+                  <CircularProgress />
+                </div>
+              )}
+            </div>
+          )}
+          {showAvailableModuleLecture && !showAvailableLecture && (
+            <div className="available-lectures-container">
+              {availableModuleLectureList ? (
+                <AvailableLectureListForModule
+                  availableLectureListForModule={availableModuleLectureList}
+                  module={module}
+                />
+              ) : (
+                <div className="available-lectures-container-loading">
+                  <CircularProgress />
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -151,6 +202,7 @@ const LectureCreationPage = ({
                 setShowQRCodeWindow(false);
               }}
               moduleCode={moduleCode}
+              module={module}
             />
           </div>
         )}

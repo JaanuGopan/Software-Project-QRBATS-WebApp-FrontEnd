@@ -81,6 +81,7 @@ const EventCreateDashboard = () => {
         userId
       );
       setEventId(response.eventId);
+      setEventName(response.eventName);
       const responseEventName = response.eventName;
       if (response) {
         setShowQRCode(true);
@@ -88,7 +89,6 @@ const EventCreateDashboard = () => {
       notifySuccess();
     } catch (error) {
       console.error("Event failed", error);
-    } finally {
     }
   };
 
