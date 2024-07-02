@@ -96,6 +96,7 @@
   color: #0D295E;
   font-weight: bold;
   margin-bottom: 0px;
+  margin-left: 10px;
 }
 
 .mainInform {
@@ -375,6 +376,29 @@
   background-color: white;
   max-width: 60vw;
 }
+.lecturer-dashboard-toggle-buttons-search{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.lecturer-dashboard-toggle{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.lecturer-dashboard-toggle-label{
+  font-weight: bold;
+  background-color: white;
+}
+
+.size-box{
+  display: flex;
+    flex-direction: row;
+  width: 10px;
+}
 
 .SearchEvent{
   display: flex;
@@ -383,6 +407,9 @@
   align-items: center;
   justify-content: space-between;
   padding-right: 10px;
+  width: 90%;
+  align-self: center;
+  justify-self: center;
 }
 
 .selected-row {
