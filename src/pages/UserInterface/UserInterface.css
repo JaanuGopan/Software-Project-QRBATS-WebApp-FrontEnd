@@ -74,7 +74,6 @@
 
  .userinterface-container {
    display: flex;
-   border: 1px solid #0063A0;
    align-items: center;
    justify-content: center;
  }
@@ -249,7 +248,10 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    width: 60%;
+    height: 100%;
   }
+
 
   .first-container-image{
     height: 40%;
@@ -257,3 +259,12 @@
     object-fit: contain;
     border-radius: 30px;
   }
+
+    .HomePageFirstContainer-image-slide {
+      display: flex;
+      flex-direction: row;
+      width: 90%;
+      height: 90%;
+      align-items: center;
+      justify-content: center;
+    }
