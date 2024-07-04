@@ -78,7 +78,7 @@ const LoginForm = () => {
           <a href="#" className="forgot-password" onClick={() => navigate("")}>
             Forgot Password?
           </a>
-          <button type="submit" className="btn btn-primary w-100">
+          <button id="LoginID" type="submit" className="btn btn-primary w-100">
             Login
           </button>
         </div>
