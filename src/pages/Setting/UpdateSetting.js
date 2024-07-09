@@ -123,6 +123,8 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
       } else if (response.status === 400) {
         setErrors(response.data);
       }
+    } else {
+      setShowUpdateWarning(false);
     }
   };
 
@@ -278,9 +280,11 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
               </div>
             )}
 
-            <button type="submit" className="btn btn-success w-100">
-              Save
-            </button>
+            <div className="settings-update-button">
+              <button type="submit" className="btn btn-warning w-100 mt-3">
+                Save
+              </button>
+            </div>
           </form>
         </div>
       </div>
@@ -288,7 +292,7 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
         <div className="setting-update-warning-container">
           <WarningPopup
             handleOk={handleUpdateUser}
-            titleText={"If You Update, You Need To Login Again"}
+            titleText={"If You Want To Update, You Need To Login Again"}
             buttonText={"Update"}
             handleCloseWarningWindow={() => setShowUpdateWarning(false)}
           />
