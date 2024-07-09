@@ -71,9 +71,34 @@ const ModulePage = () => {
     setShowDeleteModuleWindow(true);
   };
 
+  const handleModuleCreate = async (moduleData) => {
+    try {
+      const response = await ModuleService.createModule(
+        moduleData.moduleCode,
+        moduleData.moduleName,
+        moduleData.moduleEnrolmentKey,
+        moduleData.semester,
+        moduleData.departmentId,
+        moduleData.userId
+      );
+      if (response.status === 200) {
+        toast.success("Module Created Successfully ", response.data.moduleName);
+        console.log(response);
+        handleReloadModuleList();
+        setShowModuleCreateWindow(false);
+      } else if (response.status === 400) {
+        toast.error(response.data);
+      } else {
+        toast.error("Something went wrong. Please try again later.");
+      }
+    } catch (error) {
+      console.error("Fail to create modules.", error);
+      toast.error("Something went wrong. Please try again later.");
+    }
+  };
+
   return (
     <div>
-      <ToastContainer />
       <div className="module-Dash">
         <div className="module-SearchEvent">
           <p className="module-mainHead">Modules</p>
@@ -145,6 +170,9 @@ const ModulePage = () => {
                 setShowModuleCreateWindow(false);
               }}
               handleReloadModuleList={handleReloadModuleList}
+              handleModuleCreate={(moduleData) =>
+                handleModuleCreate(moduleData)
+              }
             />
           </div>
         )}

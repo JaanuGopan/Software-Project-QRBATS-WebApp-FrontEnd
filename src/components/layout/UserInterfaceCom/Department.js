@@ -11,14 +11,14 @@ const Department = ({ department }) => {
           justifyContent: "center",
           cursor: "pointer",
         }}
-        className="cursor-pointer rounded-lg shadow-lg"
+        className="cursor-pointer rounded-lg"
       >
         <div style={{ alignItems: "center" }}>
           <img
             style={{
               height: "15rem",
               width: "15rem",
-              border: "3px solid #000000",
+              border: "3px solid #0063A0",
               borderRadius: "20px 20px 0px 0px",
               objectFit: "fill",
             }}
@@ -30,9 +30,9 @@ const Department = ({ department }) => {
           style={{
             height: "6rem",
             width: "15rem",
-            background: "#0063A0",
+            background: "#0077C0",
             marginTop: "-5vh",
-            border: "3px solid #000000",
+            border: "3px solid #0063A0",
             borderRadius: "0px 0px 20px 20px",
           }}
           className="p-3"

@@ -53,7 +53,6 @@ const CreateStudentWindow = ({
 
   return (
     <div className="student-signup-main-container">
-      <ToastContainer />
       <div className="student-create-title-close-button">
         <h3 className="student-create-title">Create Student</h3>
         <div

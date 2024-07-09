@@ -74,7 +74,6 @@
 
  .userinterface-container {
    display: flex;
-   border: 1px solid #0063A0;
    align-items: center;
    justify-content: center;
  }
@@ -198,7 +197,7 @@
   }
 
   a[target="_blank"] {
-    color: blue; /* Set your desired text color */
+    color: #0077C0; /* Set your desired text color */
     text-decoration: none;
   }
   
@@ -214,3 +213,58 @@
   .signinbutton:hover{
     background-color: transparent;
   }
+
+
+  .home-page-first-container{
+    height: 60vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 26px;
+    background-color: white;
+  }
+
+  .home-page-first-container-content-container{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+
+  }
+
+  .home-page-first-container-content{
+    font-size: large;
+    font-weight: bold;
+    text-align: justify;
+  }
+
+  .home-page-first-container-content-description{
+    text-align: justify;
+  }
+
+  .home-page-first-container-image{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    height: 100%;
+  }
+
+
+  .first-container-image{
+    height: 40%;
+    width: 40%;
+    object-fit: contain;
+    border-radius: 30px;
+  }
+
+    .HomePageFirstContainer-image-slide {
+      display: flex;
+      flex-direction: row;
+      width: 90%;
+      height: 90%;
+      align-items: center;
+      justify-content: center;
+    }

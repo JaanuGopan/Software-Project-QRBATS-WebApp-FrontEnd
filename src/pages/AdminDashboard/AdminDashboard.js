@@ -134,6 +134,7 @@ const AdminDashboard = () => {
             handleClick={() => setEventCreatePopUpWindow(true)}
             title={"Create"}
             titlewithiconicon={<MdCreateNewFolder className="buttonIcon" />}
+            id={"Admincreate"}
           />
           <NormalButton
             title={"Delete"}
@@ -148,7 +149,7 @@ const AdminDashboard = () => {
           className="Admin-Create-Event-Dashboard"
         >
           <AdminEventCreation
-            handlecloseCreateEventWindow={() =>
+            handleCloseCreateEventWindow={() =>
               setEventCreatePopUpWindow(false)
             }
             reloadEventList={handleReloadEventList}
@@ -163,7 +164,7 @@ const AdminDashboard = () => {
           className="Admin-Create-Event-Dashboard"
         >
           <AdminUpdateEvent
-            handlecloseCreateEventWindow={() =>
+            handleCloseEventUpdateWindow={() =>
               setEventUpdatePopUpWindow(false)
             }
             selectedEvent={selectedEvent}

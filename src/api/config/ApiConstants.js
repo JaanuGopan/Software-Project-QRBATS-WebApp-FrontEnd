@@ -6,7 +6,7 @@ class ApiConstants {
     return "13.51.170.30";
   }
   static get baseUrl() {
-    return "http://" + ApiConstants.baseIpUrl + ":8080/api/v1"; // "http://localhost:8080";
+    return "http://" + ApiConstants.baseIpUrl + ":8082/api/v1"; // "http://localhost:8080";
   }
   static loginUrl(userName, password) {
     return (
@@ -25,6 +25,9 @@ class ApiConstants {
   }
   static get createEventUrl() {
     return ApiConstants.baseUrl + "/event/create"; //http://localhost:8080/api/v1/event/create
+  }
+  static get updateEventUrl() {
+    return ApiConstants.baseUrl + "/event/update"; //http://localhost:8080/api/v1/event/update
   }
   static get getAllEventUrl() {
     return ApiConstants.baseUrl + "/event/getallevents"; //http://localhost:8080/api/v1/event/getallevents

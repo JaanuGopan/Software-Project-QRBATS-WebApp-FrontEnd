@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "../AdminDashboard/AdminDashboard.css";
 import "./LectureDashboard.css";
-import LectureTable from "./LectureTable";
-import TotalCount from "../../components/layout/AdminDashboardComponent/TotalCount";
-import { FaSchool } from "react-icons/fa6";
-import { IoNewspaperSharp } from "react-icons/io5";
 import NormalButton from "../../components/layout/AdminDashboardComponent/NormalButton";
 import { MdCreateNewFolder } from "react-icons/md";
 import { RiDeleteBin5Fill } from "react-icons/ri";
-import LectureCreation from "./LectureCreation";
+import EventLectureCreation from "./EventLectureCreation";
 import EventService from "../../api/services/EventService";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/userSlice";
@@ -20,7 +16,8 @@ import LecturesEdit from "../Lectures/LecturesEdit";
 import LectureCreationPage from "../LactureCreation/LectureCreationPage";
 import { ToastContainer, toast } from "react-toastify";
 import WarningPopup from "../../components/warningPopup/WarningPopup";
-
+import { Table, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import EventLectureTable from "./EventLectureTable";
 const LecturerDashboard = () => {
   const [showCreateLecturePopup, setShowCreateLecturePopup] = useState(false);
   const [showUpdateLecturePopup, setShowUpdateLecturePopup] = useState(false);
@@ -121,57 +118,45 @@ const LecturerDashboard = () => {
   };
 
   const handleChange = (e) => {
-    setSelectTable(e.target.value);
+    setSelectTable(e);
   };
 
   return (
     <div className="admin-Dash">
       <ToastContainer />
       <p className="mainHead">{"Lecturer Dashboard"}</p>
-      <div className="mainInform">
-        {/* <TotalCount
-          total={"08"}
-          countIcon={
-            <FaSchool
-              style={{ color: "white", padding: "2%", fontSize: "250%" }}
-            />
-          }
-          countTitle={"Total Departments"}
-        />
-        <TotalCount
-          total={"350"}
-          countIcon={
-            <IoNewspaperSharp
-              style={{ color: "white", padding: "2%", fontSize: "250%" }}
-            />
-          }
-          countTitle={"Total Modules"}
-        /> */}
-      </div>
-      <div className="SearchEvent">
-        <select
-          style={{ border: "0px", cursor: "pointer" }}
-          value={selectTable}
-          onChange={(e) => {
-            handleChange(e);
-          }}
-          className="mainHead"
-        >
-          <option value="Lectures">Lectures List</option>
-          <option value="Events">Events List</option>
-        </select>
-        <input
-          type="text"
-          placeholder="Search..."
-          style={{
-            width: "150px",
-            padding: "3px 40px",
-            border: "0.5px solid black",
-            borderRadius: "5px",
-            textAlign: "center",
-          }}
-          onChange={(e) => setSearchLecture(e.target.value)}
-        />
+
+      <div className="lecturer-dashboard-toggle-buttons-search">
+        <div className="SearchEvent">
+          <div className="lecturer-dashboard-toggle">
+            <label className="lecturer-dashboard-toggle-label">
+              Select Table :{" "}
+            </label>
+            <div className="size-box"></div>
+            <ToggleButtonGroup
+              color="primary"
+              value={selectTable}
+              exclusive
+              onChange={(e) => handleChange(e.target.value)}
+              aria-label="Platform"
+            >
+              <ToggleButton value="Lectures">Lectures</ToggleButton>
+              <ToggleButton value="Events">Events</ToggleButton>
+            </ToggleButtonGroup>
+          </div>
+          <input
+            type="text"
+            placeholder="Search..."
+            style={{
+              width: "150px",
+              padding: "3px 40px",
+              border: "0.5px solid black",
+              borderRadius: "5px",
+              textAlign: "center",
+            }}
+            onChange={(e) => setSearchLecture(e.target.value)}
+          />
+        </div>
       </div>
       {selectTable === "Lectures" ? (
         <div className="lecture-dashboard-container">
@@ -202,16 +187,15 @@ const LecturerDashboard = () => {
           </div>
         </div>
       ) : (
-        <div className="lecture-dashboard-event-table">
+        <div className="lecture-dashboard-container">
           <div className="lecture-dashboard-table">
-            <LectureTable
+            <EventLectureTable
               search={searchLecture}
               handleUpdateLecture={() => setShowUpdateLecturePopup(true)}
               onLectureClick={handleEventLectureClick}
               lectureList={eventLectureList} // Pass the eventList prop here
             />
           </div>
-
           <div className="List-Buttons">
             <NormalButton
               handleClick={() => setShowCreateLecturePopup(true)}
@@ -227,12 +211,9 @@ const LecturerDashboard = () => {
         </div>
       )}
       {showCreateLecturePopup && (
-        <div
-          handleClick={() => setShowCreateLecturePopup(false)}
-          className="Create-Lecture-Window"
-        >
+        <div className="Create-Lecture-Window">
           {selectTable === "Events" && (
-            <LectureCreation
+            <EventLectureCreation
               handleCloseCreateLectureWindow={() =>
                 setShowCreateLecturePopup(false)
               }
@@ -258,7 +239,7 @@ const LecturerDashboard = () => {
           className="Admin-Create-Event-Dashboard"
         >
           <AdminUpdateEvent
-            handlecloseCreateEventWindow={() =>
+            handleCloseEventUpdateWindow={() =>
               setShowUpdateLecturePopup(false)
             }
             selectedEvent={selectedEventLecture}

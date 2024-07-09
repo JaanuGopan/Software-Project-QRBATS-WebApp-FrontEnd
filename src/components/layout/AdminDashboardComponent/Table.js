@@ -24,7 +24,6 @@ const Table = ({ search, handleUpdateEvent, onEventClick, eventList }) => {
             <th>No</th>
             <th className="expand">Name</th>
             <th>Start Date</th>
-            <th>End Date</th>
             <th>Venue</th>
             <th>Start Time</th>
             <th>End Time</th>
@@ -49,7 +48,6 @@ const Table = ({ search, handleUpdateEvent, onEventClick, eventList }) => {
                 <td>{index + 1}</td>
                 <td>{event.eventName}</td>
                 <td>{event.eventDate}</td>
-                <td>{event.eventValidDate}</td>
                 <td>{event.eventVenue}</td>
                 <td>{event.eventTime}</td>
                 <td>{event.eventEndTime}</td>

@@ -6,6 +6,7 @@ const LectureQRCodeWindow = ({
   createdLectureDetails,
   moduleCode,
   handleCloseQrCodeWindow,
+  module,
 }) => {
   const [qrCodeWindow, setQrCodeWindow] = useState(false);
   const downloadQRCode = () => {
@@ -49,6 +50,12 @@ const LectureQRCodeWindow = ({
       </div>
       <div className="lecture-qrCode-lecture-details-container">
         <div className="lecture-qrCode-container">
+          <p>
+            {module.moduleName}
+            {" ("}
+            {module.moduleCode}
+            {")"}
+          </p>
           <div className="lecture-qrCode">
             <QRCode
               name="QRCode"
@@ -68,16 +75,32 @@ const LectureQRCodeWindow = ({
           </div>
         </div>
         <div className="lecture-qrCode-lectures-details">
-          <h5>Created Lecture Details</h5>
+          <h5>Created Lectures Details</h5>
           {createdLectureDetails.map((lecture, index) => (
-            <div>
+            <div className="lecture-qrCode-lectures-details-main-container">
               <div className="lecture-qrCode-lectures-details-content">
-                <label>Lecture Name :</label>
+                <label className="lecture-qrCode-lectures-details-heder-label">
+                  Lecture Name :
+                </label>
                 <label key={index}>{lecture.lectureName}</label>
               </div>
               <div className="lecture-qrCode-lectures-details-content">
-                <label>Lecture Day :</label>
+                <label className="lecture-qrCode-lectures-details-heder-label">
+                  Lecture Day :
+                </label>
                 <label key={index}>{dayNames[lecture.lectureDay]}</label>
+              </div>
+              <div className="lecture-qrCode-lectures-details-content">
+                <label className="lecture-qrCode-lectures-details-heder-label">
+                  Lecture Time :
+                </label>
+                <label key={index}>{lecture.lectureStartTime}</label>
+              </div>
+              <div className="lecture-qrCode-lectures-details-content">
+                <label className="lecture-qrCode-lectures-details-heder-label">
+                  Lecture End Time :
+                </label>
+                <label key={index}>{lecture.lectureEndTime}</label>
               </div>
             </div>
           ))}

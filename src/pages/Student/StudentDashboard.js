@@ -41,6 +41,8 @@ const StudentDashboard = () => {
     );
     if (response) {
       handleReloadStudentList();
+      setShowDeletePopUpWindow(false);
+      toast.success("Successfully Deleted.");
     }
   };
 

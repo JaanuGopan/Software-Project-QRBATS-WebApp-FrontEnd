@@ -15,7 +15,6 @@ class EventService {
   static async saveEvent(
     eventName,
     eventDate,
-    eventValidDate,
     eventTime,
     eventEndTime,
     eventVenue,
@@ -27,7 +26,6 @@ class EventService {
       const response = await axios.post(ApiConstants.createEventUrl, {
         eventName: eventName,
         eventDate: eventDate,
-        eventValidDate: eventValidDate,
         eventTime: eventTime,
         eventEndTime: eventEndTime,
         eventVenue: eventVenue,
@@ -35,9 +33,60 @@ class EventService {
         eventModuleName: moduleName,
         eventAssignedUserId: userId,
       });
-      return response.data;
+      if (response.status === 200) {
+        return response;
+      }
     } catch (error) {
       console.error("Event creation failed", error);
+      if (error.response.status === 400) {
+        return error.response;
+      }
+    }
+  }
+
+  static async getEventByUserID(userId) {
+    try {
+      const response = await axios.get(
+        ApiConstants.getAllEventByUserIdUrl + "/" + userId
+      );
+      return response.data;
+    } catch (error) {
+      console.log("Event Get Failed ", error);
+    }
+  }
+
+  static async updateEvent(
+    eventId,
+    eventName,
+    eventDate,
+    eventTime,
+    eventEndTime,
+    eventVenue,
+    eventRole,
+    moduleName,
+    userId
+  ) {
+    try {
+      const response = await axios.put(ApiConstants.updateEventUrl, {
+        eventId: eventId,
+        eventName: eventName,
+        eventDate: eventDate,
+        eventTime: eventTime,
+        eventEndTime: eventEndTime,
+        eventVenue: eventVenue,
+        eventRole: eventRole,
+        eventModuleName: moduleName,
+        eventAssignedUserId: userId,
+      });
+
+      if (response.status === 200) {
+        return response;
+      }
+    } catch (error) {
+      console.error("Event creation failed", error);
+      if (error.response.status === 400) {
+        return error.response;
+      }
     }
   }
 

@@ -15,8 +15,7 @@ import { useNavigate } from "react-router-dom";
 import LecturerSideBar from "../../components/layout/AdminDashboardComponent/LecturerSideBar";
 import LecturerDashboard from "../LecturerDashboard/LecturerDashboard";
 import ModulePage from "../Module/ModulePage";
-import LectureCreationDashboard from "../LecturerDashboard/LectureCreationDashboard";
-import AdminEventCreationDashboard from "../Event/AdminEventCreationDashboard";
+import EventLectureCreationDashboard from "../LecturerDashboard/EventLectureCreationDashboard";
 import LocationService from "../../api/services/LocationService";
 import LogoutConfirmation from "../LogoutPage/LogoutConfirmation";
 import { resetSideBarIndex } from "../../redux/features/mainNavigationSlice";
@@ -123,14 +122,14 @@ function MainNavigationPage() {
             {openMenu === 1 && <StaffDashboard />}
             {openMenu === 2 && <StudentDashboard />}
             {openMenu === 3 && <EventReport />}
-            {openMenu === 4 && <Setting />}
+            {openMenu === 6 && <Setting />}
           </div>
         )}
         {role === "LECTURER" && (
           <div className="maincontent">
             {openMenu === 0 && <LecturerDashboard />}
             {openMenu === 1 && <LectureCreationPage />}
-            {openMenu === 2 && <LectureCreationDashboard />}
+            {openMenu === 2 && <EventLectureCreationDashboard />}
             {openMenu === 3 && <ModulePage />}
             {openMenu === 4 && <ReportPage />}
             {openMenu === 5 && <EventReport />}

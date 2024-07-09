@@ -28,7 +28,7 @@ const AvailableDepartment = () => {
           disableButtonsControls
           responsive={responsive}
           infinite
-          autoPlayInterval={2000}
+          autoPlayInterval={3000}
         />
       </div>
     </div>

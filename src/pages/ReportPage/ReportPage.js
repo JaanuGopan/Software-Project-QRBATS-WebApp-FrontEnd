@@ -289,13 +289,13 @@ const ReportPage = () => {
                 title={"Back"}
                 titlewithiconicon={<MdArrowBack className="staff-buttonIcon" />}
               />
-              <NormalButton
+              {/* <NormalButton
                 title={"Print"}
                 handleClick={() => {}}
                 titlewithiconicon={
                   <BiSolidPrinter className="staff-buttonIcon" />
                 }
-              />
+              /> */}
             </div>
           </div>
         )}
@@ -320,13 +320,13 @@ const ReportPage = () => {
                 title={"Back"}
                 titlewithiconicon={<MdArrowBack className="staff-buttonIcon" />}
               />
-              <NormalButton
+              {/* <NormalButton
                 title={"Print"}
                 handleClick={() => {}}
                 titlewithiconicon={
                   <BiSolidPrinter className="staff-buttonIcon" />
                 }
-              />
+              /> */}
             </div>
           </div>
         )}
