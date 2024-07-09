@@ -298,7 +298,7 @@ const EventLectureCreation = ({
             <button
               onClick={() => setQrCodeWindow(true)}
               type="submit"
-              className="btn btn-success w-100"
+              className="btn btn-success w-100 mt-2"
             >
               Create {` ${title}`}
             </button>

@@ -7,6 +7,8 @@ import InputField from "../../components/textfields/InputBox/InputField";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import Select from "react-select";
 import { Label } from "@mui/icons-material";
+import UserService from "../../api/services/UserService";
+import toast from "react-hot-toast";
 
 const UpdateStaff = ({
   handleCloseUpdateStaffWindow,
@@ -29,6 +31,26 @@ const UpdateStaff = ({
 
   const handleSaveUser = async (e) => {
     e.preventDefault();
+    try {
+      const response = await UserService.updateUser(
+        userId,
+        firstName,
+        lastName,
+        email,
+        "",
+        "",
+        departmentId
+      );
+      if (response.status === 200) {
+        handleReloadStaffList();
+        //handleCloseUpdateStaffWindow();
+        toast.success("User Updated Successfully!");
+      } else if (response.status === 400) {
+        toast.error(response.data);
+      }
+    } catch {
+      toast.error("User Updation Failed!");
+    }
   };
 
   const parseJwt = (token) => {
