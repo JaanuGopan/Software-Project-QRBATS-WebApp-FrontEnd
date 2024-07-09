@@ -97,7 +97,7 @@ class StudentService {
       }
     } catch (error) {
       //throw new Error("Update Failed ", error);
-      return error.response.data;
+      return error.response;
     }
   }
 }

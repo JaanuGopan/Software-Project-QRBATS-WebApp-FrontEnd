@@ -8,9 +8,10 @@ import toast, { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/userSlice";
 import QRCode from "qrcode.react";
+import EventService from "../../api/services/EventService";
 
 const AdminUpdateEvent = ({
-  handlecloseCreateEventWindow,
+  handleCloseEventUpdateWindow,
   selectedEvent,
   reloadEventList,
   locationNameList,
@@ -19,13 +20,9 @@ const AdminUpdateEvent = ({
   const [eventName, setEventName] = useState(selectedEvent.eventName);
   const [moduleName, setModuleName] = useState(selectedEvent.moduleName);
   const [eventDate, setEventDate] = useState(selectedEvent.eventDate);
-  const [eventValidDate, setEventValidDate] = useState(
-    selectedEvent.eventValidDate
-  );
   const [eventTime, setEventTime] = useState(selectedEvent.eventTime);
   const [eventEndTime, setEventEndTime] = useState(selectedEvent.eventEndTime);
   const [eventVenue, setEventVenue] = useState(selectedEvent.eventVenue);
-  const [showQRCode, setShowQRCode] = useState(false);
   const [eventRole, setEventRole] = useState(selectedEvent.eventRole);
   const [eventAssignedUserId, setEventAssignedUserId] = useState(
     selectedEvent.eventAssignedUserId
@@ -38,18 +35,6 @@ const AdminUpdateEvent = ({
 
   const notifySuccess = () => toast.success("Successfully Event Updated!");
 
-  const handleEreseValu = () => {
-    setEventName("");
-    setModuleName(null);
-    setEventDate("");
-    setEventValidDate("");
-    setEventTime("");
-    setEventVenue("");
-    setEventEndTime("");
-    setEventAssignedUserId(null);
-    setEventRole("EVENT");
-  };
-
   const user = useSelector(selectUser);
   // Destructure user object for cleaner code
   const { userId } = user || {};
@@ -57,29 +42,30 @@ const AdminUpdateEvent = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/event/create",
-        {
-          eventId: eventId,
-          eventName: eventName,
-          eventDate: eventDate,
-          eventValidDate: eventValidDate,
-          eventTime: eventTime,
-          eventEndTime: eventEndTime,
-          eventVenue: eventVenue,
-          eventRole: eventRole,
-          eventModuleName: moduleName,
-          eventAssignedUserId: userId,
-        }
+      const response = await EventService.updateEvent(
+        eventId,
+        eventName,
+        eventDate,
+        eventTime,
+        eventEndTime,
+        eventVenue,
+        eventRole,
+        moduleName,
+        userId
       );
-      const responseEventName = response.data.eventName;
-      console.log("Event is : " + responseEventName);
-      notifySuccess();
-      reloadEventList();
+      if (response.status === 200) {
+        notifySuccess();
+        reloadEventList();
+        //handleCloseEventUpdateWindow();
+      } else if (response.status === 400) {
+        toast.error(response.data);
+      } else {
+        toast.error("Error In Event Update. ");
+        console.log(response.data);
+      }
     } catch (error) {
       console.error("Event failed", error);
-    } finally {
-      setShowQRCode(true);
+      toast.error("Error In Event Update. ");
     }
   };
 
@@ -96,25 +82,8 @@ const AdminUpdateEvent = ({
     document.body.removeChild(aEl);
   };
 
-  const handleShareQRCode = () => {
-    html2canvas(qrCodeRef.current).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF();
-      pdf.addImage(imgData, "PNG", 0, 0);
-      pdf.save("qr_code.pdf");
-    });
-  };
-
   const eventDetails = {
     eventId: eventId,
-    eventName: eventName,
-    moduleName: moduleName,
-    eventDate: eventDate,
-    eventValidDate: eventValidDate,
-    eventTime: eventTime,
-    eventEndTime: eventEndTime,
-    eventVenue: eventVenue,
-    eventAssignedUserId: eventAssignedUserId,
   };
   const qrCodeDetails = JSON.stringify(eventDetails);
 
@@ -125,7 +94,7 @@ const AdminUpdateEvent = ({
           <h3 className="event-create-title">Update Event</h3>
           <div
             className="event-create-close-button"
-            onClick={handlecloseCreateEventWindow}
+            onClick={handleCloseEventUpdateWindow}
           >
             <IoMdCloseCircleOutline id="close-icon" />
           </div>
@@ -161,6 +130,9 @@ const AdminUpdateEvent = ({
           <Toaster />
           <form onSubmit={handleSubmit}>
             <div className="input-with-icon">
+              <label className="date-label" htmlFor="eventDate">
+                Event Name
+              </label>
               <input
                 required
                 type="text"
@@ -183,20 +155,6 @@ const AdminUpdateEvent = ({
                     type="date"
                     value={eventDate}
                     onChange={(e) => setEventDate(e.target.value)}
-                    className="form-control mb-2"
-                  />
-                </div>
-              </div>
-              <div className="eventCreation-form">
-                <div>
-                  <label className="date-label" htmlFor="eventDate">
-                    Event Ending Date
-                  </label>
-                  <input
-                    required
-                    type="date"
-                    value={eventValidDate}
-                    onChange={(e) => setEventValidDate(e.target.value)}
                     className="form-control mb-2"
                   />
                 </div>

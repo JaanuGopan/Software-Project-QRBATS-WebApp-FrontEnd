@@ -50,7 +50,6 @@ const ModuleCreate = ({
 
   return (
     <div className="module-create-main-container">
-      <ToastContainer />
       <div className="module-create-title-close-button">
         <h3 className="module-create-title">Create Module</h3>
         <div

@@ -1,10 +1,10 @@
 import React from "react";
-import LectureCreation from "./LectureCreation";
 import "./LectureDashboard.css";
-const LectureCreationDashboard = () => {
+import EventLectureCreation from "./EventLectureCreation";
+const EventLectureCreationDashboard = () => {
   return (
     <div className="row m-5 lecture-creation-dashboard">
-      <LectureCreation
+      <EventLectureCreation
         handleCloseCreateLectureWindow={() => null}
         reloadLectureList={() => null}
         hideCloseButton={true}
@@ -14,4 +14,4 @@ const LectureCreationDashboard = () => {
   );
 };
 
-export default LectureCreationDashboard;
+export default EventLectureCreationDashboard;

@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "../AdminDashboard/AdminDashboard.css";
 import "./LectureDashboard.css";
-import LectureTable from "./LectureTable";
-import TotalCount from "../../components/layout/AdminDashboardComponent/TotalCount";
-import { FaSchool } from "react-icons/fa6";
-import { IoNewspaperSharp } from "react-icons/io5";
 import NormalButton from "../../components/layout/AdminDashboardComponent/NormalButton";
 import { MdCreateNewFolder } from "react-icons/md";
 import { RiDeleteBin5Fill } from "react-icons/ri";
-import LectureCreation from "./LectureCreation";
+import EventLectureCreation from "./EventLectureCreation";
 import EventService from "../../api/services/EventService";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/userSlice";
@@ -20,8 +16,8 @@ import LecturesEdit from "../Lectures/LecturesEdit";
 import LectureCreationPage from "../LactureCreation/LectureCreationPage";
 import { ToastContainer, toast } from "react-toastify";
 import WarningPopup from "../../components/warningPopup/WarningPopup";
-import Select from "react-select";
-import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { Table, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import EventLectureTable from "./EventLectureTable";
 const LecturerDashboard = () => {
   const [showCreateLecturePopup, setShowCreateLecturePopup] = useState(false);
   const [showUpdateLecturePopup, setShowUpdateLecturePopup] = useState(false);
@@ -193,7 +189,7 @@ const LecturerDashboard = () => {
       ) : (
         <div className="lecture-dashboard-container">
           <div className="lecture-dashboard-table">
-            <LectureTable
+            <EventLectureTable
               search={searchLecture}
               handleUpdateLecture={() => setShowUpdateLecturePopup(true)}
               onLectureClick={handleEventLectureClick}
@@ -215,12 +211,9 @@ const LecturerDashboard = () => {
         </div>
       )}
       {showCreateLecturePopup && (
-        <div
-          handleClick={() => setShowCreateLecturePopup(false)}
-          className="Create-Lecture-Window"
-        >
+        <div className="Create-Lecture-Window">
           {selectTable === "Events" && (
-            <LectureCreation
+            <EventLectureCreation
               handleCloseCreateLectureWindow={() =>
                 setShowCreateLecturePopup(false)
               }
@@ -246,7 +239,7 @@ const LecturerDashboard = () => {
           className="Admin-Create-Event-Dashboard"
         >
           <AdminUpdateEvent
-            handlecloseCreateEventWindow={() =>
+            handleCloseEventUpdateWindow={() =>
               setShowUpdateLecturePopup(false)
             }
             selectedEvent={selectedEventLecture}

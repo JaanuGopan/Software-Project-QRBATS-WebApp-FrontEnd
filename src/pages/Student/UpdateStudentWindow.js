@@ -49,22 +49,19 @@ const UpdateStudentWindow = ({
       if (response.status === 200) {
         toast.success("Successfully Updated.");
         setUpdateSuccess(true);
-      } else {
-        toast.error(response);
+        handleCloseUpdateStudentWindow();
+        handleReloadStudentList();
+      } else if (response.status === 400) {
+        toast.error(response.data);
       }
     } catch (error) {
       console.error("Login failed", error);
-    } finally {
-      handleReloadStudentList();
-      if (updateSuccess) {
-        handleCloseUpdateStudentWindow();
-      }
+      toast.error("Error In Updating Student. ");
     }
   };
 
   return (
     <div className="student-signup-main-container">
-      <ToastContainer />
       <div className="student-create-title-close-button">
         <h3 className="student-create-title">Update Student</h3>
         <div

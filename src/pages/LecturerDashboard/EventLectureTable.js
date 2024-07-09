@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../AdminDashboard/AdminDashboard.css";
 import { FaEdit } from "react-icons/fa";
 
-const LectureTable = ({
+const EventLectureTable = ({
   lectureList,
   onLectureClick,
   search,
@@ -72,4 +72,4 @@ const LectureTable = ({
     </div>
   );
 };
-export default LectureTable;
+export default EventLectureTable;
