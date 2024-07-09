@@ -1,12 +1,12 @@
 class ApiConstants {
   static get baseIpUrl() {
-    return "localhost";
+    return "intelligent-creation-skyticker-backend-8761.up.railway.app";
   }
   static get awsBaseIpUrl() {
     return "13.51.170.30";
   }
   static get baseUrl() {
-    return "http://" + ApiConstants.baseIpUrl + ":8082/api/v1"; // "http://localhost:8080";
+    return "https://" + ApiConstants.baseIpUrl + "/api/v1"; // "http://localhost:8080";
   }
   static loginUrl(userName, password) {
     return (
