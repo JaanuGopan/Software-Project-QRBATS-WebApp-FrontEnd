@@ -22,6 +22,7 @@ const LecturerDashboard = () => {
   const [showCreateLecturePopup, setShowCreateLecturePopup] = useState(false);
   const [showUpdateLecturePopup, setShowUpdateLecturePopup] = useState(false);
   const [showDeleteLecturePopup, setShowDeleteLecturePopup] = useState(false);
+  const [showDeleteEventPopup, setShowDeleteEventPopup] = useState(false);
   const [eventLectureList, setEventLectureList] = useState([]);
   const [selectedLecture, setSelectedLecture] = useState(null);
   const [selectedEventLecture, setSelectedEventLecture] = useState(null);
@@ -103,13 +104,33 @@ const LecturerDashboard = () => {
     handleReloadLectureList();
   }, []);
 
+  const handleShowDeleteEventWindow = () => {
+    if (selectedEventLecture === null) {
+      toast.error("Please Select Event To Delete.");
+      return;
+    }
+    setShowDeleteEventPopup(true);
+  };
+
   const handleDeleteEventLecture = async () => {
     if (selectedEventLecture) {
-      EventService.deleteEvent(selectedEventLecture.eventId).then(() => {
-        console.log("deleted successfully ");
+      const response = await EventService.deleteEvent(
+        selectedEventLecture.eventId
+      );
+      if (response.status === 200) {
         handleReloadEventLectureList();
         setSelectedEventLecture(null);
-      });
+        toast.success(
+          `Successfully ${selectedEventLecture.eventName} Event Deleted.`
+        );
+        setShowDeleteEventPopup(false);
+      } else if (response.status === 400) {
+        toast.error(response.data);
+      } else {
+        toast.error(
+          `Error In Deleting Lecture ${selectedEventLecture.eventName}.`
+        );
+      }
     }
   };
 
@@ -204,7 +225,7 @@ const LecturerDashboard = () => {
             />
             <NormalButton
               title={"Delete"}
-              handleClick={handleDeleteEventLecture}
+              handleClick={handleShowDeleteEventWindow}
               titlewithiconicon={<RiDeleteBin5Fill className="buttonIcon" />}
             />
           </div>
@@ -268,6 +289,16 @@ const LecturerDashboard = () => {
             handleCloseWarningWindow={() => setShowDeleteLecturePopup(false)}
             handleOk={handleDeleteLecture}
             titleText={"Are You Sure You Want To Delete This Lecture?"}
+            buttonText={"Delete"}
+          />
+        </div>
+      )}
+      {showDeleteEventPopup && (
+        <div className="delete-lecture-container">
+          <WarningPopup
+            handleCloseWarningWindow={() => setShowDeleteEventPopup(false)}
+            handleOk={handleDeleteEventLecture}
+            titleText={"Are You Sure You Want To Delete This Event?"}
             buttonText={"Delete"}
           />
         </div>

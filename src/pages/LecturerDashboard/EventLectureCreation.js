@@ -153,6 +153,7 @@ const EventLectureCreation = ({
   const handleCloseQrCodeWindow = () => {
     setShowQRCode(false);
     clearEventDetails();
+    handleCloseCreateLectureWindow();
   };
 
   useEffect(() => {
@@ -297,7 +298,7 @@ const EventLectureCreation = ({
             <button
               onClick={() => setQrCodeWindow(true)}
               type="submit"
-              className="btn btn-success w-100"
+              className="btn btn-success w-100 mt-2"
             >
               Create {` ${title}`}
             </button>
@@ -306,13 +307,18 @@ const EventLectureCreation = ({
         {qrCodeWindow && showQRCode && (
           <div className="Admin-Create-Event-Dashboard">
             <div ref={qrCodeRef} className="event-main-container1">
-              <div
-                className="closeCreateEventWindow"
-                onClick={handleCloseQrCodeWindow}
-              >
-                <IoMdCloseCircleOutline />
+              <div className="event-create-title-close-button">
+                <h3 className="event-create-title">
+                  Successfully Event Created
+                </h3>
+                <div
+                  className="event-create-close-button"
+                  onClick={handleCloseQrCodeWindow}
+                >
+                  <IoMdCloseCircleOutline id="close-icon" />
+                </div>
               </div>
-              <h2>Successfully Event Created</h2>
+
               <div className="row-center">
                 <QRCode
                   name="QRCode"
