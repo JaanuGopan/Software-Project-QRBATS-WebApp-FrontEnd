@@ -8,11 +8,11 @@ import toast, { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/userSlice";
 import QRCode from "qrcode.react";
-import SaveEventService from "../../api/services/SaveEventService";
 import { useEffect } from "react";
+import EventService from "../../api/services/EventService";
 
 const AdminEventCreation = ({
-  handlecloseCreateEventWindow,
+  handleCloseCreateEventWindow,
   reloadEventList,
   locationList,
   showCloseButton,
@@ -21,7 +21,6 @@ const AdminEventCreation = ({
   const [eventName, setEventName] = useState("");
   const [moduleName, setModuleName] = useState(null);
   const [eventDate, setEventDate] = useState("");
-  const [eventValidDate, setEventValidDate] = useState("");
   const [eventTime, setEventTime] = useState("");
   const [eventEndTime, setEventEndTime] = useState("");
   const [eventVenue, setEventVenue] = useState("");
@@ -39,7 +38,6 @@ const AdminEventCreation = ({
   const clearEventDetails = () => {
     setEventName("");
     setEventDate("");
-    setEventValidDate("");
     setEventTime("");
     setEventEndTime("");
     setEventVenue("");
@@ -54,10 +52,9 @@ const AdminEventCreation = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await SaveEventService.saveEvent(
+      const response = await EventService.saveEvent(
         eventName,
         eventDate,
-        eventValidDate,
         eventTime,
         eventEndTime,
         eventVenue,
@@ -65,16 +62,20 @@ const AdminEventCreation = ({
         moduleName,
         userId
       );
-      setEventId(response.eventId);
-      const responseEventName = response.eventName;
-      notifySuccess();
-      if (response) {
+      if (response.status === 200) {
+        setEventId(response.data.eventId);
+        notifySuccess();
         reloadEventList();
         setShowQRCode(true);
+      } else if (response.status === 400) {
+        toast.error(response.data);
+      } else {
+        toast.error("Error In Event Creation. ");
       }
       clearEventDetails();
     } catch (error) {
       console.error("Event failed", error);
+      toast.error("Error In Event Creation. ");
     }
   };
 
@@ -92,14 +93,6 @@ const AdminEventCreation = ({
   };
   const eventDetails = {
     eventId: eventId,
-    eventName: eventName,
-    moduleName: moduleName,
-    eventDate: eventDate,
-    eventValidDate: eventValidDate,
-    eventTime: eventTime,
-    eventEndTime: eventEndTime,
-    eventVenue: eventVenue,
-    eventAssignedUserId: userId,
   };
   const qrCodeDetails = JSON.stringify(eventDetails);
 
@@ -113,6 +106,7 @@ const AdminEventCreation = ({
   };
 
   const [qrCodeWindow, setQrCodeWindow] = useState(false);
+  const today = new Date().toISOString().split("T")[0];
 
   return (
     <div className="event-main-container1">
@@ -122,7 +116,7 @@ const AdminEventCreation = ({
           <h3 className="event-create-title">Create Event</h3>
           <div
             className="event-create-close-button"
-            onClick={handlecloseCreateEventWindow}
+            onClick={handleCloseCreateEventWindow}
           >
             <IoMdCloseCircleOutline id="close-icon" />
           </div>
@@ -149,27 +143,16 @@ const AdminEventCreation = ({
               <div className="eventCreation-form">
                 <div>
                   <label className="date-label" htmlFor="eventDate">
-                    Event Starting Date
+                    Event Date
                   </label>
                   <input
                     required
                     type="date"
+                    min={today}
                     value={eventDate}
-                    onChange={(e) => setEventDate(e.target.value)}
-                    className="form-control mb-2"
-                  />
-                </div>
-              </div>
-              <div className="eventCreation-form">
-                <div>
-                  <label className="date-label" htmlFor="eventDate">
-                    Event Ending Date
-                  </label>
-                  <input
-                    required
-                    type="date"
-                    value={eventValidDate}
-                    onChange={(e) => setEventValidDate(e.target.value)}
+                    onChange={(e) => {
+                      setEventDate(e.target.value);
+                    }}
                     className="form-control mb-2"
                   />
                 </div>
@@ -239,15 +222,17 @@ const AdminEventCreation = ({
         {qrCodeWindow && showQRCode && (
           <div className="Admin-Create-Event-Dashboard">
             <div ref={qrCodeRef} className="event-main-container1">
-              <div
-                className="closeCreateEventWindow"
-                onClick={() => {
-                  setQrCodeWindow(false);
-                }}
-              >
-                <IoMdCloseCircleOutline />
+              <div className="event-create-title-close-button">
+                <h3 className="event-create-title">
+                  Successfully Event Created
+                </h3>
+                <div
+                  className="event-create-close-button"
+                  onClick={() => setQrCodeWindow(false)}
+                >
+                  <IoMdCloseCircleOutline id="close-icon" />
+                </div>
               </div>
-              <h2>Successfully Event Created</h2>
               <div className="row-center">
                 <QRCode
                   name="QRCode"

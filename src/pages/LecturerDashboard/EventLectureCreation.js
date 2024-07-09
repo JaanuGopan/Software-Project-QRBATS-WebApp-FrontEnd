@@ -12,12 +12,12 @@ import Select from "react-select";
 import ModuleService from "../../api/services/ModuleService";
 import LocationService from "../../api/services/LocationService";
 
-const LectureCreation = ({
+const EventLectureCreation = ({
   handleCloseCreateLectureWindow,
   reloadLectureList,
   hideCloseButton,
   locationNameList,
-  showImage = false,
+  showImage = true,
 }) => {
   const user = useSelector(selectUser);
   const { userId, departmentId } = user || {};
@@ -26,7 +26,6 @@ const LectureCreation = ({
   const [eventName, setEventName] = useState("");
   const [moduleName, setModuleName] = useState("");
   const [eventDate, setEventDate] = useState("");
-  const [eventValidDate, setEventValidDate] = useState("");
   const [eventTime, setEventTime] = useState("");
   const [eventEndTime, setEventEndTime] = useState("");
   const [eventVenue, setEventVenue] = useState("");
@@ -69,16 +68,6 @@ const LectureCreation = ({
     }
   };
 
-  const locationList = [
-    "NCC",
-    "LT1",
-    "LT2",
-    "Auditorium",
-    "DEIE",
-    "DMME",
-    "DCEE",
-  ];
-
   const qrCodeRef = useRef(null);
 
   const notifySuccess = () => toast.success("Successfully Lecture Created!");
@@ -86,7 +75,6 @@ const LectureCreation = ({
   const clearEventDetails = () => {
     setEventName("");
     setEventDate("");
-    setEventValidDate("");
     setEventTime("");
     setEventEndTime("");
     setEventVenue("");
@@ -101,7 +89,6 @@ const LectureCreation = ({
       const response = await EventService.saveEvent(
         eventName,
         eventDate,
-        eventValidDate,
         eventTime,
         eventEndTime,
         eventVenue,
@@ -109,14 +96,20 @@ const LectureCreation = ({
         eventRole === "LECTURE" ? moduleName.label : "",
         userId
       );
-      setEventId(response.eventId);
-      notifySuccess();
-      reloadLectureList();
-      clearEventDetails();
+      if (response.status === 200) {
+        setEventId(response.eventId);
+        notifySuccess();
+        reloadLectureList();
+        setShowQRCode(true);
+        clearEventDetails();
+      } else if (response.status === 400) {
+        toast.error(response.data);
+      } else {
+        toast.error("Error In Event Creation. ");
+      }
     } catch (error) {
       console.error("Lecture creation failed", error);
-    } finally {
-      setShowQRCode(true);
+      toast.error("Error In Event Creation. ");
     }
   };
 
@@ -135,14 +128,6 @@ const LectureCreation = ({
 
   const eventDetails = {
     eventId: eventId,
-    eventName: eventName,
-    moduleName: moduleName,
-    eventDate: eventDate,
-    eventValidDate: eventValidDate,
-    eventTime: eventTime,
-    eventEndTime: eventEndTime,
-    eventVenue: eventVenue,
-    eventAssignedUserId: userId,
   };
 
   const qrCodeDetails = JSON.stringify(eventDetails);
@@ -173,7 +158,6 @@ const LectureCreation = ({
   useEffect(() => {
     handleGetModulesList();
     handleGetLocationNameList();
-    //setUserId(UserDetails.getUserId());
   }, []);
 
   return (
@@ -251,27 +235,11 @@ const LectureCreation = ({
                     value={eventDate}
                     onChange={(e) => {
                       setEventDate(e.target.value);
-                      setEventValidDate(e.target.value);
                     }}
                     className="form-control mb-2"
                   />
                 </div>
               </div>
-              {/* <div className="eventCreation-form">
-                <div>
-                  <label className="date-label" htmlFor="eventDate">
-                    {`${title} Ending Date`}
-                  </label>
-                  <input
-                    required
-                    type="date"
-                    min={today}
-                    value={eventValidDate}
-                    onChange={(e) => setEventValidDate(e.target.value)}
-                    className="form-control mb-2"
-                  />
-                </div>
-              </div> */}
             </div>
             <div className="eventCreation-form">
               <div>
@@ -375,4 +343,4 @@ const LectureCreation = ({
   );
 };
 
-export default LectureCreation;
+export default EventLectureCreation;

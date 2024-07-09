@@ -10,7 +10,6 @@ import Signin from "./pages/Signin/Signin";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
 import SignUp from "./pages/SignUp/SignUp";
 import MainNavigationPage from "./pages/MainNavigation/MainNavigation";
-import EventCreation from "./pages/Event/EventCreation/EventCreation";
 import StaffMainNavigation from "./pages/StaffMainNavigation/StaffMainNavigation";
 import EventReport from "./pages/Event/EventReport";
 import LecturerDashboard from "./pages/LecturerDashboard/LecturerDashboard";
@@ -39,10 +38,6 @@ const router = createBrowserRouter([
   {
     path: "mainNavigation",
     element: store.getState("user") ? <MainNavigationPage /> : <Signin />,
-  },
-  {
-    path: "eventCreation",
-    element: <EventCreation />,
   },
   {
     path: "eventReport",

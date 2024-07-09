@@ -132,12 +132,12 @@ const AdminDashboard = () => {
         <div className="List-Buttons">
           <NormalButton
             handleClick={() => setEventCreatePopUpWindow(true)}
-            title={"Create"} 
+            title={"Create"}
             titlewithiconicon={<MdCreateNewFolder className="buttonIcon" />}
             id={"Admincreate"}
           />
-          <NormalButton 
-            title={"Delete"} 
+          <NormalButton
+            title={"Delete"}
             handleClick={handleDelete}
             titlewithiconicon={<RiDeleteBin5Fill className="buttonIcon" />}
           />
@@ -149,7 +149,7 @@ const AdminDashboard = () => {
           className="Admin-Create-Event-Dashboard"
         >
           <AdminEventCreation
-            handlecloseCreateEventWindow={() =>
+            handleCloseCreateEventWindow={() =>
               setEventCreatePopUpWindow(false)
             }
             reloadEventList={handleReloadEventList}
@@ -164,7 +164,7 @@ const AdminDashboard = () => {
           className="Admin-Create-Event-Dashboard"
         >
           <AdminUpdateEvent
-            handlecloseCreateEventWindow={() =>
+            handleCloseEventUpdateWindow={() =>
               setEventUpdatePopUpWindow(false)
             }
             selectedEvent={selectedEvent}
