@@ -37,7 +37,7 @@ const ModuleCreate = ({
       departmentId: departmentList.indexOf(departmentId) + 1,
       userId,
     };
-    handleModuleCreate(moduleData);
+    await handleModuleCreate(moduleData);
   };
 
   const handleClearData = () => {

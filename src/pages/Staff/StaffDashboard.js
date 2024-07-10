@@ -8,6 +8,7 @@ import UpdateStaff from "./UpdateStaff";
 import StaffTable from "../../components/layout/AdminDashboardComponent/StaffTable";
 import FetchStaffService from "../../api/services/FetchStaffService";
 import DeleteStaffService from "../../api/services/DeleteStaffService";
+import { ToastContainer } from "react-toastify";
 
 const StaffDashboard = () => {
   const [staffCreatePopUpWindow, setStaffCreatePopUpWindow] = useState(false);
@@ -51,6 +52,7 @@ const StaffDashboard = () => {
 
   return (
     <div className="staff-Dash">
+      <ToastContainer />
       <div className="staff-SearchEvent">
         <p className="staff-mainHead">Staff Details</p>
         <input

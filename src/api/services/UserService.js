@@ -37,11 +37,15 @@ class UserService {
         departmentId: departmentId,
       })
       .then((response) => {
-        return response;
+        if (response.status === 200) {
+          return response;
+        }
       })
       .catch((error) => {
         console.error(error);
-        return error.response;
+        if (error.response.status === 400) {
+          return error.response;
+        }
       });
   }
 

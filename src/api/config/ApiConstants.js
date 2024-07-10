@@ -1,12 +1,15 @@
 class ApiConstants {
-  static get baseIpUrl() {
+  static get hostedBaseIpUrl() {
     return "intelligent-creation-skyticker-backend-8761.up.railway.app";
   }
+  static get baseIpUrl() {
+    return "localhost:8082";
+  }
   static get awsBaseIpUrl() {
-    return "13.51.170.30";
+    return "13.51.170.30:8082";
   }
   static get baseUrl() {
-    return "https://" + ApiConstants.baseIpUrl + "/api/v1"; // "http://localhost:8080";
+    return "https://" + ApiConstants.hostedBaseIpUrl + "/api/v1"; // "http://localhost:8080";
   }
   static loginUrl(userName, password) {
     return (
@@ -87,12 +90,6 @@ class ApiConstants {
 
   static get getAllModulesByDepartmentId() {
     return ApiConstants.baseUrl + "/module/getallmodulebydepartmentid"; //localhost:8080/api/v1/module/getallmodulebydepartmentid/{departmentId}
-  }
-
-  static get getAllStudentsByDepartmentIdAndSemester() {
-    return (
-      ApiConstants.baseUrl + "/report/getallstudentsbydepartmentidandsemester"
-    ); //localhost:8080/api/v1/report/getallstudentsbydepartmentidandsemester?deptId=2&sem=6
   }
 
   static get createLectureUrl() {
