@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import "./StaffA.css";
-import axios from "axios";
-import Designer from "../../assets/Images/Designer.jpeg";
 import { useNavigate } from "react-router-dom";
 import InputField from "../../components/textfields/InputBox/InputField";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import Select from "react-select";
-import { Label } from "@mui/icons-material";
 import UserService from "../../api/services/UserService";
-import toast from "react-hot-toast";
+import { toast, ToastContainer } from "react-toastify";
 
 const UpdateStaff = ({
   handleCloseUpdateStaffWindow,

@@ -8,9 +8,13 @@ class DeleteStaffService {
         userId: staffId,
       });
       console.log("deleted Successfully..");
-      return response.data.token;
+      if (response.status === 200) {
+        return response;
+      }
     } catch (error) {
-      throw new Error("Delete Failed ", error);
+      if (error.response.status === 400) {
+        return error.response;
+      }
     }
   }
 }

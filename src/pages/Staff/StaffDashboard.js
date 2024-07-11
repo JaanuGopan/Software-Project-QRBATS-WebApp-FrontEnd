@@ -8,7 +8,8 @@ import UpdateStaff from "./UpdateStaff";
 import StaffTable from "../../components/layout/AdminDashboardComponent/StaffTable";
 import FetchStaffService from "../../api/services/FetchStaffService";
 import DeleteStaffService from "../../api/services/DeleteStaffService";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import WarningPopup from "../../components/warningPopup/WarningPopup";
 
 const StaffDashboard = () => {
   const [staffCreatePopUpWindow, setStaffCreatePopUpWindow] = useState(false);
@@ -29,14 +30,25 @@ const StaffDashboard = () => {
     console.log("Selected Staffs:", staffs);
   };
 
+  const [showDeletePopUpWindow, setShowDeletePopUpWindow] = useState(false);
+
   const handleDelete = async () => {
     try {
       const response = await DeleteStaffService.deleteStaff(
         selectedStaff.userId
       );
-      handleReloadStaffList();
+      if (response.status === 200) {
+        toast.success("Staff Deleted Successfully");
+        setSelectedStaff(null);
+        handleReloadStaffList();
+      } else if (response.status === 400) {
+        toast.error(response.data);
+      }
     } catch (error) {
       console.log("error " + error);
+      toast.error("Error In Staff Deletion. ");
+    } finally {
+      setShowDeletePopUpWindow(false);
     }
   };
 
@@ -85,7 +97,13 @@ const StaffDashboard = () => {
           />
           <NormalButton
             title={"Delete"}
-            handleClick={handleDelete}
+            handleClick={() => {
+              if (selectedStaff == null) {
+                toast.error("Please Select Staff. ");
+              } else {
+                setShowDeletePopUpWindow(true);
+              }
+            }}
             titlewithiconicon={
               <RiDeleteBin5Fill className="staff-buttonIcon" />
             }
@@ -93,10 +111,7 @@ const StaffDashboard = () => {
         </div>
       </div>
       {staffCreatePopUpWindow && (
-        <div
-          handleClick={() => setStaffCreatePopUpWindow(false)}
-          className="staff-Create-Event-Dashboard"
-        >
+        <div className="staff-Create-Event-Dashboard">
           <CreateStaff
             handleCloseCreateStaffWindow={() =>
               setStaffCreatePopUpWindow(false)
@@ -116,6 +131,16 @@ const StaffDashboard = () => {
             }
             selectedStaff={selectedStaff}
             handleReloadStaffList={handleReloadStaffList}
+          />
+        </div>
+      )}
+      {showDeletePopUpWindow && selectedStaff && (
+        <div className="student-creation-delete-popup-window">
+          <WarningPopup
+            handleOk={handleDelete}
+            handleCloseWarningWindow={() => setShowDeletePopUpWindow(false)}
+            buttonText={"Delete"}
+            titleText={"Are you sure you want to delete this staff?"}
           />
         </div>
       )}

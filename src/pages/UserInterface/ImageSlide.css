@@ -97,3 +97,8 @@
 .swiper-slide-shadow-right {
     background-image: linear-gradient(to left, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
 }
+
+
+.sized-box{
+    height: 20px;
+}
