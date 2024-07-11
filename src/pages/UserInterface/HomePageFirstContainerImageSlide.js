@@ -36,8 +36,8 @@ const HomePageFirstContainerImageSlide = () => {
           <div className="image-slide-content">
             <img src={slide_image_0} alt="Slide 1" />
             <label>
-              Lecturer can create timetable for lectures and get QR-code for
-              lectures.
+              The lecturer can create a timetable for lectures and generate QR
+              codes for them.
             </label>
           </div>
         </SwiperSlide>
