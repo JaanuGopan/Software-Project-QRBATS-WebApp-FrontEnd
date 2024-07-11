@@ -30,19 +30,8 @@ const UserInterface = () => {
         </div>
         <div className="home-page-first-container-image">
           <HomePageFirstContainerImageSlide />
-          {/* <img src={firstContainerImage} className="first-container-image" /> */}
         </div>
       </div>
-      {/* <div className="userinterface-backgroundimage">
-        <div className="welcomewin">
-          <p style={{ color: "white", fontWeight: "bolder", fontSize: "2rem" }}>
-            WELCOME TO SKYTICKER
-          </p>
-          <p className="paragraphStyle">
-            QR BASED ATTENDANCE TRACKING SYSTEM USING GPS LOCATION
-          </p>
-        </div>
-      </div> */}
       <div className="userinterface-container">
         <div className="userinterface-row">
           <AvailableDepartment />

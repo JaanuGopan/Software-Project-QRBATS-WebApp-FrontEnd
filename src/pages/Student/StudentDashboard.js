@@ -43,6 +43,7 @@ const StudentDashboard = () => {
       handleReloadStudentList();
       setShowDeletePopUpWindow(false);
       toast.success("Successfully Deleted.");
+      setSelectedStudent(null);
     }
   };
 

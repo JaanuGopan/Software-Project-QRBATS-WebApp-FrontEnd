@@ -23,9 +23,13 @@ class CreateUserService {
         departmentId: departmentId,
         role: role,
       });
-      return response.data;
+      if (response.status === 200) {
+        return response;
+      }
     } catch (error) {
-      throw new Error("The User is not created. ", error);
+      if (error.response.status === 400) {
+        return error.response;
+      }
     }
   }
 }

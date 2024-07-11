@@ -120,8 +120,11 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
         handleCloseUpdateSettingWindow();
         notifySuccess();
         handleLogoutClick();
+        toast.success("User Updated Successfully!");
       } else if (response.status === 400) {
         setErrors(response.data);
+        toast.error(response.data);
+        setShowUpdateWarning(false);
       }
     } else {
       setShowUpdateWarning(false);

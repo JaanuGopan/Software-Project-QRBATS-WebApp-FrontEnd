@@ -26,8 +26,8 @@ class UserService {
     password,
     departmentId
   ) {
-    return await axios
-      .put(ApiConstants.updateUserUrl, {
+    try {
+      const response = await axios.put(ApiConstants.updateUserUrl, {
         userId: userId,
         firstName: firstName,
         lastName: lastName,
@@ -35,18 +35,15 @@ class UserService {
         userName: userName,
         password: password,
         departmentId: departmentId,
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          return response;
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-        if (error.response.status === 400) {
-          return error.response;
-        }
       });
+      if (response.status === 200) {
+        return response;
+      }
+    } catch (error) {
+      if (error.response.status === 400) {
+        return error.response;
+      }
+    }
   }
 
   static async loginUser(userName, password, dispatch) {

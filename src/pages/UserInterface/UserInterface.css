@@ -268,3 +268,30 @@
       align-items: center;
       justify-content: center;
     }
+
+
+    @media (min-width: 1000px) {
+      
+    }
+
+    @media (max-width: 1000px) {
+      .home-page-first-container {
+          height: auto;
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 0px 26px;
+          background-color: white;
+        }
+        .home-page-first-container-content-container{
+          width: 90%;
+          margin-bottom: 20px;
+          margin-top: 20px;
+        }
+        .home-page-first-container-image{
+          width: 90%;
+          margin-bottom: 20px;
+        }
+    }

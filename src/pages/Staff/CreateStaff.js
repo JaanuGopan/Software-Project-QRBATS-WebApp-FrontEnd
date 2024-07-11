@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import "./StaffA.css";
-import axios from "axios";
-import Designer from "../../assets/Images/Designer.jpeg";
 import InputField from "../../components/textfields/InputBox/InputField";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import CreateUserService from "../../api/services/CreateUserService";
-import toast, { Toaster } from "react-hot-toast";
-import InputList from "../../components/textfields/InputList/InputList";
 import Select from "react-select";
+import { toast, ToastContainer } from "react-toastify";
 
 const CreateStaff = ({ handleCloseCreateStaffWindow, reloadStaffList }) => {
   const [firstName, setFirstName] = useState("");
@@ -36,19 +33,23 @@ const CreateStaff = ({ handleCloseCreateStaffWindow, reloadStaffList }) => {
         departmentList.indexOf(departmentId.value) + 1,
         userRoleList.indexOf(userRole.value)
       );
-      if (response) {
+      if (response.status === 200) {
         notifySuccess();
         reloadStaffList();
         handleCloseCreateStaffWindow();
+        toast.success("User Created Successfully!");
+      } else if (response.status === 400) {
+        toast.error(response.data);
       }
     } catch (error) {
       console.error("Login failed", error);
+      toast.error("Error In User Creation. ");
     }
   };
 
   return (
     <div className="staff-signup-main-container">
-      <Toaster />
+      <ToastContainer />
       <div className="staff-update-title-close-button">
         <h3 className="staff-update-title">Create User</h3>
         <div

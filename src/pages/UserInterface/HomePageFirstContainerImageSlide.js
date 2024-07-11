@@ -39,6 +39,7 @@ const HomePageFirstContainerImageSlide = () => {
               The lecturer can create a timetable for lectures and generate QR
               codes for them.
             </label>
+            <div className="sized-box"></div>
           </div>
         </SwiperSlide>
         <SwiperSlide>
@@ -48,6 +49,7 @@ const HomePageFirstContainerImageSlide = () => {
               Students can scan the QR-code to mark their attendance using
               SkyTicker mobile app.
             </label>
+            <div className="sized-box"></div>
           </div>
         </SwiperSlide>
         <SwiperSlide>
@@ -56,12 +58,14 @@ const HomePageFirstContainerImageSlide = () => {
             <label>
               When students mark their attendance, they will get notification.
             </label>
+            <div className="sized-box"></div>
           </div>
         </SwiperSlide>
         <SwiperSlide>
           <div className="image-slide-content">
             <img src={slide_image_2} alt="Slide 4" />
             <label>Admin user can manage students and lectures accounts.</label>
+            <div className="sized-box"></div>
           </div>
         </SwiperSlide>
       </Swiper>

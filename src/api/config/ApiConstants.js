@@ -9,7 +9,7 @@ class ApiConstants {
     return "13.51.170.30:8082";
   }
   static get baseUrl() {
-    return "https://" + ApiConstants.hostedBaseIpUrl + "/api/v1"; // "http://localhost:8080";
+    return "http://" + ApiConstants.baseIpUrl + "/api/v1"; // "http://localhost:8080";
   }
   static loginUrl(userName, password) {
     return (
