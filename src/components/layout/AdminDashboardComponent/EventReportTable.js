@@ -3,6 +3,7 @@ import "../../../pages/AdminDashboard/AdminDashboard.css";
 import { CiViewList } from "react-icons/ci";
 import axios from "axios";
 import FetchAttendanceByEventIdService from "../../../api/services/FetchAttendanceByEventIdService";
+import { CircularProgress } from "@mui/material";
 
 const EventReportTable = ({
   handleOpenReportWindow,
@@ -31,7 +32,7 @@ const EventReportTable = ({
   };
 
   const handleReloadAttendanceList = async (eventId) => {
-    FetchAttendanceByEventIdService.fetchAttendance(eventId)
+    await FetchAttendanceByEventIdService.fetchAttendance(eventId)
       .then((attendanceList) => {
         setAttendanceList(attendanceList);
         handleAttendanceList(attendanceList);
@@ -42,6 +43,16 @@ const EventReportTable = ({
       });
   };
 
+  const [loadingEventReport, setLoadingEventReport] = useState(false);
+  const handleViewEventAttendance = async (eventId) => {
+    try {
+      setLoadingEventReport(true);
+      await handleReloadAttendanceList(eventId);
+    } finally {
+      setLoadingEventReport(false);
+    }
+  };
+
   return (
     <div className="tableDesign">
       <table className="event-report-tableArrangement">
@@ -50,7 +61,6 @@ const EventReportTable = ({
             <th>No</th>
             <th className="expand">Name</th>
             <th>Start Date</th>
-            <th>End Date</th>
             <th>Venue</th>
             <th>Start Time</th>
             <th>End Time</th>
@@ -75,18 +85,21 @@ const EventReportTable = ({
                 <td>{index + 1}</td>
                 <td>{event.eventName}</td>
                 <td>{event.eventDate}</td>
-                <td>{event.eventValidDate}</td>
                 <td>{event.eventVenue}</td>
                 <td>{event.eventTime}</td>
                 <td>{event.eventEndTime}</td>
                 <td>
-                  <button
-                    onClick={() => handleReloadAttendanceList(event.eventId)}
-                    className="ViewButton"
-                  >
-                    <CiViewList className="EditIcon" />
-                    <p className="ViewButtonLabel">View</p>
-                  </button>
+                  {loadingEventReport ? (
+                    <CircularProgress />
+                  ) : (
+                    <button
+                      onClick={() => handleViewEventAttendance(event.eventId)}
+                      className="ViewButton"
+                    >
+                      <CiViewList className="EditIcon" />
+                      <p className="ViewButtonLabel">View</p>
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}

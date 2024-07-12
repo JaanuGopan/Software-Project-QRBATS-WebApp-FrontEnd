@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../../pages/AdminDashboard/AdminDashboard.css";
 import { CiViewList } from "react-icons/ci";
+import { CircularProgress } from "@mui/material";
 
 const LectureReportTable = ({
   handleOpenLectureWithDateWindow,
@@ -13,6 +14,16 @@ const LectureReportTable = ({
   const handleLectureReportClick = (e) => {
     setSelectedLectureReport(e);
     onLecturesReportClick(e);
+  };
+
+  const [isLoading, setIsLoading] = useState(false);
+  const OpenLectureWithDateWindow = async (lectureId) => {
+    try {
+      setIsLoading(true);
+      await handleOpenLectureWithDateWindow(lectureId);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -59,15 +70,19 @@ const LectureReportTable = ({
                 <td>{lecture.lectureStartTime}</td>
                 <td>{lecture.lectureEndTime}</td>
                 <td>
-                  <button
-                    onClick={() =>
-                      handleOpenLectureWithDateWindow(lecture.lectureId)
-                    }
-                    className="ViewButton"
-                  >
-                    <CiViewList className="EditIcon" />
-                    <p className="ViewButtonLabel">View Lecture</p>
-                  </button>
+                  {isLoading ? (
+                    <CircularProgress />
+                  ) : (
+                    <button
+                      onClick={() =>
+                        OpenLectureWithDateWindow(lecture.lectureId)
+                      }
+                      className="ViewButton"
+                    >
+                      <CiViewList className="EditIcon" />
+                      <p className="ViewButtonLabel">View Lecture</p>
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}

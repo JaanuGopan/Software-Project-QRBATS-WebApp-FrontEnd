@@ -104,27 +104,34 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
     Logout.handleLogout(dispatch); // Assuming handleLogout is asynchronous
     dispatch(resetSideBarIndex());
   };
+
+  const [loadingUpdateUser, setLoadingUpdateUser] = useState(false);
   const handleUpdateUser = async (event) => {
     event.preventDefault();
     if (handleValidation()) {
-      const response = await UserService.updateUser(
-        user.userId,
-        firstName,
-        lastName,
-        email,
-        userName,
-        newPassword,
-        departmentId.value
-      );
-      if (response.status === 200) {
-        handleCloseUpdateSettingWindow();
-        notifySuccess();
-        handleLogoutClick();
-        toast.success("User Updated Successfully!");
-      } else if (response.status === 400) {
-        setErrors(response.data);
-        toast.error(response.data);
-        setShowUpdateWarning(false);
+      try {
+        setLoadingUpdateUser(true);
+        const response = await UserService.updateUser(
+          user.userId,
+          firstName,
+          lastName,
+          email,
+          userName,
+          newPassword,
+          departmentId.value
+        );
+        if (response.status === 200) {
+          handleCloseUpdateSettingWindow();
+          notifySuccess();
+          handleLogoutClick();
+          toast.success("User Updated Successfully!");
+        } else if (response.status === 400) {
+          setErrors(response.data);
+          toast.error(response.data);
+          setShowUpdateWarning(false);
+        }
+      } finally {
+        setLoadingUpdateUser(false);
       }
     } else {
       setShowUpdateWarning(false);
@@ -298,6 +305,7 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
             titleText={"If You Want To Update, You Need To Login Again"}
             buttonText={"Update"}
             handleCloseWarningWindow={() => setShowUpdateWarning(false)}
+            processing={loadingUpdateUser}
           />
         </div>
       )}

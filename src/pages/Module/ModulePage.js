@@ -46,21 +46,28 @@ const ModulePage = () => {
     setShowUpdateModuleWindow(true);
   };
 
+  const [processingDelete, setProcessingDelete] = useState(false);
+
   const handleDeleteModule = async () => {
-    const response = await ModuleService.deleteModuleById(
-      selectedModule.moduleId
-    );
-    if (response.status === 200) {
-      handleReloadModuleList();
-      toast.success("Module Deleted Successfully!");
-      setSelectedModule(null);
-    } else if (response.status === 400) {
-      toast.error(response.data);
-      toast.error("Module Deletion Failed!");
-    } else {
-      toast.error("Error In Module Deletion!");
+    try {
+      setProcessingDelete(true);
+      const response = await ModuleService.deleteModuleById(
+        selectedModule.moduleId
+      );
+      if (response.status === 200) {
+        handleReloadModuleList();
+        toast.success("Module Deleted Successfully!");
+        setSelectedModule(null);
+      } else if (response.status === 400) {
+        toast.error(response.data);
+        toast.error("Module Deletion Failed!");
+      } else {
+        toast.error("Error In Module Deletion!");
+      }
+      setShowDeleteModuleWindow(false);
+    } finally {
+      setProcessingDelete(false);
     }
-    setShowDeleteModuleWindow(false);
   };
 
   const handleOpenDeletePopUpWindow = () => {
@@ -188,6 +195,7 @@ const ModulePage = () => {
               }}
               titleText={"Are You Sure You Want To Delete This Module?"}
               buttonText={"Delete"}
+              processing={processingDelete}
             />
           </div>
         )}

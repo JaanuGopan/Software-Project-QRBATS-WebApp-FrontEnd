@@ -10,6 +10,7 @@ import { selectUser } from "../../redux/features/userSlice";
 import QRCode from "qrcode.react";
 import { useEffect } from "react";
 import EventService from "../../api/services/EventService";
+import { CircularProgress } from "@mui/material";
 
 const AdminEventCreation = ({
   handleCloseCreateEventWindow,
@@ -49,9 +50,12 @@ const AdminEventCreation = ({
   // Destructure user object for cleaner code
   const { userId } = user || {};
 
+  const [processing, setProcessing] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setProcessing(true);
       const response = await EventService.saveEvent(
         eventName,
         eventDate,
@@ -76,6 +80,8 @@ const AdminEventCreation = ({
     } catch (error) {
       console.error("Event failed", error);
       toast.error("Error In Event Creation. ");
+    } finally {
+      setProcessing(false);
     }
   };
 
@@ -210,13 +216,19 @@ const AdminEventCreation = ({
             </div>
 
             <div className="eventCreation-form"></div>
-            <button
-              onClick={() => setQrCodeWindow(true)}
-              type="submit"
-              className="btn btn-success mt-2 w-100"
-            >
-              Create Event
-            </button>
+            {processing ? (
+              <div className="d-flex justify-content-center align-items-center">
+                <CircularProgress />
+              </div>
+            ) : (
+              <button
+                onClick={() => setQrCodeWindow(true)}
+                type="submit"
+                className="btn btn-success mt-2 w-100"
+              >
+                Create Event
+              </button>
+            )}
           </form>
         </div>
         {qrCodeWindow && showQRCode && (

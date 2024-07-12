@@ -7,13 +7,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, selectUser } from "../../../redux/features/userSlice";
 import UserService from "../../../api/services/UserService";
 import { ToastContainer, toast } from "react-toastify";
+import { CircularProgress } from "@mui/material";
 
-const LoginForm = () => {
+const LoginForm = ({ handleShowForgotPassword }) => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+
+  const [processing, setProcessing] = useState(false);
 
   // If user is already logged in, redirect to mainNavigation
   useEffect(() => {
@@ -25,6 +28,7 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setProcessing(true);
       const response = await UserService.loginUser(
         userName,
         password,
@@ -41,12 +45,13 @@ const LoginForm = () => {
     } catch (error) {
       toast.error("Error In LogIn Service.");
       console.error("Login failed", error);
+    } finally {
+      setProcessing(false);
     }
   };
 
   return (
     <div className="form-container">
-      <ToastContainer />
       <form onSubmit={handleSubmit}>
         <div className="signin-form-group">
           <div className="signin-input-with-icon">
@@ -75,12 +80,20 @@ const LoginForm = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <a href="#" className="forgot-password" onClick={() => navigate("")}>
+          <a className="forgot-password" onClick={handleShowForgotPassword}>
             Forgot Password?
           </a>
-          <button id="LoginID" type="submit" className="btn btn-primary w-100">
-            Login
-          </button>
+          {processing ? (
+            <CircularProgress />
+          ) : (
+            <button
+              id="LoginID"
+              type="submit"
+              className="btn btn-primary w-100"
+            >
+              Login
+            </button>
+          )}
         </div>
       </form>
     </div>

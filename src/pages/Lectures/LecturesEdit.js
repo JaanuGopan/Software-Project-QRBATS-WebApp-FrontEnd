@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/userSlice";
 import QRCode from "qrcode.react";
 import LectureService from "../../api/services/LectureService";
+import { CircularProgress } from "@mui/material";
 
 const LecturesEdit = ({
   handleCloseUpdateLectureWindow,
@@ -49,24 +50,31 @@ const LecturesEdit = ({
   const user = useSelector(selectUser);
   const { userId } = user || {};
 
+  const [processingUpdateLecture, setProcessingUpdateLecture] = useState(false);
+
   const handleSaveLecture = async (e) => {
     e.preventDefault();
 
-    const response = await LectureService.updateLecture(
-      lectureId,
-      lectureName,
-      lectureModuleCode,
-      lectureVenue,
-      lectureDay,
-      lectureStartTime,
-      lectureEndTime
-    );
-    if (response.status === 200) {
-      console.log(response);
-      reloadLecturesList();
-      notifySuccess();
-    } else {
-      notifyFailToUpdate(response);
+    try {
+      setProcessingUpdateLecture(true);
+      const response = await LectureService.updateLecture(
+        lectureId,
+        lectureName,
+        lectureModuleCode,
+        lectureVenue,
+        lectureDay,
+        lectureStartTime,
+        lectureEndTime
+      );
+      if (response.status === 200) {
+        console.log(response);
+        reloadLecturesList();
+        notifySuccess();
+      } else {
+        notifyFailToUpdate(response);
+      }
+    } finally {
+      setProcessingUpdateLecture(false);
     }
   };
 
@@ -236,9 +244,13 @@ const LecturesEdit = ({
               </div>
             </div>
             <div className="eventCreation-form"></div>
-            <button type="submit" className="btn btn-warning w-100">
-              Update
-            </button>
+            {processingUpdateLecture ? (
+              <CircularProgress />
+            ) : (
+              <button type="submit" className="btn btn-warning w-100">
+                Update
+              </button>
+            )}
           </form>
         </div>
       </div>

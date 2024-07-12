@@ -96,6 +96,52 @@ class UserService {
       return error.response;
     }
   }
+
+  static sendOtp = async (email) => {
+    try {
+      const response = await axios.post(ApiConstants.sendOtpUrl(email));
+      if (response.status === 200) {
+        if (response.data === true) {
+          return response;
+        }
+      }
+    } catch (error) {
+      if (error.response.status === 400) {
+        return error.response;
+      }
+    }
+  };
+
+  static verifyOtp = async (email, otp) => {
+    try {
+      const response = await axios.get(ApiConstants.verifyOtp(email, otp));
+      if (response.status === 200) {
+        if (response.data === true) {
+          return response;
+        }
+      }
+    } catch (error) {
+      console.log("Fail to verify password. " + error);
+      if (error.response.status === 400) {
+        return error.response;
+      }
+    }
+  };
+
+  static resetPassword = async (email, password, userName) => {
+    try {
+      const response = await axios.put(
+        ApiConstants.resetPasswordUrl(email, password, userName)
+      );
+      if (response.status === 200) {
+        return response;
+      }
+    } catch (error) {
+      if (error.response.status === 400) {
+        return error.response;
+      }
+    }
+  };
 }
 
 export default UserService;

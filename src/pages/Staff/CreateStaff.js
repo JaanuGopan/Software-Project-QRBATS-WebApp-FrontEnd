@@ -5,6 +5,7 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import CreateUserService from "../../api/services/CreateUserService";
 import Select from "react-select";
 import { toast, ToastContainer } from "react-toastify";
+import { CircularProgress } from "@mui/material";
 
 const CreateStaff = ({ handleCloseCreateStaffWindow, reloadStaffList }) => {
   const [firstName, setFirstName] = useState("");
@@ -21,9 +22,57 @@ const CreateStaff = ({ handleCloseCreateStaffWindow, reloadStaffList }) => {
 
   const notifySuccess = () => toast.success("Successfully Staff Created!");
 
+  const [loadingCreateStaff, setLoadingCreateStaff] = useState(false);
+
+  const handleInputValidation = () => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (firstName.trim() === "") {
+      toast.error("Please enter first name");
+      return false;
+    }
+    if (lastName.trim() === "") {
+      toast.error("Please enter last name");
+      return false;
+    }
+    if (email.trim() === "" || !emailPattern.test(email)) {
+      toast.error("Please enter a valid email");
+      return false;
+    }
+    if (userName.trim() === "") {
+      toast.error("Please enter username");
+      return false;
+    }
+    if (password.trim() === "") {
+      toast.error("Please enter password");
+      return false;
+    }
+    if (confirmPassword.trim() === "") {
+      toast.error("Please confirm password");
+      return false;
+    }
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return false;
+    }
+    if (!departmentId) {
+      toast.error("Please select department");
+      return false;
+    }
+    if (!userRole) {
+      toast.error("Please select user role");
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!handleInputValidation()) {
+      return;
+    }
     try {
+      setLoadingCreateStaff(true);
       const response = await CreateUserService.saveUser(
         firstName,
         lastName,
@@ -37,13 +86,15 @@ const CreateStaff = ({ handleCloseCreateStaffWindow, reloadStaffList }) => {
         notifySuccess();
         reloadStaffList();
         handleCloseCreateStaffWindow();
-        toast.success("User Created Successfully!");
+        toast.success("User created successfully!");
       } else if (response.status === 400) {
         toast.error(response.data);
       }
     } catch (error) {
-      console.error("Login failed", error);
-      toast.error("Error In User Creation. ");
+      console.error("User creation failed", error);
+      toast.error("Error in user creation.");
+    } finally {
+      setLoadingCreateStaff(false);
     }
   };
 
@@ -61,9 +112,6 @@ const CreateStaff = ({ handleCloseCreateStaffWindow, reloadStaffList }) => {
       </div>
 
       <div className="staff-login-container">
-        {/* <div className="staff-image-container">
-          <img src={Designer} className="staff-logo" alt="Logo" />
-        </div> */}
         <div className="form-container">
           <form onSubmit={handleSubmit}>
             <div className="staff-creation-input">
@@ -165,9 +213,15 @@ const CreateStaff = ({ handleCloseCreateStaffWindow, reloadStaffList }) => {
               </div>
             </div>
             <div className="create-staff-create-button">
-              <button type="submit" className="btn btn-success">
-                Create Staff
-              </button>
+              {loadingCreateStaff ? (
+                <div className="d-flex justify-content-center align-items-center">
+                  <CircularProgress />
+                </div>
+              ) : (
+                <button type="submit" className="btn btn-success">
+                  Create Staff
+                </button>
+              )}
             </div>
           </form>
         </div>

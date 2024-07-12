@@ -10,6 +10,7 @@ import { selectUser } from "../../redux/features/userSlice";
 import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import Select from "react-select";
+import { CircularProgress } from "@mui/material";
 
 const ModuleCreate = ({
   handleCloseModuleCreateWindow,
@@ -27,6 +28,8 @@ const ModuleCreate = ({
   const departmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA", "DIS"];
   const semesterList = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
+  const [processing, setProcessing] = useState(false);
+
   const handleCreateModule = async (e) => {
     e.preventDefault();
     const moduleData = {
@@ -37,7 +40,12 @@ const ModuleCreate = ({
       departmentId: departmentList.indexOf(departmentId) + 1,
       userId,
     };
-    await handleModuleCreate(moduleData);
+    try {
+      setProcessing(true);
+      await handleModuleCreate(moduleData);
+    } finally {
+      setProcessing(false);
+    }
   };
 
   const handleClearData = () => {
@@ -132,9 +140,13 @@ const ModuleCreate = ({
               </div>
             </div>
             <div className="create-module-create-button">
-              <button type="submit" className="btn btn-success">
-                Create module
-              </button>
+              {processing ? (
+                <CircularProgress />
+              ) : (
+                <button type="submit" className="btn btn-success">
+                  Create module
+                </button>
+              )}
             </div>
           </form>
         </div>
