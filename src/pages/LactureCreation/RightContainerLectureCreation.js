@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   Button,
+  CircularProgress,
   IconButton,
   ToggleButton,
   ToggleButtonGroup,
@@ -159,6 +160,8 @@ const RightContainerLectureCreation = ({
     return true;
   };
 
+  const [processingCreateLecture, setProcessingCreateLecture] = useState(false);
+
   const handleCreateLecture = async () => {
     const formattedTimes = dayList.reduce((acc, day) => {
       if (times[day]) {
@@ -192,6 +195,7 @@ const RightContainerLectureCreation = ({
     };
 
     try {
+      setProcessingCreateLecture(true);
       const response = await LectureService.createLecture(requestData);
       if (response.status === 200) {
         const createdLecturesList = response.data.filter(
@@ -219,6 +223,8 @@ const RightContainerLectureCreation = ({
       }
     } catch (error) {
       toast.error("Error while saving lectures.");
+    } finally {
+      setProcessingCreateLecture(false);
     }
   };
 
@@ -374,15 +380,19 @@ const RightContainerLectureCreation = ({
             </div>
           )}
           <div className="right-container-lecture-creation-submit-button">
-            <Button
-              variant="contained"
-              color="success"
-              onClick={handleCreateLecture}
-              fullWidth
-              disabled={isSaveDisabled}
-            >
-              Save
-            </Button>
+            {processingCreateLecture ? (
+              <CircularProgress />
+            ) : (
+              <Button
+                variant="contained"
+                color="success"
+                onClick={handleCreateLecture}
+                fullWidth
+                disabled={isSaveDisabled}
+              >
+                Save
+              </Button>
+            )}
           </div>
         </div>
       )}

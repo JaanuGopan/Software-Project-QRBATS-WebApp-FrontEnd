@@ -9,6 +9,7 @@ import QRCode from "qrcode.react";
 import InputList from "../../components/textfields/InputList/InputList";
 import InputField from "../../components/textfields/InputBox/InputField";
 import EventService from "../../api/services/EventService";
+import { CircularProgress } from "@mui/material";
 
 const EventCreationComponent = () => {
   // Get the user from Redux state
@@ -68,8 +69,11 @@ const EventCreationComponent = () => {
     setEventRole("EVENT");
   };
 
+  const [processing, setProcessing] = useState(false);
+
   const handleCreateEvent = async (e) => {
     try {
+      setProcessing(true);
       const response = await EventService.saveEvent(
         eventName,
         eventDate,
@@ -90,6 +94,7 @@ const EventCreationComponent = () => {
     } catch (error) {
       console.error("Event failed", error);
     } finally {
+      setProcessing(false);
     }
   };
 
@@ -208,13 +213,17 @@ const EventCreationComponent = () => {
 
             <div className="eventCreation-form"></div>
             <div className="d-flex justify-content-between mr-3 mt-3">
-              <button
-                onClick={() => setQrCodeWindow(true)}
-                type="submit"
-                className="btn btn-primary w-90"
-              >
-                Create Event
-              </button>
+              {processing ? (
+                <CircularProgress />
+              ) : (
+                <button
+                  onClick={() => setQrCodeWindow(true)}
+                  type="submit"
+                  className="btn btn-primary w-90"
+                >
+                  Create Event
+                </button>
+              )}
               <button
                 onClick={clearEventDetails}
                 className="btn btn-danger w-30"

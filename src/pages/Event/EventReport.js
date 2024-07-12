@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/userSlice";
 import AttendanceService from "../../api/services/AttendanceService";
 import { toast } from "react-toastify";
+import { CircularProgress } from "@mui/material";
 const EventReport = () => {
   const [eventReportTable, setEventReportTable] = useState(true);
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -57,21 +58,28 @@ const EventReport = () => {
     });
   };
 
+  const [loadingDownloadReport, setLoadingDownloadReport] = useState(false);
+
   const handleDownloadAttendanceEventReport = async (eventId) => {
-    const response = await AttendanceService.downloadEventAttendance(eventId);
-    if (response.status === 200) {
-      const data = response.data;
-      const blob = new Blob([data], { type: "text/csv" });
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.download = `event_${eventId}_attendance.csv`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } else if (response.status === 400) {
-      toast.error(response.data);
-    } else {
-      toast.error("Error In Downloading Report.");
+    try {
+      setLoadingDownloadReport(true);
+      const response = await AttendanceService.downloadEventAttendance(eventId);
+      if (response.status === 200) {
+        const data = response.data;
+        const blob = new Blob([data], { type: "text/csv" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = `event_${eventId}_attendance.csv`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } else if (response.status === 400) {
+        toast.error(response.data);
+      } else {
+        toast.error("Error In Downloading Report.");
+      }
+    } finally {
+      setLoadingDownloadReport(false);
     }
   };
 
@@ -133,15 +141,19 @@ const EventReport = () => {
                 title={"Back"}
                 titlewithiconicon={<MdArrowBack className="staff-buttonIcon" />}
               />
-              <NormalButton
-                title={"Print"}
-                handleClick={() =>
-                  handleDownloadAttendanceEventReport(selectedEvent.eventId)
-                }
-                titlewithiconicon={
-                  <BiSolidPrinter className="staff-buttonIcon" />
-                }
-              />
+              {loadingDownloadReport ? (
+                <CircularProgress />
+              ) : (
+                <NormalButton
+                  title={"Print"}
+                  handleClick={() =>
+                    handleDownloadAttendanceEventReport(selectedEvent.eventId)
+                  }
+                  titlewithiconicon={
+                    <BiSolidPrinter className="staff-buttonIcon" />
+                  }
+                />
+              )}
             </div>
           </div>
         </div>

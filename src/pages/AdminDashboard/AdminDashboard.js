@@ -16,6 +16,8 @@ import LocationService from "../../api/services/LocationService";
 import { useDispatch, useSelector } from "react-redux";
 import EventService from "../../api/services/EventService";
 import { selectUser } from "../../redux/features/userSlice";
+import { toast, ToastContainer } from "react-toastify";
+import WarningPopup from "../../components/warningPopup/WarningPopup";
 
 const AdminDashboard = () => {
   const [eventCreatePopUpWindow, setEventCreatePopUpWindow] = useState(false);
@@ -46,12 +48,36 @@ const AdminDashboard = () => {
     console.log("Selected Event:", event);
   };
 
+  const [showDeleteEventPopup, setShowDeleteEventPopup] = useState(false);
+
+  const showDeleteEventWarning = () => {
+    if (selectedEvent === null) {
+      toast.error("Please Select Event To Delete.");
+      return;
+    }
+    setShowDeleteEventPopup(true);
+  };
+
+  const [processingDeleteEvent, setProcessingDeleteEvent] = useState(false);
+
   const handleDelete = async () => {
     try {
+      setProcessingDeleteEvent(true);
       const response = await EventService.deleteEvent(selectedEvent.eventId);
-      handleReloadEventList();
+      if (response.status === 200) {
+        handleReloadEventList();
+        setSelectedEvent(null);
+        toast.success(`Successfully ${selectedEvent.eventName} Event Deleted.`);
+      } else if (response.status === 400) {
+        toast.error(response.data);
+      } else {
+        toast.error(`Error In Deleting Event ${selectedEvent.eventName}.`);
+      }
     } catch (error) {
       console.log("error " + error);
+    } finally {
+      setProcessingDeleteEvent(false);
+      setShowDeleteEventPopup(false);
     }
   };
 
@@ -67,45 +93,9 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-Dash">
+      <ToastContainer />
       <p className="mainHead">Admin Dashboard</p>
-      <div className="mainInform">
-        {/* <TotalCount
-          total={"20"}
-          countIcon={
-            <FaUsers
-              style={{ color: "white", padding: "2%", fontSize: "250%" }}
-            />
-          }
-          countTitle={"Total Staffs"}
-        />
-        <TotalCount
-          total={"201"}
-          countIcon={
-            <PiUsersFourFill
-              style={{ color: "white", padding: "2%", fontSize: "250%" }}
-            />
-          }
-          countTitle={"Total Students"}
-        />
-        <TotalCount
-          total={"08"}
-          countIcon={
-            <FaSchool
-              style={{ color: "white", padding: "2%", fontSize: "250%" }}
-            />
-          }
-          countTitle={"Total Departments"}
-        />
-        <TotalCount
-          total={"350"}
-          countIcon={
-            <IoNewspaperSharp
-              style={{ color: "white", padding: "2%", fontSize: "250%" }}
-            />
-          }
-          countTitle={"Total Modules"}
-        /> */}
-      </div>
+      <div className="mainInform"></div>
       <div className="SearchEvent">
         <p className="mainHead">Upcoming Events</p>
         <input
@@ -138,16 +128,13 @@ const AdminDashboard = () => {
           />
           <NormalButton
             title={"Delete"}
-            handleClick={handleDelete}
+            handleClick={showDeleteEventWarning}
             titlewithiconicon={<RiDeleteBin5Fill className="buttonIcon" />}
           />
         </div>
       </div>
       {eventCreatePopUpWindow && (
-        <div
-          handleClick={() => setEventCreatePopUpWindow(false)}
-          className="Admin-Create-Event-Dashboard"
-        >
+        <div className="Admin-Create-Event-Dashboard">
           <AdminEventCreation
             handleCloseCreateEventWindow={() =>
               setEventCreatePopUpWindow(false)
@@ -159,10 +146,7 @@ const AdminDashboard = () => {
         </div>
       )}
       {eventUpdatePopUpWindow && (
-        <div
-          handleClick={() => setEventCreatePopUpWindow(false)}
-          className="Admin-Create-Event-Dashboard"
-        >
+        <div className="Admin-Create-Event-Dashboard">
           <AdminUpdateEvent
             handleCloseEventUpdateWindow={() =>
               setEventUpdatePopUpWindow(false)
@@ -170,6 +154,18 @@ const AdminDashboard = () => {
             selectedEvent={selectedEvent}
             reloadEventList={handleReloadEventList}
             locationNameList={venuesList}
+          />
+        </div>
+      )}
+
+      {showDeleteEventPopup && (
+        <div className="delete-event-container">
+          <WarningPopup
+            handleCloseWarningWindow={() => setShowDeleteEventPopup(false)}
+            handleOk={handleDelete}
+            titleText={"Are You Sure You Want To Delete This Event?"}
+            buttonText={"Delete"}
+            processing={processingDeleteEvent}
           />
         </div>
       )}

@@ -32,8 +32,15 @@ const StaffDashboard = () => {
 
   const [showDeletePopUpWindow, setShowDeletePopUpWindow] = useState(false);
 
+  const [processingDeleteStaff, setProcessingDeleteStaff] = useState(false);
+
   const handleDelete = async () => {
+    if (!selectedStaff) {
+      toast.error("Please select a staff to delete");
+      return;
+    }
     try {
+      setProcessingDeleteStaff(true);
       const response = await DeleteStaffService.deleteStaff(
         selectedStaff.userId
       );
@@ -48,6 +55,7 @@ const StaffDashboard = () => {
       console.log("error " + error);
       toast.error("Error In Staff Deletion. ");
     } finally {
+      setProcessingDeleteStaff(false);
       setShowDeletePopUpWindow(false);
     }
   };
@@ -141,6 +149,7 @@ const StaffDashboard = () => {
             handleCloseWarningWindow={() => setShowDeletePopUpWindow(false)}
             buttonText={"Delete"}
             titleText={"Are you sure you want to delete this staff?"}
+            processing={processingDeleteStaff}
           />
         </div>
       )}

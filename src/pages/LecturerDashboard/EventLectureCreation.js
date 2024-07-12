@@ -11,6 +11,7 @@ import DualButtonComponent from "../../components/buttons/DualButtonComponent";
 import Select from "react-select";
 import ModuleService from "../../api/services/ModuleService";
 import LocationService from "../../api/services/LocationService";
+import { CircularProgress } from "@mui/material";
 
 const EventLectureCreation = ({
   handleCloseCreateLectureWindow,
@@ -83,9 +84,12 @@ const EventLectureCreation = ({
     setModuleName(null);
   };
 
+  const [processingCreateEvent, setProcessingCreateEvent] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setProcessingCreateEvent(true);
       const response = await EventService.saveEvent(
         eventName,
         eventDate,
@@ -110,6 +114,8 @@ const EventLectureCreation = ({
     } catch (error) {
       console.error("Lecture creation failed", error);
       toast.error("Error In Event Creation. ");
+    } finally {
+      setProcessingCreateEvent(false);
     }
   };
 
@@ -295,13 +301,19 @@ const EventLectureCreation = ({
             </div>
 
             <div className="eventCreation-form"></div>
-            <button
-              onClick={() => setQrCodeWindow(true)}
-              type="submit"
-              className="btn btn-success w-100 mt-2"
-            >
-              Create {` ${title}`}
-            </button>
+            {processingCreateEvent ? (
+              <div className="w-100 d-flex flex-row align-items-center justify-content-center">
+                <CircularProgress />
+              </div>
+            ) : (
+              <button
+                onClick={() => setQrCodeWindow(true)}
+                type="submit"
+                className="btn btn-success w-100 mt-2"
+              >
+                Create {` ${title}`}
+              </button>
+            )}
           </form>
         </div>
         {qrCodeWindow && showQRCode && (

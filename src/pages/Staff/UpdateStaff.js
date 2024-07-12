@@ -6,6 +6,7 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import Select from "react-select";
 import UserService from "../../api/services/UserService";
 import { toast, ToastContainer } from "react-toastify";
+import { CircularProgress } from "@mui/material";
 
 const UpdateStaff = ({
   handleCloseUpdateStaffWindow,
@@ -26,9 +27,41 @@ const UpdateStaff = ({
   const departmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA", "DIS"];
   const userRoleList = ["ADMIN", "LECTURER"];
 
+  const [loadingUpdateStaff, setLoadingUpdateStaff] = useState(false);
+
+  const handleInputValidation = () => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (firstName.trim() === "") {
+      toast.error("Please Enter First Name");
+      return false;
+    }
+    if (lastName.trim() === "") {
+      toast.error("Please Enter Last Name");
+      return false;
+    }
+    if (email.trim() === "" || !emailPattern.test(email)) {
+      toast.error("Please Enter a Valid Email");
+      return false;
+    }
+    if (!departmentId) {
+      toast.error("Please Select Department");
+      return false;
+    }
+    if (userRole.trim() === "") {
+      toast.error("Please Select User Role");
+      return false;
+    }
+    return true;
+  };
+
   const handleSaveUser = async (e) => {
     e.preventDefault();
+    if (!handleInputValidation()) {
+      return;
+    }
     try {
+      setLoadingUpdateStaff(true);
       const response = await UserService.updateUser(
         userId,
         firstName,
@@ -40,13 +73,15 @@ const UpdateStaff = ({
       );
       if (response.status === 200) {
         handleReloadStaffList();
-        //handleCloseUpdateStaffWindow();
+        handleCloseUpdateStaffWindow();
         toast.success("User Updated Successfully!");
       } else if (response.status === 400) {
         toast.error(response.data);
       }
     } catch {
       toast.error("User Updation Failed!");
+    } finally {
+      setLoadingUpdateStaff(false);
     }
   };
 
@@ -74,9 +109,6 @@ const UpdateStaff = ({
         </div>
       </div>
       <div className="staff-login-container">
-        {/* <div className="staff-image-container">
-          <img src={Designer} className="staff-logo" alt="Logo" />
-        </div> */}
         <div className="form-container">
           <form onSubmit={handleSaveUser}>
             <div className="staff-creation-input">
@@ -133,9 +165,15 @@ const UpdateStaff = ({
               </div>
             </div>
             <div className="create-staff-create-button">
-              <button type="submit" className="btn btn-warning">
-                <label>Update</label>
-              </button>
+              {loadingUpdateStaff ? (
+                <div className="d-flex justify-content-center align-items-center">
+                  <CircularProgress />
+                </div>
+              ) : (
+                <button type="submit" className="btn btn-warning">
+                  <label>Update</label>
+                </button>
+              )}
             </div>
           </form>
         </div>

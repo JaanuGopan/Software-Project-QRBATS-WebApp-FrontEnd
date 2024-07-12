@@ -4,6 +4,7 @@ import { selectUser } from "../../redux/features/userSlice";
 import "../AdminDashboard/AdminDashboard.css";
 import { TbReportAnalytics } from "react-icons/tb";
 import { GiTeacher } from "react-icons/gi";
+import { CircularProgress } from "@mui/material";
 
 const ModuleReportTable = ({
   handleOpenOverallReportWindow,
@@ -20,6 +21,28 @@ const ModuleReportTable = ({
   const handleModuleClick = (e) => {
     setSelectedModuleReport(e);
     onModuleReportClick(e);
+  };
+
+  const [loadingOverallReport, setLoadingOverallReport] = useState(false);
+
+  const handleOpenOverallReport = async (moduleId) => {
+    try {
+      setLoadingOverallReport(true);
+      await handleOpenOverallReportWindow(moduleId);
+    } finally {
+      setLoadingOverallReport(false);
+    }
+  };
+
+  const [loadingLecturesReport, setLoadingLecturesReport] = useState(false);
+
+  const handleOpenLecturesReport = async (moduleCode) => {
+    try {
+      setLoadingLecturesReport(true);
+      await handleOpenLecturesReportWindow(moduleCode);
+    } finally {
+      setLoadingLecturesReport(false);
+    }
   };
 
   return (
@@ -59,28 +82,36 @@ const ModuleReportTable = ({
                 <td>{module.moduleCode}</td>
                 <td>{module.semester}</td>
                 <td>
-                  <button
-                    onClick={() => {
-                      onModuleReportClick(module);
-                      handleOpenOverallReportWindow(module.moduleId);
-                    }}
-                    className="ViewButton"
-                  >
-                    <TbReportAnalytics className="EditIcon" />
-                    <p className="ViewButtonLabel">Overall Report</p>
-                  </button>
+                  {loadingOverallReport ? (
+                    <CircularProgress />
+                  ) : (
+                    <button
+                      onClick={() => {
+                        onModuleReportClick(module);
+                        handleOpenOverallReport(module.moduleId);
+                      }}
+                      className="ViewButton"
+                    >
+                      <TbReportAnalytics className="EditIcon" />
+                      <p className="ViewButtonLabel">Overall Report</p>
+                    </button>
+                  )}
                 </td>
                 <td>
-                  <button
-                    onClick={() => {
-                      onModuleReportClick(module);
-                      handleOpenLecturesReportWindow(module.moduleCode);
-                    }}
-                    className="ViewButton"
-                  >
-                    <GiTeacher className="EditIcon" />
-                    <p className="ViewButtonLabel">Lectures Report</p>
-                  </button>
+                  {loadingLecturesReport ? (
+                    <CircularProgress />
+                  ) : (
+                    <button
+                      onClick={() => {
+                        onModuleReportClick(module);
+                        handleOpenLecturesReport(module.moduleCode);
+                      }}
+                      className="ViewButton"
+                    >
+                      <GiTeacher className="EditIcon" />
+                      <p className="ViewButtonLabel">Lectures Report</p>
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}

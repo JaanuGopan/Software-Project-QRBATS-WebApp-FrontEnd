@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import "./Student.css";
-import { useNavigate } from "react-router-dom";
 import InputField from "../../components/textfields/InputBox/InputField";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import Select from "react-select";
 import StudentService from "../../api/services/StudentService";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
+import { CircularProgress } from "@mui/material";
 
 const UpdateStudentWindow = ({
   handleCloseUpdateStudentWindow,
@@ -16,11 +16,10 @@ const UpdateStudentWindow = ({
   const [indexNumber, setIndexNumber] = useState(student.indexNumber);
   const [studentName, setStudentName] = useState(student.studentName);
   const [studentEmail, setStudentEmail] = useState(student.studentEmail);
-  const [password, setPassword] = useState(student.password);
   const [userName, setUserName] = useState(student.username);
   const [StudentRole, setStudentRole] = useState(student.studentRole);
   const [departmentId, setDepartmentId] = useState(student.departmentId);
-  const departmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA", "DIS"];
+  const departmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA"];
 
   const [department, setDepartment] = useState({
     value: departmentList[student.departmentId - 1],
@@ -34,9 +33,59 @@ const UpdateStudentWindow = ({
 
   const [updateSuccess, setUpdateSuccess] = useState(false);
 
+  const [processing, setProcessing] = useState(false);
+
+  const handleInputValidation = () => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!studentName.trim()) {
+      toast.error("Student name is required");
+      return false;
+    }
+    // indexno = "EG/20XX/XXXX"
+    const indexNoPattern = /^EG\/20[0-9]{2}\/[0-9]{4}$/;
+
+    if (!indexNoPattern.test(indexNumber)) {
+      toast.error("Invalid index number");
+      return false;
+    }
+
+    if (!indexNumber.trim()) {
+      toast.error("Index number is required");
+      return false;
+    }
+
+    if (!studentEmail.trim() || !emailPattern.test(studentEmail)) {
+      toast.error("A valid email is required");
+      return false;
+    }
+
+    if (!userName.trim()) {
+      toast.error("Username is required");
+      return false;
+    }
+
+    if (!department.value) {
+      toast.error("Department is required");
+      return false;
+    }
+
+    if (!semester.value) {
+      toast.error("Semester is required");
+      return false;
+    }
+
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!handleInputValidation()) {
+      return;
+    }
+
     try {
+      setProcessing(true);
       const response = await StudentService.updateStudent(
         studentId,
         studentName,
@@ -55,8 +104,10 @@ const UpdateStudentWindow = ({
         toast.error(response.data);
       }
     } catch (error) {
-      console.error("Login failed", error);
-      toast.error("Error In Updating Student. ");
+      console.error("Update failed", error);
+      toast.error("Error In Updating Student.");
+    } finally {
+      setProcessing(false);
     }
   };
 
@@ -86,10 +137,10 @@ const UpdateStudentWindow = ({
               </div>
             </div>
             <div className="student-creation-input">
-              <label>IndexNumber</label>
+              <label>Index Number</label>
               <div className="student-creation-input-field">
                 <InputField
-                  placeholder="Enter Student IndexNo"
+                  placeholder="Enter Student Index No"
                   value={indexNumber}
                   onChange={(e) => setIndexNumber(e.target.value)}
                   inputType="text"
@@ -112,7 +163,7 @@ const UpdateStudentWindow = ({
               <div className="student-creation-input-field">
                 <Select
                   required
-                  placeholder="Enter Department"
+                  placeholder="Enter Semester"
                   value={semester}
                   onChange={(e) => setSemester(e)}
                   options={semesterList.map((sem) => ({
@@ -122,7 +173,6 @@ const UpdateStudentWindow = ({
                 />
               </div>
             </div>
-
             <div className="student-creation-input">
               <label>Department</label>
               <div className="student-creation-input-field">
@@ -151,12 +201,16 @@ const UpdateStudentWindow = ({
             </div> */}
 
             <div className="update-student-buttons-container">
-              <button
-                type="submit"
-                className="btn btn-warning update-student-save-button"
-              >
-                Save
-              </button>
+              {processing ? (
+                <CircularProgress />
+              ) : (
+                <button
+                  type="submit"
+                  className="btn btn-warning update-student-save-button"
+                >
+                  Save
+                </button>
+              )}
             </div>
           </form>
         </div>

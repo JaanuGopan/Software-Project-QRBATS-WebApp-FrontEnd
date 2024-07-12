@@ -73,21 +73,30 @@ const LecturerDashboard = () => {
     setShowDeleteLecturePopup(true);
   };
 
+  const [processingDeleteLecture, setProcessingDeleteLecture] = useState(false);
+
   const handleDeleteLecture = async () => {
-    const response = await LectureService.deleteLecture(
-      selectedLecture.lectureId
-    );
-    if (response.status === 200) {
-      handleReloadLectureList();
-      setSelectedLecture(null);
-      toast.success(
-        `Successfully ${selectedLecture.lectureName} Lecture Deleted.`
+    try {
+      setProcessingDeleteLecture(true);
+      const response = await LectureService.deleteLecture(
+        selectedLecture.lectureId
       );
-      setShowDeleteLecturePopup(false);
-    } else if (response.status === 400) {
-      toast.error(response.data);
-    } else {
-      toast.error(`Error In Deleting Lecture ${selectedLecture.lectureName}.`);
+      if (response.status === 200) {
+        handleReloadLectureList();
+        setSelectedLecture(null);
+        toast.success(
+          `Successfully ${selectedLecture.lectureName} Lecture Deleted.`
+        );
+        setShowDeleteLecturePopup(false);
+      } else if (response.status === 400) {
+        toast.error(response.data);
+      } else {
+        toast.error(
+          `Error In Deleting Lecture ${selectedLecture.lectureName}.`
+        );
+      }
+    } finally {
+      setProcessingDeleteLecture(false);
     }
   };
 
@@ -112,24 +121,30 @@ const LecturerDashboard = () => {
     setShowDeleteEventPopup(true);
   };
 
+  const [processingDeleteEvent, setProcessingDeleteEvent] = useState(false);
   const handleDeleteEventLecture = async () => {
     if (selectedEventLecture) {
-      const response = await EventService.deleteEvent(
-        selectedEventLecture.eventId
-      );
-      if (response.status === 200) {
-        handleReloadEventLectureList();
-        setSelectedEventLecture(null);
-        toast.success(
-          `Successfully ${selectedEventLecture.eventName} Event Deleted.`
+      try {
+        setProcessingDeleteEvent(true);
+        const response = await EventService.deleteEvent(
+          selectedEventLecture.eventId
         );
-        setShowDeleteEventPopup(false);
-      } else if (response.status === 400) {
-        toast.error(response.data);
-      } else {
-        toast.error(
-          `Error In Deleting Lecture ${selectedEventLecture.eventName}.`
-        );
+        if (response.status === 200) {
+          handleReloadEventLectureList();
+          setSelectedEventLecture(null);
+          toast.success(
+            `Successfully ${selectedEventLecture.eventName} Event Deleted.`
+          );
+          setShowDeleteEventPopup(false);
+        } else if (response.status === 400) {
+          toast.error(response.data);
+        } else {
+          toast.error(
+            `Error In Deleting Lecture ${selectedEventLecture.eventName}.`
+          );
+        }
+      } finally {
+        setProcessingDeleteEvent(false);
       }
     }
   };
@@ -255,10 +270,7 @@ const LecturerDashboard = () => {
         </div>
       )}
       {showUpdateLecturePopup && (
-        <div
-          handleClick={() => setShowUpdateLecturePopup(false)}
-          className="Admin-Create-Event-Dashboard"
-        >
+        <div className="Admin-Create-Event-Dashboard">
           <AdminUpdateEvent
             handleCloseEventUpdateWindow={() =>
               setShowUpdateLecturePopup(false)
@@ -290,6 +302,7 @@ const LecturerDashboard = () => {
             handleOk={handleDeleteLecture}
             titleText={"Are You Sure You Want To Delete This Lecture?"}
             buttonText={"Delete"}
+            processing={processingDeleteLecture}
           />
         </div>
       )}
@@ -300,6 +313,7 @@ const LecturerDashboard = () => {
             handleOk={handleDeleteEventLecture}
             titleText={"Are You Sure You Want To Delete This Event?"}
             buttonText={"Delete"}
+            processing={processingDeleteEvent}
           />
         </div>
       )}

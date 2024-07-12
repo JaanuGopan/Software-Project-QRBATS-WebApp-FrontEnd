@@ -35,15 +35,21 @@ const StudentDashboard = () => {
     handleReloadStudentList();
   }, []);
 
+  const [processingDeleteStudent, setProcessingDeleteStudent] = useState(false);
   const handelDeleteStudent = async () => {
-    const response = await StudentService.deleteStudent(
-      selectedStudent.studentId
-    );
-    if (response) {
-      handleReloadStudentList();
-      setShowDeletePopUpWindow(false);
-      toast.success("Successfully Deleted.");
-      setSelectedStudent(null);
+    try {
+      setProcessingDeleteStudent(true);
+      const response = await StudentService.deleteStudent(
+        selectedStudent.studentId
+      );
+      if (response) {
+        handleReloadStudentList();
+        setShowDeletePopUpWindow(false);
+        toast.success("Successfully Deleted.");
+        setSelectedStudent(null);
+      }
+    } finally {
+      setProcessingDeleteStudent(false);
     }
   };
 
@@ -124,6 +130,7 @@ const StudentDashboard = () => {
             handleCloseWarningWindow={() => setShowDeletePopUpWindow(false)}
             buttonText={"Delete"}
             titleText={"Are you sure you want to delete this student?"}
+            processing={processingDeleteStudent}
           />
         </div>
       )}

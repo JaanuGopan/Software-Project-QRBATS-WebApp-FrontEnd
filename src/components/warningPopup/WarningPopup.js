@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./WarningPopup.css";
+import { CircularProgress } from "@mui/material";
 
 const WarningPopup = ({
   handleCloseWarningWindow,
@@ -7,6 +8,7 @@ const WarningPopup = ({
   handleCancel,
   buttonText,
   titleText,
+  processing = false,
 }) => {
   return (
     <div className="warning-popup-main-container">
@@ -15,9 +17,13 @@ const WarningPopup = ({
           <h6>{titleText}</h6>
         </div>
         <div className="warning-popup-buttons">
-          <button onClick={handleOk} className="btn btn-danger">
-            {buttonText}
-          </button>
+          {processing ? (
+            <CircularProgress />
+          ) : (
+            <button onClick={handleOk} className="btn btn-danger">
+              {buttonText}
+            </button>
+          )}
           <button
             onClick={handleCloseWarningWindow}
             className="btn btn-secondary"

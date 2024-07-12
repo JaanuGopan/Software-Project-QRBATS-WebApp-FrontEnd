@@ -15,6 +15,7 @@ import LectureService from "../../api/services/LectureService";
 import AttendanceService from "../../api/services/AttendanceService";
 import { ToastContainer, toast } from "react-toastify";
 import LectureWithDateReportTable from "./LectureWithDateReportTable";
+import { CircularProgress } from "@mui/material";
 
 const ReportPage = () => {
   const user = useSelector(selectUser);
@@ -98,8 +99,11 @@ const ReportPage = () => {
     }
   };
 
+  const [loadingDownloadReport, setLoadingDownloadReport] = useState(false);
+
   const handleDownloadReport = async (lectureId, date) => {
     try {
+      setLoadingDownloadReport(true);
       const response =
         await AttendanceService.downloadLectureAttendanceByLectureIdAndDate(
           lectureId,
@@ -121,6 +125,8 @@ const ReportPage = () => {
       }
     } catch (error) {
       toast.error("An error occurred while downloading the report.");
+    } finally {
+      setLoadingDownloadReport(false);
     }
   };
 
@@ -181,8 +187,12 @@ const ReportPage = () => {
     }
   };
 
+  const [loadingDownloadOverallReport, setLoadingDownloadOverallReport] =
+    useState(false);
+
   const handleOverallReportDownload = async () => {
     try {
+      setLoadingDownloadOverallReport(true);
       const response =
         await AttendanceService.downloadOverallStudentReportByModuleId(
           moduleId
@@ -203,6 +213,8 @@ const ReportPage = () => {
       }
     } catch (error) {
       toast.error("An error occurred while downloading the report.");
+    } finally {
+      setLoadingDownloadOverallReport(false);
     }
   };
 
@@ -256,15 +268,19 @@ const ReportPage = () => {
                 title={"Back"}
                 titlewithiconicon={<MdArrowBack className="staff-buttonIcon" />}
               />
-              <NormalButton
-                title={"Print"}
-                handleClick={() => {
-                  handleOverallReportDownload();
-                }}
-                titlewithiconicon={
-                  <BiSolidPrinter className="staff-buttonIcon" />
-                }
-              />
+              {loadingDownloadOverallReport ? (
+                <CircularProgress />
+              ) : (
+                <NormalButton
+                  title={"Print"}
+                  handleClick={() => {
+                    handleOverallReportDownload();
+                  }}
+                  titlewithiconicon={
+                    <BiSolidPrinter className="staff-buttonIcon" />
+                  }
+                />
+              )}
             </div>
           </div>
         )}
@@ -289,13 +305,6 @@ const ReportPage = () => {
                 title={"Back"}
                 titlewithiconicon={<MdArrowBack className="staff-buttonIcon" />}
               />
-              {/* <NormalButton
-                title={"Print"}
-                handleClick={() => {}}
-                titlewithiconicon={
-                  <BiSolidPrinter className="staff-buttonIcon" />
-                }
-              /> */}
             </div>
           </div>
         )}
@@ -320,13 +329,6 @@ const ReportPage = () => {
                 title={"Back"}
                 titlewithiconicon={<MdArrowBack className="staff-buttonIcon" />}
               />
-              {/* <NormalButton
-                title={"Print"}
-                handleClick={() => {}}
-                titlewithiconicon={
-                  <BiSolidPrinter className="staff-buttonIcon" />
-                }
-              /> */}
             </div>
           </div>
         )}
@@ -348,18 +350,22 @@ const ReportPage = () => {
                 title={"Back"}
                 titlewithiconicon={<MdArrowBack className="staff-buttonIcon" />}
               />
-              <NormalButton
-                title={"Print"}
-                handleClick={() =>
-                  handleDownloadReport(
-                    selectedLectureWithDate.lectureId,
-                    selectedLectureWithDate.lectureDate
-                  )
-                }
-                titlewithiconicon={
-                  <BiSolidPrinter className="staff-buttonIcon" />
-                }
-              />
+              {loadingDownloadReport ? (
+                <CircularProgress />
+              ) : (
+                <NormalButton
+                  title={"Print"}
+                  handleClick={() =>
+                    handleDownloadReport(
+                      selectedLectureWithDate.lectureId,
+                      selectedLectureWithDate.lectureDate
+                    )
+                  }
+                  titlewithiconicon={
+                    <BiSolidPrinter className="staff-buttonIcon" />
+                  }
+                />
+              )}
             </div>
           </div>
         )}

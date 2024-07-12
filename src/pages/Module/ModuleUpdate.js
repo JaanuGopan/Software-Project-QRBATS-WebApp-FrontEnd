@@ -9,6 +9,7 @@ import ModuleService from "../../api/services/ModuleService";
 import { selectUser } from "../../redux/features/userSlice";
 import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
+import { CircularProgress } from "@mui/material";
 
 const ModuleUpdate = ({
   handleCloseModuleUpdateWindow,
@@ -32,9 +33,12 @@ const ModuleUpdate = ({
 
   const semesterList = ["1", "2", "3", "4", "5", "6", "7", "8"];
 
+  const [processing, setProcessing] = useState(false);
+
   const handleUpdateModule = async (e) => {
     e.preventDefault();
     try {
+      setProcessing(true);
       const response = await ModuleService.updateModule(
         moduleId,
         moduleCode,
@@ -57,6 +61,8 @@ const ModuleUpdate = ({
     } catch (error) {
       console.error("Fail To Update modules.", error);
       toast.error("Error In Updating Module.");
+    } finally {
+      setProcessing(false);
     }
   };
 
@@ -71,7 +77,7 @@ const ModuleUpdate = ({
   return (
     <div className="module-update-main-container">
       <div className="module-create-title-close-button">
-        <h3 className="module-create-title">Create Module</h3>
+        <h3 className="module-create-title">Update Module</h3>
         <div
           className="module-create-close-button"
           onClick={handleCloseModuleUpdateWindow}
@@ -150,9 +156,13 @@ const ModuleUpdate = ({
             </div>
 
             <div className="create-module-create-button">
-              <button type="submit" className="btn btn-warning">
-                Save module
-              </button>
+              {processing ? (
+                <CircularProgress />
+              ) : (
+                <button type="submit" className="btn btn-warning">
+                  Save module
+                </button>
+              )}
             </div>
           </form>
         </div>

@@ -190,6 +190,7 @@ input[type="password"]::placeholder {
 
 .forgot-password{
     padding: 10px;
+    cursor: pointer;
 }
 
 .forgot-password:hover{

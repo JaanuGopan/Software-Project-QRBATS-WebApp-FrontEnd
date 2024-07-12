@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../../pages/AdminDashboard/AdminDashboard.css";
 import { CiViewList } from "react-icons/ci";
+import { CircularProgress } from "@mui/material";
 
 const LectureWithDateReportTable = ({
   handleOpenLectureAttendanceReportWindow,
@@ -13,6 +14,19 @@ const LectureWithDateReportTable = ({
   const handleLectureReportClick = (e) => {
     setSelectedLectureWithDate(e);
     onLectureWithDateClick(e);
+  };
+
+  const [isLoading, setIsLoading] = useState(false);
+  const handleViewReport = async (lecture) => {
+    try {
+      setIsLoading(true);
+      await handleOpenLectureAttendanceReportWindow(
+        lecture.lectureId,
+        lecture.lectureDate
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -61,20 +75,21 @@ const LectureWithDateReportTable = ({
                 <td>{lecture.lectureStartTime}</td>
                 <td>{lecture.lectureEndTime}</td>
                 <td>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleOpenLectureAttendanceReportWindow(
-                        lecture.lectureId,
-                        lecture.lectureDate
-                      );
-                      handleLectureReportClick(lecture);
-                    }}
-                    className="ViewButton"
-                  >
-                    <CiViewList className="EditIcon" />
-                    <p className="ViewButtonLabel">View Report</p>
-                  </button>
+                  {isLoading ? (
+                    <CircularProgress />
+                  ) : (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleViewReport(lecture);
+                        handleLectureReportClick(lecture);
+                      }}
+                      className="ViewButton"
+                    >
+                      <CiViewList className="EditIcon" />
+                      <p className="ViewButtonLabel">View Report</p>
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}

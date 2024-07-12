@@ -13,6 +13,7 @@ import MainNavigationPage from "./pages/MainNavigation/MainNavigation";
 import StaffMainNavigation from "./pages/StaffMainNavigation/StaffMainNavigation";
 import EventReport from "./pages/Event/EventReport";
 import LecturerDashboard from "./pages/LecturerDashboard/LecturerDashboard";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 
 const router = createBrowserRouter([
   {
@@ -22,10 +23,6 @@ const router = createBrowserRouter([
   {
     path: "signin",
     element: <Signin />,
-  },
-  {
-    path: "signup",
-    element: <SignUp />,
   },
   {
     path: "id",

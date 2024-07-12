@@ -171,6 +171,23 @@ class ApiConstants {
     );
   }
 
+  static sendOtpUrl(email) {
+    return ApiConstants.baseUrl + "/auth/forgotpasswordsendotp?email=" + email;
+  }
+  static verifyOtp(email, otp) {
+    return (
+      ApiConstants.baseUrl +
+      `/auth/forgotpasswordverifyotp?email=${email}&otp=${otp}`
+    );
+  }
+
+  static resetPasswordUrl(email, password, userName) {
+    return (
+      ApiConstants.baseUrl +
+      `/auth/forgotpasswordresetpassword?email=${email}&password=${password}&userName=${userName}`
+    );
+  }
+
   static get updateUserUrl() {
     return ApiConstants.baseUrl + "/auth/updateuser";
   }

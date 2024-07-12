@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/userSlice";
 import QRCode from "qrcode.react";
 import EventService from "../../api/services/EventService";
+import { CircularProgress } from "@mui/material";
 
 const AdminUpdateEvent = ({
   handleCloseEventUpdateWindow,
@@ -38,10 +39,11 @@ const AdminUpdateEvent = ({
   const user = useSelector(selectUser);
   // Destructure user object for cleaner code
   const { userId } = user || {};
-
+  const [processingUpdateEvent, setProcessingUpdateEvent] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setProcessingUpdateEvent(true);
       const response = await EventService.updateEvent(
         eventId,
         eventName,
@@ -66,6 +68,8 @@ const AdminUpdateEvent = ({
     } catch (error) {
       console.error("Event failed", error);
       toast.error("Error In Event Update. ");
+    } finally {
+      setProcessingUpdateEvent(false);
     }
   };
 
@@ -211,9 +215,15 @@ const AdminUpdateEvent = ({
               </div>
             </div>
             <div className="eventCreation-form"></div>
-            <button type="submit" className="btn btn-warning w-100">
-              Update
-            </button>
+            {processingUpdateEvent ? (
+              <div className="d-flex justify-content-center align-items-center">
+                <CircularProgress />
+              </div>
+            ) : (
+              <button type="submit" className="btn btn-warning w-100">
+                Update
+              </button>
+            )}
           </form>
         </div>
       </div>
