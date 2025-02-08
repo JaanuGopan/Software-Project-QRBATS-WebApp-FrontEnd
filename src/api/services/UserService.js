@@ -1,4 +1,4 @@
-import axios from "../config/axiosInterceptor";
+import axios from "axios";
 import { login } from "../../redux/features/userSlice";
 import JwtService from "./JwtService";
 class UserService {

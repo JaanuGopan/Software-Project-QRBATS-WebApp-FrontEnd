@@ -1,4 +1,4 @@
-import axios from "../config/axiosInterceptor";
+import axios from "axios";
 
 class LoginService {
   static async loginUser(userName, password) {
