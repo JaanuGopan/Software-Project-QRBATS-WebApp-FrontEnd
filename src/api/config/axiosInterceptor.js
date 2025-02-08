@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-const developmentBaseUrl = 'http://10.50.227.44:8080';
+const developmentBaseUrl = 'http://localhost:8080';
 const productionBaseUrl = 'https://api.example.com';
+const facultyBaseUrl = 'http://10.50.227.44:8080';
 
 const TIMEOUT = 60 * 1000; // 60 seconds timeout
 
@@ -37,12 +38,14 @@ axios.interceptors.response.use(
   (error) => {
     if (error.response) {
       console.error('Response error:', error.response);
-
       if (error.response.status === 401) {
         console.warn('Unauthorized! Redirecting to login.');
-        window.location.href = '/login';
+        // handle unauthorized access
+        handleLogout();
       } else if (error.response.status === 403) {
         console.warn('Forbidden! Access denied.');
+        // handle forbidden access
+        handleLogout();
       } else if (error.response.status >= 500) {
         console.error('Server error! Please try again later.');
       }
@@ -53,6 +56,12 @@ axios.interceptors.response.use(
     }
 
     return Promise.reject(error);
+
+    function handleLogout() {
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('user');
+      window.location.href = '/signin';
+    }
   }
 );
 
