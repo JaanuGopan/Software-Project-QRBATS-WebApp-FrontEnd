@@ -1,18 +1,18 @@
 .input-with-icon {
-    position: relative;
+  position: relative;
 }
 
 .input-with-icon input {
-    padding-right: 30px;
-    /* Add some padding to accommodate the icon */
+  padding-right: 30px;
+  /* Add some padding to accommodate the icon */
 }
 
 .password-toggle-icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #888;
-    /* You can change the color to fit your design */
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
+  /* You can change the color to fit your design */
 }

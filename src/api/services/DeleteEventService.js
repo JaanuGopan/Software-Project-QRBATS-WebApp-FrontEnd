@@ -1,17 +1,16 @@
-import axios from "axios";
-import ApiConstants from "../config/ApiConstants";
+import axios from 'axios';
 
 class DeleteEventService {
   static async deleteEvent(eventId) {
     try {
-      const response = await axios.post(ApiConstants.deleteEventUrl, {
+      const response = await axios.post('/api/v1/event/deletebyid', {
         eventId: eventId,
       });
-      console.log("deleted Successfully..");
+      console.log('deleted Successfully..');
       return response.data.token;
     } catch (error) {
-      throw new Error("Delete Failed ", error);
-    } 
+      throw new Error('Delete Failed ', error);
+    }
   }
 }
 

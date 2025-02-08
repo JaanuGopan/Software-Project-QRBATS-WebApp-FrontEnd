@@ -1,33 +1,23 @@
-import axios from "axios";
-import ApiConstants from "../config/ApiConstants";
-import { useDispatch } from "react-redux";
-import { login } from "../../redux/features/userSlice";
-import JwtService from "./JwtService";
+import axios from 'axios';
+import { login } from '../../redux/features/userSlice';
+import JwtService from './JwtService';
 class UserService {
   static verifyPassword = async (userName, password) => {
     try {
       const response = await axios.get(
-        ApiConstants.verifyPasswordUrl(userName, password)
+        `/api/v1/auth/verifypassword?userName=${userName}&password=${password}`
       );
       if (response) {
         return response.data;
       }
     } catch (error) {
-      console.log("Fail to verify password. " + error);
+      console.log('Fail to verify password. ' + error);
     }
   };
 
-  static async updateUser(
-    userId,
-    firstName,
-    lastName,
-    email,
-    userName,
-    password,
-    departmentId
-  ) {
+  static async updateUser(userId, firstName, lastName, email, userName, password, departmentId) {
     try {
-      const response = await axios.put(ApiConstants.updateUserUrl, {
+      const response = await axios.put('/api/v1/auth/updateuser', {
         userId: userId,
         firstName: firstName,
         lastName: lastName,
@@ -49,7 +39,7 @@ class UserService {
   static async loginUser(userName, password, dispatch) {
     try {
       const response = await axios.get(
-        ApiConstants.loginUrl(userName, password)
+        `/api/v1/auth/signin?userName=${userName}&password=${password}`
       );
       if (response.status === 200) {
         if (response.data.token) {
@@ -61,7 +51,7 @@ class UserService {
           const loginUserRole = decodedToken.role;
           const loginUserId = decodedToken.userId;
           const loginUserDepartmentId = decodedToken.departmentId;
-          localStorage.setItem("token", response.data.token);
+          localStorage.setItem('authToken', response.data.token);
 
           const userData = {
             token: response.data.token,
@@ -73,7 +63,7 @@ class UserService {
             departmentId: loginUserDepartmentId,
             userName: loginUserName,
           };
-          localStorage.setItem("user", JSON.stringify(userData));
+          localStorage.setItem('user', JSON.stringify(userData));
 
           dispatch(
             login({
@@ -92,14 +82,14 @@ class UserService {
         }
       }
     } catch (error) {
-      console.error("Login failed", error);
+      console.error('Login failed', error);
       return error.response;
     }
   }
 
   static sendOtp = async (email) => {
     try {
-      const response = await axios.post(ApiConstants.sendOtpUrl(email));
+      const response = await axios.post(`/api/v1/auth/forgotpasswordsendotp?email=${email}`);
       if (response.status === 200) {
         if (response.data === true) {
           return response;
@@ -114,14 +104,16 @@ class UserService {
 
   static verifyOtp = async (email, otp) => {
     try {
-      const response = await axios.get(ApiConstants.verifyOtp(email, otp));
+      const response = await axios.get(
+        `/api/v1/auth/forgotpasswordverifyotp?email=${email}&otp=${otp}`
+      );
       if (response.status === 200) {
         if (response.data === true) {
           return response;
         }
       }
     } catch (error) {
-      console.log("Fail to verify password. " + error);
+      console.log('Fail to verify password. ' + error);
       if (error.response.status === 400) {
         return error.response;
       }
@@ -131,7 +123,7 @@ class UserService {
   static resetPassword = async (email, password, userName) => {
     try {
       const response = await axios.put(
-        ApiConstants.resetPasswordUrl(email, password, userName)
+        `/api/v1/auth/forgotpasswordresetpassword?email=${email}&password=${password}&userName=${userName}`
       );
       if (response.status === 200) {
         return response;

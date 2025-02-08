@@ -1,13 +1,12 @@
-import axios from "axios";
-import ApiConstants from "../config/ApiConstants";
+import axios from 'axios';
 
 class EventService {
   static async fetchEvents() {
     try {
-      const response = await axios.post(ApiConstants.getAllEventUrl);
+      const response = await axios.post('/api/v1/event/getallevents');
       return response.data;
     } catch (error) {
-      console.error("Error fetching events:", error);
+      console.error('Error fetching events:', error);
       throw error; // Re-throw the error to handle it in the component
     }
   }
@@ -23,7 +22,7 @@ class EventService {
     userId
   ) {
     try {
-      const response = await axios.post(ApiConstants.createEventUrl, {
+      const response = await axios.post('/api/v1/event/create', {
         eventName: eventName,
         eventDate: eventDate,
         eventTime: eventTime,
@@ -37,7 +36,7 @@ class EventService {
         return response;
       }
     } catch (error) {
-      console.error("Event creation failed", error);
+      console.error('Event creation failed', error);
       if (error.response.status === 400) {
         return error.response;
       }
@@ -46,12 +45,10 @@ class EventService {
 
   static async getEventByUserID(userId) {
     try {
-      const response = await axios.get(
-        ApiConstants.getAllEventByUserIdUrl + "/" + userId
-      );
+      const response = await axios.get(`/api/v1/event/geteventbyuserid/${userId}`);
       return response.data;
     } catch (error) {
-      console.log("Event Get Failed ", error);
+      console.log('Event Get Failed ', error);
     }
   }
 
@@ -67,7 +64,7 @@ class EventService {
     userId
   ) {
     try {
-      const response = await axios.put(ApiConstants.updateEventUrl, {
+      const response = await axios.put('/api/v1/event/update', {
         eventId: eventId,
         eventName: eventName,
         eventDate: eventDate,
@@ -83,7 +80,7 @@ class EventService {
         return response;
       }
     } catch (error) {
-      console.error("Event creation failed", error);
+      console.error('Event creation failed', error);
       if (error.response.status === 400) {
         return error.response;
       }
@@ -92,21 +89,17 @@ class EventService {
 
   static async getEventByUserID(userId) {
     try {
-      const response = await axios.get(
-        ApiConstants.getAllEventByUserIdUrl + "/" + userId
-      );
+      const response = await axios.get(`/api/v1/event/geteventbyuserid/${userId}`);
       return response.data;
     } catch (error) {
-      console.log("Event Get Failed ", error);
+      console.log('Event Get Failed ', error);
     }
   }
 
   static async deleteEvent(eventId) {
     try {
-      const response = await axios.delete(
-        ApiConstants.deleteEventUrl + "/" + `${eventId}`
-      );
-      console.log("deleted Successfully..");
+      const response = await axios.delete(`/api/v1/event/deletebyid/${eventId}`);
+      console.log('deleted Successfully..');
       if (response.status === 200) {
         return response;
       }
@@ -120,7 +113,7 @@ class EventService {
   static async getAllLectureByModuleCode(moduleCode) {
     try {
       const response = await axios.get(
-        ApiConstants.getAllLecturesByModuleCode(moduleCode)
+        `/api/v1/event/getalleventbymodulecode?moduleCode=${moduleCode}`
       );
       if (response.data) {
         console.log(response.data);

@@ -1,8 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 export const locationListSlice = createSlice({
-  name: "locationList",
-  initialState: ["NCC", "LT1", "LT2", "Auditorium", "DEIE", "DMME", "DCEE"],
+  name: 'locationList',
+  initialState: ['NCC', 'LT1', 'LT2', 'Auditorium', 'DEIE', 'DMME', 'DCEE'],
   reducers: {
     setLocationList: (state, action) => {
       state = [];

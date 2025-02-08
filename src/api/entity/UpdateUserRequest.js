@@ -1,3 +1,1 @@
-class UpdateUserRequest{
-    
-}
+class UpdateUserRequest {}
