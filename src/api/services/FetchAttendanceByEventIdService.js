@@ -1,18 +1,16 @@
-// FetchEventsService.js
-import axios from "axios";
-import ApiConstants from "../config/ApiConstants";
+import axios from "../config/axiosInterceptor";
 
 class FetchAttendanceByEventIdService {
   static async fetchAttendance(eventId) {
     try {
       const response = await axios.get(
-        ApiConstants.getAttendanceByEventIdUrl(eventId)
+        `/api/v1/attendance/getallattendancebyeventid/${eventId}`
       );
 
       return response.data;
     } catch (error) {
       console.error("Error fetching attendance:", error);
-      throw error; // Re-throw the error to handle it in the component
+      throw error;
     }
   }
 }

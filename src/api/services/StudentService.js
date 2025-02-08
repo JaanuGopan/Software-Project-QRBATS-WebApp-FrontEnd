@@ -1,22 +1,19 @@
-import axios from "axios";
-import ApiConstants from "../config/ApiConstants";
+import axios from "../config/axiosInterceptor";
 
 class StudentService {
-  static getStudentsByDepartmentIdAndSemester = async (
+  /* static getStudentsByDepartmentIdAndSemester = async (
     departmentId,
     semester
   ) => {
-    const response = await fetch(
-      ApiConstants.getAllStudentsByDepartmentIdAndSemester +
-        `?deptId=${departmentId}&sem=${semester}`
+    const response = await axios.get(ApiConstants.getAllStudentsByDepartmentIdAndSemester + `?deptId=${departmentId}&sem=${semester}`
     )
       .then(() => {
-        return response.json;
+        return response.data;
       })
       .catch((e) => {
         throw console.error(e);
       });
-  };
+  }; */
 
   static createStudentByAdmin = async (
     studentId,
@@ -29,7 +26,7 @@ class StudentService {
     departmentId
   ) => {
     try {
-      const response = await axios.post(ApiConstants.createStudentByAdminUrl, {
+      const response = await axios.post("/api/v1/mobile/createstudentbyadmin", {
         studentId,
         studentName,
         indexNumber,
@@ -50,7 +47,7 @@ class StudentService {
 
   static async getAllStudent() {
     try {
-      const response = await axios.post(ApiConstants.getAllStudentUrl);
+      const response = await axios.post("/api/v1/mobile/getallstudents");
       if (response.status === 200) {
         return response.data;
       }
@@ -63,7 +60,7 @@ class StudentService {
   static async deleteStudent(studentId) {
     try {
       const response = await axios.delete(
-        ApiConstants.deleteStudentUrl(studentId)
+        `/api/v1/mobile/deletestudentbystudentid/${studentId}`
       );
       if (response.status === 200) {
         return response.data;
@@ -83,7 +80,7 @@ class StudentService {
     semester
   ) {
     try {
-      const response = await axios.put(ApiConstants.updateStudentUrl, {
+      const response = await axios.put("/api/v1/mobile/updatestudent", {
         id: id,
         studentName: studentName,
         indexNumber: indexNo,

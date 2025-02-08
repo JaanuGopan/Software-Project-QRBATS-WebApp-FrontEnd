@@ -1,11 +1,10 @@
-import axios from "axios";
-import ApiConstants from "../config/ApiConstants";
+import axios from "../config/axiosInterceptor";
 
 class AttendanceService {
   static getAllAttendanceByLectureId = async (lectureId) => {
     try {
       const response = await axios.get(
-        ApiConstants.getAllLectureAttendanceByLectureIdUrl(lectureId)
+        `/api/v1/lectureattendance/getallattendancebylectureid/${lectureId}`
       );
       if (response.status === 200) {
         return response;
@@ -21,7 +20,7 @@ class AttendanceService {
   static downloadLectureAttendance = async (lectureId) => {
     try {
       const response = await axios.get(
-        ApiConstants.downloadLectureAttendanceByLectureIdUrl(lectureId)
+        `/api/v1/export/getcsv/${lectureId}`
       );
       if (response.status === 200) {
         return response;
@@ -34,7 +33,7 @@ class AttendanceService {
   static downloadEventAttendance = async (eventId) => {
     try {
       const response = await axios.get(
-        ApiConstants.downloadEventAttendanceByEventIdUrl(eventId)
+        `/api/v1/export/geteventreport/${eventId}`
       );
       return response;
     } catch (error) {
@@ -48,7 +47,7 @@ class AttendanceService {
   static getStudentsAttendanceDetails = async (moduleId) => {
     try {
       const response = await axios.get(
-        ApiConstants.getStudentAttendanceDetails(moduleId)
+        `/api/v1/lectureattendance/getallstudentattendancebymoduleId/${moduleId}`
       );
 
       return response;
@@ -63,10 +62,7 @@ class AttendanceService {
   static getAllAttendanceByLectureIdAndDate = async (lectureId, date) => {
     try {
       const response = await axios.get(
-        ApiConstants.getAllLectureAttendanceByLectureIdAndDateUrl(
-          lectureId,
-          date
-        )
+        `/api/v1/lectureattendance/getallattendancebylectureidanddate?lectureId=${lectureId}&date=${date}`
       );
       return response;
     } catch (error) {
@@ -84,10 +80,7 @@ class AttendanceService {
   ) => {
     try {
       const response = await axios.get(
-        ApiConstants.downloadLectureAttendanceByLectureIdAndDateUrl(
-          lectureId,
-          date
-        )
+        `/api/v1/export/donwloadattendancebylectureidanddate?lectureId=${lectureId}&date=${date}`
       );
       if (response.status === 200) {
         return response;
@@ -101,7 +94,7 @@ class AttendanceService {
   static downloadOverallStudentReportByModuleId = async (moduleId) => {
     try {
       const response = await axios.get(
-        ApiConstants.downloadOverallStudentReportByModuleIdUrl(moduleId)
+        `/api/v1/export/getstudentsoverallreport/${moduleId}`
       );
       if (response.status === 200) {
         return response;

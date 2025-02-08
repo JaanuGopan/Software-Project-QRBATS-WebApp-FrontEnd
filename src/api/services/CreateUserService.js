@@ -1,5 +1,4 @@
-import axios from "axios";
-import ApiConstants from "../config/ApiConstants";
+import axios from "../config/axiosInterceptor";
 
 class CreateUserService {
   static async saveUser(
@@ -14,7 +13,7 @@ class CreateUserService {
     const deparmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA"];
     const userRoleList = ["ADMIN", "LECTURER"];
     try {
-      const response = await axios.post(ApiConstants.signupUrl, {
+      const response = await axios.post( "/api/v1/auth/signup", {
         firstName: firstName,
         lastName: lastName,
         email: email,

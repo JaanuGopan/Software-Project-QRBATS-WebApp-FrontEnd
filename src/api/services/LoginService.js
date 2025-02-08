@@ -1,10 +1,9 @@
-import axios from "axios";
-import ApiConstants from "../config/ApiConstants";
+import axios from "../config/axiosInterceptor";
 
 class LoginService {
   static async loginUser(userName, password) {
     try {
-      const response = await axios.post(ApiConstants.loginUrl, {
+      const response = await axios.post(`/api/v1/auth/signin?userName=${userName}&password=${password}`, {
         userName: userName,
         password: password,
       });

@@ -1,5 +1,4 @@
-import axios from "axios";
-import ApiConstants from "../config/ApiConstants";
+import axios from "../config/axiosInterceptor";
 
 class LectureService {
   static createLecture = async (requestData) => {
@@ -7,7 +6,7 @@ class LectureService {
       console.log(requestData);
 
       const response = await axios.post(
-        ApiConstants.createLectureUrl,
+        "/api/v1/lecture/createlecture",
         requestData
       );
       return response;
@@ -20,7 +19,7 @@ class LectureService {
   static getAllLecturesByUserId = async (userId) => {
     try {
       const response = await axios.get(
-        ApiConstants.getAllLecturesByUserId(userId)
+        `/api/v1/lecture/getalllecturebyuserid/${userId}`
       );
       if (response.data) {
         return response.data;
@@ -41,7 +40,7 @@ class LectureService {
   ) => {
     try {
       const response = await axios.put(
-        ApiConstants.updateLectureUrl(lectureId),
+        `/api/v1/lecture/updatelecture/${lectureId}`,
         {
           lectureName: lectureName,
           lectureModuleCode: lectureModuleCode,
@@ -63,7 +62,7 @@ class LectureService {
   static deleteLecture = async (lectureId) => {
     try {
       const response = await axios.delete(
-        ApiConstants.deleteLectureUrl(lectureId)
+        `/api/v1/lecture/deletelecture/${lectureId}`
       );
       return response;
     } catch (error) {
@@ -77,7 +76,7 @@ class LectureService {
   static getAllLecturesByModuleCode = async (moduleCode) => {
     try {
       const response = await axios.get(
-        ApiConstants.getAllLectureByModuleCode(moduleCode)
+        `/api/v1/lecture/getalllecturebymodulecode?moduleCode=${moduleCode}`
       );
       if (response.status === 200) {
         return response.data;
@@ -92,7 +91,7 @@ class LectureService {
   static async getAllLecturesByDayAndVenue(day, venue) {
     try {
       const response = await axios.get(
-        ApiConstants.getAllLectureByDayAndVenueUrl(day, venue)
+        `/api/v1/lecture/getalllecturesbydayandvenue?venue=${venue}&day=${day}`
       );
       if (response.status === 200) {
         console.log(response.data);
@@ -107,7 +106,7 @@ class LectureService {
   static async getAllLectureWithDateByLectureId(lectureId) {
     try {
       const response = await axios.get(
-        ApiConstants.getAllLectureWithDateList(lectureId)
+        `/api/v1/lectureattendance/getalllecturewithdatefordaylecture/${lectureId}`
       );
 
       return response;

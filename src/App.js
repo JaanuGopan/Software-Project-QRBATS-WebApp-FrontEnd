@@ -1,12 +1,27 @@
 import React from "react";
-import UserInterface from "./pages/UserInterface/UserInterface";
+import LandingPage from "./pages/UserInterface/LandingPage";
 import MainNavigationPage from "./pages/MainNavigation/MainNavigation";
-import { selectUser } from "./redux/features/userSlice";
+import { selectIsLoggedIn } from "./redux/features/userSlice";
 import { useSelector } from "react-redux";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Signin from "./pages/Signin/Signin";
+import StaffMainNavigation from "./pages/StaffMainNavigation/StaffMainNavigation";
 
-function App() {
-  const user = useSelector(selectUser);
-  return <div>{user ? <MainNavigationPage /> : <UserInterface />}</div>;
-}
+const App = () => {
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/mainNavigation" element={<MainNavigationPage/>} >
+          <Route path="{:id}" element={<MainNavigationPage />} />
+        </Route>
+        <Route path="/staffMainNavigation" element={<StaffMainNavigation />} />
+      </Routes>
+    </Router>
+  );
+};
 
 export default App;

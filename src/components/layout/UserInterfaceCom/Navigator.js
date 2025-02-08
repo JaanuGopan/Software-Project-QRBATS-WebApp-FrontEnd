@@ -1,29 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../../../pages/UserInterface/UserInterface.css";
 import logo from "../../../assets/Images/logo/logo_white.png";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectIsLoggedIn } from "../../../redux/features/userSlice";
 
 const Navigator = () => {
-  const maxFontSize = 1500;
+  const navigate = useNavigate();
+  const[loginButtonLabel, setLoginButtonLabel] = useState("");
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
+  useEffect(() => {
+    if(isLoggedIn) {
+      setLoginButtonLabel("Dashboard");
+    } else {
+      setLoginButtonLabel("Sign In");
+    }
+  }, []);
+
   return (
     <div className="navigate">
       <div className="navigate1">
-        <img className="logo1" src={logo} alt="" />
+        <img className="logo1" src={logo} alt="Sky Ticker" />
         <p
           style={{
             color: "white",
-            letterSpacing: "0.5rem",
-            marginLeft: "0.5vw",
             marginBottom: "0px",
-            fontSize: `min(${maxFontSize}vw, 150%)`,
-            fontWeight: "bold",
+            fontSize: `25px`,
+            fontWeight: "600",
           }}
         >
           SKY TICKER
         </p>
       </div>
       <Button
-        onClick={() => (window.location.href = "/signin")}
+        onClick={() => navigate("/signin")}
         id="loginID"
         style={{
           color: "#0063A0",
@@ -33,7 +45,7 @@ const Navigator = () => {
         }}
         variant="contained"
       >
-        <a className="signinbutton">Sign In</a>
+        {loginButtonLabel}
       </Button>
     </div>
   );

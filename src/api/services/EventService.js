@@ -1,10 +1,9 @@
-import axios from "axios";
-import ApiConstants from "../config/ApiConstants";
+import axios from "../config/axiosInterceptor";
 
 class EventService {
   static async fetchEvents() {
     try {
-      const response = await axios.post(ApiConstants.getAllEventUrl);
+      const response = await axios.post("/api/v1/event/getallevents");
       return response.data;
     } catch (error) {
       console.error("Error fetching events:", error);
@@ -23,7 +22,7 @@ class EventService {
     userId
   ) {
     try {
-      const response = await axios.post(ApiConstants.createEventUrl, {
+      const response = await axios.post("/api/v1/event/create", {
         eventName: eventName,
         eventDate: eventDate,
         eventTime: eventTime,
@@ -47,7 +46,7 @@ class EventService {
   static async getEventByUserID(userId) {
     try {
       const response = await axios.get(
-        ApiConstants.getAllEventByUserIdUrl + "/" + userId
+        `/api/v1/event/geteventbyuserid/${userId}`
       );
       return response.data;
     } catch (error) {
@@ -67,7 +66,7 @@ class EventService {
     userId
   ) {
     try {
-      const response = await axios.put(ApiConstants.updateEventUrl, {
+      const response = await axios.put("/api/v1/event/update", {
         eventId: eventId,
         eventName: eventName,
         eventDate: eventDate,
@@ -93,7 +92,7 @@ class EventService {
   static async getEventByUserID(userId) {
     try {
       const response = await axios.get(
-        ApiConstants.getAllEventByUserIdUrl + "/" + userId
+        `/api/v1/event/geteventbyuserid/${userId}`
       );
       return response.data;
     } catch (error) {
@@ -104,7 +103,7 @@ class EventService {
   static async deleteEvent(eventId) {
     try {
       const response = await axios.delete(
-        ApiConstants.deleteEventUrl + "/" + `${eventId}`
+        `/api/v1/event/deletebyid/${eventId}`
       );
       console.log("deleted Successfully..");
       if (response.status === 200) {
@@ -120,7 +119,7 @@ class EventService {
   static async getAllLectureByModuleCode(moduleCode) {
     try {
       const response = await axios.get(
-        ApiConstants.getAllLecturesByModuleCode(moduleCode)
+        `/api/v1/event/getalleventbymodulecode?moduleCode=${moduleCode}`
       );
       if (response.data) {
         console.log(response.data);

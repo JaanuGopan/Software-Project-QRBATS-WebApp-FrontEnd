@@ -1,11 +1,10 @@
-import axios from "axios";
-import ApiConstants from "../config/ApiConstants";
+import axios from "../config/axiosInterceptor";
 
 class ModuleService {
   static getModulesByUserId = async (userId) => {
     try {
       const response = await axios.get(
-        ApiConstants.getAllModulesByUserIdUrl + `/${userId}`
+        `/api/v1/module/getmodulebylecturerid/${userId}`
       );
       return response.data;
     } catch (error) {
@@ -22,7 +21,7 @@ class ModuleService {
     userId
   ) => {
     try {
-      const response = await axios.post(ApiConstants.createModuleUrl, {
+      const response = await axios.post("/api/v1/module/createmodule", {
         moduleCode: moduleCode,
         moduleName: moduleName,
         moduleEnrolmentKey: moduleEnrolmentKey,
@@ -50,7 +49,7 @@ class ModuleService {
     userId
   ) => {
     try {
-      const response = await axios.put(ApiConstants.updateModuleUrl, {
+      const response = await axios.put("/api/v1/module/updatemodule", {
         moduleId: moduleId,
         moduleCode: moduleCode,
         moduleName: moduleName,
@@ -72,7 +71,7 @@ class ModuleService {
   static deleteModuleById = async (moduleId) => {
     try {
       const response = await axios.delete(
-        ApiConstants.deleteModuleUrl + "/" + `${moduleId}`
+        `/api/v1/module/deletemodule/${moduleId}`
       );
       return response;
     } catch (error) {
@@ -84,7 +83,7 @@ class ModuleService {
   static getAllModulesByDepartmentId = async (departmentId) => {
     try {
       const response = await axios.get(
-        ApiConstants.getAllModulesByDepartmentId + "/" + `${departmentId}`
+        `/api/v1/module/getallmodulebydepartmentid/${departmentId}`
       );
       if (response) {
         return response.data;
