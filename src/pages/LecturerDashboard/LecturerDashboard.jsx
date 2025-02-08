@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
-import "../AdminDashboard/AdminDashboard.css";
-import "./LectureDashboard.css";
-import NormalButton from "../../components/layout/AdminDashboardComponent/NormalButton";
-import { MdCreateNewFolder } from "react-icons/md";
-import { RiDeleteBin5Fill } from "react-icons/ri";
-import EventLectureCreation from "./EventLectureCreation";
-import EventService from "../../api/services/EventService";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../redux/features/userSlice";
-import AdminUpdateEvent from "../Event/AdminUpdateEvent";
-import LocationService from "../../api/services/LocationService";
-import LectureService from "../../api/services/LectureService";
-import LecturesTable from "../Lectures/LecturesTable";
-import LecturesEdit from "../Lectures/LecturesEdit";
-import LectureCreationPage from "../LactureCreation/LectureCreationPage";
-import { ToastContainer, toast } from "react-toastify";
-import WarningPopup from "../../components/warningPopup/WarningPopup";
-import { Table, ToggleButton, ToggleButtonGroup } from "@mui/material";
-import EventLectureTable from "./EventLectureTable";
+import React, { useState, useEffect } from 'react';
+import '../AdminDashboard/AdminDashboard.css';
+import './LectureDashboard.css';
+import NormalButton from '../../components/layout/AdminDashboardComponent/NormalButton';
+import { MdCreateNewFolder } from 'react-icons/md';
+import { RiDeleteBin5Fill } from 'react-icons/ri';
+import EventLectureCreation from './EventLectureCreation';
+import EventService from '../../api/services/EventService';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../redux/features/userSlice';
+import AdminUpdateEvent from '../Event/AdminUpdateEvent';
+import LocationService from '../../api/services/LocationService';
+import LectureService from '../../api/services/LectureService';
+import LecturesTable from '../Lectures/LecturesTable';
+import LecturesEdit from '../Lectures/LecturesEdit';
+import LectureCreationPage from '../LactureCreation/LectureCreationPage';
+import { ToastContainer, toast } from 'react-toastify';
+import WarningPopup from '../../components/warningPopup/WarningPopup';
+import { Table, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import EventLectureTable from './EventLectureTable';
 const LecturerDashboard = () => {
   const [showCreateLecturePopup, setShowCreateLecturePopup] = useState(false);
   const [showUpdateLecturePopup, setShowUpdateLecturePopup] = useState(false);
@@ -26,9 +26,9 @@ const LecturerDashboard = () => {
   const [eventLectureList, setEventLectureList] = useState([]);
   const [selectedLecture, setSelectedLecture] = useState(null);
   const [selectedEventLecture, setSelectedEventLecture] = useState(null);
-  const [searchLecture, setSearchLecture] = useState("");
-  const [selectTable, setSelectTable] = useState("Lectures");
-  const [title, setTitle] = useState("Lecture");
+  const [searchLecture, setSearchLecture] = useState('');
+  const [selectTable, setSelectTable] = useState('Lectures');
+  const [title, setTitle] = useState('Lecture');
   const [venuesList, setVenuesList] = useState([]);
   const user = useSelector(selectUser);
   const { userId } = user || {};
@@ -42,7 +42,7 @@ const LecturerDashboard = () => {
         console.log(eventLectureList);
       })
       .catch((error) => {
-        console.log("Error in getting lecture list ", error);
+        console.log('Error in getting lecture list ', error);
       })
       .finally(() => {});
   };
@@ -54,7 +54,7 @@ const LecturerDashboard = () => {
     const response = await LectureService.getAllLecturesByUserId(userId);
     if (response) {
       setLectureList(response);
-      console.log("lecture list : ", response);
+      console.log('lecture list : ', response);
     }
   };
 
@@ -67,7 +67,7 @@ const LecturerDashboard = () => {
 
   const handleShowDeleteWindow = () => {
     if (selectedLecture === null) {
-      toast.error("Please Select Lecture To Delete.");
+      toast.error('Please Select Lecture To Delete.');
       return;
     }
     setShowDeleteLecturePopup(true);
@@ -78,22 +78,16 @@ const LecturerDashboard = () => {
   const handleDeleteLecture = async () => {
     try {
       setProcessingDeleteLecture(true);
-      const response = await LectureService.deleteLecture(
-        selectedLecture.lectureId
-      );
+      const response = await LectureService.deleteLecture(selectedLecture.lectureId);
       if (response.status === 200) {
         handleReloadLectureList();
         setSelectedLecture(null);
-        toast.success(
-          `Successfully ${selectedLecture.lectureName} Lecture Deleted.`
-        );
+        toast.success(`Successfully ${selectedLecture.lectureName} Lecture Deleted.`);
         setShowDeleteLecturePopup(false);
       } else if (response.status === 400) {
         toast.error(response.data);
       } else {
-        toast.error(
-          `Error In Deleting Lecture ${selectedLecture.lectureName}.`
-        );
+        toast.error(`Error In Deleting Lecture ${selectedLecture.lectureName}.`);
       }
     } finally {
       setProcessingDeleteLecture(false);
@@ -115,7 +109,7 @@ const LecturerDashboard = () => {
 
   const handleShowDeleteEventWindow = () => {
     if (selectedEventLecture === null) {
-      toast.error("Please Select Event To Delete.");
+      toast.error('Please Select Event To Delete.');
       return;
     }
     setShowDeleteEventPopup(true);
@@ -126,22 +120,16 @@ const LecturerDashboard = () => {
     if (selectedEventLecture) {
       try {
         setProcessingDeleteEvent(true);
-        const response = await EventService.deleteEvent(
-          selectedEventLecture.eventId
-        );
+        const response = await EventService.deleteEvent(selectedEventLecture.eventId);
         if (response.status === 200) {
           handleReloadEventLectureList();
           setSelectedEventLecture(null);
-          toast.success(
-            `Successfully ${selectedEventLecture.eventName} Event Deleted.`
-          );
+          toast.success(`Successfully ${selectedEventLecture.eventName} Event Deleted.`);
           setShowDeleteEventPopup(false);
         } else if (response.status === 400) {
           toast.error(response.data);
         } else {
-          toast.error(
-            `Error In Deleting Lecture ${selectedEventLecture.eventName}.`
-          );
+          toast.error(`Error In Deleting Lecture ${selectedEventLecture.eventName}.`);
         }
       } finally {
         setProcessingDeleteEvent(false);
@@ -160,14 +148,12 @@ const LecturerDashboard = () => {
   return (
     <div className="admin-Dash">
       <ToastContainer />
-      <p className="mainHead">{"Lecturer Dashboard"}</p>
+      <p className="mainHead">{'Lecturer Dashboard'}</p>
 
       <div className="lecturer-dashboard-toggle-buttons-search">
         <div className="SearchEvent">
           <div className="lecturer-dashboard-toggle">
-            <label className="lecturer-dashboard-toggle-label">
-              Select Table :{" "}
-            </label>
+            <label className="lecturer-dashboard-toggle-label">Select Table : </label>
             <div className="size-box"></div>
             <ToggleButtonGroup
               color="primary"
@@ -184,17 +170,17 @@ const LecturerDashboard = () => {
             type="text"
             placeholder="Search..."
             style={{
-              width: "150px",
-              padding: "3px 40px",
-              border: "0.5px solid black",
-              borderRadius: "5px",
-              textAlign: "center",
+              width: '150px',
+              padding: '3px 40px',
+              border: '0.5px solid black',
+              borderRadius: '5px',
+              textAlign: 'center',
             }}
             onChange={(e) => setSearchLecture(e.target.value)}
           />
         </div>
       </div>
-      {selectTable === "Lectures" ? (
+      {selectTable === 'Lectures' ? (
         <div className="lecture-dashboard-container">
           <div className="lecture-dashboard-table">
             <LecturesTable
@@ -212,11 +198,11 @@ const LecturerDashboard = () => {
           <div className="List-Buttons">
             <NormalButton
               handleClick={() => setShowCreateLecturePopup(true)}
-              title={"Create Lecture"}
+              title={'Create Lecture'}
               titlewithiconicon={<MdCreateNewFolder className="buttonIcon" />}
             />
             <NormalButton
-              title={"Delete"}
+              title={'Delete'}
               handleClick={handleShowDeleteWindow}
               titlewithiconicon={<RiDeleteBin5Fill className="buttonIcon" />}
             />
@@ -235,11 +221,11 @@ const LecturerDashboard = () => {
           <div className="List-Buttons">
             <NormalButton
               handleClick={() => setShowCreateLecturePopup(true)}
-              title={"Create Event"}
+              title={'Create Event'}
               titlewithiconicon={<MdCreateNewFolder className="buttonIcon" />}
             />
             <NormalButton
-              title={"Delete"}
+              title={'Delete'}
               handleClick={handleShowDeleteEventWindow}
               titlewithiconicon={<RiDeleteBin5Fill className="buttonIcon" />}
             />
@@ -248,21 +234,17 @@ const LecturerDashboard = () => {
       )}
       {showCreateLecturePopup && (
         <div className="Create-Lecture-Window">
-          {selectTable === "Events" && (
+          {selectTable === 'Events' && (
             <EventLectureCreation
-              handleCloseCreateLectureWindow={() =>
-                setShowCreateLecturePopup(false)
-              }
+              handleCloseCreateLectureWindow={() => setShowCreateLecturePopup(false)}
               reloadLectureList={handleReloadEventLectureList}
               hideCloseButton={false}
               locationNameList={venuesList}
             />
           )}
-          {selectTable === "Lectures" && (
+          {selectTable === 'Lectures' && (
             <LectureCreationPage
-              handleCloseCreateLectureWindow={() =>
-                setShowCreateLecturePopup(false)
-              }
+              handleCloseCreateLectureWindow={() => setShowCreateLecturePopup(false)}
               handleReloadLectureList={handleReloadLectureList}
               hideCloseButton={false}
             />
@@ -272,9 +254,7 @@ const LecturerDashboard = () => {
       {showUpdateLecturePopup && (
         <div className="Admin-Create-Event-Dashboard">
           <AdminUpdateEvent
-            handleCloseEventUpdateWindow={() =>
-              setShowUpdateLecturePopup(false)
-            }
+            handleCloseEventUpdateWindow={() => setShowUpdateLecturePopup(false)}
             selectedEvent={selectedEventLecture}
             reloadEventList={handleReloadEventLectureList}
             locationNameList={venuesList}
@@ -300,8 +280,8 @@ const LecturerDashboard = () => {
           <WarningPopup
             handleCloseWarningWindow={() => setShowDeleteLecturePopup(false)}
             handleOk={handleDeleteLecture}
-            titleText={"Are You Sure You Want To Delete This Lecture?"}
-            buttonText={"Delete"}
+            titleText={'Are You Sure You Want To Delete This Lecture?'}
+            buttonText={'Delete'}
             processing={processingDeleteLecture}
           />
         </div>
@@ -311,8 +291,8 @@ const LecturerDashboard = () => {
           <WarningPopup
             handleCloseWarningWindow={() => setShowDeleteEventPopup(false)}
             handleOk={handleDeleteEventLecture}
-            titleText={"Are You Sure You Want To Delete This Event?"}
-            buttonText={"Delete"}
+            titleText={'Are You Sure You Want To Delete This Event?'}
+            buttonText={'Delete'}
             processing={processingDeleteEvent}
           />
         </div>

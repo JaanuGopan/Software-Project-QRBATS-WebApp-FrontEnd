@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import Select from "react-select";
-import ModuleService from "../../api/services/ModuleService";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../redux/features/userSlice";
-import { Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
-import LectureService from "../../api/services/LectureService";
-import { ToastContainer, toast } from "react-toastify";
+import React, { useEffect, useState } from 'react';
+import Select from 'react-select';
+import ModuleService from '../../api/services/ModuleService';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../redux/features/userSlice';
+import { Button, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import LectureService from '../../api/services/LectureService';
+import { ToastContainer, toast } from 'react-toastify';
 const LeftContainerLectureCreation = ({
   getModuleCode,
   getDayList,
@@ -44,7 +44,7 @@ const LeftContainerLectureCreation = ({
   const [moduleNameList, setModuleNameList] = useState([]);
   const [day, setDay] = useState([]);
   const [isToggleButtonDisabled, setIsToggleButtonDisabled] = useState(true);
-  const [selectedModuleName, setSelectedModuleName] = useState("");
+  const [selectedModuleName, setSelectedModuleName] = useState('');
   const [selectedModule, setSelectedModule] = useState([]);
 
   const handleDayChange = (e) => {
@@ -60,12 +60,12 @@ const LeftContainerLectureCreation = ({
 
   const handleShowRightSideWindow = () => {
     if (selectedModuleCode === null) {
-      toast.error("Please Select Module.");
+      toast.error('Please Select Module.');
     } else if (day.length === 0) {
-      toast.error("Please Select Days.");
+      toast.error('Please Select Days.');
       return;
     } else {
-      handleUpdateAvailableLectures("", day[0]);
+      handleUpdateAvailableLectures('', day[0]);
       showRightSideWindow();
     }
   };
@@ -118,11 +118,9 @@ const LeftContainerLectureCreation = ({
       <label>Module Name</label>
       <Select
         id="selectModule"
-        placeholder={"Select Module Code"}
+        placeholder={'Select Module Code'}
         onChange={(e) => {
-          const selectedModule = moduleList.find(
-            (module) => module.moduleId === e.value
-          );
+          const selectedModule = moduleList.find((module) => module.moduleId === e.value);
           handleModuleChange(selectedModule);
         }}
         options={moduleNameList}
@@ -131,11 +129,9 @@ const LeftContainerLectureCreation = ({
       <label>Module Code</label>
       <Select
         id="selectModule"
-        placeholder={"Select Module Code"}
+        placeholder={'Select Module Code'}
         onChange={(e) => {
-          const selectedModule = moduleList.find(
-            (module) => module.moduleId === e.value
-          );
+          const selectedModule = moduleList.find((module) => module.moduleId === e.value);
           handleModuleChange(selectedModule);
         }}
         options={moduleCodeList}
@@ -163,12 +159,7 @@ const LeftContainerLectureCreation = ({
       </ToggleButtonGroup>
 
       <div className="left-container-lecture-creation-submit-button">
-        <Button
-          variant="contained"
-          color="primary"
-          fullWidth
-          onClick={handleShowRightSideWindow}
-        >
+        <Button variant="contained" color="primary" fullWidth onClick={handleShowRightSideWindow}>
           Create Time Slot
         </Button>
       </div>

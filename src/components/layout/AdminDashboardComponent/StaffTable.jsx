@@ -1,13 +1,8 @@
-import React, { useState, useEffect } from "react";
-import "../../../pages/AdminDashboard/AdminDashboard.css";
-import { FaEdit } from "react-icons/fa";
+import React, { useState, useEffect } from 'react';
+import '../../../pages/AdminDashboard/AdminDashboard.css';
+import { FaEdit } from 'react-icons/fa';
 
-const StaffTable = ({
-  search,
-  handleUpdateStaff,
-  onStaffClick,
-  staffsList,
-}) => {
+const StaffTable = ({ search, handleUpdateStaff, onStaffClick, staffsList }) => {
   const [selectedStaff, setSelectedStaff] = useState(null);
 
   const handleStaffClick = (staff) => {
@@ -15,7 +10,7 @@ const StaffTable = ({
     onStaffClick(staff);
   };
 
-  const departmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA", "DIS"];
+  const departmentList = ['DEIE', 'DCOM', 'DMME', 'DCEE', 'DMENA', 'DIS'];
 
   return (
     <div className="tableDesign">
@@ -41,18 +36,15 @@ const StaffTable = ({
               <tr
                 key={index}
                 onClick={() => handleStaffClick(staff)}
-                className={selectedStaff === staff ? "selected-row" : ""}
+                className={selectedStaff === staff ? 'selected-row' : ''}
               >
                 <td>{index + 1}</td>
-                <td>{staff.firstName + " " + staff.lastName}</td>
+                <td>{staff.firstName + ' ' + staff.lastName}</td>
                 <td>{departmentList[staff.departmentId - 1]}</td>
                 <td>{staff.email}</td>
 
                 <td>
-                  <button
-                    onClick={() => handleUpdateStaff(staff)}
-                    className="EditButton"
-                  >
+                  <button onClick={() => handleUpdateStaff(staff)} className="EditButton">
                     <FaEdit className="EditIcon" />
                   </button>
                 </td>

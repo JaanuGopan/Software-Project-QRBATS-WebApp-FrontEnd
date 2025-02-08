@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
-import NormalButton from "../../components/layout/AdminDashboardComponent/NormalButton";
-import { MdCreateNewFolder } from "react-icons/md";
-import ModuleTable from "./ModuleTable";
-import ModuleService from "../../api/services/ModuleService";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../redux/features/userSlice";
-import ModuleUpdate from "./ModuleUpdate";
-import { RiDeleteBin5Fill } from "react-icons/ri";
-import "./ModulePage.css";
-import ModuleCreate from "./ModuleCreate";
-import { ToastContainer, toast } from "react-toastify";
-import WarningPopup from "../../components/warningPopup/WarningPopup";
+import React, { useState, useEffect } from 'react';
+import NormalButton from '../../components/layout/AdminDashboardComponent/NormalButton';
+import { MdCreateNewFolder } from 'react-icons/md';
+import ModuleTable from './ModuleTable';
+import ModuleService from '../../api/services/ModuleService';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../redux/features/userSlice';
+import ModuleUpdate from './ModuleUpdate';
+import { RiDeleteBin5Fill } from 'react-icons/ri';
+import './ModulePage.css';
+import ModuleCreate from './ModuleCreate';
+import { ToastContainer, toast } from 'react-toastify';
+import WarningPopup from '../../components/warningPopup/WarningPopup';
 
 const ModulePage = () => {
   const user = useSelector(selectUser);
@@ -23,7 +23,7 @@ const ModulePage = () => {
 
   const [selectedModule, setSelectedModule] = useState(null);
   const [moduleList, setModuleList] = useState([]);
-  const [searchModule, setSearchModule] = useState("");
+  const [searchModule, setSearchModule] = useState('');
 
   useEffect(() => {
     handleReloadModuleList();
@@ -31,7 +31,7 @@ const ModulePage = () => {
 
   const handleModuleClick = (module) => {
     setSelectedModule(module);
-    console.log("Selected Module:", module);
+    console.log('Selected Module:', module);
   };
 
   const handleReloadModuleList = async () => {
@@ -51,18 +51,16 @@ const ModulePage = () => {
   const handleDeleteModule = async () => {
     try {
       setProcessingDelete(true);
-      const response = await ModuleService.deleteModuleById(
-        selectedModule.moduleId
-      );
+      const response = await ModuleService.deleteModuleById(selectedModule.moduleId);
       if (response.status === 200) {
         handleReloadModuleList();
-        toast.success("Module Deleted Successfully!");
+        toast.success('Module Deleted Successfully!');
         setSelectedModule(null);
       } else if (response.status === 400) {
         toast.error(response.data);
-        toast.error("Module Deletion Failed!");
+        toast.error('Module Deletion Failed!');
       } else {
-        toast.error("Error In Module Deletion!");
+        toast.error('Error In Module Deletion!');
       }
       setShowDeleteModuleWindow(false);
     } finally {
@@ -72,7 +70,7 @@ const ModulePage = () => {
 
   const handleOpenDeletePopUpWindow = () => {
     if (!selectedModule) {
-      toast.error("Please select a module to delete.");
+      toast.error('Please select a module to delete.');
       return;
     }
     setShowDeleteModuleWindow(true);
@@ -89,18 +87,18 @@ const ModulePage = () => {
         moduleData.userId
       );
       if (response.status === 200) {
-        toast.success("Module Created Successfully ", response.data.moduleName);
+        toast.success('Module Created Successfully ', response.data.moduleName);
         console.log(response);
         handleReloadModuleList();
         setShowModuleCreateWindow(false);
       } else if (response.status === 400) {
         toast.error(response.data);
       } else {
-        toast.error("Something went wrong. Please try again later.");
+        toast.error('Something went wrong. Please try again later.');
       }
     } catch (error) {
-      console.error("Fail to create modules.", error);
-      toast.error("Something went wrong. Please try again later.");
+      console.error('Fail to create modules.', error);
+      toast.error('Something went wrong. Please try again later.');
     }
   };
 
@@ -114,11 +112,11 @@ const ModulePage = () => {
             type="text"
             placeholder="Search..."
             style={{
-              width: "150px",
-              padding: "3px 40px",
-              border: "0.5px solid black",
-              borderRadius: "5px",
-              textAlign: "center",
+              width: '150px',
+              padding: '3px 40px',
+              border: '0.5px solid black',
+              borderRadius: '5px',
+              textAlign: 'center',
             }}
             onChange={(e) => setSearchModule(e.target.value)}
           />
@@ -140,11 +138,11 @@ const ModulePage = () => {
               handleClick={() => {
                 setShowModuleCreateWindow(true);
               }}
-              title={"Create"}
+              title={'Create'}
               titlewithiconicon={<MdCreateNewFolder className="buttonIcon" />}
             />
             <NormalButton
-              title={"Delete"}
+              title={'Delete'}
               handleClick={handleOpenDeletePopUpWindow}
               titlewithiconicon={<RiDeleteBin5Fill className="buttonIcon" />}
             />
@@ -178,9 +176,7 @@ const ModulePage = () => {
                 setShowModuleCreateWindow(false);
               }}
               handleReloadModuleList={handleReloadModuleList}
-              handleModuleCreate={(moduleData) =>
-                handleModuleCreate(moduleData)
-              }
+              handleModuleCreate={(moduleData) => handleModuleCreate(moduleData)}
             />
           </div>
         )}
@@ -193,8 +189,8 @@ const ModulePage = () => {
                 setShowDeleteModuleWindow(false);
                 handleReloadModuleList();
               }}
-              titleText={"Are You Sure You Want To Delete This Module?"}
-              buttonText={"Delete"}
+              titleText={'Are You Sure You Want To Delete This Module?'}
+              buttonText={'Delete'}
               processing={processingDelete}
             />
           </div>

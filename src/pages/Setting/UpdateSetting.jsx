@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import "./Setting.css";
-import { IoMdCloseCircleOutline } from "react-icons/io";
-import Select from "react-select";
-import Switch from "@mui/material/Switch";
-import { useDispatch, useSelector } from "react-redux";
-import { selectUser } from "../../redux/features/userSlice";
-import Department from "../../utils/Department";
-import UserService from "../../api/services/UserService";
-import InputField from "../../components/textfields/InputBox/InputField";
-import InputPassword from "../../components/textfields/InputPassword/InputPassword";
-import toast, { Toaster } from "react-hot-toast";
-import WarningPopup from "../../components/warningPopup/WarningPopup";
-import Logout from "../../api/services/logoutService";
-import { resetSideBarIndex } from "../../redux/features/mainNavigationSlice";
+import React, { useState } from 'react';
+import './Setting.css';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
+import Select from 'react-select';
+import Switch from '@mui/material/Switch';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUser } from '../../redux/features/userSlice';
+import Department from '../../utils/Department';
+import UserService from '../../api/services/UserService';
+import InputField from '../../components/textfields/InputBox/InputField';
+import InputPassword from '../../components/textfields/InputPassword/InputPassword';
+import toast, { Toaster } from 'react-hot-toast';
+import WarningPopup from '../../components/warningPopup/WarningPopup';
+import Logout from '../../api/services/logoutService';
+import { resetSideBarIndex } from '../../redux/features/mainNavigationSlice';
 
 const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
   const dispatch = useDispatch();
@@ -27,10 +27,10 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
     label: Department.departmentList[user.departmentId - 1],
   });
   const [userName, setUserName] = useState(user.userName);
-  const [password, setPassword] = useState("");
-  const [oldPassword, setOldPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [password, setPassword] = useState('');
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
 
   const [errors, setErrors] = useState({});
 
@@ -39,9 +39,8 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
     label: value,
   }));
 
-  const notifySuccess = () => toast.success("Successfully Profile Updated!");
-  const notifyPasswordVerify = () =>
-    toast.success("Successfully Password Verified!");
+  const notifySuccess = () => toast.success('Successfully Profile Updated!');
+  const notifyPasswordVerify = () => toast.success('Successfully Password Verified!');
 
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -49,7 +48,7 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
   const handleShowOldPassword = (event) => {
     setShowOldPassword(event.target.checked);
     setShowNewPassword(false);
-    setOldPassword("");
+    setOldPassword('');
   };
 
   const validateEmail = (email) => {
@@ -63,36 +62,36 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
 
     if (!firstName) {
       formIsValid = false;
-      formErrors["firstName"] = "First Name cannot be empty";
+      formErrors['firstName'] = 'First Name cannot be empty';
     }
 
     if (!lastName) {
       formIsValid = false;
-      formErrors["lastName"] = "Last Name cannot be empty";
+      formErrors['lastName'] = 'Last Name cannot be empty';
     }
 
     if (!email) {
       formIsValid = false;
-      formErrors["email"] = "Email cannot be empty";
+      formErrors['email'] = 'Email cannot be empty';
     } else if (!validateEmail(email)) {
       formIsValid = false;
-      formErrors["email"] = "Email is not valid";
+      formErrors['email'] = 'Email is not valid';
     }
 
     if (!userName) {
       formIsValid = false;
-      formErrors["userName"] = "User Name cannot be empty";
+      formErrors['userName'] = 'User Name cannot be empty';
     }
 
     if (showNewPassword) {
       if (!newPassword) {
         formIsValid = false;
-        formErrors["newPassword"] = "New Password cannot be empty";
+        formErrors['newPassword'] = 'New Password cannot be empty';
       }
 
       if (newPassword !== confirmNewPassword) {
         formIsValid = false;
-        formErrors["confirmNewPassword"] = "Passwords do not match";
+        formErrors['confirmNewPassword'] = 'Passwords do not match';
       }
     }
 
@@ -124,7 +123,7 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
           handleCloseUpdateSettingWindow();
           notifySuccess();
           handleLogoutClick();
-          toast.success("User Updated Successfully!");
+          toast.success('User Updated Successfully!');
         } else if (response.status === 400) {
           setErrors(response.data);
           toast.error(response.data);
@@ -143,10 +142,7 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
     if (oldPassword) {
       setIsLoading(true);
       try {
-        const response = await UserService.verifyPassword(
-          userName,
-          oldPassword
-        );
+        const response = await UserService.verifyPassword(userName, oldPassword);
         console.log(response);
         if (response === true) {
           setShowNewPassword(true);
@@ -172,10 +168,7 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
       <Toaster />
       <div className="setting-update-title-close-button">
         <h3 className="setting-update-title">Update Profile</h3>
-        <div
-          className="setting-update-close-button"
-          onClick={handleCloseUpdateSettingWindow}
-        >
+        <div className="setting-update-close-button" onClick={handleCloseUpdateSettingWindow}>
           <IoMdCloseCircleOutline id="close-icon" />
         </div>
       </div>
@@ -186,8 +179,8 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
               <label>First Name</label>
               <InputField
                 required
-                inputType={"text"}
-                placeholder={"Enter First Name"}
+                inputType={'text'}
+                placeholder={'Enter First Name'}
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
                 error={!!errors.firstName}
@@ -197,8 +190,8 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
             <div className="Setting-input-with-icon">
               <label>Last Name</label>
               <InputField
-                inputType={"text"}
-                placeholder={"Enter Last Name"}
+                inputType={'text'}
+                placeholder={'Enter Last Name'}
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
                 error={!!errors.lastName}
@@ -208,22 +201,22 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
             <div className="Setting-input-with-icon">
               <label>Email</label>
               <InputField
-                inputType={"text"}
-                placeholder={"Enter Email"}
+                inputType={'text'}
+                placeholder={'Enter Email'}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 error={!!errors.email}
                 helperText={errors.email}
               />
             </div>
-            {user.role === "LECTURER" && (
+            {user.role === 'LECTURER' && (
               <div className="Setting-input-with-icon">
                 <label>Department</label>
                 <Select
                   required
                   id="department"
                   name="department"
-                  placeholder={"Select Department"}
+                  placeholder={'Select Department'}
                   options={departmentList}
                   value={departmentId}
                   onChange={(e) => setDepartmentId(e)}
@@ -233,8 +226,8 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
             <div className="Setting-input-with-icon">
               <label>User Name</label>
               <InputField
-                inputType={"text"}
-                placeholder={"Enter UserName"}
+                inputType={'text'}
+                placeholder={'Enter UserName'}
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)}
                 error={!!errors.userName}
@@ -246,7 +239,7 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
               <Switch
                 checked={showOldPassword}
                 onChange={handleShowOldPassword}
-                inputProps={{ "aria-label": "controlled" }}
+                inputProps={{ 'aria-label': 'controlled' }}
               />
             </div>
 
@@ -255,10 +248,10 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
                 <label>Old Password</label>
                 <div className="col">
                   <InputPassword
-                    placeholder={"Enter Old Password"}
+                    placeholder={'Enter Old Password'}
                     value={oldPassword}
                     onChange={(e) => setOldPassword(e.target.value)}
-                    buttonText={"verify"}
+                    buttonText={'verify'}
                     onButtonClick={(e) => handleVerifyPassword(e)}
                     isLoading={isLoading}
                     error={!!errors.oldPassword}
@@ -271,7 +264,7 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
               <div className="Setting-input-with-icon">
                 <label>New Password</label>
                 <InputPassword
-                  placeholder={"Enter new Password"}
+                  placeholder={'Enter new Password'}
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   showButton={false}
@@ -280,7 +273,7 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
                 />
                 <label>Confirm New Password</label>
                 <InputPassword
-                  placeholder={"Renter new Password"}
+                  placeholder={'Renter new Password'}
                   value={confirmNewPassword}
                   onChange={(e) => setConfirmNewPassword(e.target.value)}
                   showButton={false}
@@ -302,8 +295,8 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
         <div className="setting-update-warning-container">
           <WarningPopup
             handleOk={handleUpdateUser}
-            titleText={"If You Want To Update, You Need To Login Again"}
-            buttonText={"Update"}
+            titleText={'If You Want To Update, You Need To Login Again'}
+            buttonText={'Update'}
             handleCloseWarningWindow={() => setShowUpdateWarning(false)}
             processing={loadingUpdateUser}
           />

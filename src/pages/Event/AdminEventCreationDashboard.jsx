@@ -1,5 +1,5 @@
-import React from "react";
-import AdminEventCreation from "./AdminEventCreation";
+import React from 'react';
+import AdminEventCreation from './AdminEventCreation';
 
 const AdminEventCreationDashboard = ({ locationList }) => {
   return (

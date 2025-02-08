@@ -1,32 +1,32 @@
-import React, { useState } from "react";
-import "./ModulePage.css";
-import Designer from "../../assets/Images/Designer.jpeg";
-import InputField from "../../components/textfields/InputBox/InputField";
-import { IoMdCloseCircleOutline } from "react-icons/io";
-import { IoIosClose } from "react-icons/io";
-import InputList from "../../components/textfields/InputList/InputList";
-import ModuleService from "../../api/services/ModuleService";
-import { selectUser } from "../../redux/features/userSlice";
-import { useSelector } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
-import Select from "react-select";
-import { CircularProgress } from "@mui/material";
+import React, { useState } from 'react';
+import './ModulePage.css';
+import Designer from '../../assets/Images/Designer.jpeg';
+import InputField from '../../components/textfields/InputBox/InputField';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
+import { IoIosClose } from 'react-icons/io';
+import InputList from '../../components/textfields/InputList/InputList';
+import ModuleService from '../../api/services/ModuleService';
+import { selectUser } from '../../redux/features/userSlice';
+import { useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import Select from 'react-select';
+import { CircularProgress } from '@mui/material';
 
 const ModuleCreate = ({
   handleCloseModuleCreateWindow,
   handleReloadModuleList,
   handleModuleCreate,
 }) => {
-  const [moduleName, setModuleName] = useState("");
-  const [moduleCode, setModuleCode] = useState("");
-  const [semester, setSemester] = useState("");
-  const [moduleEnrolmentKey, setModuleEnrolmentKey] = useState("");
-  const [departmentId, setDepartmentId] = useState("");
+  const [moduleName, setModuleName] = useState('');
+  const [moduleCode, setModuleCode] = useState('');
+  const [semester, setSemester] = useState('');
+  const [moduleEnrolmentKey, setModuleEnrolmentKey] = useState('');
+  const [departmentId, setDepartmentId] = useState('');
 
   const { userId } = useSelector(selectUser) || {};
 
-  const departmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA", "DIS"];
-  const semesterList = ["1", "2", "3", "4", "5", "6", "7", "8"];
+  const departmentList = ['DEIE', 'DCOM', 'DMME', 'DCEE', 'DMENA', 'DIS'];
+  const semesterList = ['1', '2', '3', '4', '5', '6', '7', '8'];
 
   const [processing, setProcessing] = useState(false);
 
@@ -49,21 +49,18 @@ const ModuleCreate = ({
   };
 
   const handleClearData = () => {
-    setModuleCode("");
-    setModuleName("");
-    setDepartmentId("");
-    setModuleEnrolmentKey("");
-    setSemester("");
+    setModuleCode('');
+    setModuleName('');
+    setDepartmentId('');
+    setModuleEnrolmentKey('');
+    setSemester('');
   };
 
   return (
     <div className="module-create-main-container">
       <div className="module-create-title-close-button">
         <h3 className="module-create-title">Create Module</h3>
-        <div
-          className="module-create-close-button"
-          onClick={handleCloseModuleCreateWindow}
-        >
+        <div className="module-create-close-button" onClick={handleCloseModuleCreateWindow}>
           <IoMdCloseCircleOutline id="close-icon" />
         </div>
       </div>

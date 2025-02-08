@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 class AttendanceService {
   static getAllAttendanceByLectureId = async (lectureId) => {
@@ -10,34 +10,27 @@ class AttendanceService {
         return response;
       }
     } catch (error) {
-      console.error(
-        "Error in getting attendance for this lecture. ",
-        error.response
-      );
+      console.error('Error in getting attendance for this lecture. ', error.response);
     }
   };
 
   static downloadLectureAttendance = async (lectureId) => {
     try {
-      const response = await axios.get(
-        `/api/v1/export/getcsv/${lectureId}`
-      );
+      const response = await axios.get(`/api/v1/export/getcsv/${lectureId}`);
       if (response.status === 200) {
         return response;
       }
     } catch (error) {
-      console.error("Error in getting attendance for this lecture. ", error);
+      console.error('Error in getting attendance for this lecture. ', error);
       return error.response;
     }
   };
   static downloadEventAttendance = async (eventId) => {
     try {
-      const response = await axios.get(
-        `/api/v1/export/geteventreport/${eventId}`
-      );
+      const response = await axios.get(`/api/v1/export/geteventreport/${eventId}`);
       return response;
     } catch (error) {
-      console.error("Error in getting attendance for this lecture. ", error);
+      console.error('Error in getting attendance for this lecture. ', error);
       if (error.response.status === 400) {
         return error.response;
       }
@@ -52,7 +45,7 @@ class AttendanceService {
 
       return response;
     } catch (error) {
-      console.error("Error in getting students attendance details", error);
+      console.error('Error in getting students attendance details', error);
       if (error.response.status === 400) {
         return error.response;
       }
@@ -66,18 +59,12 @@ class AttendanceService {
       );
       return response;
     } catch (error) {
-      console.error(
-        "Error in getting attendance for this lecture. ",
-        error.response.data
-      );
+      console.error('Error in getting attendance for this lecture. ', error.response.data);
       return error.response;
     }
   };
 
-  static downloadLectureAttendanceByLectureIdAndDate = async (
-    lectureId,
-    date
-  ) => {
+  static downloadLectureAttendanceByLectureIdAndDate = async (lectureId, date) => {
     try {
       const response = await axios.get(
         `/api/v1/export/donwloadattendancebylectureidanddate?lectureId=${lectureId}&date=${date}`
@@ -86,24 +73,19 @@ class AttendanceService {
         return response;
       }
     } catch (error) {
-      console.error("Error in getting attendance for this lecture. ", error);
+      console.error('Error in getting attendance for this lecture. ', error);
       return error.response;
     }
   };
 
   static downloadOverallStudentReportByModuleId = async (moduleId) => {
     try {
-      const response = await axios.get(
-        `/api/v1/export/getstudentsoverallreport/${moduleId}`
-      );
+      const response = await axios.get(`/api/v1/export/getstudentsoverallreport/${moduleId}`);
       if (response.status === 200) {
         return response;
       }
     } catch (error) {
-      console.error(
-        "Error In Getting Overall Student Report For This Module. ",
-        error
-      );
+      console.error('Error In Getting Overall Student Report For This Module. ', error);
       return error.response;
     }
   };

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import "../../pages/AdminDashboard/AdminDashboard.css";
-import { CiViewList } from "react-icons/ci";
-import { CircularProgress } from "@mui/material";
+import React, { useState } from 'react';
+import '../../pages/AdminDashboard/AdminDashboard.css';
+import { CiViewList } from 'react-icons/ci';
+import { CircularProgress } from '@mui/material';
 
 const LectureReportTable = ({
   handleOpenLectureWithDateWindow,
@@ -45,22 +45,14 @@ const LectureReportTable = ({
           {lecturesReportList
             .filter(
               (lecture) =>
-                lecture.lectureName
-                  .toLowerCase()
-                  .includes(searchLecturesReport.toLowerCase()) ||
-                lecture.lectureDay
-                  .toLowerCase()
-                  .includes(searchLecturesReport.toLowerCase())
+                lecture.lectureName.toLowerCase().includes(searchLecturesReport.toLowerCase()) ||
+                lecture.lectureDay.toLowerCase().includes(searchLecturesReport.toLowerCase())
             )
             .map((lecture, index) => (
               <tr
                 key={index}
                 onClick={() => handleLectureReportClick(lecture)}
-                className={
-                  selectedLectureReport === lecture
-                    ? "selected-row"
-                    : "event-row"
-                }
+                className={selectedLectureReport === lecture ? 'selected-row' : 'event-row'}
               >
                 <td>{index + 1}</td>
                 <td>{lecture.lectureName}</td>
@@ -74,9 +66,7 @@ const LectureReportTable = ({
                     <CircularProgress />
                   ) : (
                     <button
-                      onClick={() =>
-                        OpenLectureWithDateWindow(lecture.lectureId)
-                      }
+                      onClick={() => OpenLectureWithDateWindow(lecture.lectureId)}
                       className="ViewButton"
                     >
                       <CiViewList className="EditIcon" />

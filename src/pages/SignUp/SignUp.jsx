@@ -1,58 +1,55 @@
-import React, { useState } from "react";
-import "./SignUp.css";
-import axios from "axios";
-import logo from "../../assets/Images/signin/Signin.jpeg";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FaUser } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import InputField from "../../components/textfields/InputBox/InputField";
+import React, { useState } from 'react';
+import './SignUp.css';
+import axios from 'axios';
+import logo from '../../assets/Images/signin/Signin.jpeg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FaUser } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { faCircleArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import InputField from '../../components/textfields/InputBox/InputField';
 
 function SignUp() {
-  const [firstname, setFirstName] = useState("");
-  const [lastname, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [userName, setUserName] = useState("");
-  const [userRole, setUserRole] = useState("");
-  const [departmentId, setDepartmentId] = useState("");
+  const [firstname, setFirstName] = useState('');
+  const [lastname, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [userName, setUserName] = useState('');
+  const [userRole, setUserRole] = useState('');
+  const [departmentId, setDepartmentId] = useState('');
   const navigate = useNavigate();
 
-  const deparmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA"];
-  const userRoleList = ["ADMIN", "LECTURER", "STAFF"];
+  const deparmentList = ['DEIE', 'DCOM', 'DMME', 'DCEE', 'DMENA'];
+  const userRoleList = ['ADMIN', 'LECTURER', 'STAFF'];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/auth/signin",
-        {
-          firstName: firstname,
-          lastName: lastname,
-          email: email,
-          password: password,
-          userName: userName,
-          departmentId: deparmentList.indexOf(departmentId) + 1,
-        }
-      );
+      const response = await axios.post('http://localhost:8080/api/v1/auth/signin', {
+        firstName: firstname,
+        lastName: lastname,
+        email: email,
+        password: password,
+        userName: userName,
+        departmentId: deparmentList.indexOf(departmentId) + 1,
+      });
       const token = response.data.token;
       const decodedToken = parseJwt(token);
       const userName = decodedToken.sub;
-      localStorage.setItem("token", token);
-      navigate("/mainNavigation", { state: { userName } });
+      localStorage.setItem('token', token);
+      navigate('/mainNavigation', { state: { userName } });
     } catch (error) {
-      console.error("Login failed", error);
+      console.error('Login failed', error);
     }
   };
 
   const parseJwt = (token) => {
-    const base64Url = token.split(".")[1];
-    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     const jsonPayload = decodeURIComponent(
       atob(base64)
-        .split("")
-        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-        .join("")
+        .split('')
+        .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+        .join('')
     );
     return JSON.parse(jsonPayload);
   };

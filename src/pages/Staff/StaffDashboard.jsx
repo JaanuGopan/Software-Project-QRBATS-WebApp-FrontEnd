@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
-import "./StaffA.css";
-import NormalButton from "../../components/layout/AdminDashboardComponent/NormalButton";
-import { MdCreateNewFolder } from "react-icons/md";
-import { RiDeleteBin5Fill } from "react-icons/ri";
-import CreateStaff from "./CreateStaff";
-import UpdateStaff from "./UpdateStaff";
-import StaffTable from "../../components/layout/AdminDashboardComponent/StaffTable";
-import FetchStaffService from "../../api/services/FetchStaffService";
-import DeleteStaffService from "../../api/services/DeleteStaffService";
-import { toast, ToastContainer } from "react-toastify";
-import WarningPopup from "../../components/warningPopup/WarningPopup";
+import React, { useState, useEffect } from 'react';
+import './StaffA.css';
+import NormalButton from '../../components/layout/AdminDashboardComponent/NormalButton';
+import { MdCreateNewFolder } from 'react-icons/md';
+import { RiDeleteBin5Fill } from 'react-icons/ri';
+import CreateStaff from './CreateStaff';
+import UpdateStaff from './UpdateStaff';
+import StaffTable from '../../components/layout/AdminDashboardComponent/StaffTable';
+import FetchStaffService from '../../api/services/FetchStaffService';
+import DeleteStaffService from '../../api/services/DeleteStaffService';
+import { toast, ToastContainer } from 'react-toastify';
+import WarningPopup from '../../components/warningPopup/WarningPopup';
 
 const StaffDashboard = () => {
   const [staffCreatePopUpWindow, setStaffCreatePopUpWindow] = useState(false);
   const [staffUpdatePopUpWindow, setStaffUpdatePopUpWindow] = useState(false);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
 
   const [staffsList, setStaffsList] = useState([]);
   const [selectedStaff, setSelectedStaff] = useState(null);
@@ -27,7 +27,7 @@ const StaffDashboard = () => {
   const handleEventClick = (staffs) => {
     setSelectedStaff(staffs);
     // Do whatever you want with the selected event data
-    console.log("Selected Staffs:", staffs);
+    console.log('Selected Staffs:', staffs);
   };
 
   const [showDeletePopUpWindow, setShowDeletePopUpWindow] = useState(false);
@@ -36,24 +36,22 @@ const StaffDashboard = () => {
 
   const handleDelete = async () => {
     if (!selectedStaff) {
-      toast.error("Please select a staff to delete");
+      toast.error('Please select a staff to delete');
       return;
     }
     try {
       setProcessingDeleteStaff(true);
-      const response = await DeleteStaffService.deleteStaff(
-        selectedStaff.userId
-      );
+      const response = await DeleteStaffService.deleteStaff(selectedStaff.userId);
       if (response.status === 200) {
-        toast.success("Staff Deleted Successfully");
+        toast.success('Staff Deleted Successfully');
         setSelectedStaff(null);
         handleReloadStaffList();
       } else if (response.status === 400) {
         toast.error(response.data);
       }
     } catch (error) {
-      console.log("error " + error);
-      toast.error("Error In Staff Deletion. ");
+      console.log('error ' + error);
+      toast.error('Error In Staff Deletion. ');
     } finally {
       setProcessingDeleteStaff(false);
       setShowDeletePopUpWindow(false);
@@ -66,7 +64,7 @@ const StaffDashboard = () => {
         setStaffsList(staffs);
       })
       .catch((error) => {
-        console.error("Error fetching staffs:", error);
+        console.error('Error fetching staffs:', error);
       });
   };
 
@@ -79,11 +77,11 @@ const StaffDashboard = () => {
           type="text"
           placeholder="Search..."
           style={{
-            width: "150px",
-            padding: "3px 40px",
-            border: "0.5px solid black",
-            borderRadius: "5px",
-            textAlign: "center",
+            width: '150px',
+            padding: '3px 40px',
+            border: '0.5px solid black',
+            borderRadius: '5px',
+            textAlign: 'center',
           }}
           onChange={(e) => setSearch(e.target.value)}
         />
@@ -98,32 +96,26 @@ const StaffDashboard = () => {
         <div className="staff-List-Buttons">
           <NormalButton
             handleClick={() => setStaffCreatePopUpWindow(true)}
-            title={"Create"}
-            titlewithiconicon={
-              <MdCreateNewFolder className="staff-buttonIcon" />
-            }
+            title={'Create'}
+            titlewithiconicon={<MdCreateNewFolder className="staff-buttonIcon" />}
           />
           <NormalButton
-            title={"Delete"}
+            title={'Delete'}
             handleClick={() => {
               if (selectedStaff == null) {
-                toast.error("Please Select Staff. ");
+                toast.error('Please Select Staff. ');
               } else {
                 setShowDeletePopUpWindow(true);
               }
             }}
-            titlewithiconicon={
-              <RiDeleteBin5Fill className="staff-buttonIcon" />
-            }
+            titlewithiconicon={<RiDeleteBin5Fill className="staff-buttonIcon" />}
           />
         </div>
       </div>
       {staffCreatePopUpWindow && (
         <div className="staff-Create-Event-Dashboard">
           <CreateStaff
-            handleCloseCreateStaffWindow={() =>
-              setStaffCreatePopUpWindow(false)
-            }
+            handleCloseCreateStaffWindow={() => setStaffCreatePopUpWindow(false)}
             reloadStaffList={handleReloadStaffList}
           />
         </div>
@@ -134,9 +126,7 @@ const StaffDashboard = () => {
           className="staff-Create-Event-Dashboard"
         >
           <UpdateStaff
-            handleCloseUpdateStaffWindow={() =>
-              setStaffUpdatePopUpWindow(false)
-            }
+            handleCloseUpdateStaffWindow={() => setStaffUpdatePopUpWindow(false)}
             selectedStaff={selectedStaff}
             handleReloadStaffList={handleReloadStaffList}
           />
@@ -147,8 +137,8 @@ const StaffDashboard = () => {
           <WarningPopup
             handleOk={handleDelete}
             handleCloseWarningWindow={() => setShowDeletePopUpWindow(false)}
-            buttonText={"Delete"}
-            titleText={"Are you sure you want to delete this staff?"}
+            buttonText={'Delete'}
+            titleText={'Are you sure you want to delete this staff?'}
             processing={processingDeleteStaff}
           />
         </div>

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import "./LogoutConfirmation.css";
-import eventCreationImage from "../../assets/Images/signin/Signin.jpeg";
-import { IoMdCloseCircleOutline } from "react-icons/io";
+import React, { useState } from 'react';
+import './LogoutConfirmation.css';
+import eventCreationImage from '../../assets/Images/signin/Signin.jpeg';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
 
 const LogoutConfirmation = ({ handleCloseLogoutWindow, handleLogout }) => {
   return (
@@ -14,10 +14,7 @@ const LogoutConfirmation = ({ handleCloseLogoutWindow, handleLogout }) => {
           <button onClick={handleLogout} className="btn btn-danger">
             Logout
           </button>
-          <button
-            onClick={handleCloseLogoutWindow}
-            className="btn btn-secondary"
-          >
+          <button onClick={handleCloseLogoutWindow} className="btn btn-secondary">
             Cancel
           </button>
         </div>

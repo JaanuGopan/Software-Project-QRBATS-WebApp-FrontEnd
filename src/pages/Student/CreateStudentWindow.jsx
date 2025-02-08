@@ -1,31 +1,28 @@
-import React, { useState } from "react";
-import "./Student.css";
-import axios from "axios";
-import Designer from "../../assets/Images/Designer.jpeg";
-import { useNavigate } from "react-router-dom";
-import InputField from "../../components/textfields/InputBox/InputField";
-import { IoMdCloseCircleOutline } from "react-icons/io";
-import Select from "react-select";
-import StudentService from "../../api/services/StudentService";
-import { ToastContainer, toast } from "react-toastify";
-import { CircularProgress } from "@mui/material";
+import React, { useState } from 'react';
+import './Student.css';
+import axios from 'axios';
+import Designer from '../../assets/Images/Designer.jpeg';
+import { useNavigate } from 'react-router-dom';
+import InputField from '../../components/textfields/InputBox/InputField';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
+import Select from 'react-select';
+import StudentService from '../../api/services/StudentService';
+import { ToastContainer, toast } from 'react-toastify';
+import { CircularProgress } from '@mui/material';
 
-const CreateStudentWindow = ({
-  handleCloseCreateStudentWindow,
-  handleReloadStudentList,
-}) => {
-  const [studentName, setStudentName] = useState("");
-  const [studentIndexNo, setStudentIndexNo] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [userName, setUserName] = useState("");
-  const [userRole, setUserRole] = useState("");
+const CreateStudentWindow = ({ handleCloseCreateStudentWindow, handleReloadStudentList }) => {
+  const [studentName, setStudentName] = useState('');
+  const [studentIndexNo, setStudentIndexNo] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [userName, setUserName] = useState('');
+  const [userRole, setUserRole] = useState('');
   const [semester, setSemester] = useState();
-  const [departmentId, setDepartmentId] = useState("");
+  const [departmentId, setDepartmentId] = useState('');
 
-  const semesterList = ["1", "2", "3", "4", "5", "6", "7", "8"];
-  const departmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA"];
+  const semesterList = ['1', '2', '3', '4', '5', '6', '7', '8'];
+  const departmentList = ['DEIE', 'DCOM', 'DMME', 'DCEE', 'DMENA'];
 
   const [processing, setProcessing] = useState(false);
 
@@ -33,39 +30,39 @@ const CreateStudentWindow = ({
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!studentName.trim()) {
-      toast.error("Student name is required");
+      toast.error('Student name is required');
       return false;
     }
     // indexno = "EG/20XX/XXXX"
     const indexNoPattern = /^EG\/20[0-9]{2}\/[0-9]{4}$/;
 
     if (!indexNoPattern.test(studentIndexNo)) {
-      toast.error("Invalid index number");
+      toast.error('Invalid index number');
       return false;
     }
 
     if (!studentIndexNo.trim()) {
-      toast.error("Index number is required");
+      toast.error('Index number is required');
       return false;
     }
 
     if (!email.trim() || !emailPattern.test(email)) {
-      toast.error("A valid email is required");
+      toast.error('A valid email is required');
       return false;
     }
 
     if (!userName.trim()) {
-      toast.error("Username is required");
+      toast.error('Username is required');
       return false;
     }
 
     if (!departmentId) {
-      toast.error("Department is required");
+      toast.error('Department is required');
       return false;
     }
 
     if (!semester.value) {
-      toast.error("Semester is required");
+      toast.error('Semester is required');
       return false;
     }
 
@@ -78,7 +75,7 @@ const CreateStudentWindow = ({
       return;
     }
     if (password !== confirmPassword) {
-      toast.error("Password does not match");
+      toast.error('Password does not match');
       return;
     }
     try {
@@ -94,7 +91,7 @@ const CreateStudentWindow = ({
         departmentList.indexOf(departmentId.value) + 1
       );
       if (response.status === 200) {
-        toast.success("Successfully Student Created.");
+        toast.success('Successfully Student Created.');
         handleReloadStudentList();
         handleCloseCreateStudentWindow();
       } else {
@@ -109,10 +106,7 @@ const CreateStudentWindow = ({
     <div className="student-signup-main-container">
       <div className="student-create-title-close-button">
         <h3 className="student-create-title">Create Student</h3>
-        <div
-          className="student-create-close-button"
-          onClick={handleCloseCreateStudentWindow}
-        >
+        <div className="student-create-close-button" onClick={handleCloseCreateStudentWindow}>
           <IoMdCloseCircleOutline id="close-icon" />
         </div>
       </div>
@@ -201,7 +195,7 @@ const CreateStudentWindow = ({
                       value: sem,
                       label: sem,
                     }))}
-                    placeholder={"Select Semester"}
+                    placeholder={'Select Semester'}
                   />
                 </div>
               </div>
@@ -218,7 +212,7 @@ const CreateStudentWindow = ({
                       value: dept,
                       label: dept,
                     }))}
-                    placeholder={"Select Department"}
+                    placeholder={'Select Department'}
                   />
                 </div>
               </div>
@@ -227,10 +221,7 @@ const CreateStudentWindow = ({
               {processing ? (
                 <CircularProgress />
               ) : (
-                <button
-                  type="submit"
-                  className="btn btn-success student-creation-save-button"
-                >
+                <button type="submit" className="btn btn-success student-creation-save-button">
                   Create Student
                 </button>
               )}

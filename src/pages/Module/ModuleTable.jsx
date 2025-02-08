@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../redux/features/userSlice";
-import ModuleService from "../../api/services/ModuleService";
-import { CiViewList } from "react-icons/ci";
-import "../AdminDashboard/AdminDashboard.css";
-import { BiEdit } from "react-icons/bi";
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../redux/features/userSlice';
+import ModuleService from '../../api/services/ModuleService';
+import { CiViewList } from 'react-icons/ci';
+import '../AdminDashboard/AdminDashboard.css';
+import { BiEdit } from 'react-icons/bi';
 
 const ModuleTable = ({
   handleOpenCreateModuleWindow,
@@ -19,7 +19,7 @@ const ModuleTable = ({
   const [moduleList, setModuleList] = useState([]);
   const [selectedModule, setSelectedModule] = useState(null);
 
-  const departmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA"];
+  const departmentList = ['DEIE', 'DCOM', 'DMME', 'DCEE', 'DMENA'];
 
   useEffect(() => {
     setModuleList(modulesList);
@@ -53,20 +53,14 @@ const ModuleTable = ({
           {moduleList
             .filter(
               (module) =>
-                module.moduleName
-                  .toLowerCase()
-                  .includes(searchModule.toLowerCase()) ||
-                module.moduleCode
-                  .toLowerCase()
-                  .includes(searchModule.toLowerCase())
+                module.moduleName.toLowerCase().includes(searchModule.toLowerCase()) ||
+                module.moduleCode.toLowerCase().includes(searchModule.toLowerCase())
             )
             .map((module, index) => (
               <tr
                 key={index}
                 onClick={() => handleModuleClick(module)}
-                className={
-                  selectedModule === module ? "selected-row" : "event-row"
-                }
+                className={selectedModule === module ? 'selected-row' : 'event-row'}
               >
                 <td>{index + 1}</td>
                 <td>{module.moduleName}</td>
@@ -74,10 +68,7 @@ const ModuleTable = ({
                 <td>{module.semester}</td>
                 <td>{departmentList[module.departmentId - 1]}</td>
                 <td>
-                  <button
-                    onClick={handleOpenUpdateModuleWindow}
-                    className="ViewButton"
-                  >
+                  <button onClick={handleOpenUpdateModuleWindow} className="ViewButton">
                     <BiEdit className="EditIcon" />
                     <p className="ViewButtonLabel">Edit</p>
                   </button>

@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from "react";
-import "../../../pages/AdminDashboard/AdminDashboard.css";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
-import { FaCheck } from "react-icons/fa";
-import { AiOutlineClose } from "react-icons/ai";
+import React, { useState, useEffect } from 'react';
+import '../../../pages/AdminDashboard/AdminDashboard.css';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import { FaCheck } from 'react-icons/fa';
+import { AiOutlineClose } from 'react-icons/ai';
 
-const EventAttendanceTable = ({
-  search,
-  attendanceList,
-  handleGeneratePDF,
-}) => {
+const EventAttendanceTable = ({ search, attendanceList, handleGeneratePDF }) => {
   const [attendance, setAttendance] = useState([]);
   const [selectedAttendance, setSelectedAttendance] = useState(null);
 
@@ -40,21 +36,13 @@ const EventAttendanceTable = ({
           {attendance
             .filter(
               (attendance) =>
-                attendance.studentName
-                  .toLowerCase()
-                  .includes(search.toLowerCase()) ||
-                attendance.indexNumber
-                  .toLowerCase()
-                  .includes(search.toLowerCase())
+                attendance.studentName.toLowerCase().includes(search.toLowerCase()) ||
+                attendance.indexNumber.toLowerCase().includes(search.toLowerCase())
             )
             .map((attendance, index) => (
               <tr
                 key={index}
-                className={
-                  selectedAttendance === attendance
-                    ? "selected-row"
-                    : "event-row"
-                }
+                className={selectedAttendance === attendance ? 'selected-row' : 'event-row'}
               >
                 <td>{index + 1}</td>
                 <td>{attendance.studentName}</td>

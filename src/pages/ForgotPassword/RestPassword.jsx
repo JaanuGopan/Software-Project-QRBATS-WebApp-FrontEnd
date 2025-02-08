@@ -1,25 +1,21 @@
-import React, { useState } from "react";
-import { BiUser } from "react-icons/bi";
-import { MdPassword } from "react-icons/md";
-import { ToastContainer, toast } from "react-toastify";
-import UserService from "../../api/services/UserService";
+import React, { useState } from 'react';
+import { BiUser } from 'react-icons/bi';
+import { MdPassword } from 'react-icons/md';
+import { ToastContainer, toast } from 'react-toastify';
+import UserService from '../../api/services/UserService';
 
-const ResetPassword = ({
-  handleCloseResetPassword,
-  handleShowLogin,
-  email,
-}) => {
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [userName, setUserName] = useState("");
+const ResetPassword = ({ handleCloseResetPassword, handleShowLogin, email }) => {
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [userName, setUserName] = useState('');
 
   const handleCheckInputs = () => {
     if (!userName || !password || !confirmPassword) {
-      toast.error("All fields are required");
+      toast.error('All fields are required');
       return false;
     }
     if (password !== confirmPassword) {
-      toast.error("Passwords do not match");
+      toast.error('Passwords do not match');
       return false;
     }
     return true;
@@ -29,19 +25,15 @@ const ResetPassword = ({
     e.preventDefault();
     if (handleCheckInputs()) {
       try {
-        const response = await UserService.resetPassword(
-          email,
-          password,
-          userName
-        );
+        const response = await UserService.resetPassword(email, password, userName);
         if (response.status === 200) {
-          toast.success("Password reset successfully.");
+          toast.success('Password reset successfully.');
           handleShowLogin();
         } else {
-          toast.error(response.data || "Error in password reset.");
+          toast.error(response.data || 'Error in password reset.');
         }
       } catch (error) {
-        toast.error("Error in password reset.");
+        toast.error('Error in password reset.');
       }
     }
   };

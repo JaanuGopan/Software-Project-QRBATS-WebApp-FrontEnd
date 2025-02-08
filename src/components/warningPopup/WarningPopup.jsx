@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import "./WarningPopup.css";
-import { CircularProgress } from "@mui/material";
+import React, { useState } from 'react';
+import './WarningPopup.css';
+import { CircularProgress } from '@mui/material';
 
 const WarningPopup = ({
   handleCloseWarningWindow,
@@ -24,10 +24,7 @@ const WarningPopup = ({
               {buttonText}
             </button>
           )}
-          <button
-            onClick={handleCloseWarningWindow}
-            className="btn btn-secondary"
-          >
+          <button onClick={handleCloseWarningWindow} className="btn btn-secondary">
             Cancel
           </button>
         </div>

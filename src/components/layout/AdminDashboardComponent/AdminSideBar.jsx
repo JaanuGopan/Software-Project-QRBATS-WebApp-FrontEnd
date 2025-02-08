@@ -1,16 +1,16 @@
-import React from "react";
-import { IoMdCloseCircleOutline } from "react-icons/io";
-import { IoSettings } from "react-icons/io5";
-import { FaUserTie } from "react-icons/fa";
-import { PiStudentBold } from "react-icons/pi";
-import { IoLogOut } from "react-icons/io5";
-import "../../../pages/StaffMainNavigation/StaffMainNavigation.css";
-import logo from "../../../assets/Images/logo/logo_white.png";
-import Sidebarbutton from "../StaffDashboardComponents/Sidebarbutton";
-import { AiFillDashboard } from "react-icons/ai";
-import { useDispatch } from "react-redux";
-import { TbReport } from "react-icons/tb";
-import { setSideBarIndex } from "../../../redux/features/mainNavigationSlice";
+import React from 'react';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
+import { IoSettings } from 'react-icons/io5';
+import { FaUserTie } from 'react-icons/fa';
+import { PiStudentBold } from 'react-icons/pi';
+import { IoLogOut } from 'react-icons/io5';
+import '../../../pages/StaffMainNavigation/StaffMainNavigation.css';
+import logo from '../../../assets/Images/logo/logo_white.png';
+import Sidebarbutton from '../StaffDashboardComponents/Sidebarbutton';
+import { AiFillDashboard } from 'react-icons/ai';
+import { useDispatch } from 'react-redux';
+import { TbReport } from 'react-icons/tb';
+import { setSideBarIndex } from '../../../redux/features/mainNavigationSlice';
 
 const AdminSideBar = ({ handleClose, index, setIndex, handleLogout }) => {
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const AdminSideBar = ({ handleClose, index, setIndex, handleLogout }) => {
       <div className="SideBar">
         <Sidebarbutton
           handleSidebarMenu={() => handleMenuClick(0)}
-          title={"Dashboard"}
+          title={'Dashboard'}
           titlewithiconicon={<AiFillDashboard className="buttonIcon" />}
           isOpen={index === 0}
         />
@@ -44,32 +44,32 @@ const AdminSideBar = ({ handleClose, index, setIndex, handleLogout }) => {
         /> */}
         <Sidebarbutton
           handleSidebarMenu={() => handleMenuClick(1)}
-          title={"Staff"}
+          title={'Staff'}
           titlewithiconicon={<FaUserTie className="buttonIcon" />}
           isOpen={index === 1}
         />
         <Sidebarbutton
           handleSidebarMenu={() => handleMenuClick(2)}
-          title={"Student"}
+          title={'Student'}
           titlewithiconicon={<PiStudentBold className="buttonIcon" />}
           isOpen={index === 2}
         />
         <Sidebarbutton
           handleSidebarMenu={() => handleMenuClick(3)}
-          title={"Report"}
+          title={'Report'}
           titlewithiconicon={<TbReport className="buttonIcon" />}
           isOpen={index === 3}
         />
         <Sidebarbutton
           handleSidebarMenu={() => handleMenuClick(6)}
-          title={"Settings"}
+          title={'Settings'}
           titlewithiconicon={<IoSettings className="buttonIcon" />}
           isOpen={index === 6}
         />
 
         <Sidebarbutton
           handleSidebarMenu={handleLogoutClick}
-          title={"Logout"}
+          title={'Logout'}
           titlewithiconicon={<IoLogOut className="buttonIcon" />}
         />
       </div>

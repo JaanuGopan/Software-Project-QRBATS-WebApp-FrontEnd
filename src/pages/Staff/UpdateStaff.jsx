@@ -1,55 +1,51 @@
-import React, { useState } from "react";
-import "./StaffA.css";
-import { useNavigate } from "react-router-dom";
-import InputField from "../../components/textfields/InputBox/InputField";
-import { IoMdCloseCircleOutline } from "react-icons/io";
-import Select from "react-select";
-import UserService from "../../api/services/UserService";
-import { toast, ToastContainer } from "react-toastify";
-import { CircularProgress } from "@mui/material";
+import React, { useState } from 'react';
+import './StaffA.css';
+import { useNavigate } from 'react-router-dom';
+import InputField from '../../components/textfields/InputBox/InputField';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
+import Select from 'react-select';
+import UserService from '../../api/services/UserService';
+import { toast, ToastContainer } from 'react-toastify';
+import { CircularProgress } from '@mui/material';
 
-const UpdateStaff = ({
-  handleCloseUpdateStaffWindow,
-  selectedStaff,
-  handleReloadStaffList,
-}) => {
+const UpdateStaff = ({ handleCloseUpdateStaffWindow, selectedStaff, handleReloadStaffList }) => {
   const [userId, setUserId] = useState(selectedStaff.userId);
   const [firstName, setFirstName] = useState(selectedStaff.firstName);
   const [lastName, setLastName] = useState(selectedStaff.lastName);
   const [email, setEmail] = useState(selectedStaff.email);
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState('');
   const [userName, setUserName] = useState(selectedStaff.username);
   const [userRole, setUserRole] = useState(selectedStaff.role);
   const [departmentId, setDepartmentId] = useState(selectedStaff.departmentId);
   const [department, setDepartment] = useState();
   const navigate = useNavigate();
 
-  const departmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA", "DIS"];
-  const userRoleList = ["ADMIN", "LECTURER"];
+  const departmentList = ['DEIE', 'DCOM', 'DMME', 'DCEE', 'DMENA', 'DIS'];
+  const userRoleList = ['ADMIN', 'LECTURER'];
 
   const [loadingUpdateStaff, setLoadingUpdateStaff] = useState(false);
 
   const handleInputValidation = () => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (firstName.trim() === "") {
-      toast.error("Please Enter First Name");
+    if (firstName.trim() === '') {
+      toast.error('Please Enter First Name');
       return false;
     }
-    if (lastName.trim() === "") {
-      toast.error("Please Enter Last Name");
+    if (lastName.trim() === '') {
+      toast.error('Please Enter Last Name');
       return false;
     }
-    if (email.trim() === "" || !emailPattern.test(email)) {
-      toast.error("Please Enter a Valid Email");
+    if (email.trim() === '' || !emailPattern.test(email)) {
+      toast.error('Please Enter a Valid Email');
       return false;
     }
     if (!departmentId) {
-      toast.error("Please Select Department");
+      toast.error('Please Select Department');
       return false;
     }
-    if (userRole.trim() === "") {
-      toast.error("Please Select User Role");
+    if (userRole.trim() === '') {
+      toast.error('Please Select User Role');
       return false;
     }
     return true;
@@ -67,32 +63,32 @@ const UpdateStaff = ({
         firstName,
         lastName,
         email,
-        "",
-        "",
+        '',
+        '',
         departmentId
       );
       if (response.status === 200) {
         handleReloadStaffList();
         handleCloseUpdateStaffWindow();
-        toast.success("User Updated Successfully!");
+        toast.success('User Updated Successfully!');
       } else if (response.status === 400) {
         toast.error(response.data);
       }
     } catch {
-      toast.error("User Updation Failed!");
+      toast.error('User Updation Failed!');
     } finally {
       setLoadingUpdateStaff(false);
     }
   };
 
   const parseJwt = (token) => {
-    const base64Url = token.split(".")[1];
-    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     const jsonPayload = decodeURIComponent(
       atob(base64)
-        .split("")
-        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-        .join("")
+        .split('')
+        .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+        .join('')
     );
     return JSON.parse(jsonPayload);
   };
@@ -101,10 +97,7 @@ const UpdateStaff = ({
     <div className="staff-signup-main-container">
       <div className="staff-update-title-close-button">
         <h3 className="staff-update-title">Update User</h3>
-        <div
-          className="staff-update-close-button"
-          onClick={handleCloseUpdateStaffWindow}
-        >
+        <div className="staff-update-close-button" onClick={handleCloseUpdateStaffWindow}>
           <IoMdCloseCircleOutline id="close-icon" />
         </div>
       </div>
@@ -153,14 +146,12 @@ const UpdateStaff = ({
                     value: departmentList[departmentId - 1],
                     label: departmentList[departmentId - 1],
                   }}
-                  onChange={(e) =>
-                    setDepartmentId(departmentList.indexOf(e.value) + 1)
-                  }
+                  onChange={(e) => setDepartmentId(departmentList.indexOf(e.value) + 1)}
                   options={departmentList.map((dept) => ({
                     value: dept,
                     label: dept,
                   }))}
-                  placeholder={"Select Department"}
+                  placeholder={'Select Department'}
                 />
               </div>
             </div>

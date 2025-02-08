@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import "../../pages/AdminDashboard/AdminDashboard.css";
-import { CiViewList } from "react-icons/ci";
-import { CircularProgress } from "@mui/material";
+import React, { useState } from 'react';
+import '../../pages/AdminDashboard/AdminDashboard.css';
+import { CiViewList } from 'react-icons/ci';
+import { CircularProgress } from '@mui/material';
 
 const LectureWithDateReportTable = ({
   handleOpenLectureAttendanceReportWindow,
@@ -20,10 +20,7 @@ const LectureWithDateReportTable = ({
   const handleViewReport = async (lecture) => {
     try {
       setIsLoading(true);
-      await handleOpenLectureAttendanceReportWindow(
-        lecture.lectureId,
-        lecture.lectureDate
-      );
+      await handleOpenLectureAttendanceReportWindow(lecture.lectureId, lecture.lectureDate);
     } finally {
       setIsLoading(false);
     }
@@ -53,19 +50,13 @@ const LectureWithDateReportTable = ({
                     .toLowerCase()
                     .includes(searchLectureWithDate.toLowerCase())) ||
                 (lecture.lectureDate &&
-                  lecture.lectureDate
-                    .toLowerCase()
-                    .includes(searchLectureWithDate.toLowerCase()))
+                  lecture.lectureDate.toLowerCase().includes(searchLectureWithDate.toLowerCase()))
             )
             .map((lecture, index) => (
               <tr
                 key={index}
                 onClick={() => handleLectureReportClick(lecture)}
-                className={
-                  selectedLectureWithDate === lecture
-                    ? "selected-row"
-                    : "event-row"
-                }
+                className={selectedLectureWithDate === lecture ? 'selected-row' : 'event-row'}
               >
                 <td>{index + 1}</td>
                 <td>{`Lecture_${lecture.lectureDate}`}</td>

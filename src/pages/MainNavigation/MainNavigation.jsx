@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from "react";
-import "./MainNavigation.css";
-import "../StaffMainNavigation/StaffMainNavigation.css";
-import AdminDashboard from "../AdminDashboard/AdminDashboard";
-import { PiListDashesFill } from "react-icons/pi";
-import StaffNavBar from "../../components/layout/StaffDashboardComponents/StaffNavBar";
-import AdminSideBar from "../../components/layout/AdminDashboardComponent/AdminSideBar";
-import StudentDashboard from "../Student/StudentDashboard";
-import Setting from "../Setting/Setting";
-import StaffDashboard from "../Staff/StaffDashboard";
-import EventReport from "../Event/EventReport";
-import { useDispatch, useSelector } from "react-redux";
-import { login, selectUser } from "../../redux/features/userSlice";
-import { useNavigate } from "react-router-dom";
-import LecturerSideBar from "../../components/layout/AdminDashboardComponent/LecturerSideBar";
-import LecturerDashboard from "../LecturerDashboard/LecturerDashboard";
-import ModulePage from "../Module/ModulePage";
-import EventLectureCreationDashboard from "../LecturerDashboard/EventLectureCreationDashboard";
-import LocationService from "../../api/services/LocationService";
-import LogoutConfirmation from "../LogoutPage/LogoutConfirmation";
-import { resetSideBarIndex } from "../../redux/features/mainNavigationSlice";
-import Logout from "../../api/services/logoutService";
-import ReportPage from "../ReportPage/ReportPage";
-import LectureCreationPage from "../LactureCreation/LectureCreationPage";
+import React, { useState, useEffect } from 'react';
+import './MainNavigation.css';
+import '../StaffMainNavigation/StaffMainNavigation.css';
+import AdminDashboard from '../AdminDashboard/AdminDashboard';
+import { PiListDashesFill } from 'react-icons/pi';
+import StaffNavBar from '../../components/layout/StaffDashboardComponents/StaffNavBar';
+import AdminSideBar from '../../components/layout/AdminDashboardComponent/AdminSideBar';
+import StudentDashboard from '../Student/StudentDashboard';
+import Setting from '../Setting/Setting';
+import StaffDashboard from '../Staff/StaffDashboard';
+import EventReport from '../Event/EventReport';
+import { useDispatch, useSelector } from 'react-redux';
+import { login, selectUser } from '../../redux/features/userSlice';
+import { useNavigate } from 'react-router-dom';
+import LecturerSideBar from '../../components/layout/AdminDashboardComponent/LecturerSideBar';
+import LecturerDashboard from '../LecturerDashboard/LecturerDashboard';
+import ModulePage from '../Module/ModulePage';
+import EventLectureCreationDashboard from '../LecturerDashboard/EventLectureCreationDashboard';
+import LocationService from '../../api/services/LocationService';
+import LogoutConfirmation from '../LogoutPage/LogoutConfirmation';
+import { resetSideBarIndex } from '../../redux/features/mainNavigationSlice';
+import Logout from '../../api/services/logoutService';
+import ReportPage from '../ReportPage/ReportPage';
+import LectureCreationPage from '../LactureCreation/LectureCreationPage';
 
 function MainNavigationPage() {
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ function MainNavigationPage() {
   // If user is already logged in, redirect to mainNavigation
   useEffect(() => {
     if (!user) {
-      navigate("/signin");
+      navigate('/signin');
     }
     handleGetLocationNameList();
     if (sideBarIndex) {
@@ -88,14 +88,11 @@ function MainNavigationPage() {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <PiListDashesFill
-          size={"30px"}
-          color={isHovered ? "#0366a4" : "white"}
-        />
+        <PiListDashesFill size={'30px'} color={isHovered ? '#0366a4' : 'white'} />
       </div>
       <StaffNavBar setIndex={setOpenMenu} />
       <div className="staff-Submain">
-        {!isHidden && role === "ADMIN" && (
+        {!isHidden && role === 'ADMIN' && (
           <AdminSideBar
             handleClose={handleClose}
             index={openMenu}
@@ -103,7 +100,7 @@ function MainNavigationPage() {
             handleLogout={() => setHandleShowLogoutWindow(true)}
           />
         )}
-        {!isHidden && role === "LECTURER" && (
+        {!isHidden && role === 'LECTURER' && (
           <LecturerSideBar
             handleClose={handleClose}
             index={openMenu}
@@ -113,7 +110,7 @@ function MainNavigationPage() {
             }}
           />
         )}
-        {role === "ADMIN" && (
+        {role === 'ADMIN' && (
           <div className="maincontent">
             {openMenu === 0 && <AdminDashboard />}
             {/* {openMenu === 1 && (
@@ -125,7 +122,7 @@ function MainNavigationPage() {
             {openMenu === 6 && <Setting />}
           </div>
         )}
-        {role === "LECTURER" && (
+        {role === 'LECTURER' && (
           <div className="maincontent">
             {openMenu === 0 && <LecturerDashboard />}
             {openMenu === 1 && <LectureCreationPage />}

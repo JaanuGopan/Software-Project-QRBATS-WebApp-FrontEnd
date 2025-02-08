@@ -1,15 +1,15 @@
-import "../Event/EventCreation/EventCreation.css";
-import React, { useState, useRef } from "react";
-import axios from "axios";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
-import { IoMdCloseCircleOutline } from "react-icons/io";
-import toast, { Toaster } from "react-hot-toast";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../redux/features/userSlice";
-import QRCode from "qrcode.react";
-import EventService from "../../api/services/EventService";
-import { CircularProgress } from "@mui/material";
+import '../Event/EventCreation/EventCreation.css';
+import React, { useState, useRef } from 'react';
+import axios from 'axios';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
+import toast, { Toaster } from 'react-hot-toast';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../redux/features/userSlice';
+import QRCode from 'qrcode.react';
+import EventService from '../../api/services/EventService';
+import { CircularProgress } from '@mui/material';
 
 const AdminUpdateEvent = ({
   handleCloseEventUpdateWindow,
@@ -25,16 +25,14 @@ const AdminUpdateEvent = ({
   const [eventEndTime, setEventEndTime] = useState(selectedEvent.eventEndTime);
   const [eventVenue, setEventVenue] = useState(selectedEvent.eventVenue);
   const [eventRole, setEventRole] = useState(selectedEvent.eventRole);
-  const [eventAssignedUserId, setEventAssignedUserId] = useState(
-    selectedEvent.eventAssignedUserId
-  );
+  const [eventAssignedUserId, setEventAssignedUserId] = useState(selectedEvent.eventAssignedUserId);
 
   const [showModuleNameInput, setShowModuleNameInput] = useState(true);
-  const [title, setTitle] = useState("Event");
+  const [title, setTitle] = useState('Event');
 
   const qrCodeRef = useRef(null);
 
-  const notifySuccess = () => toast.success("Successfully Event Updated!");
+  const notifySuccess = () => toast.success('Successfully Event Updated!');
 
   const user = useSelector(selectUser);
   // Destructure user object for cleaner code
@@ -62,12 +60,12 @@ const AdminUpdateEvent = ({
       } else if (response.status === 400) {
         toast.error(response.data);
       } else {
-        toast.error("Error In Event Update. ");
+        toast.error('Error In Event Update. ');
         console.log(response.data);
       }
     } catch (error) {
-      console.error("Event failed", error);
-      toast.error("Error In Event Update. ");
+      console.error('Event failed', error);
+      toast.error('Error In Event Update. ');
     } finally {
       setProcessingUpdateEvent(false);
     }
@@ -75,12 +73,12 @@ const AdminUpdateEvent = ({
 
   const downloadQRCode = () => {
     const qrCodeURL = document
-      .getElementById("qrCodeEl")
-      .toDataURL("image/png")
-      .replace("image/png", "image/octet-stream");
-    let aEl = document.createElement("a");
+      .getElementById('qrCodeEl')
+      .toDataURL('image/png')
+      .replace('image/png', 'image/octet-stream');
+    let aEl = document.createElement('a');
     aEl.href = qrCodeURL;
-    aEl.download = "QR_Code" + "_" + eventName + ".png";
+    aEl.download = 'QR_Code' + '_' + eventName + '.png';
     document.body.appendChild(aEl);
     aEl.click();
     document.body.removeChild(aEl);
@@ -96,10 +94,7 @@ const AdminUpdateEvent = ({
       {
         <div className="event-create-title-close-button">
           <h3 className="event-create-title">Update Event</h3>
-          <div
-            className="event-create-close-button"
-            onClick={handleCloseEventUpdateWindow}
-          >
+          <div className="event-create-close-button" onClick={handleCloseEventUpdateWindow}>
             <IoMdCloseCircleOutline id="close-icon" />
           </div>
         </div>
@@ -114,7 +109,7 @@ const AdminUpdateEvent = ({
                 size={200}
                 value={qrCodeDetails}
                 className="QRCode-img"
-                style={{ border: "5px solid white" }}
+                style={{ border: '5px solid white' }}
               />
             </div>
           </div>
@@ -142,7 +137,7 @@ const AdminUpdateEvent = ({
                 type="text"
                 id="eventName"
                 name="eventName"
-                placeholder={"Event Name"}
+                placeholder={'Event Name'}
                 className="form-control mb-2"
                 value={eventName}
                 onChange={(e) => setEventName(e.target.value)}

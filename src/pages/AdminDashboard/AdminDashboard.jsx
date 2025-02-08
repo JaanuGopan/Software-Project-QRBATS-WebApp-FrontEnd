@@ -1,30 +1,30 @@
-import React, { useState, useEffect } from "react";
-import "./AdminDashboard.css";
-import Table from "../../components/layout/AdminDashboardComponent/Table";
-import TotalCount from "../../components/layout/AdminDashboardComponent/TotalCount";
-import { FaUsers } from "react-icons/fa";
-import { PiUsersFourFill } from "react-icons/pi";
-import { FaSchool } from "react-icons/fa6";
-import { IoNewspaperSharp } from "react-icons/io5";
-import NormalButton from "../../components/layout/AdminDashboardComponent/NormalButton";
-import { MdCreateNewFolder } from "react-icons/md";
-import { RiDeleteBin5Fill } from "react-icons/ri";
-import AdminUpdateEvent from "../Event/AdminUpdateEvent";
-import AdminEventCreation from "../Event/AdminEventCreation";
-import FetchEventsService from "../../api/services/FetchEventsService";
-import LocationService from "../../api/services/LocationService";
-import { useDispatch, useSelector } from "react-redux";
-import EventService from "../../api/services/EventService";
-import { selectUser } from "../../redux/features/userSlice";
-import { toast, ToastContainer } from "react-toastify";
-import WarningPopup from "../../components/warningPopup/WarningPopup";
+import React, { useState, useEffect } from 'react';
+import './AdminDashboard.css';
+import Table from '../../components/layout/AdminDashboardComponent/Table';
+import TotalCount from '../../components/layout/AdminDashboardComponent/TotalCount';
+import { FaUsers } from 'react-icons/fa';
+import { PiUsersFourFill } from 'react-icons/pi';
+import { FaSchool } from 'react-icons/fa6';
+import { IoNewspaperSharp } from 'react-icons/io5';
+import NormalButton from '../../components/layout/AdminDashboardComponent/NormalButton';
+import { MdCreateNewFolder } from 'react-icons/md';
+import { RiDeleteBin5Fill } from 'react-icons/ri';
+import AdminUpdateEvent from '../Event/AdminUpdateEvent';
+import AdminEventCreation from '../Event/AdminEventCreation';
+import FetchEventsService from '../../api/services/FetchEventsService';
+import LocationService from '../../api/services/LocationService';
+import { useDispatch, useSelector } from 'react-redux';
+import EventService from '../../api/services/EventService';
+import { selectUser } from '../../redux/features/userSlice';
+import { toast, ToastContainer } from 'react-toastify';
+import WarningPopup from '../../components/warningPopup/WarningPopup';
 
 const AdminDashboard = () => {
   const [eventCreatePopUpWindow, setEventCreatePopUpWindow] = useState(false);
   const [eventUpdatePopUpWindow, setEventUpdatePopUpWindow] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [eventList, setEventList] = useState([]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [venuesList, setVenuesList] = useState([]);
   const dispatch = useDispatch;
 
@@ -45,14 +45,14 @@ const AdminDashboard = () => {
   const handleEventClick = (event) => {
     setSelectedEvent(event);
     // Do whatever you want with the selected event data
-    console.log("Selected Event:", event);
+    console.log('Selected Event:', event);
   };
 
   const [showDeleteEventPopup, setShowDeleteEventPopup] = useState(false);
 
   const showDeleteEventWarning = () => {
     if (selectedEvent === null) {
-      toast.error("Please Select Event To Delete.");
+      toast.error('Please Select Event To Delete.');
       return;
     }
     setShowDeleteEventPopup(true);
@@ -74,7 +74,7 @@ const AdminDashboard = () => {
         toast.error(`Error In Deleting Event ${selectedEvent.eventName}.`);
       }
     } catch (error) {
-      console.log("error " + error);
+      console.log('error ' + error);
     } finally {
       setProcessingDeleteEvent(false);
       setShowDeleteEventPopup(false);
@@ -87,7 +87,7 @@ const AdminDashboard = () => {
         setEventList(events);
       })
       .catch((error) => {
-        console.error("Error fetching events:", error);
+        console.error('Error fetching events:', error);
       });
   };
 
@@ -102,11 +102,11 @@ const AdminDashboard = () => {
           type="text"
           placeholder="Search..."
           style={{
-            width: "150px",
-            padding: "3px 40px",
-            border: "0.5px solid black",
-            borderRadius: "5px",
-            textAlign: "center",
+            width: '150px',
+            padding: '3px 40px',
+            border: '0.5px solid black',
+            borderRadius: '5px',
+            textAlign: 'center',
           }}
           onChange={(e) => setSearch(e.target.value)}
         />
@@ -122,12 +122,12 @@ const AdminDashboard = () => {
         <div className="List-Buttons">
           <NormalButton
             handleClick={() => setEventCreatePopUpWindow(true)}
-            title={"Create"}
+            title={'Create'}
             titlewithiconicon={<MdCreateNewFolder className="buttonIcon" />}
-            id={"Admincreate"}
+            id={'Admincreate'}
           />
           <NormalButton
-            title={"Delete"}
+            title={'Delete'}
             handleClick={showDeleteEventWarning}
             titlewithiconicon={<RiDeleteBin5Fill className="buttonIcon" />}
           />
@@ -136,9 +136,7 @@ const AdminDashboard = () => {
       {eventCreatePopUpWindow && (
         <div className="Admin-Create-Event-Dashboard">
           <AdminEventCreation
-            handleCloseCreateEventWindow={() =>
-              setEventCreatePopUpWindow(false)
-            }
+            handleCloseCreateEventWindow={() => setEventCreatePopUpWindow(false)}
             reloadEventList={handleReloadEventList}
             locationList={venuesList}
             showCloseButton={true}
@@ -148,9 +146,7 @@ const AdminDashboard = () => {
       {eventUpdatePopUpWindow && (
         <div className="Admin-Create-Event-Dashboard">
           <AdminUpdateEvent
-            handleCloseEventUpdateWindow={() =>
-              setEventUpdatePopUpWindow(false)
-            }
+            handleCloseEventUpdateWindow={() => setEventUpdatePopUpWindow(false)}
             selectedEvent={selectedEvent}
             reloadEventList={handleReloadEventList}
             locationNameList={venuesList}
@@ -163,8 +159,8 @@ const AdminDashboard = () => {
           <WarningPopup
             handleCloseWarningWindow={() => setShowDeleteEventPopup(false)}
             handleOk={handleDelete}
-            titleText={"Are You Sure You Want To Delete This Event?"}
-            buttonText={"Delete"}
+            titleText={'Are You Sure You Want To Delete This Event?'}
+            buttonText={'Delete'}
             processing={processingDeleteEvent}
           />
         </div>

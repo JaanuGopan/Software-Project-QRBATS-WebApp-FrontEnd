@@ -1,13 +1,8 @@
-import React, { useEffect, useState } from "react";
-import "../AdminDashboard/AdminDashboard.css";
-import { FaEdit } from "react-icons/fa";
+import React, { useEffect, useState } from 'react';
+import '../AdminDashboard/AdminDashboard.css';
+import { FaEdit } from 'react-icons/fa';
 
-const EventLectureTable = ({
-  lectureList,
-  onLectureClick,
-  search,
-  handleUpdateLecture,
-}) => {
+const EventLectureTable = ({ lectureList, onLectureClick, search, handleUpdateLecture }) => {
   const [lecturesList, setLecturesList] = useState([]);
   const [selectedLecture, setSelectedLecture] = useState(null);
 
@@ -38,18 +33,14 @@ const EventLectureTable = ({
           {lecturesList
             .filter(
               (lecture) =>
-                lecture.eventName
-                  .toLowerCase()
-                  .includes(search.toLowerCase()) ||
+                lecture.eventName.toLowerCase().includes(search.toLowerCase()) ||
                 lecture.eventVenue.toLowerCase().includes(search.toLowerCase())
             )
             .map((lecture, index) => (
               <tr
                 key={index}
                 onClick={() => handleLectureClick(lecture)}
-                className={
-                  selectedLecture === lecture ? "selected-row" : "event-row"
-                }
+                className={selectedLecture === lecture ? 'selected-row' : 'event-row'}
               >
                 <td>{index + 1}</td>
                 <td>{lecture.eventName}</td>
@@ -58,10 +49,7 @@ const EventLectureTable = ({
                 <td>{lecture.eventTime}</td>
                 <td>{lecture.eventEndTime}</td>
                 <td>
-                  <button
-                    onClick={() => handleUpdateLecture(lecture)}
-                    className="EditButton"
-                  >
+                  <button onClick={() => handleUpdateLecture(lecture)} className="EditButton">
                     <FaEdit className="EditIcon" />
                   </button>
                 </td>

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 class StudentService {
   /* static getStudentsByDepartmentIdAndSemester = async (
@@ -26,7 +26,7 @@ class StudentService {
     departmentId
   ) => {
     try {
-      const response = await axios.post("/api/v1/mobile/createstudentbyadmin", {
+      const response = await axios.post('/api/v1/mobile/createstudentbyadmin', {
         studentId,
         studentName,
         indexNumber,
@@ -47,26 +47,24 @@ class StudentService {
 
   static async getAllStudent() {
     try {
-      const response = await axios.post("/api/v1/mobile/getallstudents");
+      const response = await axios.post('/api/v1/mobile/getallstudents');
       if (response.status === 200) {
         return response.data;
       }
     } catch (error) {
-      console.error("Error fetching students:", error);
+      console.error('Error fetching students:', error);
       throw error; // Re-throw the error to handle it in the component
     }
   }
 
   static async deleteStudent(studentId) {
     try {
-      const response = await axios.delete(
-        `/api/v1/mobile/deletestudentbystudentid/${studentId}`
-      );
+      const response = await axios.delete(`/api/v1/mobile/deletestudentbystudentid/${studentId}`);
       if (response.status === 200) {
         return response.data;
       }
     } catch (error) {
-      throw new Error("Delete Failed ", error);
+      throw new Error('Delete Failed ', error);
     }
   }
 
@@ -80,7 +78,7 @@ class StudentService {
     semester
   ) {
     try {
-      const response = await axios.put("/api/v1/mobile/updatestudent", {
+      const response = await axios.put('/api/v1/mobile/updatestudent', {
         id: id,
         studentName: studentName,
         indexNumber: indexNo,

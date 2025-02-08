@@ -1,500 +1,480 @@
-.lecture-creation-main-container{
-    display: flex;
-    flex-direction: column;
-    overflow: scroll;
-    margin-top: 15px;
-    margin-left: 15px;
-    margin-right: 5px;
-    padding: 10px;
-    width: 98%;
-    height: 95%;
-    border-top: 5px solid #0365A1;
-    box-shadow: 0.5px 2px 0.5px 0.5px rgba(25, 65, 85, 0.5);
-    border-radius: 10px;
-    background-color: #FAFAFA;
+.lecture-creation-main-container {
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-right: 5px;
+  padding: 10px;
+  width: 98%;
+  height: 95%;
+  border-top: 5px solid #0365a1;
+  box-shadow: 0.5px 2px 0.5px 0.5px rgba(25, 65, 85, 0.5);
+  border-radius: 10px;
+  background-color: #fafafa;
 }
 
-
-.lecture-creation-title-icon-close-button{
-    display: flex;
-    flex-direction: row;
-    align-self: center;
-    margin-top: 10px;
-    justify-self: center;
-    align-items: center;
+.lecture-creation-title-icon-close-button {
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  margin-top: 10px;
+  justify-self: center;
+  align-items: center;
 }
 
 .lecture-create-title-close-button {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .lecture-create-title {
-    align-self: center;
-    justify-self: center;
-    margin-left: auto;
+  align-self: center;
+  justify-self: center;
+  margin-left: auto;
 }
 
 .lecture-create-close-button {
-    align-self: center;
-    justify-self: flex-end;
-    margin-left: auto;
-    height: 30px;
-    width: 30px;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 30px;
+  align-self: center;
+  justify-self: flex-end;
+  margin-left: auto;
+  height: 30px;
+  width: 30px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
 }
 
 .lecture-create-close-button #close-icon {
-    align-self: center;
-    justify-self: center;
-    color: red;
-    height: 90%;
-    width: 90%;
+  align-self: center;
+  justify-self: center;
+  color: red;
+  height: 90%;
+  width: 90%;
 }
 
 .lecture-create-close-button #close-icon:hover {
-    align-self: center;
-    justify-self: center;
-    color: white;
-    height: 90%;
-    width: 90%;
-    background-color: red;
-    border-radius: 100%;
+  align-self: center;
+  justify-self: center;
+  color: white;
+  height: 90%;
+  width: 90%;
+  background-color: red;
+  border-radius: 100%;
 }
 
-
-
-
-.lecture-creation-container{
-    height: 100%;
-    width: 100%;
-    background-color: #FAFAFA;
-    padding: auto;
-    display: flex;
-    gap: 10px;
+.lecture-creation-container {
+  height: 100%;
+  width: 100%;
+  background-color: #fafafa;
+  padding: auto;
+  display: flex;
+  gap: 10px;
 }
 
-.lecture-creation-container-left{
-    height: 100%;
-    width: 100%;
-    background-color: #FAFAFA;
-    padding: auto;  
+.lecture-creation-container-left {
+  height: 100%;
+  width: 100%;
+  background-color: #fafafa;
+  padding: auto;
 }
-.lecture-creation-container-right{
-    height: 100%;
-    width: 100%;
-    background-color: #FAFAFA;
-    padding: auto;
+.lecture-creation-container-right {
+  height: 100%;
+  width: 100%;
+  background-color: #fafafa;
+  padding: auto;
 }
-.left-container-lecture-creation{
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    padding-left: 10%;
-    padding-right: 10%;
-    padding-top: 10px;
-    padding-bottom: 20px;
-    
-}
-
-.left-container-lecture-creation #selectModule, #toggle-button {
-    margin-bottom: 15px;
+.left-container-lecture-creation {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-top: 10px;
+  padding-bottom: 20px;
 }
 
-.right-container-lecture-creation-heading{
-    justify-self: center;
-    align-self: center;
-    display: flex;
-    flex-direction: column;
-    padding-top: 10px;
-    padding-bottom: 10px;
+.left-container-lecture-creation #selectModule,
+#toggle-button {
+  margin-bottom: 15px;
 }
 
-.right-container-lecture-creation-heading label{
-    justify-self: center;
-    align-self: center;
+.right-container-lecture-creation-heading {
+  justify-self: center;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
-.right-container-lecture-creation-day-time{
-    width: 100%;
-    height: 100%; 
+.right-container-lecture-creation-heading label {
+  justify-self: center;
+  align-self: center;
 }
 
-.right-container-lecture-creation-toggle-button{
-    align-items: center;
-    justify-items: center;
-    display: flex;
-    flex-direction: column;
-    margin: 10px;
-    
+.right-container-lecture-creation-day-time {
+  width: 100%;
+  height: 100%;
+}
+
+.right-container-lecture-creation-toggle-button {
+  align-items: center;
+  justify-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
 }
 
 .right-container-lecture-creation-time-selection-container {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid green;
-    box-shadow: 0px 2px 5px 0px rgba(25, 65, 85, 0.5);
-    border-radius: 5px;
-    width: auto;
-    margin-left: 20%;
-    margin-right: 20%;
-    overflow: scroll;
-    max-height: 500px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid green;
+  box-shadow: 0px 2px 5px 0px rgba(25, 65, 85, 0.5);
+  border-radius: 5px;
+  width: auto;
+  margin-left: 20%;
+  margin-right: 20%;
+  overflow: scroll;
+  max-height: 500px;
 }
 
-.right-container-lecture-creation-time-selection-time-slot{
-    border: 0.7px solid #E65100;
-    box-shadow: 0px 1.5px 4px 0px rgba(25, 65, 85, 0.5);
-    width: 80%;
-    border-radius: 5px;
-    margin: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
+.right-container-lecture-creation-time-selection-time-slot {
+  border: 0.7px solid #e65100;
+  box-shadow: 0px 1.5px 4px 0px rgba(25, 65, 85, 0.5);
+  width: 80%;
+  border-radius: 5px;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
-.right-container-lecture-creation-time-selection-time-slot-heading{
-    display: flex;
-    flex-direction: row;
-   align-items: center;
-   justify-content: center;
-   width: 100%;
+.right-container-lecture-creation-time-selection-time-slot-heading {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 .right-container-lecture-creation-time-selection-time-slot-heading #heading {
-    color: #ED6C02;
-    margin-left: 10px;
-    width: auto;
+  color: #ed6c02;
+  margin-left: 10px;
+  width: auto;
 }
-.right-container-lecture-creation-time-selection-time-slot-heading #iconButton{
-    align-self: last;
-    margin-left: 50% ;
-}
-
-
-
-.right-container-lecture-creation-time-selection{
-    width: auto;
-    display: flex;
-    flex-direction: row;
-    padding: 10px;
-    align-items: center;
-    justify-content: center;
-    justify-self: center;
-    gap: 10px;
+.right-container-lecture-creation-time-selection-time-slot-heading #iconButton {
+  align-self: last;
+  margin-left: 50%;
 }
 
-.right-container-lecture-creation-venue-selection-select{
-    width: 50%;
+.right-container-lecture-creation-time-selection {
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  gap: 10px;
 }
 
-.right-container-lecture-creation-time-selection-time-slot-button{
-    width: 50%;
-        display: flex;
-        flex-direction: row;
-        padding: 10px;
-        align-items: center;
-        justify-content: center;
-        justify-self: center;
-        margin: auto;
-        margin-bottom: 10px;
+.right-container-lecture-creation-venue-selection-select {
+  width: 50%;
 }
 
-
-.right-container-lecture-creation-submit-button{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    width: 30%;
-    align-self: center;
-    justify-self: center;
-    margin: 10px auto;
-}
-.left-container-lecture-creation-submit-button{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    width: auto;
-    align-self: center;
-    justify-self: center;
-    margin: 10px auto;
+.right-container-lecture-creation-time-selection-time-slot-button {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  margin: auto;
+  margin-bottom: 10px;
 }
 
-.lecture-creation-qrCode-popup{
-    position: fixed;
-        z-index: 4;
-        left: 0;
-        top: 0;
-        overflow-y: scroll;
-        width: 100%;
-        height: 100vh;
-        padding-top: 5vh;
-        padding-bottom: 5vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: rgba(0, 0, 0, 0.5);
+.right-container-lecture-creation-submit-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  width: 30%;
+  align-self: center;
+  justify-self: center;
+  margin: 10px auto;
+}
+.left-container-lecture-creation-submit-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  width: auto;
+  align-self: center;
+  justify-self: center;
+  margin: 10px auto;
 }
 
-.lecture-qrCode-window{
-    margin-top: 10px;
-        width: 60%;
-        border-top: 6px solid #0077C0;
-        border-radius: 10px;
-        padding: 20px;
-        background-color: #ffffff;
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-        z-index: 4;
+.lecture-creation-qrCode-popup {
+  position: fixed;
+  z-index: 4;
+  left: 0;
+  top: 0;
+  overflow-y: scroll;
+  width: 100%;
+  height: 100vh;
+  padding-top: 5vh;
+  padding-bottom: 5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.lecture-qrCode-window {
+  margin-top: 10px;
+  width: 60%;
+  border-top: 6px solid #0077c0;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 4;
 }
 
 .lecture-qrCode-title-close-button {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .lecture-qrCode-title {
-    align-self: center;
-    justify-self: center;
-    margin-left: auto;
+  align-self: center;
+  justify-self: center;
+  margin-left: auto;
 }
 
 .lecture-qrCode-close-button {
-    align-self: center;
-    justify-self: flex-end;
-    margin-left: auto;
-    height: 30px;
-    width: 30px;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 30px;
+  align-self: center;
+  justify-self: flex-end;
+  margin-left: auto;
+  height: 30px;
+  width: 30px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
 }
 
 .lecture-qrCode-close-button #close-icon {
-    align-self: center;
-    justify-self: center;
-    color: red;
-    height: 90%;
-    width: 90%;
+  align-self: center;
+  justify-self: center;
+  color: red;
+  height: 90%;
+  width: 90%;
 }
 
 .lecture-qrCode-close-button #close-icon:hover {
-    align-self: center;
-    justify-self: center;
-    color: white;
-    height: 90%;
-    width: 90%;
-    background-color: red;
-    border-radius: 100%;
+  align-self: center;
+  justify-self: center;
+  color: white;
+  height: 90%;
+  width: 90%;
+  background-color: red;
+  border-radius: 100%;
 }
 
-.lecture-qrCode-lecture-details-container{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-evenly;
-    padding: 10px;
+.lecture-qrCode-lecture-details-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 10px;
 }
 
-.lecture-qrCode-container{
-    display: flex;
-    flex-direction: column;
-    padding: auto;
-    align-items: center;
-    justify-content: center;
-
+.lecture-qrCode-container {
+  display: flex;
+  flex-direction: column;
+  padding: auto;
+  align-items: center;
+  justify-content: center;
 }
 
-.lecture-qrCode{
-    padding: 10;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
+.lecture-qrCode {
+  padding: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
-.lecture-qrCode-lectures-details{
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.lecture-qrCode-lectures-details {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.lecture-qrCode-lectures-details-main-container{
-    padding: 10px;
-    margin: 10px;
-    background-color: rgba(25, 135, 84, 0.1);
-    border-radius: 10px;
+.lecture-qrCode-lectures-details-main-container {
+  padding: 10px;
+  margin: 10px;
+  background-color: rgba(25, 135, 84, 0.1);
+  border-radius: 10px;
 }
 
-.lecture-qrCode-lectures-details-content{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 1px;
+.lecture-qrCode-lectures-details-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1px;
 }
-.lecture-qrCode-lectures-details-heder-label{
-    font-weight: bold;
-}
-
-.lecture-qrCode-lectures-details-content{
-    display: flex;
-    flex-direction: row;
-    align-items: start;
-    justify-content:start;
+.lecture-qrCode-lectures-details-heder-label {
+  font-weight: bold;
 }
 
-.available-lectures-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 45%;
+.lecture-qrCode-lectures-details-content {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  justify-content: start;
 }
 
-.available-lectures-container-loading{
-    
+.available-lectures-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 45%;
 }
 
-.available-lecture-list{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 95%;
-    height: 100%;
-    /* border-top: 2px solid #0365A1;
+.available-lectures-container-loading {
+}
+
+.available-lecture-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 95%;
+  height: 100%;
+  /* border-top: 2px solid #0365A1;
     box-shadow: 0.5px 2px 0.5px 0.5px rgba(25, 65, 85, 0.5);
     border-radius: 10px; */
-    background-color: #FAFAFA;
-    margin-top: 10px;
-    overflow: scroll;
-
+  background-color: #fafafa;
+  margin-top: 10px;
+  overflow: scroll;
 }
-.available-lecture-list-table{
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    width: 95%;
-    height: 100%;
-    overflow: scroll;
-    
+.available-lecture-list-table {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  width: 95%;
+  height: 100%;
+  overflow: scroll;
 }
 
-.available-lecture-list-table-arrangement{
-    box-shadow: 0px 5px 5px #ccc;
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    border-bottom: 2px solid #0176bf;
-    overflow: scroll;
-    margin-top: 10px;
-    overflow: scroll;
-    border-radius: 10px;
-
+.available-lecture-list-table-arrangement {
+  box-shadow: 0px 5px 5px #ccc;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-bottom: 2px solid #0176bf;
+  overflow: scroll;
+  margin-top: 10px;
+  overflow: scroll;
+  border-radius: 10px;
 }
-.available-lecture-list-table-arrangement-for-creation{
-    box-shadow: 0px 5px 5px #ccc;
-        width: 100%;
-        max-width: 100%;
-        height: auto;
-        border-bottom: 2px solid #0176bf;
-        overflow: scroll;
-        margin-top: 10px;
-        overflow: scroll;
-        border-radius: 10px;
-
+.available-lecture-list-table-arrangement-for-creation {
+  box-shadow: 0px 5px 5px #ccc;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-bottom: 2px solid #0176bf;
+  overflow: scroll;
+  margin-top: 10px;
+  overflow: scroll;
+  border-radius: 10px;
 }
 
-.available-lecture-list-table-arrangement thead{
-    position: sticky;
-    top: 0;
-    background-color: rgba(0, 100, 160, 0.9);
-    color: white;
-    border-bottom: 3px solid #0077C0;
-    text-align: center;
-    border-radius: 10px;
+.available-lecture-list-table-arrangement thead {
+  position: sticky;
+  top: 0;
+  background-color: rgba(0, 100, 160, 0.9);
+  color: white;
+  border-bottom: 3px solid #0077c0;
+  text-align: center;
+  border-radius: 10px;
 }
-.available-lecture-list-table-arrangement-for-creation thead{
-    position: sticky;
-    top: 0;
-    background-color: rgba(237, 108, 2, 0.95);
-    color: white;
-    border-bottom: 3px solid rgba(237, 108, 2, 0.95);;
-    text-align: center;
-    border-radius: 10px;
-}
-
-.available-lecture-list-table-arrangement tr{
-    border: 2px solid #0077C0;
-    border-radius: 10px;
-    max-height: 10vh;
-}
-.available-lecture-list-table-arrangement-for-creation tr{
-    border: 2px solid rgba(237, 108, 2, 0.95);;
-    border-radius: 10px;
-    max-height: 10vh;
+.available-lecture-list-table-arrangement-for-creation thead {
+  position: sticky;
+  top: 0;
+  background-color: rgba(237, 108, 2, 0.95);
+  color: white;
+  border-bottom: 3px solid rgba(237, 108, 2, 0.95);
+  text-align: center;
+  border-radius: 10px;
 }
 
-.available-lecture-list-table-arrangement tbody{
-    overflow: scroll;
+.available-lecture-list-table-arrangement tr {
+  border: 2px solid #0077c0;
+  border-radius: 10px;
+  max-height: 10vh;
 }
-.available-lecture-list-table-arrangement-for-creation tbody{
-    overflow: scroll;
-}
-
-.available-lecture-list-table-arrangement td{
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: center;
-    padding: 0.5rem;
-    
-}
-.available-lecture-list-table-arrangement-for-creation td{
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: center;
-    padding: 0.5rem;
-    
+.available-lecture-list-table-arrangement-for-creation tr {
+  border: 2px solid rgba(237, 108, 2, 0.95);
+  border-radius: 10px;
+  max-height: 10vh;
 }
 
-.available-lecture-list-table-arrangement th{
-    padding: 0.8rem;
-    text-align: center;
+.available-lecture-list-table-arrangement tbody {
+  overflow: scroll;
 }
-.available-lecture-list-table-arrangement-for-creation th{
-    padding: 0.8rem;
-    text-align: center;
+.available-lecture-list-table-arrangement-for-creation tbody {
+  overflow: scroll;
 }
 
-.available-lecture-list-empty{
-    align-self: center;
-    justify-self: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
+.available-lecture-list-table-arrangement td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  padding: 0.5rem;
+}
+.available-lecture-list-table-arrangement-for-creation td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  padding: 0.5rem;
 }
 
+.available-lecture-list-table-arrangement th {
+  padding: 0.8rem;
+  text-align: center;
+}
+.available-lecture-list-table-arrangement-for-creation th {
+  padding: 0.8rem;
+  text-align: center;
+}
 
-
-
+.available-lecture-list-empty {
+  align-self: center;
+  justify-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}

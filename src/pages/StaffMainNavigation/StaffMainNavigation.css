@@ -1,151 +1,150 @@
 @media screen and (max-width: 1800px) {
-    .Webname {
-      font-size: x-large;
-    }
-    .Staff-Logo{
-      height: 4.5rem;
-    }
-    .ProfileButton{
-      height: 2.5rem;
-    }
-    .ProfileName{
-      font-weight: bold;
-    }
-    .Staff-Sidebar{
-      width: 20%;
-    }
-    .buttonIcon{
-      height: 1.5rem;
-      width: 1.5rem;
-    }
-    .SideBarButton{
-      height: 3rem;
-      padding-left: 2vw;
-    }
-    .SideBar{
-      margin-top: 2vh;
-      width: 100%;
-    }
-    .SideBarLabel{
-      font-size: larger;
-      padding: 1vw;
-      margin-bottom: 0px;
-    }
+  .Webname {
+    font-size: x-large;
+  }
+  .Staff-Logo {
+    height: 4.5rem;
+  }
+  .ProfileButton {
+    height: 2.5rem;
+  }
+  .ProfileName {
+    font-weight: bold;
+  }
+  .Staff-Sidebar {
+    width: 20%;
+  }
+  .buttonIcon {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+  .SideBarButton {
+    height: 3rem;
+    padding-left: 2vw;
+  }
+  .SideBar {
+    margin-top: 2vh;
+    width: 100%;
+  }
+  .SideBarLabel {
+    font-size: larger;
+    padding: 1vw;
+    margin-bottom: 0px;
+  }
 }
 
 @media screen and (max-width: 1200px) {
-    .Webname {
-        font-size: large;
-    }
-    .Staff-Logo{
-      height: 3.5rem;
-    }
-    .ProfileButton{
-      height: 2.5rem;
-    }
-    .ProfileName{
-      font-weight: bold;
-    }
-    .Staff-Sidebar{
-      width: 20%;
-    }
-    .buttonIcon{
-      height: 1.5rem;
-      width: 1.5rem;
-    }
+  .Webname {
+    font-size: large;
   }
+  .Staff-Logo {
+    height: 3.5rem;
+  }
+  .ProfileButton {
+    height: 2.5rem;
+  }
+  .ProfileName {
+    font-weight: bold;
+  }
+  .Staff-Sidebar {
+    width: 20%;
+  }
+  .buttonIcon {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+}
 
 @media screen and (max-width: 1024px) {
-    .Webname {
-        font-size: large;
-    }
-    .Staff-Logo{
-      height: 3.5rem;
-    }
-    .ProfileButton{
-      height: 2.5rem;
-    }
-    .ProfileName{
-      font-weight: bold;
-    }
-    .Staff-Sidebar{
-      width: 20%;
-    }
-    .buttonIcon{
-      height: 1.5rem;
-      width: 1.5rem;
-    }
-    .SideBarLabel{
-      font-size: medium;
-      padding: 1vw;
-      margin-bottom: 0px;
-    }
-    .Staff-Logo{
-      height: 4rem;
-    }
-
+  .Webname {
+    font-size: large;
+  }
+  .Staff-Logo {
+    height: 3.5rem;
+  }
+  .ProfileButton {
+    height: 2.5rem;
+  }
+  .ProfileName {
+    font-weight: bold;
+  }
+  .Staff-Sidebar {
+    width: 20%;
+  }
+  .buttonIcon {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+  .SideBarLabel {
+    font-size: medium;
+    padding: 1vw;
+    margin-bottom: 0px;
+  }
+  .Staff-Logo {
+    height: 4rem;
+  }
 }
 @media screen and (max-width: 768px) {
-    .Webname {
-        font-size: large;
-    }
-    .Staff-Logo{
-      height: 3.5rem;
-    }
-    .ProfileButton{
-      height: 2.5rem;
-    }
-    .ProfileName{
-      font-weight: bold;
-    }
-    .Staff-Sidebar{
-      width: 60px;
-    }
-    .Sidebarlogo{
-      visibility: hidden;
-    }
-    .buttonIcon{
-      height: 2rem;
-      width: 2rem;
-    }
-    .SideBarLabel{
-      visibility: hidden;
-      font-size: 0px;
-      padding: 0px;
-      margin-bottom: 0px;
-    }
-    .SideBar{
-      margin-top: 6vh;
-      width: 100%;
-      position: absolute;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+  .Webname {
+    font-size: large;
+  }
+  .Staff-Logo {
+    height: 3.5rem;
+  }
+  .ProfileButton {
+    height: 2.5rem;
+  }
+  .ProfileName {
+    font-weight: bold;
+  }
+  .Staff-Sidebar {
+    width: 60px;
+  }
+  .Sidebarlogo {
+    visibility: hidden;
+  }
+  .buttonIcon {
+    height: 2rem;
+    width: 2rem;
+  }
+  .SideBarLabel {
+    visibility: hidden;
+    font-size: 0px;
+    padding: 0px;
+    margin-bottom: 0px;
+  }
+  .SideBar {
+    margin-top: 6vh;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 @media screen and (max-width: 425px) {
-    .Webname {
-        font-size: small;
-    }
-    .ProfileName{
-        font-size: small;
-    }
-    .Staff-Logo{
-      height: 3rem;
-    }
-    .ProfileButton{
-      height: 2rem;
-    }
-    .ProfileName{
-      font-weight: normal;
-    }
-    .SideBar{
-      width: 70%;
-    }
+  .Webname {
+    font-size: small;
+  }
+  .ProfileName {
+    font-size: small;
+  }
+  .Staff-Logo {
+    height: 3rem;
+  }
+  .ProfileButton {
+    height: 2rem;
+  }
+  .ProfileName {
+    font-weight: normal;
+  }
+  .SideBar {
+    width: 70%;
+  }
 }
 
-.staff-Main{
+.staff-Main {
   display: flex;
   flex-direction: column;
   width: 100vw;
@@ -154,8 +153,8 @@
   height: 100vh;
 }
 
-.Staff-Navbar{
-  background-color: #0063A0;
+.Staff-Navbar {
+  background-color: #0063a0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -166,79 +165,80 @@
   flex-wrap: nowrap;
 }
 
-.Staff-Icon{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: nowrap;
-    height: 4.5rem;
-    width: 35vw;
-    padding-left: 2vw;
+.Staff-Icon {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+  height: 4.5rem;
+  width: 35vw;
+  padding-left: 2vw;
 }
 
 .Staff-Logo {
-    padding: 5px;
-    margin-right: 1vw;
-  }
+  padding: 5px;
+  margin-right: 1vw;
+}
 
 .Webname {
-    color: white;
-    letter-Spacing: 0.5rem;
-    margin-Left: 0.5vw;
-    margin-Bottom: 0px;
-    font-weight: bold;
+  color: white;
+  letter-spacing: 0.5rem;
+  margin-left: 0.5vw;
+  margin-bottom: 0px;
+  font-weight: bold;
 }
 
-.ProfileButton{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
-    flex-wrap: nowrap;
-    border: 1px solid white;
-    margin-right: 2vw;
-    cursor: pointer;
-    border-radius: 30px;
+.ProfileButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  border: 1px solid white;
+  margin-right: 2vw;
+  cursor: pointer;
+  border-radius: 30px;
 }
 
-.ProfileButton:hover{
-    background-color: white;
-    border-color: #0063A0;
-    .ProfileName{
-      color: #0063A0;
-    }
+.ProfileButton:hover {
+  background-color: white;
+  border-color: #0063a0;
+  .ProfileName {
+    color: #0063a0;
+  }
 }
 
-.ProfileName{
-    color: white;
-    margin-right: 0.5vw;
-    margin-Bottom: 0px;
-    padding: 10px;
+.ProfileName {
+  color: white;
+  margin-right: 0.5vw;
+  margin-bottom: 0px;
+  padding: 10px;
 }
 
-.circle {/* Adjust size as needed */
-    height: 100%; /* Adjust size as needed */
-    border-radius: 30px; /* Makes it a circle */
-    overflow: hidden; /* Clips the content to the shape of the container */
-    border: 2px solid #ccc; /* Optional: Adds a border */
+.circle {
+  /* Adjust size as needed */
+  height: 100%; /* Adjust size as needed */
+  border-radius: 30px; /* Makes it a circle */
+  overflow: hidden; /* Clips the content to the shape of the container */
+  border: 2px solid #ccc; /* Optional: Adds a border */
 }
 
 .ProfilePicture {
-    height: 100%;
+  height: 100%;
 }
 
-.staff-Submain{
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    height: 100vh;
-    position: relative;
+.staff-Submain {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 100vh;
+  position: relative;
 }
 
-.Staff-Sidebar{
-  background: linear-gradient(#0063A0, rgba(0,100,160,0.8));
+.Staff-Sidebar {
+  background: linear-gradient(#0063a0, rgba(0, 100, 160, 0.8));
   display: flex;
   position: relative;
   flex-direction: column;
@@ -247,17 +247,17 @@
   border-top: 5px solid white;
   border-top-right-radius: 20px;
   z-index: 1;
-  height:-webkit-fill-available;
+  height: -webkit-fill-available;
 }
 
-.Sidebarlogo{
+.Sidebarlogo {
   height: 130px;
   width: 150px;
   padding: 5px;
   margin-top: 30px;
 }
 
-.SideBarButton{
+.SideBarButton {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -267,7 +267,7 @@
   cursor: pointer;
 }
 
-.SideBarButton:hover{
+.SideBarButton:hover {
   background-color: #025587;
   border-radius: 10px;
   border: 1px solid white;
@@ -279,29 +279,29 @@
   border-left: 3px solid #007bff; /* Example of adding a border to indicate active state */
 }
 
-.menuButton{
+.menuButton {
   position: absolute;
   margin-top: 5rem;
   z-index: 2;
   cursor: pointer;
-  background-color:#0366a4;
+  background-color: #0366a4;
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
   padding: 5px;
   box-shadow: 2px 2px 2px 0px rgba(27, 37, 49, 0.5);
 }
 
-.menuButton:hover{
+.menuButton:hover {
   background-color: white;
 }
 
-.closeButton{
+.closeButton {
   color: white;
   cursor: pointer;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  align-items:start;
+  align-items: start;
   justify-content: flex-start;
   margin-left: -80%;
   margin-top: 3px;
@@ -309,15 +309,14 @@
   border-radius: 10px;
   border-color: white;
 }
-.closeButton:hover{
+.closeButton:hover {
   background-color: white;
 }
 
-.Staff-Subpage{
+.Staff-Subpage {
   display: block;
   position: relative;
   background-color: aqua;
-  height:-webkit-fill-available;
-  width:-webkit-fill-available;
+  height: -webkit-fill-available;
+  width: -webkit-fill-available;
 }
-

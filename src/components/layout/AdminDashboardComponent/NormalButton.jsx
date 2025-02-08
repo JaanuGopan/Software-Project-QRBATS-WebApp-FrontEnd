@@ -1,5 +1,5 @@
-import React from "react";
-import "../../../pages/AdminDashboard/AdminDashboard.css";
+import React from 'react';
+import '../../../pages/AdminDashboard/AdminDashboard.css';
 
 const NormalButton = ({ title, titlewithiconicon, handleClick }) => {
   return (

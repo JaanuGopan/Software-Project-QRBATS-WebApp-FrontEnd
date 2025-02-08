@@ -1,14 +1,13 @@
-import "./Setting.css";
-import React, { useState } from "react";
-import UpdateSetting from "./UpdateSetting";
-import Avatar from "@mui/material/Avatar";
-import PersonIcon from "../../assets/Images/personIcon/person_icon.png";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../redux/features/userSlice";
-import Department from "../../utils/Department";
+import './Setting.css';
+import React, { useState } from 'react';
+import UpdateSetting from './UpdateSetting';
+import Avatar from '@mui/material/Avatar';
+import PersonIcon from '../../assets/Images/personIcon/person_icon.png';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../redux/features/userSlice';
+import Department from '../../utils/Department';
 const Setting = () => {
-  const [adminUpdateSettingPopUpWindow, setAdminUpdateSettingPopUpWindow] =
-    useState(false);
+  const [adminUpdateSettingPopUpWindow, setAdminUpdateSettingPopUpWindow] = useState(false);
 
   const { userId, firstName, lastName, email, userName, departmentId, role } =
     useSelector(selectUser);
@@ -19,11 +18,7 @@ const Setting = () => {
     <div className="setting-main-container2">
       <div className="setting-field">
         <div className="setting-person-icon-container">
-          <Avatar
-            alt="Remy Sharp"
-            sx={{ width: 150, height: 150 }}
-            src={PersonIcon}
-          ></Avatar>
+          <Avatar alt="Remy Sharp" sx={{ width: 150, height: 150 }} src={PersonIcon}></Avatar>
         </div>
         <div className="setting-content">
           <div className="setting-label">
@@ -38,7 +33,7 @@ const Setting = () => {
             <label id="setting-label-1">Email</label>
             <label id="setting-label-2">{`: ${email}`}</label>
           </div>
-          {role === "LECTURER" && (
+          {role === 'LECTURER' && (
             <div className="setting-label">
               <label id="setting-label-1">Department</label>
               <label id="setting-label-2">{`: ${department}`}</label>
@@ -61,9 +56,7 @@ const Setting = () => {
       {adminUpdateSettingPopUpWindow && (
         <div className="student-Create-Event-Dashboard">
           <UpdateSetting
-            handleCloseUpdateSettingWindow={() =>
-              setAdminUpdateSettingPopUpWindow(false)
-            }
+            handleCloseUpdateSettingWindow={() => setAdminUpdateSettingPopUpWindow(false)}
           />
         </div>
       )}

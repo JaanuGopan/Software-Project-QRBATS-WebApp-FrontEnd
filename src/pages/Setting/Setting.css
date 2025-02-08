@@ -1,189 +1,184 @@
 .setting-main-container2 {
-    margin-top: 10px;
-    width: 100%;
-    border-top: 6px solid #0077C0;
-    border-radius: 10px;
-    padding: 20px;
-    background-color: #ffffff;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 3;
-    height: 85vh;
+  margin-top: 10px;
+  width: 100%;
+  border-top: 6px solid #0077c0;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 3;
+  height: 85vh;
 }
 
-.setting-field{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    height: initial;
+.setting-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  height: initial;
 }
 
-.setting-update-main-container{
-    margin-top: 10px;
-    width: 50%;
-    border-top: 6px solid #0077C0;
-    border-radius: 10px;
-    padding: 20px;
-    background-color: #ffffff;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 3;
+.setting-update-main-container {
+  margin-top: 10px;
+  width: 50%;
+  border-top: 6px solid #0077c0;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 3;
 }
 
-.setting-person-icon-container{
-    width: 200px;        
-    height: 200px;      
-    border-radius: 50%;        
-    background-color: white;
-    display: flex;        
-    align-items: center;        
-    justify-content: center;
-    border-color: #0077C0;
-    border-width: 1px;
-    
+.setting-person-icon-container {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-color: #0077c0;
+  border-width: 1px;
 }
 
 .setting-person-icon-container img {
-    width: 50%;
-    height: 50%;
-    object-fit: cover;
+  width: 50%;
+  height: 50%;
+  object-fit: cover;
 }
 
-
-
-.setting-content-label{
-    display: flex;
-    flex-direction: row;
+.setting-content-label {
+  display: flex;
+  flex-direction: row;
 }
 
-.update-setting-input-form{
-    padding: 5%;
-    width: 100%;
+.update-setting-input-form {
+  padding: 5%;
+  width: 100%;
 }
 
 .closeUpdateSettingWindow {
-    color: red;
-    cursor: pointer;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: center;
-    padding: 5px;
-    border-radius: 50px;
-    margin-left: 95%;
-    width: 30px;
-    height: 30px;
+  color: red;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  border-radius: 50px;
+  margin-left: 95%;
+  width: 30px;
+  height: 30px;
 }
 
 .closeUpdateSettingWindow:hover {
-    color: white;
-    background-color: red;
-
+  color: white;
+  background-color: red;
 }
 .setting-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    height: initial;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  height: initial;
 }
 
-.setting-label{
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
-    align-items: center;
-    width: 100%;
-    padding: 5px;
+.setting-label {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  padding: 5px;
 }
 
-.setting-label #setting-label-1{
-    font-weight: bold;
-    font-size: large;
+.setting-label #setting-label-1 {
+  font-weight: bold;
+  font-size: large;
 }
 
-.setting-page-button-container{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
+.setting-page-button-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
 }
 
-.setting-page-button-container button{
-    margin: 1% 40% 1% 40%;
+.setting-page-button-container button {
+  margin: 1% 40% 1% 40%;
 }
-
 
 .setting-update-title-close-button {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .setting-update-title {
-    align-self: center;
-    justify-self: center;
-    margin-left: auto;
+  align-self: center;
+  justify-self: center;
+  margin-left: auto;
 }
 
 .setting-update-close-button {
-    align-self: center;
-    justify-self: flex-end;
-    margin-left: auto;
-    height: 30px;
-    width: 30px;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 30px;
+  align-self: center;
+  justify-self: flex-end;
+  margin-left: auto;
+  height: 30px;
+  width: 30px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
 }
 
 .setting-update-close-button #close-icon {
-    align-self: center;
-    justify-self: center;
-    color: red;
-    height: 90%;
-    width: 90%;
+  align-self: center;
+  justify-self: center;
+  color: red;
+  height: 90%;
+  width: 90%;
 }
 
 .setting-update-close-button #close-icon:hover {
-    align-self: center;
-    justify-self: center;
-    color: white;
-    height: 90%;
-    width: 90%;
-    background-color: red;
-    border-radius: 100%;
+  align-self: center;
+  justify-self: center;
+  color: white;
+  height: 90%;
+  width: 90%;
+  background-color: red;
+  border-radius: 100%;
 }
 
 .setting-update-warning-container {
-    position: fixed;
-    z-index: 4;
-    left: 0;
-    top: 0;
-    overflow-y: scroll;
-    width: 100%;
-    height: 100vh;
-    padding-top: 5vh;
-    padding-bottom: 5vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  z-index: 4;
+  left: 0;
+  top: 0;
+  overflow-y: scroll;
+  width: 100%;
+  height: 100vh;
+  padding-top: 5vh;
+  padding-bottom: 5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-.settings-update-button{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    justify-content: center;
+.settings-update-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
 }
 
-.settings-update-button button{
-    margin: 1% 30% 1% 30%;
+.settings-update-button button {
+  margin: 1% 30% 1% 30%;
 }

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import "../../../pages/AdminDashboard/AdminDashboard.css";
-import { CiViewList } from "react-icons/ci";
-import axios from "axios";
-import FetchAttendanceByEventIdService from "../../../api/services/FetchAttendanceByEventIdService";
-import { CircularProgress } from "@mui/material";
+import React, { useState, useEffect } from 'react';
+import '../../../pages/AdminDashboard/AdminDashboard.css';
+import { CiViewList } from 'react-icons/ci';
+import axios from 'axios';
+import FetchAttendanceByEventIdService from '../../../api/services/FetchAttendanceByEventIdService';
+import { CircularProgress } from '@mui/material';
 
 const EventReportTable = ({
   handleOpenReportWindow,
@@ -39,7 +39,7 @@ const EventReportTable = ({
         handleOpenReportWindow();
       })
       .catch((error) => {
-        console.error("Error fetching attendance:", error);
+        console.error('Error fetching attendance:', error);
       });
   };
 
@@ -78,9 +78,7 @@ const EventReportTable = ({
               <tr
                 key={index}
                 onClick={() => handleEventClick(event)}
-                className={
-                  selectedEvent === event ? "selected-row" : "event-row"
-                }
+                className={selectedEvent === event ? 'selected-row' : 'event-row'}
               >
                 <td>{index + 1}</td>
                 <td>{event.eventName}</td>

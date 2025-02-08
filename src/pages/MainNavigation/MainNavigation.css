@@ -8,14 +8,12 @@
 }
 
 .maincontent {
-    flex-grow: 1; 
-    padding: 2px;
-    overflow-y: auto;
-    height: 90vh;
-    width: 100%;
+  flex-grow: 1;
+  padding: 2px;
+  overflow-y: auto;
+  height: 90vh;
+  width: 100%;
 }
-
-
 
 .logout-window {
   position: fixed;

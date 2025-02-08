@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 const AvailableLectureList = ({ availableLectureList, day, venue }) => {
   const dayNames = {
-    Mon: "Monday",
-    Tue: "Tuesday",
-    Wed: "Wednesday",
-    Thu: "Thursday",
-    Fri: "Friday",
-    Sat: "Saturday",
-    Sun: "Sunday",
+    Mon: 'Monday',
+    Tue: 'Tuesday',
+    Wed: 'Wednesday',
+    Thu: 'Thursday',
+    Fri: 'Friday',
+    Sat: 'Saturday',
+    Sun: 'Sunday',
   };
 
   return (
@@ -17,8 +17,7 @@ const AvailableLectureList = ({ availableLectureList, day, venue }) => {
         <div className="available-lecture-list">
           <div className="available-lecture-list-heading">
             <h5>
-              Available Lectures for {dayNames[day]} {venue && `at ${venue}`}{" "}
-              {" For All Modules"}
+              Available Lectures for {dayNames[day]} {venue && `at ${venue}`} {' For All Modules'}
             </h5>
           </div>
           <div className="available-lecture-list-table">

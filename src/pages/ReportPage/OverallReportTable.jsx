@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import "../../pages/AdminDashboard/AdminDashboard.css";
+import React, { useEffect, useState } from 'react';
+import '../../pages/AdminDashboard/AdminDashboard.css';
 
 const OverallReportTable = ({ search, studentAttendanceDetails }) => {
   const [selectedStudent, setSelectedStudent] = useState(null);
@@ -21,23 +21,19 @@ const OverallReportTable = ({ search, studentAttendanceDetails }) => {
           {studentAttendanceDetails
             .filter(
               (details) =>
-                details.studentName
-                  .toLowerCase()
-                  .includes(search.toLowerCase()) ||
+                details.studentName.toLowerCase().includes(search.toLowerCase()) ||
                 details.indexNumber.toLowerCase().includes(search.toLowerCase())
             )
             .map((details, index) => (
               <tr
                 key={index}
-                className={
-                  selectedStudent === details ? "selected-row" : "event-row"
-                }
+                className={selectedStudent === details ? 'selected-row' : 'event-row'}
               >
                 <td>{index + 1}</td>
                 <td>{details.studentName}</td>
                 <td>{details.indexNumber}</td>
                 <td>
-                  {details.attendedLectureCount} /{" "}
+                  {details.attendedLectureCount} /{' '}
                   {details.attendedLectureCount + details.missedLectureCount}
                 </td>
                 <td>{Number(details.attendancePercentage).toFixed(2)} %</td>

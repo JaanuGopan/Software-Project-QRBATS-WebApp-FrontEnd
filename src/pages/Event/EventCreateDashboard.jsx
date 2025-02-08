@@ -1,71 +1,55 @@
-import "./EventCreation/EventCreation.css";
-import eventCreationImage from "../../assets/Images/signin/Signin.jpeg";
-import React, { useState, useRef } from "react";
-import { IoMdCloseCircleOutline } from "react-icons/io";
-import toast, { Toaster } from "react-hot-toast";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../redux/features/userSlice";
-import QRCode from "qrcode.react";
-import InputList from "../../components/textfields/InputList/InputList";
-import InputField from "../../components/textfields/InputBox/InputField";
-import EventService from "../../api/services/EventService";
-import { CircularProgress } from "@mui/material";
+import './EventCreation/EventCreation.css';
+import eventCreationImage from '../../assets/Images/signin/Signin.jpeg';
+import React, { useState, useRef } from 'react';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
+import toast, { Toaster } from 'react-hot-toast';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../redux/features/userSlice';
+import QRCode from 'qrcode.react';
+import InputList from '../../components/textfields/InputList/InputList';
+import InputField from '../../components/textfields/InputBox/InputField';
+import EventService from '../../api/services/EventService';
+import { CircularProgress } from '@mui/material';
 
 const EventCreateDashboard = () => {
   // Get the user from Redux state
   const user = useSelector(selectUser);
   const { userId } = user || {};
-  const [eventId, setEventId] = useState("");
-  const [eventName, setEventName] = useState("");
+  const [eventId, setEventId] = useState('');
+  const [eventName, setEventName] = useState('');
   const [moduleName, setModuleName] = useState(null);
-  const [eventDate, setEventDate] = useState("");
-  const [eventValidDate, setEventValidDate] = useState("");
-  const [eventTime, setEventTime] = useState("");
-  const [eventEndTime, setEventEndTime] = useState("");
-  const [eventVenue, setEventVenue] = useState("");
+  const [eventDate, setEventDate] = useState('');
+  const [eventValidDate, setEventValidDate] = useState('');
+  const [eventTime, setEventTime] = useState('');
+  const [eventEndTime, setEventEndTime] = useState('');
+  const [eventVenue, setEventVenue] = useState('');
   const [showQRCode, setShowQRCode] = useState(false);
-  const [eventRole, setEventRole] = useState("EVENT");
+  const [eventRole, setEventRole] = useState('EVENT');
   const [eventAssignedUserId, setEventAssignedUserId] = useState(null);
 
   const [showModuleNameInput, setShowModuleNameInput] = useState(true);
-  const [title, setTitle] = useState("Event");
+  const [title, setTitle] = useState('Event');
 
-  const venueList = [
-    "NCC",
-    "LT1",
-    "LT2",
-    "Auditorium",
-    "DEIE",
-    "DMME",
-    "DCEE",
-    "Other",
-  ];
+  const venueList = ['NCC', 'LT1', 'LT2', 'Auditorium', 'DEIE', 'DMME', 'DCEE', 'Other'];
 
-  const notifySuccess = () => toast.success("Successfully Event Created!");
+  const notifySuccess = () => toast.success('Successfully Event Created!');
 
   const handleInputValidation = () => {
-    if (
-      !eventName ||
-      !eventDate ||
-      !eventValidDate ||
-      !eventTime ||
-      !eventEndTime ||
-      !eventVenue
-    ) {
+    if (!eventName || !eventDate || !eventValidDate || !eventTime || !eventEndTime || !eventVenue) {
       return false;
     }
     return true;
   };
 
   const clearEventDetails = () => {
-    setEventName("");
-    setEventDate("");
-    setEventValidDate("");
-    setEventTime("");
-    setEventEndTime("");
-    setEventVenue("");
+    setEventName('');
+    setEventDate('');
+    setEventValidDate('');
+    setEventTime('');
+    setEventEndTime('');
+    setEventVenue('');
     setEventAssignedUserId(null);
-    setEventRole("EVENT");
+    setEventRole('EVENT');
   };
 
   const [processing, setProcessing] = useState(false);
@@ -92,7 +76,7 @@ const EventCreateDashboard = () => {
       }
       notifySuccess();
     } catch (error) {
-      console.error("Event failed", error);
+      console.error('Event failed', error);
     } finally {
       setProcessing(false);
     }
@@ -103,19 +87,19 @@ const EventCreateDashboard = () => {
     if (handleInputValidation()) {
       await handleCreateEvent(e);
     } else {
-      console.log("Please fill all the fields");
+      console.log('Please fill all the fields');
     }
   };
 
   const qrCodeRef = useRef(null);
   const downloadQRCode = () => {
     const qrCodeURL = document
-      .getElementById("qrCodeEl")
-      .toDataURL("image/png")
-      .replace("image/png", "image/octet-stream");
-    let aEl = document.createElement("a");
+      .getElementById('qrCodeEl')
+      .toDataURL('image/png')
+      .replace('image/png', 'image/octet-stream');
+    let aEl = document.createElement('a');
     aEl.href = qrCodeURL;
-    aEl.download = "QR_Code.png";
+    aEl.download = 'QR_Code.png';
     document.body.appendChild(aEl);
     aEl.click();
     document.body.removeChild(aEl);
@@ -147,9 +131,9 @@ const EventCreateDashboard = () => {
             <div className="input-with-icon">
               <InputField
                 value={eventName}
-                placeholder={"Event Name"}
+                placeholder={'Event Name'}
                 onChange={(e) => setEventName(e.target.value)}
-                inputType={"text"}
+                inputType={'text'}
               />
             </div>
             <div className="date-div">
@@ -160,7 +144,7 @@ const EventCreateDashboard = () => {
                 <InputField
                   value={eventDate}
                   onChange={(e) => setEventDate(e.target.value)}
-                  inputType={"date"}
+                  inputType={'date'}
                 />
               </div>
               <div className="eventCreation-form">
@@ -170,8 +154,8 @@ const EventCreateDashboard = () => {
                 <InputField
                   value={eventValidDate}
                   onChange={(e) => setEventValidDate(e.target.value)}
-                  placeholder={"Event Valid Date"}
-                  inputType={"date"}
+                  placeholder={'Event Valid Date'}
+                  inputType={'date'}
                 />
               </div>
             </div>
@@ -182,9 +166,9 @@ const EventCreateDashboard = () => {
               <InputList
                 list={venueList}
                 onChange={(e) => setEventVenue(e.target.value)}
-                placeholder={"Venue"}
+                placeholder={'Venue'}
                 value={eventVenue}
-                initialValue={"Select Venue"}
+                initialValue={'Select Venue'}
               />
             </div>
             <div className="eventCreation-form">
@@ -192,10 +176,10 @@ const EventCreateDashboard = () => {
                 Event Starting Time
               </label>
               <InputField
-                inputType={"time"}
+                inputType={'time'}
                 value={eventTime}
                 onChange={(e) => setEventTime(e.target.value)}
-                placeholder={"Event Time"}
+                placeholder={'Event Time'}
               />
 
               <div className="eventCreation-form">
@@ -203,10 +187,10 @@ const EventCreateDashboard = () => {
                   Event Ending Time
                 </label>
                 <InputField
-                  inputType={"time"}
+                  inputType={'time'}
                   value={eventEndTime}
                   onChange={(e) => setEventEndTime(e.target.value)}
-                  placeholder={"Event End Time"}
+                  placeholder={'Event End Time'}
                 />
               </div>
             </div>
@@ -224,10 +208,7 @@ const EventCreateDashboard = () => {
                   Create Event
                 </button>
               )}
-              <button
-                onClick={clearEventDetails}
-                className="btn btn-danger w-30"
-              >
+              <button onClick={clearEventDetails} className="btn btn-danger w-30">
                 Clear
               </button>
             </div>
@@ -261,10 +242,7 @@ const EventCreateDashboard = () => {
               </div>
               <div className="row-center">
                 <div className="QRbutton">
-                  <button
-                    onClick={downloadQRCode}
-                    className="btn btn-success mr-3"
-                  >
+                  <button onClick={downloadQRCode} className="btn btn-success mr-3">
                     Save
                   </button>
                 </div>

@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   CircularProgress,
   IconButton,
   ToggleButton,
   ToggleButtonGroup,
-} from "@mui/material";
-import InputField from "../../components/textfields/InputBox/InputField";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { pink } from "@mui/material/colors";
-import axios from "axios";
-import LocationService from "../../api/services/LocationService";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import LectureService from "../../api/services/LectureService";
-import { Toaster } from "react-hot-toast";
+} from '@mui/material';
+import InputField from '../../components/textfields/InputBox/InputField';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { pink } from '@mui/material/colors';
+import axios from 'axios';
+import LocationService from '../../api/services/LocationService';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import LectureService from '../../api/services/LectureService';
+import { Toaster } from 'react-hot-toast';
 
 const RightContainerLectureCreation = ({
   moduleCode,
@@ -25,7 +25,7 @@ const RightContainerLectureCreation = ({
   handleReloadLecturesList,
   handleShowQrCode,
 }) => {
-  const [selectedDay, setSelectedDay] = useState(dayList[0] || "");
+  const [selectedDay, setSelectedDay] = useState(dayList[0] || '');
   const [times, setTimes] = useState(timesList);
   const maxTimeSlots = 20;
   const [venueList, setVenuesList] = useState([]);
@@ -35,16 +35,14 @@ const RightContainerLectureCreation = ({
       const response = await LocationService.getAllLocationNames();
       setVenuesList(response);
     } catch (error) {
-      console.error("Error fetching location names:", error);
+      console.error('Error fetching location names:', error);
     }
   };
 
   useEffect(() => {
     setTimes((prevTimes) => {
       const updatedTimes = dayList.reduce((acc, day) => {
-        acc[day] = prevTimes[day] || [
-          { startTime: "", endTime: "", venue: "" },
-        ];
+        acc[day] = prevTimes[day] || [{ startTime: '', endTime: '', venue: '' }];
         return acc;
       }, {});
       return updatedTimes;
@@ -54,10 +52,7 @@ const RightContainerLectureCreation = ({
       setSelectedDay(selectedDay);
     } else {
       const dayWithoutTimes = dayList.find(
-        (day) =>
-          !times[day]?.some(
-            (slot) => !slot.startTime || !slot.endTime || !slot.venue
-          )
+        (day) => !times[day]?.some((slot) => !slot.startTime || !slot.endTime || !slot.venue)
       );
       setSelectedDay(dayWithoutTimes || dayList[dayList.length - 1]);
     }
@@ -66,9 +61,7 @@ const RightContainerLectureCreation = ({
 
   const handleGetAvailableLectureForDay = async (moduleCode, day) => {
     try {
-      const response = await LectureService.getAllLecturesByModuleCode(
-        moduleCode
-      );
+      const response = await LectureService.getAllLecturesByModuleCode(moduleCode);
       const dayLectureList = response
         .filter((lecture) => lecture.lectureId)
         .find((lecture) => lecture.lectureDay === day);
@@ -91,14 +84,14 @@ const RightContainerLectureCreation = ({
         [day]: dayLectureTimesList,
       }));
     } catch (error) {
-      console.error("Error fetching available lectures for day:", error);
+      console.error('Error fetching available lectures for day:', error);
     }
   };
 
   const handleDaySelect = (event, newDay) => {
     if (newDay !== null) {
       setSelectedDay(newDay);
-      handelShowAvailableLectures(times[newDay]?.[0]?.venue || "", newDay);
+      handelShowAvailableLectures(times[newDay]?.[0]?.venue || '', newDay);
     }
   };
 
@@ -129,12 +122,12 @@ const RightContainerLectureCreation = ({
       const venue = slot.venue;
 
       if (startTime === endTime) {
-        toast.error("Start time and end time cannot be the same.");
+        toast.error('Start time and end time cannot be the same.');
         return false;
       }
 
       if (startTime > endTime) {
-        toast.error("End time cannot be before start time.");
+        toast.error('End time cannot be before start time.');
         return false;
       }
 
@@ -151,7 +144,7 @@ const RightContainerLectureCreation = ({
               (startTime <= otherStartTime && endTime >= otherEndTime)) &&
             venue === otherVenue
           ) {
-            toast.error("Time slots cannot overlap.");
+            toast.error('Time slots cannot overlap.');
             return false;
           }
         }
@@ -184,7 +177,7 @@ const RightContainerLectureCreation = ({
     }, {});
 
     if (Object.values(formattedTimes).some((slots) => slots.length === 0)) {
-      toast.error("Please fix the errors before saving.");
+      toast.error('Please fix the errors before saving.');
       return;
     }
 
@@ -198,31 +191,26 @@ const RightContainerLectureCreation = ({
       setProcessingCreateLecture(true);
       const response = await LectureService.createLecture(requestData);
       if (response.status === 200) {
-        const createdLecturesList = response.data.filter(
-          (lecture) => lecture.lectureId
-        );
+        const createdLecturesList = response.data.filter((lecture) => lecture.lectureId);
         if (createdLecturesList.length > 0) {
           toast.success(
             `Lectures saved successfully: ${createdLecturesList
               .map((lecture) => lecture.lectureName)
-              .join(", ")}`
+              .join(', ')}`
           );
           handleShowQrCode(createdLecturesList);
         } else {
-          toast.error("Lectures not saved or already exist.");
+          toast.error('Lectures not saved or already exist.');
         }
         handleReloadLecturesList();
-        handelShowAvailableLectures(
-          times[selectedDay]?.[0]?.venue || "",
-          selectedDay
-        );
+        handelShowAvailableLectures(times[selectedDay]?.[0]?.venue || '', selectedDay);
       } else if (response.status === 400) {
         toast.error(response.data);
       } else {
-        toast.error("Error while saving lectures.");
+        toast.error('Error while saving lectures.');
       }
     } catch (error) {
-      toast.error("Error while saving lectures.");
+      toast.error('Error while saving lectures.');
     } finally {
       setProcessingCreateLecture(false);
     }
@@ -231,10 +219,7 @@ const RightContainerLectureCreation = ({
   const addTimeSlot = () => {
     setTimes((prevTimes) => ({
       ...prevTimes,
-      [selectedDay]: [
-        ...prevTimes[selectedDay],
-        { startTime: "", endTime: "", venue: "" },
-      ],
+      [selectedDay]: [...prevTimes[selectedDay], { startTime: '', endTime: '', venue: '' }],
     }));
   };
 
@@ -286,16 +271,16 @@ const RightContainerLectureCreation = ({
             <div className="right-container-lecture-creation-time-selection-container">
               <div className="right-container-lecture-creation-time-selection">
                 <label>
-                  Select Time For{" "}
-                  {selectedDay === "Tue"
-                    ? "Tuesday"
-                    : selectedDay === "Thu"
-                    ? "Thursday"
-                    : selectedDay === "Sat"
-                    ? "Saturday"
-                    : selectedDay === "Wed"
-                    ? "Wednesday"
-                    : selectedDay + "day"}
+                  Select Time For{' '}
+                  {selectedDay === 'Tue'
+                    ? 'Tuesday'
+                    : selectedDay === 'Thu'
+                      ? 'Thursday'
+                      : selectedDay === 'Sat'
+                        ? 'Saturday'
+                        : selectedDay === 'Wed'
+                          ? 'Wednesday'
+                          : selectedDay + 'day'}
                 </label>
               </div>
               {times[selectedDay]?.map((slot, index) => (
@@ -320,10 +305,8 @@ const RightContainerLectureCreation = ({
                     <div className="right-container-lecture-creation-venue-selection-select">
                       <select
                         required
-                        value={slot.venue || ""}
-                        onChange={(e) =>
-                          handleVenueChange(index, e.target.value)
-                        }
+                        value={slot.venue || ''}
+                        onChange={(e) => handleVenueChange(index, e.target.value)}
                         className="form-control mb-2"
                       >
                         <option value="">Select Venue</option>
@@ -338,41 +321,28 @@ const RightContainerLectureCreation = ({
                   <div className="right-container-lecture-creation-time-selection">
                     <label>Start Time</label>
                     <InputField
-                      inputType={"time"}
+                      inputType={'time'}
                       onChange={(e) => {
-                        handleTimeChange(
-                          index,
-                          "startTime",
-                          `${e.target.value}:00`
-                        );
+                        handleTimeChange(index, 'startTime', `${e.target.value}:00`);
                       }}
-                      value={slot.startTime || ""}
+                      value={slot.startTime || ''}
                     />
                   </div>
                   <div className="right-container-lecture-creation-time-selection">
                     <label>End Time</label>
                     <InputField
-                      inputType={"time"}
+                      inputType={'time'}
                       onChange={(e) => {
-                        handleTimeChange(
-                          index,
-                          "endTime",
-                          `${e.target.value}:00`
-                        );
+                        handleTimeChange(index, 'endTime', `${e.target.value}:00`);
                       }}
-                      value={slot.endTime || ""}
+                      value={slot.endTime || ''}
                     />
                   </div>
                 </div>
               ))}
               {times[selectedDay]?.length < maxTimeSlots && (
                 <div className="right-container-lecture-creation-time-selection-time-slot-button">
-                  <Button
-                    variant="contained"
-                    fullWidth
-                    onClick={addTimeSlot}
-                    color="warning"
-                  >
+                  <Button variant="contained" fullWidth onClick={addTimeSlot} color="warning">
                     Add Time Slot
                   </Button>
                 </div>

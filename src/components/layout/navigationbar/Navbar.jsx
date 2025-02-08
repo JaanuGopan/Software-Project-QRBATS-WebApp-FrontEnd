@@ -1,7 +1,7 @@
-import React from "react";
-import "./navbar.css";
-import { Link, useParams, useNavigate } from "react-router-dom";
-import logo from "../../../assets/logo/logo1.png";
+import React from 'react';
+import './navbar.css';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import logo from '../../../assets/logo/logo1.png';
 
 export default function Navbar() {
   const { id } = useParams();
@@ -16,11 +16,11 @@ export default function Navbar() {
           </a>
 
           <div>
-            <button className="btn2" onClick={() => navigate("/login")}>
+            <button className="btn2" onClick={() => navigate('/login')}>
               <span>SignIn</span>
               <i></i>
             </button>
-            <button className="btn2" onClick={() => navigate("/signup")}>
+            <button className="btn2" onClick={() => navigate('/signup')}>
               <span>SignUp</span>
               <i></i>
             </button>

@@ -1,5 +1,5 @@
-import React from "react";
-import "../../../pages/AdminDashboard/AdminDashboard.css";
+import React from 'react';
+import '../../../pages/AdminDashboard/AdminDashboard.css';
 
 const TotalCount = ({ total, countIcon, countTitle }) => {
   return (
@@ -7,10 +7,10 @@ const TotalCount = ({ total, countIcon, countTitle }) => {
       <div className="inform1">
         <p
           style={{
-            color: "white",
-            fontSize: "large",
-            fontWeight: "bold",
-            padding: "5%",
+            color: 'white',
+            fontSize: 'large',
+            fontWeight: 'bold',
+            padding: '5%',
           }}
         >
           {total}
@@ -20,9 +20,9 @@ const TotalCount = ({ total, countIcon, countTitle }) => {
       <p
         className="informationText"
         style={{
-          color: "white",
-          fontWeight: "bold",
-          padding: "5%",
+          color: 'white',
+          fontWeight: 'bold',
+          padding: '5%',
         }}
       >
         {countTitle}

@@ -1,6 +1,6 @@
-import React from "react";
-import "../../../pages/Event/EventCreation/EventCreation.css";
-import { CircularProgress } from "@mui/material";
+import React from 'react';
+import '../../../pages/Event/EventCreation/EventCreation.css';
+import { CircularProgress } from '@mui/material';
 
 const InputPassword = ({
   placeholder,
@@ -19,7 +19,7 @@ const InputPassword = ({
         <input
           required
           type="password"
-          className={`form-control ${error ? "is-invalid" : ""}`}
+          className={`form-control ${error ? 'is-invalid' : ''}`}
           placeholder={placeholder}
           value={value}
           onChange={onChange}

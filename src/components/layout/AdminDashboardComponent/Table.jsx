@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import "../../../pages/AdminDashboard/AdminDashboard.css";
-import { FaEdit } from "react-icons/fa";
+import React, { useState, useEffect } from 'react';
+import '../../../pages/AdminDashboard/AdminDashboard.css';
+import { FaEdit } from 'react-icons/fa';
 
 const Table = ({ search, handleUpdateEvent, onEventClick, eventList }) => {
   const [events, setEvents] = useState([]);
@@ -41,9 +41,7 @@ const Table = ({ search, handleUpdateEvent, onEventClick, eventList }) => {
               <tr
                 key={index}
                 onClick={() => handleEventClick(event)}
-                className={
-                  selectedEvent === event ? "selected-row" : "event-row"
-                }
+                className={selectedEvent === event ? 'selected-row' : 'event-row'}
               >
                 <td>{index + 1}</td>
                 <td>{event.eventName}</td>
@@ -52,10 +50,7 @@ const Table = ({ search, handleUpdateEvent, onEventClick, eventList }) => {
                 <td>{event.eventTime}</td>
                 <td>{event.eventEndTime}</td>
                 <td>
-                  <button
-                    onClick={() => handleUpdateEvent(event)}
-                    className="EditButton"
-                  >
+                  <button onClick={() => handleUpdateEvent(event)} className="EditButton">
                     <FaEdit className="EditIcon" />
                   </button>
                 </td>

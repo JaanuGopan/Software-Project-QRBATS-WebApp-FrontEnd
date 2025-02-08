@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import "./ModulePage.css";
-import Designer from "../../assets/Images/Designer.jpeg";
-import InputField from "../../components/textfields/InputBox/InputField";
-import { IoMdCloseCircleOutline } from "react-icons/io";
-import CreateUserService from "../../api/services/CreateUserService";
-import InputList from "../../components/textfields/InputList/InputList";
-import ModuleService from "../../api/services/ModuleService";
-import { selectUser } from "../../redux/features/userSlice";
-import { useSelector } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
-import { CircularProgress } from "@mui/material";
+import React, { useState } from 'react';
+import './ModulePage.css';
+import Designer from '../../assets/Images/Designer.jpeg';
+import InputField from '../../components/textfields/InputBox/InputField';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
+import CreateUserService from '../../api/services/CreateUserService';
+import InputList from '../../components/textfields/InputList/InputList';
+import ModuleService from '../../api/services/ModuleService';
+import { selectUser } from '../../redux/features/userSlice';
+import { useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import { CircularProgress } from '@mui/material';
 
 const ModuleUpdate = ({
   handleCloseModuleUpdateWindow,
@@ -20,18 +20,14 @@ const ModuleUpdate = ({
   const [moduleName, setModuleName] = useState(selectedModule.moduleName);
   const [moduleCode, setModuleCode] = useState(selectedModule.moduleCode);
   const [semester, setSemester] = useState(selectedModule.semester);
-  const [moduleEnrolmentKey, setModuleEnrolmentKey] = useState(
-    selectedModule.moduleEnrolmentKey
-  );
-  const departmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA", "DIS"];
+  const [moduleEnrolmentKey, setModuleEnrolmentKey] = useState(selectedModule.moduleEnrolmentKey);
+  const departmentList = ['DEIE', 'DCOM', 'DMME', 'DCEE', 'DMENA', 'DIS'];
 
-  const [departmentId, setDepartmentId] = useState(
-    departmentList[selectedModule.departmentId - 1]
-  );
+  const [departmentId, setDepartmentId] = useState(departmentList[selectedModule.departmentId - 1]);
 
   const { userId } = useSelector(selectUser) || {};
 
-  const semesterList = ["1", "2", "3", "4", "5", "6", "7", "8"];
+  const semesterList = ['1', '2', '3', '4', '5', '6', '7', '8'];
 
   const [processing, setProcessing] = useState(false);
 
@@ -49,39 +45,36 @@ const ModuleUpdate = ({
         userId
       );
       if (response.status === 200) {
-        toast.success("Module Updated Successfully ", response.data.moduleName);
+        toast.success('Module Updated Successfully ', response.data.moduleName);
         console.log(response);
         handleReloadModuleList();
       } else if (response.status === 400) {
         toast.error(response.data);
       } else {
         console.log(response.status);
-        toast.error("Failed To Update Module.");
+        toast.error('Failed To Update Module.');
       }
     } catch (error) {
-      console.error("Fail To Update modules.", error);
-      toast.error("Error In Updating Module.");
+      console.error('Fail To Update modules.', error);
+      toast.error('Error In Updating Module.');
     } finally {
       setProcessing(false);
     }
   };
 
   const handleClearData = () => {
-    setModuleCode("");
-    setModuleName("");
-    setDepartmentId("");
-    setModuleEnrolmentKey("");
-    setSemester("");
+    setModuleCode('');
+    setModuleName('');
+    setDepartmentId('');
+    setModuleEnrolmentKey('');
+    setSemester('');
   };
 
   return (
     <div className="module-update-main-container">
       <div className="module-create-title-close-button">
         <h3 className="module-create-title">Update Module</h3>
-        <div
-          className="module-create-close-button"
-          onClick={handleCloseModuleUpdateWindow}
-        >
+        <div className="module-create-close-button" onClick={handleCloseModuleUpdateWindow}>
           <IoMdCloseCircleOutline id="close-icon" />
         </div>
       </div>

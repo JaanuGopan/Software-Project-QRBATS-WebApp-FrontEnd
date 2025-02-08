@@ -1,66 +1,66 @@
-import React, { useState } from "react";
-import "./StaffA.css";
-import InputField from "../../components/textfields/InputBox/InputField";
-import { IoMdCloseCircleOutline } from "react-icons/io";
-import CreateUserService from "../../api/services/CreateUserService";
-import Select from "react-select";
-import { toast, ToastContainer } from "react-toastify";
-import { CircularProgress } from "@mui/material";
+import React, { useState } from 'react';
+import './StaffA.css';
+import InputField from '../../components/textfields/InputBox/InputField';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
+import CreateUserService from '../../api/services/CreateUserService';
+import Select from 'react-select';
+import { toast, ToastContainer } from 'react-toastify';
+import { CircularProgress } from '@mui/material';
 
 const CreateStaff = ({ handleCloseCreateStaffWindow, reloadStaffList }) => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [userName, setUserName] = useState("");
-  const [userRole, setUserRole] = useState("");
-  const [departmentId, setDepartmentId] = useState("");
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [userName, setUserName] = useState('');
+  const [userRole, setUserRole] = useState('');
+  const [departmentId, setDepartmentId] = useState('');
 
-  const departmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA", "DIS"];
-  const userRoleList = ["ADMIN", "LECTURER"];
+  const departmentList = ['DEIE', 'DCOM', 'DMME', 'DCEE', 'DMENA', 'DIS'];
+  const userRoleList = ['ADMIN', 'LECTURER'];
 
-  const notifySuccess = () => toast.success("Successfully Staff Created!");
+  const notifySuccess = () => toast.success('Successfully Staff Created!');
 
   const [loadingCreateStaff, setLoadingCreateStaff] = useState(false);
 
   const handleInputValidation = () => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (firstName.trim() === "") {
-      toast.error("Please enter first name");
+    if (firstName.trim() === '') {
+      toast.error('Please enter first name');
       return false;
     }
-    if (lastName.trim() === "") {
-      toast.error("Please enter last name");
+    if (lastName.trim() === '') {
+      toast.error('Please enter last name');
       return false;
     }
-    if (email.trim() === "" || !emailPattern.test(email)) {
-      toast.error("Please enter a valid email");
+    if (email.trim() === '' || !emailPattern.test(email)) {
+      toast.error('Please enter a valid email');
       return false;
     }
-    if (userName.trim() === "") {
-      toast.error("Please enter username");
+    if (userName.trim() === '') {
+      toast.error('Please enter username');
       return false;
     }
-    if (password.trim() === "") {
-      toast.error("Please enter password");
+    if (password.trim() === '') {
+      toast.error('Please enter password');
       return false;
     }
-    if (confirmPassword.trim() === "") {
-      toast.error("Please confirm password");
+    if (confirmPassword.trim() === '') {
+      toast.error('Please confirm password');
       return false;
     }
     if (password !== confirmPassword) {
-      toast.error("Passwords do not match");
+      toast.error('Passwords do not match');
       return false;
     }
     if (!departmentId) {
-      toast.error("Please select department");
+      toast.error('Please select department');
       return false;
     }
     if (!userRole) {
-      toast.error("Please select user role");
+      toast.error('Please select user role');
       return false;
     }
     return true;
@@ -86,13 +86,13 @@ const CreateStaff = ({ handleCloseCreateStaffWindow, reloadStaffList }) => {
         notifySuccess();
         reloadStaffList();
         handleCloseCreateStaffWindow();
-        toast.success("User created successfully!");
+        toast.success('User created successfully!');
       } else if (response.status === 400) {
         toast.error(response.data);
       }
     } catch (error) {
-      console.error("User creation failed", error);
-      toast.error("Error in user creation.");
+      console.error('User creation failed', error);
+      toast.error('Error in user creation.');
     } finally {
       setLoadingCreateStaff(false);
     }
@@ -103,10 +103,7 @@ const CreateStaff = ({ handleCloseCreateStaffWindow, reloadStaffList }) => {
       <ToastContainer />
       <div className="staff-update-title-close-button">
         <h3 className="staff-update-title">Create User</h3>
-        <div
-          className="staff-update-close-button"
-          onClick={handleCloseCreateStaffWindow}
-        >
+        <div className="staff-update-close-button" onClick={handleCloseCreateStaffWindow}>
           <IoMdCloseCircleOutline id="close-icon" />
         </div>
       </div>
@@ -125,7 +122,7 @@ const CreateStaff = ({ handleCloseCreateStaffWindow, reloadStaffList }) => {
                     value: role,
                     label: role,
                   }))}
-                  placeholder={"Select User Role"}
+                  placeholder={'Select User Role'}
                 />
               </div>
             </div>
@@ -208,7 +205,7 @@ const CreateStaff = ({ handleCloseCreateStaffWindow, reloadStaffList }) => {
                     value: dept,
                     label: dept,
                   }))}
-                  placeholder={"Select Department"}
+                  placeholder={'Select Department'}
                 />
               </div>
             </div>

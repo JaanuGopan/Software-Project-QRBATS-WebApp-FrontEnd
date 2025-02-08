@@ -1,18 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { FaUser, FaLock, FaMailBulk } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import UserService from "../../api/services/UserService";
-import { FaVoicemail } from "react-icons/fa6";
-import { Email } from "@mui/icons-material";
-import { CircularProgress } from "@mui/material";
+import React, { useState, useEffect } from 'react';
+import { FaUser, FaLock, FaMailBulk } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import UserService from '../../api/services/UserService';
+import { FaVoicemail } from 'react-icons/fa6';
+import { Email } from '@mui/icons-material';
+import { CircularProgress } from '@mui/material';
 
-const OtpVerification = ({
-  handleCloseOtpVerification,
-  handleShowPasswordChange,
-  email,
-}) => {
-  const [otp, setOtp] = useState("");
+const OtpVerification = ({ handleCloseOtpVerification, handleShowPasswordChange, email }) => {
+  const [otp, setOtp] = useState('');
 
   const [processing, setProcessing] = useState(false);
 
@@ -22,15 +18,15 @@ const OtpVerification = ({
       setProcessing(true);
       const response = await UserService.verifyOtp(email, otp);
       if (response.status === 200) {
-        toast.success("Otp successfully verified.");
+        toast.success('Otp successfully verified.');
         handleShowPasswordChange();
       } else if (response.status === 400) {
         toast.error(response.data);
       } else {
-        toast.error("Error In Otp Verification.");
+        toast.error('Error In Otp Verification.');
       }
     } catch (error) {
-      toast.error("Error In Otp Verification.");
+      toast.error('Error In Otp Verification.');
     } finally {
       setProcessing(false);
     }
@@ -57,11 +53,7 @@ const OtpVerification = ({
           {processing ? (
             <CircularProgress />
           ) : (
-            <button
-              id="LoginID"
-              type="submit"
-              className="btn btn-primary w-100"
-            >
+            <button id="LoginID" type="submit" className="btn btn-primary w-100">
               Verify Otp
             </button>
           )}

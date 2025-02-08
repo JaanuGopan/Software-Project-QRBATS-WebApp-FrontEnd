@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { Calendar, momentLocalizer } from "react-big-calendar";
-import moment from "moment";
-import "react-big-calendar/lib/css/react-big-calendar.css";
-import "../../../pages/UserInterface/UserInterface.css";
+import React, { useState } from 'react';
+import { Calendar, momentLocalizer } from 'react-big-calendar';
+import moment from 'moment';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import '../../../pages/UserInterface/UserInterface.css';
 
 const MyLiveCalendar = () => {
   const localizer = momentLocalizer(moment);
@@ -22,13 +22,13 @@ const MyLiveCalendar = () => {
   };*/
 
   return (
-    <div style={{ height:"65vh", width:"100%" }}>
-      <h2 style={{ color: "#025587" }}>Calendar</h2>
+    <div style={{ height: '65vh', width: '100%' }}>
+      <h2 style={{ color: '#025587' }}>Calendar</h2>
       <Calendar
         localizer={localizer}
         startAccessor="start"
         endAccessor="end"
-        views={["month", "agenda", "day"]}
+        views={['month', 'agenda', 'day']}
       />
     </div>
   );

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import "../../pages/AdminDashboard/AdminDashboard.css";
-import { FaCheck } from "react-icons/fa6";
-import { AiOutlineClose } from "react-icons/ai";
+import React, { useState, useEffect } from 'react';
+import '../../pages/AdminDashboard/AdminDashboard.css';
+import { FaCheck } from 'react-icons/fa6';
+import { AiOutlineClose } from 'react-icons/ai';
 
 const LectureStudentsAttendanceTable = ({ search, attendanceList }) => {
   const [attendance, setAttendance] = useState([]);
@@ -10,7 +10,7 @@ const LectureStudentsAttendanceTable = ({ search, attendanceList }) => {
   useEffect(() => {
     // Update events whenever eventList prop changes
     setAttendance(attendanceList);
-    console.log("Attendance report : ", attendanceList);
+    console.log('Attendance report : ', attendanceList);
   }, [attendanceList]);
 
   const handleAttendanceClick = (attendance) => {
@@ -35,31 +35,19 @@ const LectureStudentsAttendanceTable = ({ search, attendanceList }) => {
           {attendanceList
             .filter(
               (attendance) =>
-                attendance.studentName
-                  .toLowerCase()
-                  .includes(search.toLowerCase()) ||
-                attendance.studentIndexNumber
-                  .toLowerCase()
-                  .includes(search.toLowerCase())
+                attendance.studentName.toLowerCase().includes(search.toLowerCase()) ||
+                attendance.studentIndexNumber.toLowerCase().includes(search.toLowerCase())
             )
             .map((attendance, index) => (
               <tr
                 key={index}
-                className={
-                  selectedAttendance === attendance
-                    ? "selected-row"
-                    : "event-row"
-                }
+                className={selectedAttendance === attendance ? 'selected-row' : 'event-row'}
               >
                 <td>{index + 1}</td>
                 <td>{attendance.studentName}</td>
                 <td>{attendance.studentIndexNumber}</td>
-                <td>
-                  {attendance.attendanceStatus ? attendance.attendedDate : "-"}
-                </td>
-                <td>
-                  {attendance.attendanceStatus ? attendance.attendedTime : "-"}
-                </td>
+                <td>{attendance.attendanceStatus ? attendance.attendedDate : '-'}</td>
+                <td>{attendance.attendanceStatus ? attendance.attendedTime : '-'}</td>
                 <td>
                   {attendance.attendanceStatus ? (
                     <FaCheck color="green" />

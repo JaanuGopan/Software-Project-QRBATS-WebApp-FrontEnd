@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import "../AdminDashboard/AdminDashboard.css";
-import { FaEdit } from "react-icons/fa";
+import React, { useState, useEffect } from 'react';
+import '../AdminDashboard/AdminDashboard.css';
+import { FaEdit } from 'react-icons/fa';
 
 const StudentTable = ({ handleUpdateStudent, onStudentClick, studentList }) => {
   const [selectedStudent, setSelectedStudent] = useState(null);
@@ -10,7 +10,7 @@ const StudentTable = ({ handleUpdateStudent, onStudentClick, studentList }) => {
     setSelectedStudent(student);
   };
 
-  const departmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA", "DIS"];
+  const departmentList = ['DEIE', 'DCOM', 'DMME', 'DCEE', 'DMENA', 'DIS'];
 
   return (
     <div className="tableDesign">
@@ -30,9 +30,7 @@ const StudentTable = ({ handleUpdateStudent, onStudentClick, studentList }) => {
             <tr
               key={index}
               onClick={() => handleStudentClick(student)}
-              className={
-                selectedStudent === student ? "selected-row" : "event-row"
-              }
+              className={selectedStudent === student ? 'selected-row' : 'event-row'}
             >
               <td>{index + 1}</td>
               <td>{student.studentName}</td>
@@ -40,10 +38,7 @@ const StudentTable = ({ handleUpdateStudent, onStudentClick, studentList }) => {
               <td>{departmentList[student.departmentId - 1]}</td>
               <td>{student.currentSemester}</td>
               <td>
-                <button
-                  onClick={() => handleUpdateStudent(student)}
-                  className="EditButton"
-                >
+                <button onClick={() => handleUpdateStudent(student)} className="EditButton">
                   <FaEdit className="EditIcon" />
                 </button>
               </td>

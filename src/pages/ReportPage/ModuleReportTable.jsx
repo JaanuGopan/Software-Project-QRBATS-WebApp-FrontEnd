@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../redux/features/userSlice";
-import "../AdminDashboard/AdminDashboard.css";
-import { TbReportAnalytics } from "react-icons/tb";
-import { GiTeacher } from "react-icons/gi";
-import { CircularProgress } from "@mui/material";
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../redux/features/userSlice';
+import '../AdminDashboard/AdminDashboard.css';
+import { TbReportAnalytics } from 'react-icons/tb';
+import { GiTeacher } from 'react-icons/gi';
+import { CircularProgress } from '@mui/material';
 
 const ModuleReportTable = ({
   handleOpenOverallReportWindow,
@@ -62,20 +62,14 @@ const ModuleReportTable = ({
           {modulesReportList
             .filter(
               (module) =>
-                module.moduleName
-                  .toLowerCase()
-                  .includes(searchModuleReport.toLowerCase()) ||
-                module.moduleCode
-                  .toLowerCase()
-                  .includes(searchModuleReport.toLowerCase())
+                module.moduleName.toLowerCase().includes(searchModuleReport.toLowerCase()) ||
+                module.moduleCode.toLowerCase().includes(searchModuleReport.toLowerCase())
             )
             .map((module, index) => (
               <tr
                 key={index}
                 onClick={() => handleModuleClick(module)}
-                className={
-                  selectedModuleReport === module ? "selected-row" : "event-row"
-                }
+                className={selectedModuleReport === module ? 'selected-row' : 'event-row'}
               >
                 <td>{index + 1}</td>
                 <td>{module.moduleName}</td>

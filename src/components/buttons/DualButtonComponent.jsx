@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 const DualButtonComponent = ({ onSelect, buttonText1, buttonText2 }) => {
   const [selectedButton, setSelectedButton] = useState(1);
@@ -15,9 +15,7 @@ const DualButtonComponent = ({ onSelect, buttonText1, buttonText2 }) => {
       </div>
       <div className="col">
         <button
-          className={`btn  ${
-            selectedButton === 1 ? "btn-primary" : "btn-outline-primary"
-          }`}
+          className={`btn  ${selectedButton === 1 ? 'btn-primary' : 'btn-outline-primary'}`}
           onClick={() => handleSelect(1)}
         >
           {buttonText1}
@@ -25,9 +23,7 @@ const DualButtonComponent = ({ onSelect, buttonText1, buttonText2 }) => {
       </div>
       <div className="col">
         <button
-          className={`btn ${
-            selectedButton === 2 ? "btn-primary" : "btn-outline-primary"
-          }`}
+          className={`btn ${selectedButton === 2 ? 'btn-primary' : 'btn-outline-primary'}`}
           onClick={() => handleSelect(2)}
         >
           {buttonText2}

@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
-import "../Staff/StaffA.css";
-import EventReportTable from "../../components/layout/AdminDashboardComponent/EventReportTable";
-import EventAttendanceTable from "../../components/layout/AdminDashboardComponent/EventAttendancetable";
-import NormalButton from "../../components/layout/AdminDashboardComponent/NormalButton";
-import { MdArrowBack } from "react-icons/md";
-import { BiSolidPrinter } from "react-icons/bi";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
-import EventService from "../../api/services/EventService";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../redux/features/userSlice";
-import AttendanceService from "../../api/services/AttendanceService";
-import { toast } from "react-toastify";
-import { CircularProgress } from "@mui/material";
+import React, { useState, useEffect } from 'react';
+import '../Staff/StaffA.css';
+import EventReportTable from '../../components/layout/AdminDashboardComponent/EventReportTable';
+import EventAttendanceTable from '../../components/layout/AdminDashboardComponent/EventAttendancetable';
+import NormalButton from '../../components/layout/AdminDashboardComponent/NormalButton';
+import { MdArrowBack } from 'react-icons/md';
+import { BiSolidPrinter } from 'react-icons/bi';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import EventService from '../../api/services/EventService';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../redux/features/userSlice';
+import AttendanceService from '../../api/services/AttendanceService';
+import { toast } from 'react-toastify';
+import { CircularProgress } from '@mui/material';
 const EventReport = () => {
   const [eventReportTable, setEventReportTable] = useState(true);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [eventList, setEventList] = useState([]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [selectedAttendance, setSelectedAttendance] = useState(null);
   const [attendanceList, setAttendanceList] = useState([]);
 
@@ -31,7 +31,7 @@ const EventReport = () => {
   const handleEventClick = (event) => {
     setSelectedEvent(event);
     // Do whatever you want with the selected event data
-    console.log("Selected Event:", event);
+    console.log('Selected Event:', event);
   };
 
   const handleReloadEventList = async () => {
@@ -40,7 +40,7 @@ const EventReport = () => {
         setEventList(events);
       })
       .catch((error) => {
-        console.error("Error fetching events:", error);
+        console.error('Error fetching events:', error);
       });
   };
 
@@ -49,12 +49,12 @@ const EventReport = () => {
   };
 
   const generatePDF = () => {
-    const input = document.getElementById("table-to-print");
+    const input = document.getElementById('table-to-print');
     html2canvas(input).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
+      const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF();
-      pdf.addImage(imgData, "PNG", 0, 0);
-      pdf.save("table.pdf");
+      pdf.addImage(imgData, 'PNG', 0, 0);
+      pdf.save('table.pdf');
     });
   };
 
@@ -66,8 +66,8 @@ const EventReport = () => {
       const response = await AttendanceService.downloadEventAttendance(eventId);
       if (response.status === 200) {
         const data = response.data;
-        const blob = new Blob([data], { type: "text/csv" });
-        const link = document.createElement("a");
+        const blob = new Blob([data], { type: 'text/csv' });
+        const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
         link.download = `event_${eventId}_attendance.csv`;
         document.body.appendChild(link);
@@ -76,7 +76,7 @@ const EventReport = () => {
       } else if (response.status === 400) {
         toast.error(response.data);
       } else {
-        toast.error("Error In Downloading Report.");
+        toast.error('Error In Downloading Report.');
       }
     } finally {
       setLoadingDownloadReport(false);
@@ -93,11 +93,11 @@ const EventReport = () => {
               type="text"
               placeholder="Search..."
               style={{
-                width: "150px",
-                padding: "3px 40px",
-                border: "0.5px solid black",
-                borderRadius: "5px",
-                textAlign: "center",
+                width: '150px',
+                padding: '3px 40px',
+                border: '0.5px solid black',
+                borderRadius: '5px',
+                textAlign: 'center',
               }}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -120,38 +120,31 @@ const EventReport = () => {
               type="text"
               placeholder="Search..."
               style={{
-                width: "150px",
-                padding: "3px 40px",
-                border: "0.5px solid black",
-                borderRadius: "5px",
-                textAlign: "center",
+                width: '150px',
+                padding: '3px 40px',
+                border: '0.5px solid black',
+                borderRadius: '5px',
+                textAlign: 'center',
               }}
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
 
           <div id="table-to-print" className="staff-EventList">
-            <EventAttendanceTable
-              search={search}
-              attendanceList={attendanceList}
-            />
+            <EventAttendanceTable search={search} attendanceList={attendanceList} />
             <div className="staff-List-Buttons">
               <NormalButton
                 handleClick={() => setEventReportTable(true)}
-                title={"Back"}
+                title={'Back'}
                 titlewithiconicon={<MdArrowBack className="staff-buttonIcon" />}
               />
               {loadingDownloadReport ? (
                 <CircularProgress />
               ) : (
                 <NormalButton
-                  title={"Print"}
-                  handleClick={() =>
-                    handleDownloadAttendanceEventReport(selectedEvent.eventId)
-                  }
-                  titlewithiconicon={
-                    <BiSolidPrinter className="staff-buttonIcon" />
-                  }
+                  title={'Print'}
+                  handleClick={() => handleDownloadAttendanceEventReport(selectedEvent.eventId)}
+                  titlewithiconicon={<BiSolidPrinter className="staff-buttonIcon" />}
                 />
               )}
             </div>

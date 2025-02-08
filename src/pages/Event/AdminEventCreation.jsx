@@ -1,16 +1,16 @@
-import "./EventCreation/EventCreation.css";
-import eventCreationImage from "../../assets/Images/signin/Signin.jpeg";
-import React, { useState, useRef } from "react";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
-import { IoMdCloseCircleOutline } from "react-icons/io";
-import toast, { Toaster } from "react-hot-toast";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../redux/features/userSlice";
-import QRCode from "qrcode.react";
-import { useEffect } from "react";
-import EventService from "../../api/services/EventService";
-import { CircularProgress } from "@mui/material";
+import './EventCreation/EventCreation.css';
+import eventCreationImage from '../../assets/Images/signin/Signin.jpeg';
+import React, { useState, useRef } from 'react';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
+import toast, { Toaster } from 'react-hot-toast';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../redux/features/userSlice';
+import QRCode from 'qrcode.react';
+import { useEffect } from 'react';
+import EventService from '../../api/services/EventService';
+import { CircularProgress } from '@mui/material';
 
 const AdminEventCreation = ({
   handleCloseCreateEventWindow,
@@ -18,32 +18,32 @@ const AdminEventCreation = ({
   locationList,
   showCloseButton,
 }) => {
-  const [eventId, setEventId] = useState("");
-  const [eventName, setEventName] = useState("");
+  const [eventId, setEventId] = useState('');
+  const [eventName, setEventName] = useState('');
   const [moduleName, setModuleName] = useState(null);
-  const [eventDate, setEventDate] = useState("");
-  const [eventTime, setEventTime] = useState("");
-  const [eventEndTime, setEventEndTime] = useState("");
-  const [eventVenue, setEventVenue] = useState("");
+  const [eventDate, setEventDate] = useState('');
+  const [eventTime, setEventTime] = useState('');
+  const [eventEndTime, setEventEndTime] = useState('');
+  const [eventVenue, setEventVenue] = useState('');
   const [showQRCode, setShowQRCode] = useState(false);
-  const [eventRole, setEventRole] = useState("EVENT");
+  const [eventRole, setEventRole] = useState('EVENT');
   const [eventAssignedUserId, setEventAssignedUserId] = useState(null);
 
   const [showModuleNameInput, setShowModuleNameInput] = useState(true);
-  const [title, setTitle] = useState("Event");
+  const [title, setTitle] = useState('Event');
 
   const qrCodeRef = useRef(null);
 
-  const notifySuccess = () => toast.success("Successfully Event Created!");
+  const notifySuccess = () => toast.success('Successfully Event Created!');
 
   const clearEventDetails = () => {
-    setEventName("");
-    setEventDate("");
-    setEventTime("");
-    setEventEndTime("");
-    setEventVenue("");
+    setEventName('');
+    setEventDate('');
+    setEventTime('');
+    setEventEndTime('');
+    setEventVenue('');
     setEventAssignedUserId(null);
-    setEventRole("EVENT");
+    setEventRole('EVENT');
   };
 
   const user = useSelector(selectUser);
@@ -74,12 +74,12 @@ const AdminEventCreation = ({
       } else if (response.status === 400) {
         toast.error(response.data);
       } else {
-        toast.error("Error In Event Creation. ");
+        toast.error('Error In Event Creation. ');
       }
       clearEventDetails();
     } catch (error) {
-      console.error("Event failed", error);
-      toast.error("Error In Event Creation. ");
+      console.error('Event failed', error);
+      toast.error('Error In Event Creation. ');
     } finally {
       setProcessing(false);
     }
@@ -87,12 +87,12 @@ const AdminEventCreation = ({
 
   const downloadQRCode = () => {
     const qrCodeURL = document
-      .getElementById("qrCodeEl")
-      .toDataURL("image/png")
-      .replace("image/png", "image/octet-stream");
-    let aEl = document.createElement("a");
+      .getElementById('qrCodeEl')
+      .toDataURL('image/png')
+      .replace('image/png', 'image/octet-stream');
+    let aEl = document.createElement('a');
     aEl.href = qrCodeURL;
-    aEl.download = "QR_Code.png";
+    aEl.download = 'QR_Code.png';
     document.body.appendChild(aEl);
     aEl.click();
     document.body.removeChild(aEl);
@@ -104,15 +104,15 @@ const AdminEventCreation = ({
 
   const handleShareQRCode = () => {
     html2canvas(qrCodeRef.current).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
+      const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF();
-      pdf.addImage(imgData, "PNG", 0, 0);
-      pdf.save("qr_code.pdf");
+      pdf.addImage(imgData, 'PNG', 0, 0);
+      pdf.save('qr_code.pdf');
     });
   };
 
   const [qrCodeWindow, setQrCodeWindow] = useState(false);
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toISOString().split('T')[0];
 
   return (
     <div className="event-main-container1">
@@ -120,10 +120,7 @@ const AdminEventCreation = ({
       {showCloseButton && (
         <div className="event-create-title-close-button">
           <h3 className="event-create-title">Create Event</h3>
-          <div
-            className="event-create-close-button"
-            onClick={handleCloseCreateEventWindow}
-          >
+          <div className="event-create-close-button" onClick={handleCloseCreateEventWindow}>
             <IoMdCloseCircleOutline id="close-icon" />
           </div>
         </div>
@@ -139,7 +136,7 @@ const AdminEventCreation = ({
                 type="text"
                 id="eventName"
                 name="eventName"
-                placeholder={"Event Name"}
+                placeholder={'Event Name'}
                 className="form-control mb-2"
                 value={eventName}
                 onChange={(e) => setEventName(e.target.value)}
@@ -235,13 +232,8 @@ const AdminEventCreation = ({
           <div className="Admin-Create-Event-Dashboard">
             <div ref={qrCodeRef} className="event-main-container1">
               <div className="event-create-title-close-button">
-                <h3 className="event-create-title">
-                  Successfully Event Created
-                </h3>
-                <div
-                  className="event-create-close-button"
-                  onClick={() => setQrCodeWindow(false)}
-                >
+                <h3 className="event-create-title">Successfully Event Created</h3>
+                <div className="event-create-close-button" onClick={() => setQrCodeWindow(false)}>
                   <IoMdCloseCircleOutline id="close-icon" />
                 </div>
               </div>
@@ -259,10 +251,7 @@ const AdminEventCreation = ({
               </div>
               <div className="row-center">
                 <div className="QRbutton">
-                  <button
-                    onClick={downloadQRCode}
-                    className="btn btn-success mr-3"
-                  >
+                  <button onClick={downloadQRCode} className="btn btn-success mr-3">
                     Save
                   </button>
                 </div>

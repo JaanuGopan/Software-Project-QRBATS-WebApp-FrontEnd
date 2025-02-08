@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
-import EventService from "../../api/services/EventService";
-import QRCode from "qrcode.react";
-import { IoMdCloseCircleOutline } from "react-icons/io";
-import toast, { Toaster } from "react-hot-toast";
-import "../Event/EventCreation/EventCreation.css";
-import eventCreationImage from "../../assets/Images/designer_pic/Designer_pic4.jpeg";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../redux/features/userSlice";
-import DualButtonComponent from "../../components/buttons/DualButtonComponent";
-import Select from "react-select";
-import ModuleService from "../../api/services/ModuleService";
-import LocationService from "../../api/services/LocationService";
-import { CircularProgress } from "@mui/material";
+import React, { useState, useEffect, useRef } from 'react';
+import EventService from '../../api/services/EventService';
+import QRCode from 'qrcode.react';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
+import toast, { Toaster } from 'react-hot-toast';
+import '../Event/EventCreation/EventCreation.css';
+import eventCreationImage from '../../assets/Images/designer_pic/Designer_pic4.jpeg';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../redux/features/userSlice';
+import DualButtonComponent from '../../components/buttons/DualButtonComponent';
+import Select from 'react-select';
+import ModuleService from '../../api/services/ModuleService';
+import LocationService from '../../api/services/LocationService';
+import { CircularProgress } from '@mui/material';
 
 const EventLectureCreation = ({
   handleCloseCreateLectureWindow,
@@ -23,33 +23,31 @@ const EventLectureCreation = ({
   const user = useSelector(selectUser);
   const { userId, departmentId } = user || {};
 
-  const [eventId, setEventId] = useState("");
-  const [eventName, setEventName] = useState("");
-  const [moduleName, setModuleName] = useState("");
-  const [eventDate, setEventDate] = useState("");
-  const [eventTime, setEventTime] = useState("");
-  const [eventEndTime, setEventEndTime] = useState("");
-  const [eventVenue, setEventVenue] = useState("");
+  const [eventId, setEventId] = useState('');
+  const [eventName, setEventName] = useState('');
+  const [moduleName, setModuleName] = useState('');
+  const [eventDate, setEventDate] = useState('');
+  const [eventTime, setEventTime] = useState('');
+  const [eventEndTime, setEventEndTime] = useState('');
+  const [eventVenue, setEventVenue] = useState('');
   const [showQRCode, setShowQRCode] = useState(false);
-  const [eventRole, setEventRole] = useState("EVENT");
+  const [eventRole, setEventRole] = useState('EVENT');
   const [eventAssignedUserId, setEventAssignedUserId] = useState(userId);
-  const [title, setTitle] = useState("Event");
+  const [title, setTitle] = useState('Event');
   const [moduleNameList, setModuleNameList] = useState([]);
 
   const [venueList, setVenuesList] = useState([
-    "NCC",
-    "LT1",
-    "LT2",
-    "Auditorium",
-    "DEIE",
-    "DMME",
-    "DCEE",
+    'NCC',
+    'LT1',
+    'LT2',
+    'Auditorium',
+    'DEIE',
+    'DMME',
+    'DCEE',
   ]);
 
   const handleGetModulesList = async () => {
-    const response = await ModuleService.getAllModulesByDepartmentId(
-      departmentId
-    );
+    const response = await ModuleService.getAllModulesByDepartmentId(departmentId);
     if (response) {
       const moduleList = response.map((module) => ({
         value: module.moduleId,
@@ -65,22 +63,22 @@ const EventLectureCreation = ({
       const response = await LocationService.getAllLocationNames();
       setVenuesList(response);
     } catch (error) {
-      console.error("Error fetching location names:", error);
+      console.error('Error fetching location names:', error);
     }
   };
 
   const qrCodeRef = useRef(null);
 
-  const notifySuccess = () => toast.success("Successfully Lecture Created!");
+  const notifySuccess = () => toast.success('Successfully Lecture Created!');
 
   const clearEventDetails = () => {
-    setEventName("");
-    setEventDate("");
-    setEventTime("");
-    setEventEndTime("");
-    setEventVenue("");
+    setEventName('');
+    setEventDate('');
+    setEventTime('');
+    setEventEndTime('');
+    setEventVenue('');
     setEventAssignedUserId(null);
-    setEventRole("LECTURE");
+    setEventRole('LECTURE');
     setModuleName(null);
   };
 
@@ -97,7 +95,7 @@ const EventLectureCreation = ({
         eventEndTime,
         eventVenue,
         eventRole,
-        eventRole === "LECTURE" ? moduleName.label : "",
+        eventRole === 'LECTURE' ? moduleName.label : '',
         userId
       );
       if (response.status === 200) {
@@ -109,11 +107,11 @@ const EventLectureCreation = ({
       } else if (response.status === 400) {
         toast.error(response.data);
       } else {
-        toast.error("Error In Event Creation. ");
+        toast.error('Error In Event Creation. ');
       }
     } catch (error) {
-      console.error("Lecture creation failed", error);
-      toast.error("Error In Event Creation. ");
+      console.error('Lecture creation failed', error);
+      toast.error('Error In Event Creation. ');
     } finally {
       setProcessingCreateEvent(false);
     }
@@ -121,12 +119,12 @@ const EventLectureCreation = ({
 
   const downloadQRCode = () => {
     const qrCodeURL = document
-      .getElementById("qrCodeEl")
-      .toDataURL("image/png")
-      .replace("image/png", "image/octet-stream");
-    let aEl = document.createElement("a");
+      .getElementById('qrCodeEl')
+      .toDataURL('image/png')
+      .replace('image/png', 'image/octet-stream');
+    let aEl = document.createElement('a');
     aEl.href = qrCodeURL;
-    aEl.download = "QR_Code.png";
+    aEl.download = 'QR_Code.png';
     document.body.appendChild(aEl);
     aEl.click();
     document.body.removeChild(aEl);
@@ -145,16 +143,16 @@ const EventLectureCreation = ({
   const handleSelectedButton = (button) => {
     setSelectedButton(button);
     if (button === 2) {
-      setEventRole("EVENT");
+      setEventRole('EVENT');
       setModuleName(null);
-      setTitle("Event");
+      setTitle('Event');
     } else {
-      setEventRole("LECTURE");
-      setTitle("Lecture");
+      setEventRole('LECTURE');
+      setTitle('Lecture');
     }
   };
 
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toISOString().split('T')[0];
 
   const handleCloseQrCodeWindow = () => {
     setShowQRCode(false);
@@ -173,23 +171,16 @@ const EventLectureCreation = ({
       {!hideCloseButton && (
         <div className="event-create-title-close-button">
           <h3 className="event-create-title">Create {` ${title}`}</h3>
-          <div
-            className="event-create-close-button"
-            onClick={handleCloseCreateLectureWindow}
-          >
+          <div className="event-create-close-button" onClick={handleCloseCreateLectureWindow}>
             <IoMdCloseCircleOutline id="close-icon" />
           </div>
         </div>
       )}
       {hideCloseButton && (
-        <h3 className="event-create-title-without-close">
-          Create {` ${title}`}
-        </h3>
+        <h3 className="event-create-title-without-close">Create {` ${title}`}</h3>
       )}
       <div className="eventCreation-field">
-        {showImage && (
-          <img src={eventCreationImage} className="Create-logo" alt="Logo" />
-        )}
+        {showImage && <img src={eventCreationImage} className="Create-logo" alt="Logo" />}
         <div className="eventCreation-input-field">
           {/* <DualButtonComponent
             onSelect={handleSelectedButton}
@@ -225,7 +216,7 @@ const EventLectureCreation = ({
                   options={moduleNameList}
                   onChange={(e) => setModuleName(e)}
                   value={moduleName}
-                  placeholder={"Select Module Code"}
+                  placeholder={'Select Module Code'}
                 />
               </div>
             )}
@@ -320,13 +311,8 @@ const EventLectureCreation = ({
           <div className="Admin-Create-Event-Dashboard">
             <div ref={qrCodeRef} className="event-main-container1">
               <div className="event-create-title-close-button">
-                <h3 className="event-create-title">
-                  Successfully Event Created
-                </h3>
-                <div
-                  className="event-create-close-button"
-                  onClick={handleCloseQrCodeWindow}
-                >
+                <h3 className="event-create-title">Successfully Event Created</h3>
+                <div className="event-create-close-button" onClick={handleCloseQrCodeWindow}>
                   <IoMdCloseCircleOutline id="close-icon" />
                 </div>
               </div>
@@ -345,10 +331,7 @@ const EventLectureCreation = ({
               </div>
               <div className="row-center">
                 <div className="QRbutton">
-                  <button
-                    onClick={downloadQRCode}
-                    className="btn btn-success mr-3"
-                  >
+                  <button onClick={downloadQRCode} className="btn btn-success mr-3">
                     Save
                   </button>
                 </div>

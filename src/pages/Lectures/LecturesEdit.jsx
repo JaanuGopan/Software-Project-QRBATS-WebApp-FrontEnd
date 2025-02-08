@@ -1,16 +1,16 @@
-import "../Event/EventCreation/EventCreation.css";
-import "./Lectures.css";
-import React, { useState, useRef } from "react";
-import axios from "axios";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
-import { IoMdCloseCircleOutline } from "react-icons/io";
-import toast, { Toaster } from "react-hot-toast";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../redux/features/userSlice";
-import QRCode from "qrcode.react";
-import LectureService from "../../api/services/LectureService";
-import { CircularProgress } from "@mui/material";
+import '../Event/EventCreation/EventCreation.css';
+import './Lectures.css';
+import React, { useState, useRef } from 'react';
+import axios from 'axios';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
+import toast, { Toaster } from 'react-hot-toast';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../redux/features/userSlice';
+import QRCode from 'qrcode.react';
+import LectureService from '../../api/services/LectureService';
+import { CircularProgress } from '@mui/material';
 
 const LecturesEdit = ({
   handleCloseUpdateLectureWindow,
@@ -20,31 +20,23 @@ const LecturesEdit = ({
 }) => {
   const [lectureId, setLectureId] = useState(selectedLecture.lectureId);
   const [lectureName, setLectureName] = useState(selectedLecture.lectureName);
-  const [lectureModuleCode, setLectureModuleCode] = useState(
-    selectedLecture.lectureModuleCode
-  );
+  const [lectureModuleCode, setLectureModuleCode] = useState(selectedLecture.lectureModuleCode);
   const [lectureDay, setLectureDay] = useState(selectedLecture.lectureDay);
-  const [lectureStartTime, setLectureStartTime] = useState(
-    selectedLecture.lectureStartTime
-  );
-  const [lectureEndTime, setLectureEndTime] = useState(
-    selectedLecture.lectureEndTime
-  );
-  const [lectureVenue, setLectureVenue] = useState(
-    selectedLecture.lectureVenue
-  );
+  const [lectureStartTime, setLectureStartTime] = useState(selectedLecture.lectureStartTime);
+  const [lectureEndTime, setLectureEndTime] = useState(selectedLecture.lectureEndTime);
+  const [lectureVenue, setLectureVenue] = useState(selectedLecture.lectureVenue);
   const [showQRCode, setShowQRCode] = useState(false);
   const [lectureAssignedUserId, setLectureAssignedUserId] = useState(
     selectedLecture.lectureAssignedUserId
   );
 
-  const lectureDayList = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const lectureDayList = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-  const [title, setTitle] = useState("Lecture");
+  const [title, setTitle] = useState('Lecture');
 
   const qrCodeRef = useRef(null);
 
-  const notifySuccess = () => toast.success("Successfully Lecture Updated!");
+  const notifySuccess = () => toast.success('Successfully Lecture Updated!');
   const notifyFailToUpdate = (errorMsg) => toast.error(`${errorMsg}`);
 
   const user = useSelector(selectUser);
@@ -80,12 +72,12 @@ const LecturesEdit = ({
 
   const downloadQRCode = () => {
     const qrCodeURL = document
-      .getElementById("qrCodeEl")
-      .toDataURL("image/png")
-      .replace("image/png", "image/octet-stream");
-    let aEl = document.createElement("a");
+      .getElementById('qrCodeEl')
+      .toDataURL('image/png')
+      .replace('image/png', 'image/octet-stream');
+    let aEl = document.createElement('a');
     aEl.href = qrCodeURL;
-    aEl.download = "QR_Code" + "_" + lectureName + ".png";
+    aEl.download = 'QR_Code' + '_' + lectureName + '.png';
     document.body.appendChild(aEl);
     aEl.click();
     document.body.removeChild(aEl);
@@ -93,10 +85,10 @@ const LecturesEdit = ({
 
   const handleShareQRCode = () => {
     html2canvas(qrCodeRef.current).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
+      const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF();
-      pdf.addImage(imgData, "PNG", 0, 0);
-      pdf.save("qr_code.pdf");
+      pdf.addImage(imgData, 'PNG', 0, 0);
+      pdf.save('qr_code.pdf');
     });
   };
 
@@ -110,10 +102,7 @@ const LecturesEdit = ({
       <Toaster />
       <div className="lecture-update-title-close-button">
         <h3 className="lecture-update-title">Update Lecture</h3>
-        <div
-          className="lecture-update-close-button"
-          onClick={handleCloseUpdateLectureWindow}
-        >
+        <div className="lecture-update-close-button" onClick={handleCloseUpdateLectureWindow}>
           <IoMdCloseCircleOutline id="close-icon" />
         </div>
       </div>
@@ -127,7 +116,7 @@ const LecturesEdit = ({
                 size={200}
                 value={qrCodeDetails}
                 className="QRCode-img"
-                style={{ border: "5px solid white" }}
+                style={{ border: '5px solid white' }}
               />
             </div>
           </div>
@@ -155,7 +144,7 @@ const LecturesEdit = ({
                 type="text"
                 id="lectureName"
                 name="lectureName"
-                placeholder={"Lecture Name"}
+                placeholder={'Lecture Name'}
                 className="form-control mb-2"
                 value={lectureName}
                 onChange={(e) => setLectureName(e.target.value)}

@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../redux/features/userSlice";
-import "./ReportPage.css";
-import ModuleReportTable from "./ModuleReportTable";
-import OverallReportTable from "./OverallReportTable";
-import LectureReportTable from "./LectureReportTable";
-import ModuleService from "../../api/services/ModuleService";
-import EventService from "../../api/services/EventService";
-import { MdArrowBack } from "react-icons/md";
-import NormalButton from "../../components/layout/AdminDashboardComponent/NormalButton";
-import { BiSolidPrinter } from "react-icons/bi";
-import LectureStudentsAttendanceTable from "./LectureStudentsAttendanceTable";
-import LectureService from "../../api/services/LectureService";
-import AttendanceService from "../../api/services/AttendanceService";
-import { ToastContainer, toast } from "react-toastify";
-import LectureWithDateReportTable from "./LectureWithDateReportTable";
-import { CircularProgress } from "@mui/material";
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../redux/features/userSlice';
+import './ReportPage.css';
+import ModuleReportTable from './ModuleReportTable';
+import OverallReportTable from './OverallReportTable';
+import LectureReportTable from './LectureReportTable';
+import ModuleService from '../../api/services/ModuleService';
+import EventService from '../../api/services/EventService';
+import { MdArrowBack } from 'react-icons/md';
+import NormalButton from '../../components/layout/AdminDashboardComponent/NormalButton';
+import { BiSolidPrinter } from 'react-icons/bi';
+import LectureStudentsAttendanceTable from './LectureStudentsAttendanceTable';
+import LectureService from '../../api/services/LectureService';
+import AttendanceService from '../../api/services/AttendanceService';
+import { ToastContainer, toast } from 'react-toastify';
+import LectureWithDateReportTable from './LectureWithDateReportTable';
+import { CircularProgress } from '@mui/material';
 
 const ReportPage = () => {
   const user = useSelector(selectUser);
@@ -23,24 +23,19 @@ const ReportPage = () => {
   const [showModuleReportWindow, setShowModuleReportWindow] = useState(true);
   const [showOverallReportWindow, setShowOverallReportWindow] = useState(false);
   const [showLectureReportWindow, setShowLectureReportWindow] = useState(false);
-  const [
-    showLectureStudentAttendanceReportWindow,
-    setShowLectureStudentAttendanceReportWindow,
-  ] = useState(false);
-  const [showLectureWithDateWindow, setShowLectureWithDateWindow] =
+  const [showLectureStudentAttendanceReportWindow, setShowLectureStudentAttendanceReportWindow] =
     useState(false);
+  const [showLectureWithDateWindow, setShowLectureWithDateWindow] = useState(false);
 
   const [selectedModuleReport, setSelectedModuleReport] = useState(null);
   const [moduleReportList, setModuleReportList] = useState([]);
-  const [searchModuleReport, setSearchModuleReport] = useState("");
-  const [searchLecturesReport, setSearchLecturesReport] = useState("");
-  const [searchStudentReport, setSearchStudentReport] = useState("");
+  const [searchModuleReport, setSearchModuleReport] = useState('');
+  const [searchLecturesReport, setSearchLecturesReport] = useState('');
+  const [searchStudentReport, setSearchStudentReport] = useState('');
   const [selectedLectureReport, setSelectedLectureReport] = useState(null);
   const [lecturesReportList, setLecturesReportList] = useState([]);
-  const [lectureStudentAttendanceList, setLectureStudentAttendanceList] =
-    useState([]);
-  const [searchLectureStudentAttendance, setSearchLectureStudentAttendance] =
-    useState("");
+  const [lectureStudentAttendanceList, setLectureStudentAttendanceList] = useState([]);
+  const [searchLectureStudentAttendance, setSearchLectureStudentAttendance] = useState('');
   const [studentAttendanceDetails, setStudentAttendanceDetails] = useState([]);
 
   useEffect(() => {
@@ -49,7 +44,7 @@ const ReportPage = () => {
 
   const handleModuleReportClick = (e) => {
     setSelectedModuleReport(e);
-    console.log("Selected ModuleReport:", e);
+    console.log('Selected ModuleReport:', e);
   };
 
   const handleReloadModuleReportList = async () => {
@@ -58,15 +53,13 @@ const ReportPage = () => {
       setModuleReportList(modulesList);
       console.log(modulesList);
     } catch (error) {
-      console.error("Error reloading module report list:", error);
+      console.error('Error reloading module report list:', error);
     }
   };
 
   const handleLoadLectureReport = async (moduleCode) => {
     try {
-      const response = await LectureService.getAllLecturesByModuleCode(
-        moduleCode
-      );
+      const response = await LectureService.getAllLecturesByModuleCode(moduleCode);
       if (response) {
         setLecturesReportList(response);
         setShowModuleReportWindow(false);
@@ -79,11 +72,7 @@ const ReportPage = () => {
 
   const handleLoadStudentAttendanceReport = async (lectureId, date) => {
     try {
-      const response =
-        await AttendanceService.getAllAttendanceByLectureIdAndDate(
-          lectureId,
-          date
-        );
+      const response = await AttendanceService.getAllAttendanceByLectureIdAndDate(lectureId, date);
       if (response.status === 200) {
         setLectureStudentAttendanceList(response.data);
         setShowLectureStudentAttendanceReportWindow(true);
@@ -92,10 +81,10 @@ const ReportPage = () => {
         setShowOverallReportWindow(false);
         setShowLectureWithDateWindow(false);
       } else {
-        console.error("Error fetching attendance:", response);
+        console.error('Error fetching attendance:', response);
       }
     } catch (error) {
-      console.error("Error fetching attendance:", error);
+      console.error('Error fetching attendance:', error);
     }
   };
 
@@ -104,15 +93,14 @@ const ReportPage = () => {
   const handleDownloadReport = async (lectureId, date) => {
     try {
       setLoadingDownloadReport(true);
-      const response =
-        await AttendanceService.downloadLectureAttendanceByLectureIdAndDate(
-          lectureId,
-          date
-        );
+      const response = await AttendanceService.downloadLectureAttendanceByLectureIdAndDate(
+        lectureId,
+        date
+      );
       if (response.status === 200) {
         const data = response.data;
-        const blob = new Blob([data], { type: "text/csv" });
-        const link = document.createElement("a");
+        const blob = new Blob([data], { type: 'text/csv' });
+        const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
         link.download = `lecture_${selectedLectureWithDate.lectureModuleCode}_attendance_${date}.csv`;
         document.body.appendChild(link);
@@ -121,10 +109,10 @@ const ReportPage = () => {
       } else if (response.status === 400) {
         toast.error(response.data);
       } else {
-        toast.error("Error in downloading the report.");
+        toast.error('Error in downloading the report.');
       }
     } catch (error) {
-      toast.error("An error occurred while downloading the report.");
+      toast.error('An error occurred while downloading the report.');
     } finally {
       setLoadingDownloadReport(false);
     }
@@ -140,9 +128,7 @@ const ReportPage = () => {
 
   const getAllStudentsAttendanceReport = async (moduleId) => {
     try {
-      const response = await AttendanceService.getStudentsAttendanceDetails(
-        moduleId
-      );
+      const response = await AttendanceService.getStudentsAttendanceDetails(moduleId);
       if (response.status === 200) {
         setStudentAttendanceDetails(response.data);
         setShowLectureStudentAttendanceReportWindow(false);
@@ -153,23 +139,21 @@ const ReportPage = () => {
       } else if (response.status === 400) {
         toast.error(response.data);
       } else {
-        toast.error("Error in getting overall report.");
+        toast.error('Error in getting overall report.');
       }
     } catch (error) {
-      toast.error("Error in getting overall report.");
+      toast.error('Error in getting overall report.');
     }
   };
 
   const [lectureWithDateList, setLectureWithDateList] = useState([]);
-  const [searchLectureWithDate, setSearchLectureWithDate] = useState("");
+  const [searchLectureWithDate, setSearchLectureWithDate] = useState('');
   const [selectedLectureWithDate, setSelectedLectureWithDate] = useState(null);
 
   const handleLoadLectureWithDateList = async (lectureId) => {
     try {
       setLectureWithDateList([]);
-      const response = await LectureService.getAllLectureWithDateByLectureId(
-        lectureId
-      );
+      const response = await LectureService.getAllLectureWithDateByLectureId(lectureId);
       if (response.status === 200) {
         setLectureWithDateList(response.data);
         setShowLectureStudentAttendanceReportWindow(false);
@@ -180,27 +164,23 @@ const ReportPage = () => {
       } else if (response.status === 400) {
         toast.error(response.data);
       } else {
-        toast.error("Error In Getting Lecture With Date List.");
+        toast.error('Error In Getting Lecture With Date List.');
       }
     } catch (error) {
-      toast.error("Error In Getting Lecture With Date List.");
+      toast.error('Error In Getting Lecture With Date List.');
     }
   };
 
-  const [loadingDownloadOverallReport, setLoadingDownloadOverallReport] =
-    useState(false);
+  const [loadingDownloadOverallReport, setLoadingDownloadOverallReport] = useState(false);
 
   const handleOverallReportDownload = async () => {
     try {
       setLoadingDownloadOverallReport(true);
-      const response =
-        await AttendanceService.downloadOverallStudentReportByModuleId(
-          moduleId
-        );
+      const response = await AttendanceService.downloadOverallStudentReportByModuleId(moduleId);
       if (response.status === 200) {
         const data = response.data;
-        const blob = new Blob([data], { type: "text/csv" });
-        const link = document.createElement("a");
+        const blob = new Blob([data], { type: 'text/csv' });
+        const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
         link.download = `module_${selectedModuleReport.moduleCode}_students_report.csv`;
         document.body.appendChild(link);
@@ -209,10 +189,10 @@ const ReportPage = () => {
       } else if (response.status === 400) {
         toast.error(response.data);
       } else {
-        toast.error("Error in downloading the report.");
+        toast.error('Error in downloading the report.');
       }
     } catch (error) {
-      toast.error("An error occurred while downloading the report.");
+      toast.error('An error occurred while downloading the report.');
     } finally {
       setLoadingDownloadOverallReport(false);
     }
@@ -228,11 +208,11 @@ const ReportPage = () => {
             type="text"
             placeholder="Search..."
             style={{
-              width: "150px",
-              padding: "3px 40px",
-              border: "0.5px solid black",
-              borderRadius: "5px",
-              textAlign: "center",
+              width: '150px',
+              padding: '3px 40px',
+              border: '0.5px solid black',
+              borderRadius: '5px',
+              textAlign: 'center',
             }}
             onChange={(e) => setSearchModuleReport(e.target.value)}
           />
@@ -244,9 +224,7 @@ const ReportPage = () => {
               onModuleReportClick={handleModuleReportClick}
               searchModuleReport={searchModuleReport}
               handleModuleReportReload={handleReloadModuleReportList}
-              handleOpenOverallReportWindow={(moduleId) =>
-                handleOpenOverallReportWindow(moduleId)
-              }
+              handleOpenOverallReportWindow={(moduleId) => handleOpenOverallReportWindow(moduleId)}
               handleOpenLecturesReportWindow={(e) => handleLoadLectureReport(e)}
             />
           </div>
@@ -265,20 +243,18 @@ const ReportPage = () => {
                   setShowOverallReportWindow(false);
                   setShowLectureWithDateWindow(false);
                 }}
-                title={"Back"}
+                title={'Back'}
                 titlewithiconicon={<MdArrowBack className="staff-buttonIcon" />}
               />
               {loadingDownloadOverallReport ? (
                 <CircularProgress />
               ) : (
                 <NormalButton
-                  title={"Print"}
+                  title={'Print'}
                   handleClick={() => {
                     handleOverallReportDownload();
                   }}
-                  titlewithiconicon={
-                    <BiSolidPrinter className="staff-buttonIcon" />
-                  }
+                  titlewithiconicon={<BiSolidPrinter className="staff-buttonIcon" />}
                 />
               )}
             </div>
@@ -302,7 +278,7 @@ const ReportPage = () => {
                   setShowOverallReportWindow(false);
                   setShowLectureWithDateWindow(false);
                 }}
-                title={"Back"}
+                title={'Back'}
                 titlewithiconicon={<MdArrowBack className="staff-buttonIcon" />}
               />
             </div>
@@ -326,7 +302,7 @@ const ReportPage = () => {
                   setShowOverallReportWindow(false);
                   setShowLectureWithDateWindow(false);
                 }}
-                title={"Back"}
+                title={'Back'}
                 titlewithiconicon={<MdArrowBack className="staff-buttonIcon" />}
               />
             </div>
@@ -347,23 +323,21 @@ const ReportPage = () => {
                   setShowLectureStudentAttendanceReportWindow(false);
                   setShowLectureWithDateWindow(true);
                 }}
-                title={"Back"}
+                title={'Back'}
                 titlewithiconicon={<MdArrowBack className="staff-buttonIcon" />}
               />
               {loadingDownloadReport ? (
                 <CircularProgress />
               ) : (
                 <NormalButton
-                  title={"Print"}
+                  title={'Print'}
                   handleClick={() =>
                     handleDownloadReport(
                       selectedLectureWithDate.lectureId,
                       selectedLectureWithDate.lectureDate
                     )
                   }
-                  titlewithiconicon={
-                    <BiSolidPrinter className="staff-buttonIcon" />
-                  }
+                  titlewithiconicon={<BiSolidPrinter className="staff-buttonIcon" />}
                 />
               )}
             </div>

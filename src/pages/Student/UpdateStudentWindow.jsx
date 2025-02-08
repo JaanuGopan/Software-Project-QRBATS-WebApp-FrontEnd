@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import "./Student.css";
-import InputField from "../../components/textfields/InputBox/InputField";
-import { IoMdCloseCircleOutline } from "react-icons/io";
-import Select from "react-select";
-import StudentService from "../../api/services/StudentService";
-import { toast } from "react-toastify";
-import { CircularProgress } from "@mui/material";
+import React, { useState } from 'react';
+import './Student.css';
+import InputField from '../../components/textfields/InputBox/InputField';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
+import Select from 'react-select';
+import StudentService from '../../api/services/StudentService';
+import { toast } from 'react-toastify';
+import { CircularProgress } from '@mui/material';
 
 const UpdateStudentWindow = ({
   handleCloseUpdateStudentWindow,
@@ -19,13 +19,13 @@ const UpdateStudentWindow = ({
   const [userName, setUserName] = useState(student.username);
   const [StudentRole, setStudentRole] = useState(student.studentRole);
   const [departmentId, setDepartmentId] = useState(student.departmentId);
-  const departmentList = ["DEIE", "DCOM", "DMME", "DCEE", "DMENA"];
+  const departmentList = ['DEIE', 'DCOM', 'DMME', 'DCEE', 'DMENA'];
 
   const [department, setDepartment] = useState({
     value: departmentList[student.departmentId - 1],
     label: departmentList[student.departmentId - 1],
   });
-  const semesterList = ["1", "2", "3", "4", "5", "6", "7", "8"];
+  const semesterList = ['1', '2', '3', '4', '5', '6', '7', '8'];
   const [semester, setSemester] = useState({
     value: semesterList[student.currentSemester - 1],
     label: semesterList[student.currentSemester - 1],
@@ -39,39 +39,39 @@ const UpdateStudentWindow = ({
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!studentName.trim()) {
-      toast.error("Student name is required");
+      toast.error('Student name is required');
       return false;
     }
     // indexno = "EG/20XX/XXXX"
     const indexNoPattern = /^EG\/20[0-9]{2}\/[0-9]{4}$/;
 
     if (!indexNoPattern.test(indexNumber)) {
-      toast.error("Invalid index number");
+      toast.error('Invalid index number');
       return false;
     }
 
     if (!indexNumber.trim()) {
-      toast.error("Index number is required");
+      toast.error('Index number is required');
       return false;
     }
 
     if (!studentEmail.trim() || !emailPattern.test(studentEmail)) {
-      toast.error("A valid email is required");
+      toast.error('A valid email is required');
       return false;
     }
 
     if (!userName.trim()) {
-      toast.error("Username is required");
+      toast.error('Username is required');
       return false;
     }
 
     if (!department.value) {
-      toast.error("Department is required");
+      toast.error('Department is required');
       return false;
     }
 
     if (!semester.value) {
-      toast.error("Semester is required");
+      toast.error('Semester is required');
       return false;
     }
 
@@ -96,7 +96,7 @@ const UpdateStudentWindow = ({
         semesterList.indexOf(semester.value) + 1
       );
       if (response.status === 200) {
-        toast.success("Successfully Updated.");
+        toast.success('Successfully Updated.');
         setUpdateSuccess(true);
         handleCloseUpdateStudentWindow();
         handleReloadStudentList();
@@ -104,8 +104,8 @@ const UpdateStudentWindow = ({
         toast.error(response.data);
       }
     } catch (error) {
-      console.error("Update failed", error);
-      toast.error("Error In Updating Student.");
+      console.error('Update failed', error);
+      toast.error('Error In Updating Student.');
     } finally {
       setProcessing(false);
     }
@@ -115,10 +115,7 @@ const UpdateStudentWindow = ({
     <div className="student-signup-main-container">
       <div className="student-create-title-close-button">
         <h3 className="student-create-title">Update Student</h3>
-        <div
-          className="student-create-close-button"
-          onClick={handleCloseUpdateStudentWindow}
-        >
+        <div className="student-create-close-button" onClick={handleCloseUpdateStudentWindow}>
           <IoMdCloseCircleOutline id="close-icon" />
         </div>
       </div>
@@ -204,10 +201,7 @@ const UpdateStudentWindow = ({
               {processing ? (
                 <CircularProgress />
               ) : (
-                <button
-                  type="submit"
-                  className="btn btn-warning update-student-save-button"
-                >
+                <button type="submit" className="btn btn-warning update-student-save-button">
                   Save
                 </button>
               )}

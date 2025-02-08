@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
-import "../../../pages/UserInterface/UserInterface.css";
-import logo from "../../../assets/Images/logo/logo_white.png";
-import { Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectIsLoggedIn } from "../../../redux/features/userSlice";
+import React, { useEffect, useState } from 'react';
+import '../../../pages/UserInterface/UserInterface.css';
+import logo from '../../../assets/Images/logo/logo_white.png';
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectIsLoggedIn } from '../../../redux/features/userSlice';
 
 const Navigator = () => {
   const navigate = useNavigate();
-  const[loginButtonLabel, setLoginButtonLabel] = useState("");
+  const [loginButtonLabel, setLoginButtonLabel] = useState('');
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   useEffect(() => {
-    if(isLoggedIn) {
-      setLoginButtonLabel("Dashboard");
+    if (isLoggedIn) {
+      setLoginButtonLabel('Dashboard');
     } else {
-      setLoginButtonLabel("Sign In");
+      setLoginButtonLabel('Sign In');
     }
   }, []);
 
@@ -25,23 +25,23 @@ const Navigator = () => {
         <img className="logo1" src={logo} alt="Sky Ticker" />
         <p
           style={{
-            color: "white",
-            marginBottom: "0px",
+            color: 'white',
+            marginBottom: '0px',
             fontSize: `25px`,
-            fontWeight: "600",
+            fontWeight: '600',
           }}
         >
           SKY TICKER
         </p>
       </div>
       <Button
-        onClick={() => navigate("/signin")}
+        onClick={() => navigate('/signin')}
         id="loginID"
         style={{
-          color: "#0063A0",
-          backgroundColor: "white",
-          marginRight: "3vw",
-          fontWeight: "bold",
+          color: '#0063A0',
+          backgroundColor: 'white',
+          marginRight: '3vw',
+          fontWeight: 'bold',
         }}
         variant="contained"
       >
