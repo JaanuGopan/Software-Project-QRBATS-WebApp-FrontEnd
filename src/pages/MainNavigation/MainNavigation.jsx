@@ -10,7 +10,7 @@ import Setting from '../Setting/Setting';
 import StaffDashboard from '../Staff/StaffDashboard';
 import EventReport from '../Event/EventReport';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, selectUser } from '../../redux/features/userSlice';
+import { selectUser } from '../../redux/features/userSlice';
 import { useNavigate } from 'react-router-dom';
 import LecturerSideBar from '../../components/layout/AdminDashboardComponent/LecturerSideBar';
 import LecturerDashboard from '../LecturerDashboard/LecturerDashboard';
@@ -22,6 +22,7 @@ import { resetSideBarIndex } from '../../redux/features/mainNavigationSlice';
 import Logout from '../../api/services/logoutService';
 import ReportPage from '../ReportPage/ReportPage';
 import LectureCreationPage from '../LactureCreation/LectureCreationPage';
+import { IoMenu } from 'react-icons/io5';
 
 function MainNavigationPage() {
   const navigate = useNavigate();
@@ -70,25 +71,10 @@ function MainNavigationPage() {
     setIsHidden(true);
   };
 
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
-
   return (
     <div className="staff-Main">
-      <div
-        className="menuButton"
-        onClick={handleShow}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
-        <PiListDashesFill size={'30px'} color={isHovered ? '#0366a4' : 'white'} />
+      <div className="menuButton" onClick={handleShow}>
+        <IoMenu className="menu-button-icon" size={'30px'} />
       </div>
       <StaffNavBar setIndex={setOpenMenu} />
       <div className="staff-Submain">

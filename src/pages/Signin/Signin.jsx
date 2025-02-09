@@ -9,6 +9,8 @@ import ForgotPassword from '../ForgotPassword/ForgotPassword';
 import OtpVerification from '../ForgotPassword/OtpVerification';
 import ResetPassword from '../ForgotPassword/RestPassword';
 import { ToastContainer } from 'react-toastify';
+import { ArrowLeft } from '@mui/icons-material';
+import { BiLeftArrow, BiLeftArrowAlt } from 'react-icons/bi';
 
 function Signin() {
   const navigate = useNavigate();
@@ -84,7 +86,7 @@ function Signin() {
 
       <div className="ComponentBackground">
         <button onClick={handleBackButtonAction} className="back-button">
-          <FontAwesomeIcon icon={faCircleArrowLeft} className="backicon" />
+          <BiLeftArrowAlt size={'20px'} />
         </button>
         <p className="head1">{title}</p>
         <div className="content">

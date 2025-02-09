@@ -69,6 +69,7 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  gap: 20px;
 }
 
 .Designer {
@@ -159,6 +160,7 @@ a:hover {
   border-radius: 5px;
   border-bottom: 3px solid #0077c0;
   padding-left: 10px;
+  width: 90%;
 }
 
 .input-icon {
