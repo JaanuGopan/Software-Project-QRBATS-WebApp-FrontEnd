@@ -58,7 +58,12 @@ const ModuleReportTable = ({
             <th>Lectures Report</th>
           </tr>
         </thead>
-        <tbody>
+        {modulesReportList
+            .filter(
+              (module) =>
+                module.moduleName.toLowerCase().includes(searchModuleReport.toLowerCase()) ||
+                module.moduleCode.toLowerCase().includes(searchModuleReport.toLowerCase())
+            ).length > 0 ? <tbody>
           {modulesReportList
             .filter(
               (module) =>
@@ -109,7 +114,9 @@ const ModuleReportTable = ({
                 </td>
               </tr>
             ))}
-        </tbody>
+        </tbody> : <tbody className='nodata'>
+          No Data Available
+        </tbody>}
       </table>
     </div>
   );

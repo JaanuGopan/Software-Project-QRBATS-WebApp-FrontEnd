@@ -15,7 +15,6 @@ const StaffDashboard = () => {
   const [staffCreatePopUpWindow, setStaffCreatePopUpWindow] = useState(false);
   const [staffUpdatePopUpWindow, setStaffUpdatePopUpWindow] = useState(false);
   const [search, setSearch] = useState('');
-
   const [staffsList, setStaffsList] = useState([]);
   const [selectedStaff, setSelectedStaff] = useState(null);
 

@@ -24,7 +24,12 @@ const LecturesTable = ({ lecturesList, onLectureClick, search, handleLectureUpda
             <th>Edit</th>
           </tr>
         </thead>
-        <tbody>
+        {lecturesList
+            .filter(
+              (lecture) =>
+                lecture.lectureName.toLowerCase().includes(search.toLowerCase()) ||
+                lecture.lectureModuleCode.toLowerCase().includes(search.toLowerCase())
+            ).length > 0 ? <tbody>
           {lecturesList
             .filter(
               (lecture) =>
@@ -51,7 +56,9 @@ const LecturesTable = ({ lecturesList, onLectureClick, search, handleLectureUpda
                 </td>
               </tr>
             ))}
-        </tbody>
+        </tbody> : <tbody className='nodata'>
+          No Data Available
+        </tbody>}
       </table>
     </div>
   );

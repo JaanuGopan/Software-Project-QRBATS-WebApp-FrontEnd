@@ -85,6 +85,16 @@
   }
 }
 
+.nodata{
+  height: auto;
+  width: 100%;
+  display: flex;
+  padding-top: 35%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .admin-Dash {
   flex-grow: 1;
   height: 90vh;

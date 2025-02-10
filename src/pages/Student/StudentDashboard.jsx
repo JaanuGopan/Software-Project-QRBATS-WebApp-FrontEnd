@@ -16,6 +16,7 @@ const StudentDashboard = () => {
   const [showDeletePopUpWindow, setShowDeletePopUpWindow] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [studentList, setStudentList] = useState([]);
+  const [search, setSearch] = useState('');
 
   const handleSelectedStudent = (student) => {
     setSelectedStudent(student);
@@ -64,6 +65,7 @@ const StudentDashboard = () => {
             borderRadius: '5px',
             textAlign: 'center',
           }}
+          onChange={(e) => setSearch(e.target.value)}
         />
       </div>
       <div className="student-EventList">
@@ -74,6 +76,7 @@ const StudentDashboard = () => {
           }}
           onStudentClick={(e) => handleSelectedStudent(e)}
           studentList={studentList}
+          search={search}
         />
         <div className="student-List-Buttons">
           <NormalButton

@@ -32,7 +32,12 @@ const EventAttendanceTable = ({ search, attendanceList, handleGeneratePDF }) => 
           </tr>
         </thead>
 
-        <tbody>
+        {attendance
+            .filter(
+              (attendance) =>
+                attendance.studentName.toLowerCase().includes(search.toLowerCase()) ||
+                attendance.indexNumber.toLowerCase().includes(search.toLowerCase())
+            ).length > 0 ? <tbody>
           {attendance
             .filter(
               (attendance) =>
@@ -58,7 +63,9 @@ const EventAttendanceTable = ({ search, attendanceList, handleGeneratePDF }) => 
                 </td>
               </tr>
             ))}
-        </tbody>
+        </tbody> : <tbody className='nodata'>
+          No Data Available
+        </tbody>}
       </table>
     </div>
   );
