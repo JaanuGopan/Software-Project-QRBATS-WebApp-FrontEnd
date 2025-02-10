@@ -1,13 +1,12 @@
-import axios from "axios";
-import ApiConstants from "../config/ApiConstants";
+import axios from 'axios';
 
 class DeleteStaffService {
   static async deleteStaff(staffId) {
     try {
-      const response = await axios.post(ApiConstants.deleteStaffUrl, {
+      const response = await axios.post('/api/v1/auth/deleteuserbyuserid', {
         userId: staffId,
       });
-      console.log("deleted Successfully..");
+      console.log('deleted Successfully..');
       if (response.status === 200) {
         return response;
       }

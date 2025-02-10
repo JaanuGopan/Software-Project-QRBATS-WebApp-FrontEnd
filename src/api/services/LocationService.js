@@ -1,19 +1,13 @@
-import axios from "axios";
-import ApiConstants from "../config/ApiConstants";
-import { useDispatch } from "react-redux";
-import {
-  setLocationList,
-  resetLocationList,
-} from "../../redux/features/locationListSlice";
+import axios from 'axios';
+
 class LocationService {
   static getAllLocationNames = async () => {
     try {
-      const response = await axios.get(ApiConstants.getAllLocationNameUrl);
-      console.log(response.data);
+      const response = await axios.get('/api/v1/location/getalllocationnames');
       return response.data;
     } catch (error) {
-      console.log("Error in fetching location names: ", error);
-      throw error; // rethrow the error so that calling code can handle it
+      console.log('Error in fetching location names: ', error);
+      throw error;
     }
   };
 }
