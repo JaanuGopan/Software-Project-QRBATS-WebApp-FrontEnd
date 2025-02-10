@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import '../AdminDashboard/AdminDashboard.css';
 import { FaEdit } from 'react-icons/fa';
 
-const StudentTable = ({ handleUpdateStudent, onStudentClick, studentList }) => {
+const StudentTable = ({ handleUpdateStudent, onStudentClick, studentList, search }) => {
   const [selectedStudent, setSelectedStudent] = useState(null);
-
+  
   const handleStudentClick = (student) => {
     onStudentClick(student);
     setSelectedStudent(student);
@@ -25,8 +25,15 @@ const StudentTable = ({ handleUpdateStudent, onStudentClick, studentList }) => {
             <th>Edit</th>
           </tr>
         </thead>
-        <tbody>
-          {studentList.map((student, index) => (
+        {studentList.filter(
+              (student) => student.studentName.toLowerCase().includes(search.toLowerCase()) ||
+              student.indexNumber.toLowerCase().includes(search.toLowerCase())
+            ).length > 0 ? <tbody>
+          {studentList.filter(
+              (student) => student.studentName.toLowerCase().includes(search.toLowerCase()) ||
+              student.indexNumber.toLowerCase().includes(search.toLowerCase())
+            )
+            .map((student, index) => (
             <tr
               key={index}
               onClick={() => handleStudentClick(student)}
@@ -44,7 +51,9 @@ const StudentTable = ({ handleUpdateStudent, onStudentClick, studentList }) => {
               </td>
             </tr>
           ))}
-        </tbody>
+        </tbody> : <tbody className='nodata'>
+          No Data Available
+        </tbody>}
       </table>
     </div>
   );

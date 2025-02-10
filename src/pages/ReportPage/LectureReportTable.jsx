@@ -41,7 +41,12 @@ const LectureReportTable = ({
             <th>View</th>
           </tr>
         </thead>
-        <tbody>
+        {lecturesReportList
+            .filter(
+              (lecture) =>
+                lecture.lectureName.toLowerCase().includes(searchLecturesReport.toLowerCase()) ||
+                lecture.lectureDay.toLowerCase().includes(searchLecturesReport.toLowerCase())
+            ).length > 0 ? <tbody>
           {lecturesReportList
             .filter(
               (lecture) =>
@@ -76,7 +81,9 @@ const LectureReportTable = ({
                 </td>
               </tr>
             ))}
-        </tbody>
+        </tbody> : <tbody className='nodata'>
+          No Data Available
+        </tbody>}
       </table>
     </div>
   );

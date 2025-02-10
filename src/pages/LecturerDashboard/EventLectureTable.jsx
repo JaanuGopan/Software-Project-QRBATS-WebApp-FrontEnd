@@ -29,7 +29,12 @@ const EventLectureTable = ({ lectureList, onLectureClick, search, handleUpdateLe
             <th>Edit</th>
           </tr>
         </thead>
-        <tbody>
+        {lecturesList
+            .filter(
+              (lecture) =>
+                lecture.eventName.toLowerCase().includes(search.toLowerCase()) ||
+                lecture.eventVenue.toLowerCase().includes(search.toLowerCase())
+            ).length > 0 ? <tbody>
           {lecturesList
             .filter(
               (lecture) =>
@@ -55,7 +60,9 @@ const EventLectureTable = ({ lectureList, onLectureClick, search, handleUpdateLe
                 </td>
               </tr>
             ))}
-        </tbody>
+        </tbody> : <tbody className='nodata'>
+          No Data Available
+        </tbody>}
       </table>
     </div>
   );

@@ -31,7 +31,12 @@ const LectureStudentsAttendanceTable = ({ search, attendanceList }) => {
           </tr>
         </thead>
 
-        <tbody>
+        {attendanceList
+            .filter(
+              (attendance) =>
+                attendance.studentName.toLowerCase().includes(search.toLowerCase()) ||
+                attendance.studentIndexNumber.toLowerCase().includes(search.toLowerCase())
+            ).length > 0 ? <tbody>
           {attendanceList
             .filter(
               (attendance) =>
@@ -57,7 +62,9 @@ const LectureStudentsAttendanceTable = ({ search, attendanceList }) => {
                 </td>
               </tr>
             ))}
-        </tbody>
+        </tbody> : <tbody className='nodata'>
+          No Data Available
+        </tbody>}
       </table>
     </div>
   );

@@ -17,7 +17,12 @@ const OverallReportTable = ({ search, studentAttendanceDetails }) => {
           </tr>
         </thead>
 
-        <tbody>
+        {studentAttendanceDetails
+            .filter(
+              (details) =>
+                details.studentName.toLowerCase().includes(search.toLowerCase()) ||
+                details.indexNumber.toLowerCase().includes(search.toLowerCase())
+            ).length > 0 ? <tbody>
           {studentAttendanceDetails
             .filter(
               (details) =>
@@ -39,7 +44,9 @@ const OverallReportTable = ({ search, studentAttendanceDetails }) => {
                 <td>{Number(details.attendancePercentage).toFixed(2)} %</td>
               </tr>
             ))}
-        </tbody>
+        </tbody> : <tbody className='nodata'>
+          No Data Available
+        </tbody>}
       </table>
     </div>
   );
