@@ -7,7 +7,7 @@ const facultyBaseUrl = 'http://10.50.227.44:8080';
 const TIMEOUT = 60 * 1000; // 60 seconds timeout
 
 // Set global Axios defaults
-axios.defaults.baseURL = developmentBaseUrl;
+axios.defaults.baseURL = facultyBaseUrl;
 axios.defaults.timeout = TIMEOUT;
 
 // Request Interceptor

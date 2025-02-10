@@ -422,6 +422,13 @@
   padding: 5px 10px;
   align-items: center;
   justify-content: center;
+  border-radius: 5px;
+}
+
+.ViewButton:hover {
+  background-color: white;
+  color: #0063a0;
+  border: 1px solid #0063a0;
 }
 
 .ViewButtonLabel {
