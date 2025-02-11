@@ -49,7 +49,12 @@ const ModuleTable = ({
             <th>Edit</th>
           </tr>
         </thead>
-        <tbody>
+        {moduleList
+            .filter(
+              (module) =>
+                module.moduleName.toLowerCase().includes(searchModule.toLowerCase()) ||
+                module.moduleCode.toLowerCase().includes(searchModule.toLowerCase())
+            ).length > 0 ? <tbody>
           {moduleList
             .filter(
               (module) =>
@@ -75,7 +80,9 @@ const ModuleTable = ({
                 </td>
               </tr>
             ))}
-        </tbody>
+        </tbody> : <tbody className='nodata'>
+          No Data Available
+        </tbody>}
       </table>
     </div>
   );
