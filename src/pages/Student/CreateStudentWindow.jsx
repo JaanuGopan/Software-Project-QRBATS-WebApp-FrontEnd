@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import './Student.css';
-import axios from 'axios';
-import Designer from '../../assets/Images/Designer.jpeg';
-import { useNavigate } from 'react-router-dom';
 import InputField from '../../components/textfields/InputBox/InputField';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import Select from 'react-select';
 import StudentService from '../../api/services/StudentService';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { CircularProgress } from '@mui/material';
 
 const CreateStudentWindow = ({ handleCloseCreateStudentWindow, handleReloadStudentList }) => {
@@ -17,7 +14,7 @@ const CreateStudentWindow = ({ handleCloseCreateStudentWindow, handleReloadStude
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [userName, setUserName] = useState('');
-  const [userRole, setUserRole] = useState('');
+  const [userRole, setUserRole] = useState('STUDENT');
   const [semester, setSemester] = useState();
   const [departmentId, setDepartmentId] = useState('');
 
@@ -80,15 +77,16 @@ const CreateStudentWindow = ({ handleCloseCreateStudentWindow, handleReloadStude
     }
     try {
       setProcessing(true);
+      console.log('Creating Student');
       const response = await StudentService.createStudentByAdmin(
-        -1,
         studentName,
         studentIndexNo,
         email,
         userName,
         password,
         semesterList.indexOf(semester.value) + 1,
-        departmentList.indexOf(departmentId.value) + 1
+        departmentList.indexOf(departmentId.value) + 1,
+        userRole
       );
       if (response.status === 200) {
         toast.success('Successfully Student Created.');

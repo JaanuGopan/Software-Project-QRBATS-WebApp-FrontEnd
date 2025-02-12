@@ -6,10 +6,10 @@ import { RiDeleteBin5Fill } from 'react-icons/ri';
 import CreateStaff from './CreateStaff';
 import UpdateStaff from './UpdateStaff';
 import StaffTable from '../../components/layout/AdminDashboardComponent/StaffTable';
-import FetchStaffService from '../../api/services/FetchStaffService';
 import DeleteStaffService from '../../api/services/DeleteStaffService';
 import { toast, ToastContainer } from 'react-toastify';
 import WarningPopup from '../../components/warningPopup/WarningPopup';
+import AdminService from '../../api/services/AdminService';
 
 const StaffDashboard = () => {
   const [staffCreatePopUpWindow, setStaffCreatePopUpWindow] = useState(false);
@@ -58,7 +58,7 @@ const StaffDashboard = () => {
   };
 
   const handleReloadStaffList = async () => {
-    FetchStaffService.fetchStaffs()
+    AdminService.fetchStaffs()
       .then((staffs) => {
         setStaffsList(staffs);
       })

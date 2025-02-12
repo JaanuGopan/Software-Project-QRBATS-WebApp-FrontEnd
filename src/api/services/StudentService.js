@@ -16,38 +16,37 @@ class StudentService {
   }; */
 
   static createStudentByAdmin = async (
-    studentId,
     studentName,
     indexNumber,
     studentEmail,
     userName,
     password,
     currentSemester,
-    departmentId
+    departmentId,
+    userRole
   ) => {
     try {
-      const response = await axios.post('/api/v1/mobile/createstudentbyadmin', {
-        studentId,
-        studentName,
+      const response = await axios.post('/api/v1/auth/signup', {
+        firstName: studentName,
         indexNumber,
-        studentEmail,
+        email: studentEmail,
         userName,
         password,
-        currentSemester,
+        semester: currentSemester,
         departmentId,
+        role: userRole,
       });
       if (response.status === 200) {
         return response;
       }
     } catch (error) {
-      console.error(error.response.data);
-      return error.response.data;
+      return error?.response?.data;
     }
   };
 
   static async getAllStudent() {
     try {
-      const response = await axios.post('/api/v1/mobile/getallstudents');
+      const response = await axios.get('/api/v1/admin/get-all-students');
       if (response.status === 200) {
         return response.data;
       }
@@ -59,7 +58,7 @@ class StudentService {
 
   static async deleteStudent(studentId) {
     try {
-      const response = await axios.delete(`/api/v1/mobile/deletestudentbystudentid?studentId=${studentId}`);
+      const response = await axios.delete(`/api/v1/auth/deleteuserbyuserid?userId=${studentId}`);
       if (response.status === 200) {
         return response.data;
       }
@@ -75,17 +74,19 @@ class StudentService {
     studentEmail,
     userName,
     departmentId,
-    semester
+    semester,
+    StudentRole
   ) {
     try {
-      const response = await axios.put('/api/v1/mobile/updatestudent', {
-        id: id,
-        studentName: studentName,
+      const response = await axios.put('/api/v1/auth/updateuser', {
+        userId: id,
+        firstName: studentName,
         indexNumber: indexNo,
-        studentEmail: studentEmail,
+        email: studentEmail,
         userName: userName,
         departmentId: departmentId,
-        currentSemester: semester,
+        semester: semester,
+        role: StudentRole,
       });
       if (response.status === 200) {
         return response;

@@ -23,7 +23,7 @@ class UserService {
         lastName: lastName,
         email: email,
         userName: userName,
-        password: password,
+        password: password ? password : null,
         departmentId: departmentId,
       });
       if (response.status === 200) {

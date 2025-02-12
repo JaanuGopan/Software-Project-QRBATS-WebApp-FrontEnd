@@ -20,7 +20,6 @@ const StudentDashboard = () => {
 
   const handleSelectedStudent = (student) => {
     setSelectedStudent(student);
-    console.log(selectedStudent);
   };
 
   const handleReloadStudentList = async () => {
@@ -38,7 +37,7 @@ const StudentDashboard = () => {
   const handelDeleteStudent = async () => {
     try {
       setProcessingDeleteStudent(true);
-      const response = await StudentService.deleteStudent(selectedStudent.studentId);
+      const response = await StudentService.deleteStudent(selectedStudent.userId);
       if (response) {
         handleReloadStudentList();
         setShowDeletePopUpWindow(false);

@@ -26,11 +26,11 @@ const StudentTable = ({ handleUpdateStudent, onStudentClick, studentList, search
           </tr>
         </thead>
         {studentList.filter(
-              (student) => student.studentName.toLowerCase().includes(search.toLowerCase()) ||
+              (student) => student.firstName.toLowerCase().includes(search.toLowerCase()) ||
               student.indexNumber.toLowerCase().includes(search.toLowerCase())
             ).length > 0 ? <tbody>
           {studentList.filter(
-              (student) => student.studentName.toLowerCase().includes(search.toLowerCase()) ||
+              (student) => student.firstName.toLowerCase().includes(search.toLowerCase()) ||
               student.indexNumber.toLowerCase().includes(search.toLowerCase())
             )
             .map((student, index) => (
@@ -40,10 +40,10 @@ const StudentTable = ({ handleUpdateStudent, onStudentClick, studentList, search
               className={selectedStudent === student ? 'selected-row' : 'event-row'}
             >
               <td>{index + 1}</td>
-              <td>{student.studentName}</td>
+              <td>{student.firstName}</td>
               <td>{student.indexNumber}</td>
               <td>{departmentList[student.departmentId - 1]}</td>
-              <td>{student.currentSemester}</td>
+              <td>{student.semester}</td>
               <td>
                 <button onClick={() => handleUpdateStudent(student)} className="EditButton">
                   <FaEdit className="EditIcon" />

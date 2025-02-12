@@ -100,10 +100,9 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
   };
 
   const handleLogoutClick = () => {
-    Logout.handleLogout(dispatch); // Assuming handleLogout is asynchronous
     dispatch(resetSideBarIndex());
+    Logout.handleLogout(dispatch); // Assuming handleLogout is asynchronous
   };
-
   const [loadingUpdateUser, setLoadingUpdateUser] = useState(false);
   const handleUpdateUser = async (event) => {
     event.preventDefault();
@@ -123,7 +122,6 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
           handleCloseUpdateSettingWindow();
           notifySuccess();
           handleLogoutClick();
-          toast.success('User Updated Successfully!');
         } else if (response.status === 400) {
           setErrors(response.data);
           toast.error(response.data);

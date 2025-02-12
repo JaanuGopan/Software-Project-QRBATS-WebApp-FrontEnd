@@ -89,7 +89,7 @@ class EventService {
 
   static async getEventByUserID(userId) {
     try {
-      const response = await axios.get(`/api/v1/event/geteventbyuserid/${userId}`);
+      const response = await axios.get(`/api/v1/event/geteventbyuserid?userId=${userId}`);
       return response.data;
     } catch (error) {
       console.log('Event Get Failed ', error);

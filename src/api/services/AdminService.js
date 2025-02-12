@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-class FetchStaffService {
+class AdminService {
   static async fetchStaffs() {
     try {
-      const response = await axios.post('/api/v1/auth/getallstaffs');
+      const response = await axios.get('/api/v1/admin/get-all-staffs');
       return response.data;
     } catch (error) {
       console.error('Error fetching staffs:', error);
@@ -12,4 +12,4 @@ class FetchStaffService {
   }
 }
 
-export default FetchStaffService;
+export default AdminService;
