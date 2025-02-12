@@ -59,7 +59,7 @@ class StudentService {
 
   static async deleteStudent(studentId) {
     try {
-      const response = await axios.delete(`/api/v1/mobile/deletestudentbystudentid/${studentId}`);
+      const response = await axios.delete(`/api/v1/mobile/deletestudentbystudentid?studentId=${studentId}`);
       if (response.status === 200) {
         return response.data;
       }
