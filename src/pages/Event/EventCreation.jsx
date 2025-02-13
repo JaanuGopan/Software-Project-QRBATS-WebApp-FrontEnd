@@ -1,19 +1,17 @@
 import './EventCreation/EventCreation.css';
 import eventCreationImage from '../../assets/Images/signin/Signin.jpeg';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import toast, { Toaster } from 'react-hot-toast';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../redux/features/userSlice';
 import QRCode from 'qrcode.react';
 import InputList from '../../components/textfields/InputList/InputList';
 import InputField from '../../components/textfields/InputBox/InputField';
 import EventService from '../../api/services/EventService';
 import { CircularProgress } from '@mui/material';
+import { AuthContext } from '../../config/AuthProvider';
 
 const EventCreationComponent = () => {
-  // Get the user from Redux state
-  const user = useSelector(selectUser);
+  const { user } = useContext(AuthContext);
   const { userId } = user || {};
 
   const [eventId, setEventId] = useState('');

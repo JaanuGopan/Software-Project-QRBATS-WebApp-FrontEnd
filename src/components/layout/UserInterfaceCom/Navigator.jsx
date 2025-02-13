@@ -1,23 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import '../../../pages/UserInterface/UserInterface.css';
 import logo from '../../../assets/Images/logo/logo_white.png';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { selectIsLoggedIn } from '../../../redux/features/userSlice';
+import { AuthContext } from '../../../config/AuthProvider';
 
 const Navigator = () => {
   const navigate = useNavigate();
-  const [loginButtonLabel, setLoginButtonLabel] = useState('');
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const {user} = useContext(AuthContext);
+  const loginButtonLabel = user ? 'Dashboard' : 'Login';
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      setLoginButtonLabel('Dashboard');
-    } else {
-      setLoginButtonLabel('Sign In');
-    }
-  }, []);
 
   return (
     <div className="navigate">

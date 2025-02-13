@@ -1,15 +1,11 @@
 import '../Event/EventCreation/EventCreation.css';
-import React, { useState, useRef } from 'react';
-import axios from 'axios';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import React, { useState, useRef, useContext } from 'react';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import toast, { Toaster } from 'react-hot-toast';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../redux/features/userSlice';
 import QRCode from 'qrcode.react';
 import EventService from '../../api/services/EventService';
 import { CircularProgress } from '@mui/material';
+import { AuthContext } from '../../config/AuthProvider';
 
 const AdminUpdateEvent = ({
   handleCloseEventUpdateWindow,
@@ -34,8 +30,7 @@ const AdminUpdateEvent = ({
 
   const notifySuccess = () => toast.success('Successfully Event Updated!');
 
-  const user = useSelector(selectUser);
-  // Destructure user object for cleaner code
+  const { user } = useContext(AuthContext);
   const { userId } = user || {};
   const [processingUpdateEvent, setProcessingUpdateEvent] = useState(false);
   const handleSubmit = async (e) => {

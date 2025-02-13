@@ -7,7 +7,6 @@ import '../../../pages/StaffMainNavigation/StaffMainNavigation.css';
 import logo from '../../../assets/Images/logo/logo_white.png';
 import Sidebarbutton from '../StaffDashboardComponents/Sidebarbutton';
 import { AiFillDashboard } from 'react-icons/ai';
-import Logout from '../../../api/services/logoutService';
 import { useDispatch } from 'react-redux';
 import { TbReport } from 'react-icons/tb';
 import { setSideBarIndex, resetSideBarIndex } from '../../../redux/features/mainNavigationSlice';
@@ -24,7 +23,7 @@ const LecturerSideBar = ({ handleClose, index, setIndex, handleShowLogoutWindow 
   };
 
   const handleLogoutClick = () => {
-    Logout.handleLogout(dispatch); // Assuming handleLogout is asynchronous
+    Logout.handleLogout(dispatch);
     dispatch(resetSideBarIndex());
   };
 

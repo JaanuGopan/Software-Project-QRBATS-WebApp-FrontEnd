@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../../pages/AdminDashboard/AdminDashboard.css';
 import { FaEdit } from 'react-icons/fa';
+import Department from '../../../utils/Department';
 
 const StaffTable = ({ search, handleUpdateStaff, onStaffClick, staffsList }) => {
   const [selectedStaff, setSelectedStaff] = useState(null);
@@ -10,7 +11,7 @@ const StaffTable = ({ search, handleUpdateStaff, onStaffClick, staffsList }) => 
     onStaffClick(staff);
   };
 
-  const departmentList = ['DEIE', 'DCOM', 'DMME', 'DCEE', 'DMENA', 'DIS'];
+  const departmentList = Department.departmentList;
 
   return (
     <div className="tableDesign">

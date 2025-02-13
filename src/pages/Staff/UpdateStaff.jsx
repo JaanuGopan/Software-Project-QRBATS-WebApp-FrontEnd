@@ -7,6 +7,7 @@ import Select from 'react-select';
 import UserService from '../../api/services/UserService';
 import { toast, ToastContainer } from 'react-toastify';
 import { CircularProgress } from '@mui/material';
+import Department from '../../utils/Department';
 
 const UpdateStaff = ({ handleCloseUpdateStaffWindow, selectedStaff, handleReloadStaffList }) => {
   const [userId, setUserId] = useState(selectedStaff.userId);
@@ -20,7 +21,7 @@ const UpdateStaff = ({ handleCloseUpdateStaffWindow, selectedStaff, handleReload
   const [department, setDepartment] = useState();
   const navigate = useNavigate();
 
-  const departmentList = ['DEIE', 'DCOM', 'DMME', 'DCEE', 'DMENA', 'DIS'];
+  const departmentList = Department.departmentList;
   const userRoleList = ['ADMIN', 'LECTURER'];
 
   const [loadingUpdateStaff, setLoadingUpdateStaff] = useState(false);

@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Select from 'react-select';
 import ModuleService from '../../api/services/ModuleService';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../redux/features/userSlice';
 import { Button, ToggleButton, ToggleButtonGroup } from '@mui/material';
-import LectureService from '../../api/services/LectureService';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
+import { AuthContext } from '../../config/AuthProvider';
+
 const LeftContainerLectureCreation = ({
   getModuleCode,
   getDayList,
@@ -16,7 +15,7 @@ const LeftContainerLectureCreation = ({
   onDayChange,
   handleGetAvailableLecturesForModule,
 }) => {
-  const user = useSelector(selectUser);
+  const { user } = useContext(AuthContext);
   const { userId, departmentId } = user || {};
 
   const handleGetModulesList = async () => {

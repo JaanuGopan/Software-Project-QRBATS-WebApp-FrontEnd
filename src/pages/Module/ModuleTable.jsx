@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../redux/features/userSlice';
 import ModuleService from '../../api/services/ModuleService';
-import { CiViewList } from 'react-icons/ci';
 import '../AdminDashboard/AdminDashboard.css';
 import { BiEdit } from 'react-icons/bi';
+import Department from '../../utils/Department';
 
 const ModuleTable = ({
   handleOpenCreateModuleWindow,
@@ -14,12 +12,10 @@ const ModuleTable = ({
   modulesList,
   handleDeleteModule,
 }) => {
-  const user = useSelector(selectUser);
-  const { userId } = user || {};
   const [moduleList, setModuleList] = useState([]);
   const [selectedModule, setSelectedModule] = useState(null);
 
-  const departmentList = ['DEIE', 'DCOM', 'DMME', 'DCEE', 'DMENA'];
+  const departmentList = Department.studentDepartmentList;
 
   useEffect(() => {
     setModuleList(modulesList);

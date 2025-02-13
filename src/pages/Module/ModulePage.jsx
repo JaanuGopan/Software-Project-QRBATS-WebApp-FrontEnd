@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import NormalButton from '../../components/layout/AdminDashboardComponent/NormalButton';
 import { MdCreateNewFolder } from 'react-icons/md';
 import ModuleTable from './ModuleTable';
 import ModuleService from '../../api/services/ModuleService';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../redux/features/userSlice';
 import ModuleUpdate from './ModuleUpdate';
 import { RiDeleteBin5Fill } from 'react-icons/ri';
 import './ModulePage.css';
 import ModuleCreate from './ModuleCreate';
 import { ToastContainer, toast } from 'react-toastify';
 import WarningPopup from '../../components/warningPopup/WarningPopup';
+import { AuthContext } from '../../config/AuthProvider';
 
 const ModulePage = () => {
-  const user = useSelector(selectUser);
+  const { user } = useContext(AuthContext);
   const { userId } = user || {};
 
   const [showModuleTable, setShowModuleTable] = useState(true);

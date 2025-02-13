@@ -6,6 +6,7 @@ import CreateUserService from '../../api/services/CreateUserService';
 import Select from 'react-select';
 import { toast, ToastContainer } from 'react-toastify';
 import { CircularProgress } from '@mui/material';
+import Department from '../../utils/Department';
 
 const CreateStaff = ({ handleCloseCreateStaffWindow, reloadStaffList }) => {
   const [firstName, setFirstName] = useState('');
@@ -17,7 +18,7 @@ const CreateStaff = ({ handleCloseCreateStaffWindow, reloadStaffList }) => {
   const [userRole, setUserRole] = useState('');
   const [departmentId, setDepartmentId] = useState('');
 
-  const departmentList = ['DEIE', 'DCOM', 'DMME', 'DCEE', 'DMENA', 'DIS'];
+  const departmentList = Department.departmentList;
   const userRoleList = ['ADMIN', 'LECTURER'];
 
   const notifySuccess = () => toast.success('Successfully Staff Created!');

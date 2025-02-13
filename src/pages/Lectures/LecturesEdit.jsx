@@ -1,13 +1,10 @@
 import '../Event/EventCreation/EventCreation.css';
 import './Lectures.css';
 import React, { useState, useRef } from 'react';
-import axios from 'axios';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import toast, { Toaster } from 'react-hot-toast';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../redux/features/userSlice';
 import QRCode from 'qrcode.react';
 import LectureService from '../../api/services/LectureService';
 import { CircularProgress } from '@mui/material';
@@ -38,9 +35,6 @@ const LecturesEdit = ({
 
   const notifySuccess = () => toast.success('Successfully Lecture Updated!');
   const notifyFailToUpdate = (errorMsg) => toast.error(`${errorMsg}`);
-
-  const user = useSelector(selectUser);
-  const { userId } = user || {};
 
   const [processingUpdateLecture, setProcessingUpdateLecture] = useState(false);
 

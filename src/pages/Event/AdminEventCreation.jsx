@@ -1,16 +1,14 @@
 import './EventCreation/EventCreation.css';
 import eventCreationImage from '../../assets/Images/signin/Signin.jpeg';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import toast, { Toaster } from 'react-hot-toast';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../redux/features/userSlice';
 import QRCode from 'qrcode.react';
-import { useEffect } from 'react';
 import EventService from '../../api/services/EventService';
 import { CircularProgress } from '@mui/material';
+import { AuthContext } from '../../config/AuthProvider';
 
 const AdminEventCreation = ({
   handleCloseCreateEventWindow,
@@ -46,8 +44,8 @@ const AdminEventCreation = ({
     setEventRole('EVENT');
   };
 
-  const user = useSelector(selectUser);
   // Destructure user object for cleaner code
+  const { user } = useContext(AuthContext);
   const { userId } = user || {};
 
   const [processing, setProcessing] = useState(false);

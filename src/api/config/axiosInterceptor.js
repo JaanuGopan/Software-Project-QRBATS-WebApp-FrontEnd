@@ -16,14 +16,6 @@ axios.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('authToken');
     if (token) {
-      // Exclude public, auth, and OTP endpoints from token injection
-      if (
-        config.url?.startsWith('/api/v1/public') ||
-        config.url?.startsWith('/api/v1/auth') ||
-        config.url?.startsWith('/api/v1/otp')
-      ) {
-        return config;
-      }
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
@@ -60,8 +52,9 @@ axios.interceptors.response.use(
 
     function handleLogout() {
       localStorage.removeItem('authToken');
+      localStorage.removeItem('refreshToken');
       localStorage.removeItem('user');
-      window.location.href = '/signin';
+      window.location.href = '/';
     }
   }
 );

@@ -1,17 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import EventService from '../../api/services/EventService';
 import QRCode from 'qrcode.react';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import toast, { Toaster } from 'react-hot-toast';
 import '../Event/EventCreation/EventCreation.css';
 import eventCreationImage from '../../assets/Images/designer_pic/Designer_pic4.jpeg';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../redux/features/userSlice';
-import DualButtonComponent from '../../components/buttons/DualButtonComponent';
 import Select from 'react-select';
 import ModuleService from '../../api/services/ModuleService';
 import LocationService from '../../api/services/LocationService';
 import { CircularProgress } from '@mui/material';
+import { AuthContext } from '../../config/AuthProvider';
 
 const EventLectureCreation = ({
   handleCloseCreateLectureWindow,
@@ -20,9 +18,8 @@ const EventLectureCreation = ({
   locationNameList,
   showImage = true,
 }) => {
-  const user = useSelector(selectUser);
+  const { user } = useContext(AuthContext);
   const { userId, departmentId } = user || {};
-
   const [eventId, setEventId] = useState('');
   const [eventName, setEventName] = useState('');
   const [moduleName, setModuleName] = useState('');

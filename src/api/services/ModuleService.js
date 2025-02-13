@@ -3,7 +3,7 @@ import axios from 'axios';
 class ModuleService {
   static getModulesByUserId = async (userId) => {
     try {
-      const response = await axios.get(`/api/v1/module/getmodulebylecturerid/${userId}`);
+      const response = await axios.get(`/api/v1/module/get-module-by-lecturerId/${userId}`);
       return response.data;
     } catch (error) {
       console.log('Fail to get modules. ' + error);
@@ -19,7 +19,7 @@ class ModuleService {
     userId
   ) => {
     try {
-      const response = await axios.post('/api/v1/module/createmodule', {
+      const response = await axios.post('/api/v1/module/create-module', {
         moduleCode: moduleCode,
         moduleName: moduleName,
         moduleEnrolmentKey: moduleEnrolmentKey,
@@ -47,7 +47,7 @@ class ModuleService {
     userId
   ) => {
     try {
-      const response = await axios.put('/api/v1/module/updatemodule', {
+      const response = await axios.put('/api/v1/module/update-module', {
         moduleId: moduleId,
         moduleCode: moduleCode,
         moduleName: moduleName,
@@ -68,7 +68,7 @@ class ModuleService {
 
   static deleteModuleById = async (moduleId) => {
     try {
-      const response = await axios.delete(`/api/v1/module/deletemodule/${moduleId}`);
+      const response = await axios.delete(`/api/v1/module/delete-module/${moduleId}`);
       return response;
     } catch (error) {
       console.error('fail to delete module : ' + error);
@@ -78,7 +78,7 @@ class ModuleService {
 
   static getAllModulesByDepartmentId = async (departmentId) => {
     try {
-      const response = await axios.get(`/api/v1/module/getallmodulebydepartmentid/${departmentId}`);
+      const response = await axios.get(`/api/v1/module/get-all-module-by-departmentId/${departmentId}`);
       if (response) {
         return response.data;
       }

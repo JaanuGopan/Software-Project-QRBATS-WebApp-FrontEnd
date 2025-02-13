@@ -1,43 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import '../../../pages/Signin/Signin.css';
 import { FaUser, FaLock } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { login, selectUser } from '../../../redux/features/userSlice';
-import UserService from '../../../api/services/UserService';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { CircularProgress } from '@mui/material';
+import { AuthContext } from '../../../config/AuthProvider';
 
 const LoginForm = ({ handleShowForgotPassword }) => {
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const user = useSelector(selectUser);
+  const { login } = useContext(AuthContext);
 
   const [processing, setProcessing] = useState(false);
 
-  // If user is already logged in, redirect to mainNavigation
-  useEffect(() => {
-    if (user) {
-      navigate('/mainNavigation');
-    }
-  }, [user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setProcessing(true);
-      const response = await UserService.loginUser(userName, password, dispatch);
-      if (response.status === 200) {
+      await login(userName, password);
+      toast.success('Successfully LogIn.');
+      navigate('/mainNavigation');
+      /* if (response.status === 200) {
         toast.success('Successfully LogIn.');
         navigate('/mainNavigation');
       } else if (response.status === 400) {
         toast.error(response.data);
       } else {
         toast.error('Error In LogIn Service.');
-      }
+      } */
     } catch (error) {
       toast.error('Error In LogIn Service.');
       console.error('Login failed', error);

@@ -3,7 +3,7 @@ import axios from 'axios';
 class EventService {
   static async fetchEvents() {
     try {
-      const response = await axios.post('/api/v1/event/getallevents');
+      const response = await axios.post('/api/v1/event/get-all-events');
       return response.data;
     } catch (error) {
       console.error('Error fetching events:', error);
@@ -40,15 +40,6 @@ class EventService {
       if (error.response.status === 400) {
         return error.response;
       }
-    }
-  }
-
-  static async getEventByUserID(userId) {
-    try {
-      const response = await axios.get(`/api/v1/event/geteventbyuserid/${userId}`);
-      return response.data;
-    } catch (error) {
-      console.log('Event Get Failed ', error);
     }
   }
 
@@ -89,7 +80,7 @@ class EventService {
 
   static async getEventByUserID(userId) {
     try {
-      const response = await axios.get(`/api/v1/event/geteventbyuserid?userId=${userId}`);
+      const response = await axios.get(`/api/v1/event/get-event-by-userId?userId=${userId}`);
       return response.data;
     } catch (error) {
       console.log('Event Get Failed ', error);
@@ -98,7 +89,7 @@ class EventService {
 
   static async deleteEvent(eventId) {
     try {
-      const response = await axios.delete(`/api/v1/event/deletebyid/${eventId}`);
+      const response = await axios.delete(`/api/v1/event/delete-by-eventId/${eventId}`);
       console.log('deleted Successfully..');
       if (response.status === 200) {
         return response;
@@ -113,7 +104,7 @@ class EventService {
   static async getAllLectureByModuleCode(moduleCode) {
     try {
       const response = await axios.get(
-        `/api/v1/event/getalleventbymodulecode?moduleCode=${moduleCode}`
+        `/api/v1/event/get-all-event-by-module-code?moduleCode=${moduleCode}`
       );
       if (response.data) {
         console.log(response.data);

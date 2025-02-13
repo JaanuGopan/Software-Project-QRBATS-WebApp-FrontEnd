@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../redux/features/userSlice';
+import React, { useState, useEffect, useContext } from 'react';
 import './ReportPage.css';
 import ModuleReportTable from './ModuleReportTable';
 import OverallReportTable from './OverallReportTable';
 import LectureReportTable from './LectureReportTable';
 import ModuleService from '../../api/services/ModuleService';
-import EventService from '../../api/services/EventService';
 import { MdArrowBack } from 'react-icons/md';
 import NormalButton from '../../components/layout/AdminDashboardComponent/NormalButton';
 import { BiSolidPrinter } from 'react-icons/bi';
@@ -16,9 +13,10 @@ import AttendanceService from '../../api/services/AttendanceService';
 import { ToastContainer, toast } from 'react-toastify';
 import LectureWithDateReportTable from './LectureWithDateReportTable';
 import { CircularProgress } from '@mui/material';
+import { AuthContext } from '../../config/AuthProvider';
 
 const ReportPage = () => {
-  const user = useSelector(selectUser);
+  const { user } = useContext(AuthContext);
   const { userId } = user || {};
   const [showModuleReportWindow, setShowModuleReportWindow] = useState(true);
   const [showOverallReportWindow, setShowOverallReportWindow] = useState(false);

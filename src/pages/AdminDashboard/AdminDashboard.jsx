@@ -1,23 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './AdminDashboard.css';
 import Table from '../../components/layout/AdminDashboardComponent/Table';
-import TotalCount from '../../components/layout/AdminDashboardComponent/TotalCount';
-import { FaUsers } from 'react-icons/fa';
-import { PiUsersFourFill } from 'react-icons/pi';
-import { FaSchool } from 'react-icons/fa6';
-import { IoNewspaperSharp } from 'react-icons/io5';
 import NormalButton from '../../components/layout/AdminDashboardComponent/NormalButton';
 import { MdCreateNewFolder } from 'react-icons/md';
 import { RiDeleteBin5Fill } from 'react-icons/ri';
 import AdminUpdateEvent from '../Event/AdminUpdateEvent';
 import AdminEventCreation from '../Event/AdminEventCreation';
-import FetchEventsService from '../../api/services/FetchEventsService';
 import LocationService from '../../api/services/LocationService';
-import { useDispatch, useSelector } from 'react-redux';
 import EventService from '../../api/services/EventService';
-import { selectUser } from '../../redux/features/userSlice';
 import { toast, ToastContainer } from 'react-toastify';
 import WarningPopup from '../../components/warningPopup/WarningPopup';
+import { AuthContext } from '../../config/AuthProvider';
 
 const AdminDashboard = () => {
   const [eventCreatePopUpWindow, setEventCreatePopUpWindow] = useState(false);
@@ -26,9 +19,9 @@ const AdminDashboard = () => {
   const [eventList, setEventList] = useState([]);
   const [search, setSearch] = useState('');
   const [venuesList, setVenuesList] = useState([]);
-  const dispatch = useDispatch;
 
-  const { userId } = useSelector(selectUser);
+  const { user } = useContext(AuthContext);
+  const { userId } = user || {};
 
   const handleGetLocationNameList = async () => {
     const response = await LocationService.getAllLocationNames();

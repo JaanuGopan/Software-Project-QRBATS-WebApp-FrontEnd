@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import '../AdminDashboard/AdminDashboard.css';
 import './LectureDashboard.css';
 import NormalButton from '../../components/layout/AdminDashboardComponent/NormalButton';
@@ -6,8 +6,6 @@ import { MdCreateNewFolder } from 'react-icons/md';
 import { RiDeleteBin5Fill } from 'react-icons/ri';
 import EventLectureCreation from './EventLectureCreation';
 import EventService from '../../api/services/EventService';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../redux/features/userSlice';
 import AdminUpdateEvent from '../Event/AdminUpdateEvent';
 import LocationService from '../../api/services/LocationService';
 import LectureService from '../../api/services/LectureService';
@@ -18,6 +16,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import WarningPopup from '../../components/warningPopup/WarningPopup';
 import { Table, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import EventLectureTable from './EventLectureTable';
+import { AuthContext } from '../../config/AuthProvider';
+
 const LecturerDashboard = () => {
   const [showCreateLecturePopup, setShowCreateLecturePopup] = useState(false);
   const [showUpdateLecturePopup, setShowUpdateLecturePopup] = useState(false);
@@ -30,7 +30,9 @@ const LecturerDashboard = () => {
   const [selectTable, setSelectTable] = useState('Lectures');
   const [title, setTitle] = useState('Lecture');
   const [venuesList, setVenuesList] = useState([]);
-  const user = useSelector(selectUser);
+  const [showEditLectureWindow, setShowEditLectureWindow] = useState(false);
+  const [editLecture, setEditLecture] = useState(null);
+  const { user } = useContext(AuthContext);
   const { userId } = user || {};
 
   const [lectureList, setLectureList] = useState([]);
@@ -46,9 +48,6 @@ const LecturerDashboard = () => {
       })
       .finally(() => {});
   };
-  //=====================================================================================
-  const [showEditLectureWindow, setShowEditLectureWindow] = useState(false);
-  const [editLecture, setEditLecture] = useState(null);
 
   const handleReloadLectureList = async () => {
     const response = await LectureService.getAllLecturesByUserId(userId);

@@ -1,16 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './ModulePage.css';
-import Designer from '../../assets/Images/Designer.jpeg';
 import InputField from '../../components/textfields/InputBox/InputField';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
-import { IoIosClose } from 'react-icons/io';
 import InputList from '../../components/textfields/InputList/InputList';
-import ModuleService from '../../api/services/ModuleService';
-import { selectUser } from '../../redux/features/userSlice';
-import { useSelector } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
-import Select from 'react-select';
 import { CircularProgress } from '@mui/material';
+import { AuthContext } from '../../config/AuthProvider';
+import Department from '../../utils/Department';
 
 const ModuleCreate = ({
   handleCloseModuleCreateWindow,
@@ -23,9 +18,10 @@ const ModuleCreate = ({
   const [moduleEnrolmentKey, setModuleEnrolmentKey] = useState('');
   const [departmentId, setDepartmentId] = useState('');
 
-  const { userId } = useSelector(selectUser) || {};
+  const { user } = useContext(AuthContext);
+  const { userId } = user || {};
 
-  const departmentList = ['DEIE', 'DCOM', 'DMME', 'DCEE', 'DMENA', 'DIS'];
+  const departmentList = Department.departmentList;
   const semesterList = ['1', '2', '3', '4', '5', '6', '7', '8'];
 
   const [processing, setProcessing] = useState(false);

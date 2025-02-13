@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './LectureCreation.css';
 import LeftContainerLectureCreation from './LeftContainerLectureCreation';
 import RightContainerLectureCreation from './RightContainerLectureCreation';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../redux/features/userSlice';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import LectureQRCodeWindow from './LectureQRCodeWindow';
 import AvailableLectureList from './AvailableLectureList';
@@ -11,12 +9,14 @@ import LectureService from '../../api/services/LectureService';
 import { ToastContainer, toast } from 'react-toastify';
 import CircularProgress from '@mui/material/CircularProgress';
 import AvailableLectureListForModule from './AvailableLectureListForModule';
+import { AuthContext } from '../../config/AuthProvider';
+
 const LectureCreationPage = ({
   handleCloseCreateLectureWindow,
   handleReloadLectureList = () => {},
   hideCloseButton = true,
 }) => {
-  const user = useSelector(selectUser);
+  const { user } = useContext(AuthContext);
   const { userId, departmentId } = user || {};
   const [dayList, setDayList] = useState([]);
   const [day, setDay] = useState('');

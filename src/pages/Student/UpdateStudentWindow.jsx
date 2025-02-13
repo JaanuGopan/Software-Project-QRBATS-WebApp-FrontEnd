@@ -6,6 +6,7 @@ import Select from 'react-select';
 import StudentService from '../../api/services/StudentService';
 import { toast } from 'react-toastify';
 import { CircularProgress } from '@mui/material';
+import Department from '../../utils/Department';
 
 const UpdateStudentWindow = ({
   handleCloseUpdateStudentWindow,
@@ -19,7 +20,7 @@ const UpdateStudentWindow = ({
   const [userName, setUserName] = useState(student.username);
   const [StudentRole, setStudentRole] = useState(student.role);
   const [departmentId, setDepartmentId] = useState(student.departmentId);
-  const departmentList = ['DEIE', 'DCOM', 'DMME', 'DCEE', 'DMENA'];
+  const departmentList = Department.studentDepartmentList;
 
   const [department, setDepartment] = useState({
     value: departmentList[student.departmentId - 1],

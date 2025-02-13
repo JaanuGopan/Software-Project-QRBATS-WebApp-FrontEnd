@@ -1,38 +1,37 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './Setting.css';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import Select from 'react-select';
 import Switch from '@mui/material/Switch';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectUser } from '../../redux/features/userSlice';
+import { useDispatch } from 'react-redux';
 import Department from '../../utils/Department';
 import UserService from '../../api/services/UserService';
 import InputField from '../../components/textfields/InputBox/InputField';
 import InputPassword from '../../components/textfields/InputPassword/InputPassword';
 import toast, { Toaster } from 'react-hot-toast';
 import WarningPopup from '../../components/warningPopup/WarningPopup';
-import Logout from '../../api/services/logoutService';
 import { resetSideBarIndex } from '../../redux/features/mainNavigationSlice';
+import { AuthContext } from '../../config/AuthProvider';
+import axios from 'axios';
 
 const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
   const dispatch = useDispatch();
-  const user = useSelector(selectUser);
+  const { user } = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
 
-  const [firstName, setFirstName] = useState(user.firstName);
-  const [lastName, setLastName] = useState(user.lastName);
-  const [email, setEmail] = useState(user.email);
-  const [userRole, setUserRole] = useState(user.role);
-  const [departmentId, setDepartmentId] = useState({
-    value: user.departmentId,
-    label: Department.departmentList[user.departmentId - 1],
-  });
-  const [userName, setUserName] = useState(user.userName);
-  const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [userRole, setUserRole] = useState();
+  const [departmentId, setDepartmentId] = useState({});
+  const [userName, setUserName] = useState('');
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
-
   const [errors, setErrors] = useState({});
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const departmentList = Department.departmentList.map((value, index) => ({
     value: index + 1,
@@ -42,9 +41,22 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
   const notifySuccess = () => toast.success('Successfully Profile Updated!');
   const notifyPasswordVerify = () => toast.success('Successfully Password Verified!');
 
-  const [showOldPassword, setShowOldPassword] = useState(false);
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    if (user) {
+      const response = axios.get('/api/v1/auth/user').then((res) => {
+        setUserName(res.data.userName);
+        setFirstName(res.data.firstName);
+        setLastName(res.data.lastName);
+        setEmail(res.data.email);
+        setUserRole(res.data.role);
+        setDepartmentId({
+          value: res.data.departmentId,
+          label: Department.departmentList[res.data.departmentId - 1],
+        });
+      })
+    }
+  },[])
+
   const handleShowOldPassword = (event) => {
     setShowOldPassword(event.target.checked);
     setShowNewPassword(false);
@@ -101,8 +113,9 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
 
   const handleLogoutClick = () => {
     dispatch(resetSideBarIndex());
-    Logout.handleLogout(dispatch); // Assuming handleLogout is asynchronous
+    logout();
   };
+
   const [loadingUpdateUser, setLoadingUpdateUser] = useState(false);
   const handleUpdateUser = async (event) => {
     event.preventDefault();

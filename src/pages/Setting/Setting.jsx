@@ -1,16 +1,16 @@
 import './Setting.css';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import UpdateSetting from './UpdateSetting';
 import Avatar from '@mui/material/Avatar';
 import PersonIcon from '../../assets/Images/personIcon/person_icon.png';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../redux/features/userSlice';
 import Department from '../../utils/Department';
+import { AuthContext } from '../../config/AuthProvider';
+
 const Setting = () => {
   const [adminUpdateSettingPopUpWindow, setAdminUpdateSettingPopUpWindow] = useState(false);
 
-  const { userId, firstName, lastName, email, userName, departmentId, role } =
-    useSelector(selectUser);
+  const { user } = useContext(AuthContext);
+  const { firstName, lastName, email, departmentId, role } = user || {};
 
   const department = Department.departmentList[departmentId - 1];
 

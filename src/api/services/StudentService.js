@@ -1,20 +1,6 @@
 import axios from 'axios';
 
 class StudentService {
-  /* static getStudentsByDepartmentIdAndSemester = async (
-    departmentId,
-    semester
-  ) => {
-    const response = await axios.get(ApiConstants.getAllStudentsByDepartmentIdAndSemester + `?deptId=${departmentId}&sem=${semester}`
-    )
-      .then(() => {
-        return response.data;
-      })
-      .catch((e) => {
-        throw console.error(e);
-      });
-  }; */
-
   static createStudentByAdmin = async (
     studentName,
     indexNumber,
@@ -58,7 +44,7 @@ class StudentService {
 
   static async deleteStudent(studentId) {
     try {
-      const response = await axios.delete(`/api/v1/auth/deleteuserbyuserid?userId=${studentId}`);
+      const response = await axios.delete(`/api/v1/admin/delete-user?userId=${studentId}`);
       if (response.status === 200) {
         return response.data;
       }
@@ -78,7 +64,7 @@ class StudentService {
     StudentRole
   ) {
     try {
-      const response = await axios.put('/api/v1/auth/updateuser', {
+      const response = await axios.put('/api/v1/auth/update-user', {
         userId: id,
         firstName: studentName,
         indexNumber: indexNo,
@@ -92,7 +78,6 @@ class StudentService {
         return response;
       }
     } catch (error) {
-      //throw new Error("Update Failed ", error);
       return error.response;
     }
   }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use, useContext } from 'react';
 import '../Staff/StaffA.css';
 import EventReportTable from '../../components/layout/AdminDashboardComponent/EventReportTable';
 import EventAttendanceTable from '../../components/layout/AdminDashboardComponent/EventAttendancetable';
@@ -8,11 +8,11 @@ import { BiSolidPrinter } from 'react-icons/bi';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import EventService from '../../api/services/EventService';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../redux/features/userSlice';
 import AttendanceService from '../../api/services/AttendanceService';
 import { toast } from 'react-toastify';
 import { CircularProgress } from '@mui/material';
+import { AuthContext } from '../../config/AuthProvider';
+
 const EventReport = () => {
   const [eventReportTable, setEventReportTable] = useState(true);
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -20,8 +20,7 @@ const EventReport = () => {
   const [search, setSearch] = useState('');
   const [selectedAttendance, setSelectedAttendance] = useState(null);
   const [attendanceList, setAttendanceList] = useState([]);
-
-  const user = useSelector(selectUser);
+  const { user } = useContext(AuthContext);
   const { userId } = user || {};
 
   useEffect(() => {

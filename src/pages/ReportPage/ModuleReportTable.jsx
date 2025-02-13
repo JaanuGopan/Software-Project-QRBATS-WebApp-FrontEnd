@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../redux/features/userSlice';
 import '../AdminDashboard/AdminDashboard.css';
 import { TbReportAnalytics } from 'react-icons/tb';
 import { GiTeacher } from 'react-icons/gi';
@@ -14,8 +12,6 @@ const ModuleReportTable = ({
   modulesReportList,
   handleModuleReportReload,
 }) => {
-  const user = useSelector(selectUser);
-  const { userId } = user || {};
   const [selectedModuleReport, setSelectedModuleReport] = useState(null);
 
   const handleModuleClick = (e) => {

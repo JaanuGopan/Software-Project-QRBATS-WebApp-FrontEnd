@@ -120,10 +120,7 @@ const StaffDashboard = () => {
         </div>
       )}
       {staffUpdatePopUpWindow && (
-        <div
-          handleClick={() => setStaffCreatePopUpWindow(false)}
-          className="staff-Create-Event-Dashboard"
-        >
+        <div className="staff-Create-Event-Dashboard">
           <UpdateStaff
             handleCloseUpdateStaffWindow={() => setStaffUpdatePopUpWindow(false)}
             selectedStaff={selectedStaff}

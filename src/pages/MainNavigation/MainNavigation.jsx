@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './MainNavigation.css';
 import '../StaffMainNavigation/StaffMainNavigation.css';
 import AdminDashboard from '../AdminDashboard/AdminDashboard';
-import { PiListDashesFill } from 'react-icons/pi';
 import StaffNavBar from '../../components/layout/StaffDashboardComponents/StaffNavBar';
 import AdminSideBar from '../../components/layout/AdminDashboardComponent/AdminSideBar';
 import StudentDashboard from '../Student/StudentDashboard';
@@ -10,7 +9,6 @@ import Setting from '../Setting/Setting';
 import StaffDashboard from '../Staff/StaffDashboard';
 import EventReport from '../Event/EventReport';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUser } from '../../redux/features/userSlice';
 import { useNavigate } from 'react-router-dom';
 import LecturerSideBar from '../../components/layout/AdminDashboardComponent/LecturerSideBar';
 import LecturerDashboard from '../LecturerDashboard/LecturerDashboard';
@@ -19,18 +17,17 @@ import EventLectureCreationDashboard from '../LecturerDashboard/EventLectureCrea
 import LocationService from '../../api/services/LocationService';
 import LogoutConfirmation from '../LogoutPage/LogoutConfirmation';
 import { resetSideBarIndex } from '../../redux/features/mainNavigationSlice';
-import Logout from '../../api/services/logoutService';
 import ReportPage from '../ReportPage/ReportPage';
 import LectureCreationPage from '../LactureCreation/LectureCreationPage';
 import { IoMenu } from 'react-icons/io5';
+import { AuthContext } from '../../config/AuthProvider';
 
 function MainNavigationPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector(selectUser);
   const sideBarIndex = useSelector((state) => state.mainNavigation);
   const locationList = useSelector((state) => state.locationList);
-
+  const { user ,logout } = useContext(AuthContext);
   const { role } = user || {};
 
   const [venuesList, setVenuesList] = useState([]);
@@ -43,12 +40,13 @@ function MainNavigationPage() {
   };
 
   const handleLogoutClick = () => {
-    Logout.handleLogout(dispatch); // Assuming handleLogout is asynchronous
     dispatch(resetSideBarIndex());
+    logout();
   };
 
   // If user is already logged in, redirect to mainNavigation
   useEffect(() => {
+    console.log("mainNavigationPage" ,user);
     if (!user) {
       navigate('/signin');
     }
