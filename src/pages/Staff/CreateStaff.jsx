@@ -4,7 +4,7 @@ import InputField from '../../components/textfields/InputBox/InputField';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import CreateUserService from '../../api/services/CreateUserService';
 import Select from 'react-select';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { CircularProgress } from '@mui/material';
 import Department from '../../utils/Department';
 
@@ -101,7 +101,6 @@ const CreateStaff = ({ handleCloseCreateStaffWindow, reloadStaffList }) => {
 
   return (
     <div className="staff-signup-main-container">
-      <ToastContainer />
       <div className="staff-update-title-close-button">
         <h3 className="staff-update-title">Create User</h3>
         <div className="staff-update-close-button" onClick={handleCloseCreateStaffWindow}>

@@ -1,7 +1,7 @@
 import '../Event/EventCreation/EventCreation.css';
 import React, { useState, useRef, useContext } from 'react';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
-import toast, { Toaster } from 'react-hot-toast';
+import { toast } from 'react-toastify';
 import QRCode from 'qrcode.react';
 import EventService from '../../api/services/EventService';
 import { CircularProgress } from '@mui/material';
@@ -21,9 +21,7 @@ const AdminUpdateEvent = ({
   const [eventEndTime, setEventEndTime] = useState(selectedEvent.eventEndTime);
   const [eventVenue, setEventVenue] = useState(selectedEvent.eventVenue);
   const [eventRole, setEventRole] = useState(selectedEvent.eventRole);
-  const [eventAssignedUserId, setEventAssignedUserId] = useState(selectedEvent.eventAssignedUserId);
 
-  const [showModuleNameInput, setShowModuleNameInput] = useState(true);
   const [title, setTitle] = useState('Event');
 
   const qrCodeRef = useRef(null);
@@ -121,7 +119,6 @@ const AdminUpdateEvent = ({
           </div>
         </div>
         <div className="eventCreation-input-field">
-          <Toaster />
           <form onSubmit={handleSubmit}>
             <div className="input-with-icon">
               <label className="date-label" htmlFor="eventDate">

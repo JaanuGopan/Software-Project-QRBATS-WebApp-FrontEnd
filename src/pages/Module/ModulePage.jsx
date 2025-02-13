@@ -7,7 +7,7 @@ import ModuleUpdate from './ModuleUpdate';
 import { RiDeleteBin5Fill } from 'react-icons/ri';
 import './ModulePage.css';
 import ModuleCreate from './ModuleCreate';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import WarningPopup from '../../components/warningPopup/WarningPopup';
 import { AuthContext } from '../../config/AuthProvider';
 
@@ -103,7 +103,6 @@ const ModulePage = () => {
 
   return (
     <div>
-      <ToastContainer />
       <div className="module-Dash">
         <div className="module-SearchEvent">
           <p className="module-mainHead">Modules</p>

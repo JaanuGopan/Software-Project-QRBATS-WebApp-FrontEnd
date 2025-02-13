@@ -8,7 +8,7 @@ import CreateStudentWindow from './CreateStudentWindow';
 import UpdateStudentWindow from './UpdateStudentWindow';
 import StudentService from '../../api/services/StudentService';
 import WarningPopup from '../../components/warningPopup/WarningPopup';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const StudentDashboard = () => {
   const [studentCreatePopUpWindow, setStudentCreatePopUpWindow] = useState(false);
@@ -51,7 +51,6 @@ const StudentDashboard = () => {
 
   return (
     <div className="student-Dash">
-      <ToastContainer />
       <div className="student-SearchEvent">
         <p className="student-mainHead">Student Details</p>
         <input

@@ -2,15 +2,11 @@ import React, { useState } from 'react';
 import './Signin.css';
 import LoginForm from '../../components/layout/LoginLayout/LoginForm';
 import Designer from '../../assets/Images/Designer.jpeg';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import ForgotPassword from '../ForgotPassword/ForgotPassword';
 import OtpVerification from '../ForgotPassword/OtpVerification';
 import ResetPassword from '../ForgotPassword/RestPassword';
-import { ToastContainer } from 'react-toastify';
-import { ArrowLeft } from '@mui/icons-material';
-import { BiLeftArrow, BiLeftArrowAlt } from 'react-icons/bi';
+import { BiLeftArrowAlt } from 'react-icons/bi';
 
 function Signin() {
   const navigate = useNavigate();
@@ -82,8 +78,6 @@ function Signin() {
 
   return (
     <div className="mainBackground">
-      <ToastContainer />
-
       <div className="ComponentBackground">
         <button onClick={handleBackButtonAction} className="back-button">
           <BiLeftArrowAlt size={'20px'} />

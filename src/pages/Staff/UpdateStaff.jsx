@@ -5,7 +5,7 @@ import InputField from '../../components/textfields/InputBox/InputField';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import Select from 'react-select';
 import UserService from '../../api/services/UserService';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { CircularProgress } from '@mui/material';
 import Department from '../../utils/Department';
 

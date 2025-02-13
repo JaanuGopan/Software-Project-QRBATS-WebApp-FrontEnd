@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const AuthContext = createContext(null);
 
@@ -15,17 +16,26 @@ const AuthProvider = ({ children }) => {
     const login = async (userName, password) => {
         try {
             const response = await axios.get(`/api/v1/auth/login?userName=${userName}&password=${password}`);
-            const { token, refreshToken, user } = response.data;
-            console.log(response.data);
+            if (response.status === 200) {
+                toast.success('Successfully LogIn.');
+                const { token, refreshToken, user } = response.data;
 
-            localStorage.setItem("authToken", token);
-            localStorage.setItem("refreshToken", refreshToken);
-            localStorage.setItem("user", JSON.stringify(user));
+                localStorage.setItem("authToken", token);
+                localStorage.setItem("refreshToken", refreshToken);
+                localStorage.setItem("user", JSON.stringify(user));
 
-            setAuthToken(token);
-            setUser(user);
+                setAuthToken(token);
+                setUser(user);
+            }
+            
         } catch (error) {
             console.error("Login failed:", error);
+            if(error.response.status === 400){
+                toast.error(error.response.data);
+            }
+            else{
+                toast.error('Login failed');
+            }
         }
     };
 

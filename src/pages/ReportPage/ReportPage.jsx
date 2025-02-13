@@ -10,7 +10,7 @@ import { BiSolidPrinter } from 'react-icons/bi';
 import LectureStudentsAttendanceTable from './LectureStudentsAttendanceTable';
 import LectureService from '../../api/services/LectureService';
 import AttendanceService from '../../api/services/AttendanceService';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import LectureWithDateReportTable from './LectureWithDateReportTable';
 import { CircularProgress } from '@mui/material';
 import { AuthContext } from '../../config/AuthProvider';
@@ -198,7 +198,6 @@ const ReportPage = () => {
 
   return (
     <div>
-      <ToastContainer />
       <div className="module-report-Dash">
         <div className="module-report-SearchEvent">
           <p className="module-report-mainHead">Modules Report</p>

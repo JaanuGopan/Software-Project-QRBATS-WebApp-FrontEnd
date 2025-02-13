@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BiUser } from 'react-icons/bi';
 import { MdPassword } from 'react-icons/md';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import UserService from '../../api/services/UserService';
 
 const ResetPassword = ({ handleCloseResetPassword, handleShowLogin, email }) => {

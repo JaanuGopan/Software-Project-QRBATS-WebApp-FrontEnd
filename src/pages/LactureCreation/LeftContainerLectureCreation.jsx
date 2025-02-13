@@ -113,7 +113,6 @@ const LeftContainerLectureCreation = ({
 
   return (
     <div className="left-container-lecture-creation">
-      {/* <ToastContainer /> */}
       <label>Module Name</label>
       <Select
         id="selectModule"

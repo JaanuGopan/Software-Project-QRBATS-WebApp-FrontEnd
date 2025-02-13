@@ -12,7 +12,7 @@ import LectureService from '../../api/services/LectureService';
 import LecturesTable from '../Lectures/LecturesTable';
 import LecturesEdit from '../Lectures/LecturesEdit';
 import LectureCreationPage from '../LactureCreation/LectureCreationPage';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import WarningPopup from '../../components/warningPopup/WarningPopup';
 import { Table, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import EventLectureTable from './EventLectureTable';
@@ -93,8 +93,6 @@ const LecturerDashboard = () => {
     }
   };
 
-  //=====================================================================================
-
   const handleGetLocationNameList = async () => {
     const response = await LocationService.getAllLocationNames();
     setVenuesList(response);
@@ -146,7 +144,6 @@ const LecturerDashboard = () => {
 
   return (
     <div className="admin-Dash">
-      <ToastContainer />
       <p className="mainHead">{'Lecturer Dashboard'}</p>
 
       <div className="lecturer-dashboard-toggle-buttons-search">

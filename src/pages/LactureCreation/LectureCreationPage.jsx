@@ -6,7 +6,6 @@ import { IoMdCloseCircleOutline } from 'react-icons/io';
 import LectureQRCodeWindow from './LectureQRCodeWindow';
 import AvailableLectureList from './AvailableLectureList';
 import LectureService from '../../api/services/LectureService';
-import { ToastContainer, toast } from 'react-toastify';
 import CircularProgress from '@mui/material/CircularProgress';
 import AvailableLectureListForModule from './AvailableLectureListForModule';
 import { AuthContext } from '../../config/AuthProvider';
@@ -101,7 +100,6 @@ const LectureCreationPage = ({
 
   return (
     <div className="lecture-creation-main-container">
-      {hideCloseButton && <ToastContainer />}
       {!hideCloseButton && (
         <div className="lecture-create-title-close-button">
           <h3 className="lecture-create-title">Create Lecture Time Table</h3>

@@ -20,17 +20,8 @@ const LoginForm = ({ handleShowForgotPassword }) => {
     e.preventDefault();
     try {
       setProcessing(true);
-      await login(userName, password);
-      toast.success('Successfully LogIn.');
+      const response = await login(userName, password);
       navigate('/mainNavigation');
-      /* if (response.status === 200) {
-        toast.success('Successfully LogIn.');
-        navigate('/mainNavigation');
-      } else if (response.status === 400) {
-        toast.error(response.data);
-      } else {
-        toast.error('Error In LogIn Service.');
-      } */
     } catch (error) {
       toast.error('Error In LogIn Service.');
       console.error('Login failed', error);

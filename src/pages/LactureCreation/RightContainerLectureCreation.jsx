@@ -11,7 +11,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { pink } from '@mui/material/colors';
 import axios from 'axios';
 import LocationService from '../../api/services/LocationService';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LectureService from '../../api/services/LectureService';
 import { Toaster } from 'react-hot-toast';
@@ -242,7 +242,6 @@ const RightContainerLectureCreation = ({
 
   return (
     <div className="right-container-lecture-creation">
-      {/* <ToastContainer /> */}
       <div className="right-container-lecture-creation-heading">
         <label>{`Module Code: ${moduleCode}`}</label>
       </div>

@@ -8,7 +8,7 @@ import AdminUpdateEvent from '../Event/AdminUpdateEvent';
 import AdminEventCreation from '../Event/AdminEventCreation';
 import LocationService from '../../api/services/LocationService';
 import EventService from '../../api/services/EventService';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import WarningPopup from '../../components/warningPopup/WarningPopup';
 import { AuthContext } from '../../config/AuthProvider';
 
@@ -86,7 +86,6 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-Dash">
-      <ToastContainer />
       <p className="mainHead">Admin Dashboard</p>
       <div className="mainInform"></div>
       <div className="SearchEvent">

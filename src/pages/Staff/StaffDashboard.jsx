@@ -7,7 +7,7 @@ import CreateStaff from './CreateStaff';
 import UpdateStaff from './UpdateStaff';
 import StaffTable from '../../components/layout/AdminDashboardComponent/StaffTable';
 import DeleteStaffService from '../../api/services/DeleteStaffService';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import WarningPopup from '../../components/warningPopup/WarningPopup';
 import AdminService from '../../api/services/AdminService';
 
@@ -69,7 +69,6 @@ const StaffDashboard = () => {
 
   return (
     <div className="staff-Dash">
-      <ToastContainer />
       <div className="staff-SearchEvent">
         <p className="staff-mainHead">Staff Details</p>
         <input
