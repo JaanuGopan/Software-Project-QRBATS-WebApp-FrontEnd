@@ -78,7 +78,9 @@ class ModuleService {
 
   static getAllModulesByDepartmentId = async (departmentId) => {
     try {
-      const response = await axios.get(`/api/v1/module/get-all-module-by-departmentId/${departmentId}`);
+      const response = await axios.get(
+        `/api/v1/module/get-all-module-by-departmentId/${departmentId}`
+      );
       if (response) {
         return response.data;
       }

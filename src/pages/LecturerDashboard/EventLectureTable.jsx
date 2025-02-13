@@ -29,40 +29,41 @@ const EventLectureTable = ({ lectureList, onLectureClick, search, handleUpdateLe
             <th>Edit</th>
           </tr>
         </thead>
-        {lecturesList
-            .filter(
-              (lecture) =>
-                lecture.eventName.toLowerCase().includes(search.toLowerCase()) ||
-                lecture.eventVenue.toLowerCase().includes(search.toLowerCase())
-            ).length > 0 ? <tbody>
-          {lecturesList
-            .filter(
-              (lecture) =>
-                lecture.eventName.toLowerCase().includes(search.toLowerCase()) ||
-                lecture.eventVenue.toLowerCase().includes(search.toLowerCase())
-            )
-            .map((lecture, index) => (
-              <tr
-                key={index}
-                onClick={() => handleLectureClick(lecture)}
-                className={selectedLecture === lecture ? 'selected-row' : 'event-row'}
-              >
-                <td>{index + 1}</td>
-                <td>{lecture.eventName}</td>
-                <td>{lecture.eventDate}</td>
-                <td>{lecture.eventVenue}</td>
-                <td>{lecture.eventTime}</td>
-                <td>{lecture.eventEndTime}</td>
-                <td>
-                  <button onClick={() => handleUpdateLecture(lecture)} className="EditButton">
-                    <FaEdit className="EditIcon" />
-                  </button>
-                </td>
-              </tr>
-            ))}
-        </tbody> : <tbody className='nodata'>
-          No Data Available
-        </tbody>}
+        {lecturesList.filter(
+          (lecture) =>
+            lecture.eventName.toLowerCase().includes(search.toLowerCase()) ||
+            lecture.eventVenue.toLowerCase().includes(search.toLowerCase())
+        ).length > 0 ? (
+          <tbody>
+            {lecturesList
+              .filter(
+                (lecture) =>
+                  lecture.eventName.toLowerCase().includes(search.toLowerCase()) ||
+                  lecture.eventVenue.toLowerCase().includes(search.toLowerCase())
+              )
+              .map((lecture, index) => (
+                <tr
+                  key={index}
+                  onClick={() => handleLectureClick(lecture)}
+                  className={selectedLecture === lecture ? 'selected-row' : 'event-row'}
+                >
+                  <td>{index + 1}</td>
+                  <td>{lecture.eventName}</td>
+                  <td>{lecture.eventDate}</td>
+                  <td>{lecture.eventVenue}</td>
+                  <td>{lecture.eventTime}</td>
+                  <td>{lecture.eventEndTime}</td>
+                  <td>
+                    <button onClick={() => handleUpdateLecture(lecture)} className="EditButton">
+                      <FaEdit className="EditIcon" />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        ) : (
+          <tbody className="nodata">No Data Available</tbody>
+        )}
       </table>
     </div>
   );

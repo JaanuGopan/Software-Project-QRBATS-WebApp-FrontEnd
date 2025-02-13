@@ -32,40 +32,41 @@ const EventAttendanceTable = ({ search, attendanceList, handleGeneratePDF }) => 
           </tr>
         </thead>
 
-        {attendance
-            .filter(
-              (attendance) =>
-                attendance.studentName.toLowerCase().includes(search.toLowerCase()) ||
-                attendance.indexNumber.toLowerCase().includes(search.toLowerCase())
-            ).length > 0 ? <tbody>
-          {attendance
-            .filter(
-              (attendance) =>
-                attendance.studentName.toLowerCase().includes(search.toLowerCase()) ||
-                attendance.indexNumber.toLowerCase().includes(search.toLowerCase())
-            )
-            .map((attendance, index) => (
-              <tr
-                key={index}
-                className={selectedAttendance === attendance ? 'selected-row' : 'event-row'}
-              >
-                <td>{index + 1}</td>
-                <td>{attendance.studentName}</td>
-                <td>{attendance.indexNumber}</td>
-                <td>{attendance.attendedDate}</td>
-                <td>{attendance.attendedTime}</td>
-                <td>
-                  {attendance.attendanceStatus ? (
-                    <FaCheck color="green" />
-                  ) : (
-                    <AiOutlineClose color="red" />
-                  )}
-                </td>
-              </tr>
-            ))}
-        </tbody> : <tbody className='nodata'>
-          No Data Available
-        </tbody>}
+        {attendance.filter(
+          (attendance) =>
+            attendance.studentName.toLowerCase().includes(search.toLowerCase()) ||
+            attendance.indexNumber.toLowerCase().includes(search.toLowerCase())
+        ).length > 0 ? (
+          <tbody>
+            {attendance
+              .filter(
+                (attendance) =>
+                  attendance.studentName.toLowerCase().includes(search.toLowerCase()) ||
+                  attendance.indexNumber.toLowerCase().includes(search.toLowerCase())
+              )
+              .map((attendance, index) => (
+                <tr
+                  key={index}
+                  className={selectedAttendance === attendance ? 'selected-row' : 'event-row'}
+                >
+                  <td>{index + 1}</td>
+                  <td>{attendance.studentName}</td>
+                  <td>{attendance.indexNumber}</td>
+                  <td>{attendance.attendedDate}</td>
+                  <td>{attendance.attendedTime}</td>
+                  <td>
+                    {attendance.attendanceStatus ? (
+                      <FaCheck color="green" />
+                    ) : (
+                      <AiOutlineClose color="red" />
+                    )}
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        ) : (
+          <tbody className="nodata">No Data Available</tbody>
+        )}
       </table>
     </div>
   );

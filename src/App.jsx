@@ -1,7 +1,7 @@
-import React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
-import AppRoutes from "./routes";
-import { ToastContainer } from "react-toastify";
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import AppRoutes from './routes';
+import { ToastContainer } from 'react-toastify';
 
 const App = () => {
   return (
@@ -18,7 +18,7 @@ const App = () => {
         theme="light"
         className="me-1"
       />
-     <AppRoutes />
+      <AppRoutes />
     </Router>
   );
 };

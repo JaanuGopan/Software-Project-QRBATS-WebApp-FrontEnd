@@ -11,11 +11,11 @@ import './api/config/axiosInterceptor';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-    <Provider store={store}>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
-    </Provider>
+  <Provider store={store}>
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  </Provider>
 );
 
 // Performance measurement

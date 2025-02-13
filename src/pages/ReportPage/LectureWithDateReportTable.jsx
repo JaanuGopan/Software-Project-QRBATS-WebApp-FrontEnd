@@ -41,61 +41,60 @@ const LectureWithDateReportTable = ({
             <th>View</th>
           </tr>
         </thead>
-        {lectureWithDateList
-            .filter(
-              (lecture) =>
-                (lecture.lectureName &&
-                  lecture.lectureName
-                    .toLowerCase()
-                    .includes(searchLectureWithDate.toLowerCase())) ||
-                (lecture.lectureDate &&
-                  lecture.lectureDate.toLowerCase().includes(searchLectureWithDate.toLowerCase()))
-            ).length > 0 ? <tbody>
-          {lectureWithDateList
-            .filter(
-              (lecture) =>
-                (lecture.lectureName &&
-                  lecture.lectureName
-                    .toLowerCase()
-                    .includes(searchLectureWithDate.toLowerCase())) ||
-                (lecture.lectureDate &&
-                  lecture.lectureDate.toLowerCase().includes(searchLectureWithDate.toLowerCase()))
-            )
-            .map((lecture, index) => (
-              <tr
-                key={index}
-                onClick={() => handleLectureReportClick(lecture)}
-                className={selectedLectureWithDate === lecture ? 'selected-row' : 'event-row'}
-              >
-                <td>{index + 1}</td>
-                <td>{`Lecture_${lecture.lectureDate}`}</td>
-                <td>{lecture.lectureModuleCode}</td>
-                <td>{lecture.lectureDate}</td>
-                <td>{lecture.lectureVenue}</td>
-                <td>{lecture.lectureStartTime}</td>
-                <td>{lecture.lectureEndTime}</td>
-                <td>
-                  {isLoading ? (
-                    <CircularProgress />
-                  ) : (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleViewReport(lecture);
-                        handleLectureReportClick(lecture);
-                      }}
-                      className="ViewButton"
-                    >
-                      <CiViewList className="EditIcon" />
-                      <p className="ViewButtonLabel">View Report</p>
-                    </button>
-                  )}
-                </td>
-              </tr>
-            ))}
-        </tbody> : <tbody className='nodata'>
-          No Data Available
-        </tbody>}
+        {lectureWithDateList.filter(
+          (lecture) =>
+            (lecture.lectureName &&
+              lecture.lectureName.toLowerCase().includes(searchLectureWithDate.toLowerCase())) ||
+            (lecture.lectureDate &&
+              lecture.lectureDate.toLowerCase().includes(searchLectureWithDate.toLowerCase()))
+        ).length > 0 ? (
+          <tbody>
+            {lectureWithDateList
+              .filter(
+                (lecture) =>
+                  (lecture.lectureName &&
+                    lecture.lectureName
+                      .toLowerCase()
+                      .includes(searchLectureWithDate.toLowerCase())) ||
+                  (lecture.lectureDate &&
+                    lecture.lectureDate.toLowerCase().includes(searchLectureWithDate.toLowerCase()))
+              )
+              .map((lecture, index) => (
+                <tr
+                  key={index}
+                  onClick={() => handleLectureReportClick(lecture)}
+                  className={selectedLectureWithDate === lecture ? 'selected-row' : 'event-row'}
+                >
+                  <td>{index + 1}</td>
+                  <td>{`Lecture_${lecture.lectureDate}`}</td>
+                  <td>{lecture.lectureModuleCode}</td>
+                  <td>{lecture.lectureDate}</td>
+                  <td>{lecture.lectureVenue}</td>
+                  <td>{lecture.lectureStartTime}</td>
+                  <td>{lecture.lectureEndTime}</td>
+                  <td>
+                    {isLoading ? (
+                      <CircularProgress />
+                    ) : (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleViewReport(lecture);
+                          handleLectureReportClick(lecture);
+                        }}
+                        className="ViewButton"
+                      >
+                        <CiViewList className="EditIcon" />
+                        <p className="ViewButtonLabel">View Report</p>
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        ) : (
+          <tbody className="nodata">No Data Available</tbody>
+        )}
       </table>
     </div>
   );

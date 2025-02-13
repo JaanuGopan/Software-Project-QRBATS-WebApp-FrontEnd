@@ -15,7 +15,9 @@ class LectureService {
 
   static getAllLecturesByUserId = async (userId) => {
     try {
-      const response = await axios.get(`/api/v1/lecture/get-all-lecture-by-userId?userId=${userId}`);
+      const response = await axios.get(
+        `/api/v1/lecture/get-all-lecture-by-userId?userId=${userId}`
+      );
       if (response.data) {
         return response.data;
       }

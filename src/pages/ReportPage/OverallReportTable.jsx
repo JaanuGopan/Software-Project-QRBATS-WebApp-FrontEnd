@@ -17,36 +17,37 @@ const OverallReportTable = ({ search, studentAttendanceDetails }) => {
           </tr>
         </thead>
 
-        {studentAttendanceDetails
-            .filter(
-              (details) =>
-                details.studentName.toLowerCase().includes(search.toLowerCase()) ||
-                details.indexNumber.toLowerCase().includes(search.toLowerCase())
-            ).length > 0 ? <tbody>
-          {studentAttendanceDetails
-            .filter(
-              (details) =>
-                details.studentName.toLowerCase().includes(search.toLowerCase()) ||
-                details.indexNumber.toLowerCase().includes(search.toLowerCase())
-            )
-            .map((details, index) => (
-              <tr
-                key={index}
-                className={selectedStudent === details ? 'selected-row' : 'event-row'}
-              >
-                <td>{index + 1}</td>
-                <td>{details.studentName}</td>
-                <td>{details.indexNumber}</td>
-                <td>
-                  {details.attendedLectureCount} /{' '}
-                  {details.attendedLectureCount + details.missedLectureCount}
-                </td>
-                <td>{Number(details.attendancePercentage).toFixed(2)} %</td>
-              </tr>
-            ))}
-        </tbody> : <tbody className='nodata'>
-          No Data Available
-        </tbody>}
+        {studentAttendanceDetails.filter(
+          (details) =>
+            details.studentName.toLowerCase().includes(search.toLowerCase()) ||
+            details.indexNumber.toLowerCase().includes(search.toLowerCase())
+        ).length > 0 ? (
+          <tbody>
+            {studentAttendanceDetails
+              .filter(
+                (details) =>
+                  details.studentName.toLowerCase().includes(search.toLowerCase()) ||
+                  details.indexNumber.toLowerCase().includes(search.toLowerCase())
+              )
+              .map((details, index) => (
+                <tr
+                  key={index}
+                  className={selectedStudent === details ? 'selected-row' : 'event-row'}
+                >
+                  <td>{index + 1}</td>
+                  <td>{details.studentName}</td>
+                  <td>{details.indexNumber}</td>
+                  <td>
+                    {details.attendedLectureCount} /{' '}
+                    {details.attendedLectureCount + details.missedLectureCount}
+                  </td>
+                  <td>{Number(details.attendancePercentage).toFixed(2)} %</td>
+                </tr>
+              ))}
+          </tbody>
+        ) : (
+          <tbody className="nodata">No Data Available</tbody>
+        )}
       </table>
     </div>
   );

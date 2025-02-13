@@ -7,9 +7,8 @@ import { AuthContext } from '../../../config/AuthProvider';
 
 const Navigator = () => {
   const navigate = useNavigate();
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const loginButtonLabel = user ? 'Dashboard' : 'Login';
-
 
   return (
     <div className="navigate">

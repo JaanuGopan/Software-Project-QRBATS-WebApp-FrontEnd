@@ -67,48 +67,49 @@ const EventReportTable = ({
             <th>View</th>
           </tr>
         </thead>
-        {events
-            .filter(
-              (event) =>
-                event.eventName.toLowerCase().includes(search.toLowerCase()) ||
-                event.eventVenue.toLowerCase().includes(search.toLowerCase())
-            ).length > 0 ? <tbody>
-          {events
-            .filter(
-              (event) =>
-                event.eventName.toLowerCase().includes(search.toLowerCase()) ||
-                event.eventVenue.toLowerCase().includes(search.toLowerCase())
-            )
-            .map((event, index) => (
-              <tr
-                key={index}
-                onClick={() => handleEventClick(event)}
-                className={selectedEvent === event ? 'selected-row' : 'event-row'}
-              >
-                <td>{index + 1}</td>
-                <td>{event.eventName}</td>
-                <td>{event.eventDate}</td>
-                <td>{event.eventVenue}</td>
-                <td>{event.eventTime}</td>
-                <td>{event.eventEndTime}</td>
-                <td>
-                  {loadingEventReport ? (
-                    <CircularProgress />
-                  ) : (
-                    <button
-                      onClick={() => handleViewEventAttendance(event.eventId)}
-                      className="ViewButton"
-                    >
-                      <CiViewList className="EditIcon" />
-                      <p className="ViewButtonLabel">View</p>
-                    </button>
-                  )}
-                </td>
-              </tr>
-            ))}
-        </tbody> : <tbody className='nodata'>
-          No Data Available
-        </tbody>}
+        {events.filter(
+          (event) =>
+            event.eventName.toLowerCase().includes(search.toLowerCase()) ||
+            event.eventVenue.toLowerCase().includes(search.toLowerCase())
+        ).length > 0 ? (
+          <tbody>
+            {events
+              .filter(
+                (event) =>
+                  event.eventName.toLowerCase().includes(search.toLowerCase()) ||
+                  event.eventVenue.toLowerCase().includes(search.toLowerCase())
+              )
+              .map((event, index) => (
+                <tr
+                  key={index}
+                  onClick={() => handleEventClick(event)}
+                  className={selectedEvent === event ? 'selected-row' : 'event-row'}
+                >
+                  <td>{index + 1}</td>
+                  <td>{event.eventName}</td>
+                  <td>{event.eventDate}</td>
+                  <td>{event.eventVenue}</td>
+                  <td>{event.eventTime}</td>
+                  <td>{event.eventEndTime}</td>
+                  <td>
+                    {loadingEventReport ? (
+                      <CircularProgress />
+                    ) : (
+                      <button
+                        onClick={() => handleViewEventAttendance(event.eventId)}
+                        className="ViewButton"
+                      >
+                        <CiViewList className="EditIcon" />
+                        <p className="ViewButtonLabel">View</p>
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        ) : (
+          <tbody className="nodata">No Data Available</tbody>
+        )}
       </table>
     </div>
   );

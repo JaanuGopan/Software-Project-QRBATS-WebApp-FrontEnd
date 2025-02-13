@@ -27,7 +27,7 @@ function MainNavigationPage() {
   const dispatch = useDispatch();
   const sideBarIndex = useSelector((state) => state.mainNavigation);
   const locationList = useSelector((state) => state.locationList);
-  const { user ,logout } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
   const { role } = user || {};
 
   const [venuesList, setVenuesList] = useState([]);
@@ -46,7 +46,7 @@ function MainNavigationPage() {
 
   // If user is already logged in, redirect to mainNavigation
   useEffect(() => {
-    console.log("mainNavigationPage" ,user);
+    console.log('mainNavigationPage', user);
     if (!user) {
       navigate('/signin');
     }

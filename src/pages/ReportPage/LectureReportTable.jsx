@@ -41,49 +41,50 @@ const LectureReportTable = ({
             <th>View</th>
           </tr>
         </thead>
-        {lecturesReportList
-            .filter(
-              (lecture) =>
-                lecture.lectureName.toLowerCase().includes(searchLecturesReport.toLowerCase()) ||
-                lecture.lectureDay.toLowerCase().includes(searchLecturesReport.toLowerCase())
-            ).length > 0 ? <tbody>
-          {lecturesReportList
-            .filter(
-              (lecture) =>
-                lecture.lectureName.toLowerCase().includes(searchLecturesReport.toLowerCase()) ||
-                lecture.lectureDay.toLowerCase().includes(searchLecturesReport.toLowerCase())
-            )
-            .map((lecture, index) => (
-              <tr
-                key={index}
-                onClick={() => handleLectureReportClick(lecture)}
-                className={selectedLectureReport === lecture ? 'selected-row' : 'event-row'}
-              >
-                <td>{index + 1}</td>
-                <td>{lecture.lectureName}</td>
-                <td>{lecture.lectureModuleCode}</td>
-                <td>{lecture.lectureDay}</td>
-                <td>{lecture.lectureVenue}</td>
-                <td>{lecture.lectureStartTime}</td>
-                <td>{lecture.lectureEndTime}</td>
-                <td>
-                  {isLoading ? (
-                    <CircularProgress />
-                  ) : (
-                    <button
-                      onClick={() => OpenLectureWithDateWindow(lecture.lectureId)}
-                      className="ViewButton"
-                    >
-                      <CiViewList className="EditIcon" />
-                      <p className="ViewButtonLabel">View Lecture</p>
-                    </button>
-                  )}
-                </td>
-              </tr>
-            ))}
-        </tbody> : <tbody className='nodata'>
-          No Data Available
-        </tbody>}
+        {lecturesReportList.filter(
+          (lecture) =>
+            lecture.lectureName.toLowerCase().includes(searchLecturesReport.toLowerCase()) ||
+            lecture.lectureDay.toLowerCase().includes(searchLecturesReport.toLowerCase())
+        ).length > 0 ? (
+          <tbody>
+            {lecturesReportList
+              .filter(
+                (lecture) =>
+                  lecture.lectureName.toLowerCase().includes(searchLecturesReport.toLowerCase()) ||
+                  lecture.lectureDay.toLowerCase().includes(searchLecturesReport.toLowerCase())
+              )
+              .map((lecture, index) => (
+                <tr
+                  key={index}
+                  onClick={() => handleLectureReportClick(lecture)}
+                  className={selectedLectureReport === lecture ? 'selected-row' : 'event-row'}
+                >
+                  <td>{index + 1}</td>
+                  <td>{lecture.lectureName}</td>
+                  <td>{lecture.lectureModuleCode}</td>
+                  <td>{lecture.lectureDay}</td>
+                  <td>{lecture.lectureVenue}</td>
+                  <td>{lecture.lectureStartTime}</td>
+                  <td>{lecture.lectureEndTime}</td>
+                  <td>
+                    {isLoading ? (
+                      <CircularProgress />
+                    ) : (
+                      <button
+                        onClick={() => OpenLectureWithDateWindow(lecture.lectureId)}
+                        className="ViewButton"
+                      >
+                        <CiViewList className="EditIcon" />
+                        <p className="ViewButtonLabel">View Lecture</p>
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        ) : (
+          <tbody className="nodata">No Data Available</tbody>
+        )}
       </table>
     </div>
   );

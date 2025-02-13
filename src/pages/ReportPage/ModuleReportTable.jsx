@@ -54,65 +54,66 @@ const ModuleReportTable = ({
             <th>Lectures Report</th>
           </tr>
         </thead>
-        {modulesReportList
-            .filter(
-              (module) =>
-                module.moduleName.toLowerCase().includes(searchModuleReport.toLowerCase()) ||
-                module.moduleCode.toLowerCase().includes(searchModuleReport.toLowerCase())
-            ).length > 0 ? <tbody>
-          {modulesReportList
-            .filter(
-              (module) =>
-                module.moduleName.toLowerCase().includes(searchModuleReport.toLowerCase()) ||
-                module.moduleCode.toLowerCase().includes(searchModuleReport.toLowerCase())
-            )
-            .map((module, index) => (
-              <tr
-                key={index}
-                onClick={() => handleModuleClick(module)}
-                className={selectedModuleReport === module ? 'selected-row' : 'event-row'}
-              >
-                <td>{index + 1}</td>
-                <td>{module.moduleName}</td>
-                <td>{module.moduleCode}</td>
-                <td>{module.semester}</td>
-                <td>
-                  {loadingOverallReport ? (
-                    <CircularProgress />
-                  ) : (
-                    <button
-                      onClick={() => {
-                        onModuleReportClick(module);
-                        handleOpenOverallReport(module.moduleId);
-                      }}
-                      className="ViewButton"
-                    >
-                      <TbReportAnalytics className="EditIcon" />
-                      <p className="ViewButtonLabel">Overall Report</p>
-                    </button>
-                  )}
-                </td>
-                <td>
-                  {loadingLecturesReport ? (
-                    <CircularProgress />
-                  ) : (
-                    <button
-                      onClick={() => {
-                        onModuleReportClick(module);
-                        handleOpenLecturesReport(module.moduleCode);
-                      }}
-                      className="ViewButton"
-                    >
-                      <GiTeacher className="EditIcon" />
-                      <p className="ViewButtonLabel">Lectures Report</p>
-                    </button>
-                  )}
-                </td>
-              </tr>
-            ))}
-        </tbody> : <tbody className='nodata'>
-          No Data Available
-        </tbody>}
+        {modulesReportList.filter(
+          (module) =>
+            module.moduleName.toLowerCase().includes(searchModuleReport.toLowerCase()) ||
+            module.moduleCode.toLowerCase().includes(searchModuleReport.toLowerCase())
+        ).length > 0 ? (
+          <tbody>
+            {modulesReportList
+              .filter(
+                (module) =>
+                  module.moduleName.toLowerCase().includes(searchModuleReport.toLowerCase()) ||
+                  module.moduleCode.toLowerCase().includes(searchModuleReport.toLowerCase())
+              )
+              .map((module, index) => (
+                <tr
+                  key={index}
+                  onClick={() => handleModuleClick(module)}
+                  className={selectedModuleReport === module ? 'selected-row' : 'event-row'}
+                >
+                  <td>{index + 1}</td>
+                  <td>{module.moduleName}</td>
+                  <td>{module.moduleCode}</td>
+                  <td>{module.semester}</td>
+                  <td>
+                    {loadingOverallReport ? (
+                      <CircularProgress />
+                    ) : (
+                      <button
+                        onClick={() => {
+                          onModuleReportClick(module);
+                          handleOpenOverallReport(module.moduleId);
+                        }}
+                        className="ViewButton"
+                      >
+                        <TbReportAnalytics className="EditIcon" />
+                        <p className="ViewButtonLabel">Overall Report</p>
+                      </button>
+                    )}
+                  </td>
+                  <td>
+                    {loadingLecturesReport ? (
+                      <CircularProgress />
+                    ) : (
+                      <button
+                        onClick={() => {
+                          onModuleReportClick(module);
+                          handleOpenLecturesReport(module.moduleCode);
+                        }}
+                        className="ViewButton"
+                      >
+                        <GiTeacher className="EditIcon" />
+                        <p className="ViewButtonLabel">Lectures Report</p>
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        ) : (
+          <tbody className="nodata">No Data Available</tbody>
+        )}
       </table>
     </div>
   );

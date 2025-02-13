@@ -53,9 +53,9 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
           value: res.data.departmentId,
           label: Department.departmentList[res.data.departmentId - 1],
         });
-      })
+      });
     }
-  },[])
+  }, []);
 
   const handleShowOldPassword = (event) => {
     setShowOldPassword(event.target.checked);

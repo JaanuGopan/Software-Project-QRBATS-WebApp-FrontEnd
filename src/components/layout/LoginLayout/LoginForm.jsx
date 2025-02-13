@@ -15,7 +15,6 @@ const LoginForm = ({ handleShowForgotPassword }) => {
 
   const [processing, setProcessing] = useState(false);
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
