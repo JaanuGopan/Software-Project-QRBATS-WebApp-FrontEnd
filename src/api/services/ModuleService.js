@@ -6,7 +6,7 @@ class ModuleService {
       const response = await axios.get(`/api/v1/module/get-module-by-lecturerId/${userId}`);
       return response.data;
     } catch (error) {
-      console.log('Fail to get modules. ' + error);
+      console.error('Fail to get modules. ' + error);
     }
   };
 
@@ -29,9 +29,9 @@ class ModuleService {
       });
       return response;
     } catch (error) {
-      console.log('Fail to create modules. ' + error);
+      console.error('Fail to create modules. ' + error);
       if (error.response.status === 400) {
-        console.log('Error Response is ', error.response);
+        console.error('Error Response is ', error.response);
         return error.response;
       }
     }
@@ -60,7 +60,7 @@ class ModuleService {
     } catch (error) {
       console.error('Error In Updating Module.', error);
       if (error.response.status === 400) {
-        console.log('Error Response is ', error.response);
+        console.error('Error Response is ', error.response);
         return error.response;
       }
     }
@@ -85,7 +85,7 @@ class ModuleService {
         return response.data;
       }
     } catch (e) {
-      console.log('Error in getting modules ' + e);
+      console.error('Error in getting modules ' + e);
     }
   };
 }

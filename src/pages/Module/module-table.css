@@ -1,0 +1,37 @@
+.module-table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+  }
+  
+.sticky-header th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1);
+}
+  
+  
+  .module-table-table-header-row > th {
+    vertical-align: middle;
+  }
+  
+  .module-table-row {
+    cursor: pointer;
+  }
+  
+  .module-table-row  > td {
+    vertical-align: middle;
+  }
+  
+  .module-table-selected-row > td {
+    background-color: var(--bs-table-hover-bg) !important;
+    font-weight: bold;
+  }
+  
+  .table-action-icons {
+    width: 90px;
+  }

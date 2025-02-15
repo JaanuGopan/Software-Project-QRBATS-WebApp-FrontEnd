@@ -1,14 +1,14 @@
+import CircularProgress from '@mui/material/CircularProgress';
 import React, { useContext, useState } from 'react';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
+import LectureService from '../../api/services/LectureService';
+import { AuthContext } from '../../config/AuthProvider';
+import AvailableLectureList from './AvailableLectureList';
+import AvailableLectureListForModule from './AvailableLectureListForModule';
 import './LectureCreation.css';
+import LectureQRCodeWindow from './LectureQRCodeWindow';
 import LeftContainerLectureCreation from './LeftContainerLectureCreation';
 import RightContainerLectureCreation from './RightContainerLectureCreation';
-import { IoMdCloseCircleOutline } from 'react-icons/io';
-import LectureQRCodeWindow from './LectureQRCodeWindow';
-import AvailableLectureList from './AvailableLectureList';
-import LectureService from '../../api/services/LectureService';
-import CircularProgress from '@mui/material/CircularProgress';
-import AvailableLectureListForModule from './AvailableLectureListForModule';
-import { AuthContext } from '../../config/AuthProvider';
 
 const LectureCreationPage = ({
   handleCloseCreateLectureWindow,
@@ -83,7 +83,6 @@ const LectureCreationPage = ({
 
   const handleLectureShowQRCode = (moduleLectures) => {
     setCreatedLectureDetails(moduleLectures);
-    console.log('Created Lecture List is : ', moduleLectures);
     setShowQRCodeWindow(true);
   };
 

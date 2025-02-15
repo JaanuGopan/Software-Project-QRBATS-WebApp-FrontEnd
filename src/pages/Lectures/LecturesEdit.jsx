@@ -1,13 +1,13 @@
-import '../Event/EventCreation/EventCreation.css';
-import './Lectures.css';
-import React, { useState, useRef } from 'react';
+import { CircularProgress } from '@mui/material';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { IoMdCloseCircleOutline } from 'react-icons/io';
-import toast, { Toaster } from 'react-hot-toast';
 import QRCode from 'qrcode.react';
+import React, { useRef, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
 import LectureService from '../../api/services/LectureService';
-import { CircularProgress } from '@mui/material';
+import '../Event/EventCreation/EventCreation.css';
+import './Lectures.css';
 
 const LecturesEdit = ({
   handleCloseUpdateLectureWindow,
@@ -53,7 +53,6 @@ const LecturesEdit = ({
         lectureEndTime
       );
       if (response.status === 200) {
-        console.log(response);
         reloadLecturesList();
         notifySuccess();
       } else {

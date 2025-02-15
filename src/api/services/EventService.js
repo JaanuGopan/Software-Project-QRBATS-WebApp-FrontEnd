@@ -83,14 +83,13 @@ class EventService {
       const response = await axios.get(`/api/v1/event/get-event-by-userId?userId=${userId}`);
       return response.data;
     } catch (error) {
-      console.log('Event Get Failed ', error);
+      console.error('Event Get Failed ', error);
     }
   }
 
   static async deleteEvent(eventId) {
     try {
       const response = await axios.delete(`/api/v1/event/delete-by-eventId/${eventId}`);
-      console.log('deleted Successfully..');
       if (response.status === 200) {
         return response;
       }
@@ -107,7 +106,6 @@ class EventService {
         `/api/v1/event/get-all-event-by-module-code?moduleCode=${moduleCode}`
       );
       if (response.data) {
-        console.log(response.data);
         return response.data;
       }
     } catch (error) {

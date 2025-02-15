@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import '../../pages/AdminDashboard/AdminDashboard.css';
+import React, { useState } from 'react';
+import './report-table.css';
 
 const OverallReportTable = ({ search, studentAttendanceDetails }) => {
   const [selectedStudent, setSelectedStudent] = useState(null);
 
   return (
-    <div className="tableDesign">
-      <table className="student-tableArrangement">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th className="expand">Student Name</th>
-            <th>Registration Number</th>
-            <th>Attended Lecture</th>
-            <th>Attendance Percentage</th>
+    <div className="report-table-container">
+      <table className="table table-hover">
+        <thead className="sticky-header">
+          <tr className="report-table-table-header-row">
+            <th className="col">No</th>
+            <th className="col">Student Name</th>
+            <th className="col">Registration Number</th>
+            <th className="col">Attended Lecture</th>
+            <th className="col">Attendance Percentage</th>
           </tr>
         </thead>
 
@@ -32,7 +32,10 @@ const OverallReportTable = ({ search, studentAttendanceDetails }) => {
               .map((details, index) => (
                 <tr
                   key={index}
-                  className={selectedStudent === details ? 'selected-row' : 'event-row'}
+                  className={
+                    'report-table-row' +
+                    (selectedStudent === details ? ' report-table-selected-row' : '')
+                  }
                 >
                   <td>{index + 1}</td>
                   <td>{details.studentName}</td>
@@ -41,7 +44,7 @@ const OverallReportTable = ({ search, studentAttendanceDetails }) => {
                     {details.attendedLectureCount} /{' '}
                     {details.attendedLectureCount + details.missedLectureCount}
                   </td>
-                  <td>{Number(details.attendancePercentage).toFixed(2)} %</td>
+                  <td>{Number(details.attendancePercentage).toFixed(2) || 0} %</td>
                 </tr>
               ))}
           </tbody>

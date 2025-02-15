@@ -1,17 +1,18 @@
-import React, { useState, useEffect, use, useContext } from 'react';
-import '../Staff/StaffA.css';
-import EventReportTable from '../../components/layout/AdminDashboardComponent/EventReportTable';
-import EventAttendanceTable from '../../components/layout/AdminDashboardComponent/EventAttendancetable';
-import NormalButton from '../../components/layout/AdminDashboardComponent/NormalButton';
-import { MdArrowBack } from 'react-icons/md';
-import { BiSolidPrinter } from 'react-icons/bi';
+import { CircularProgress } from '@mui/material';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import EventService from '../../api/services/EventService';
-import AttendanceService from '../../api/services/AttendanceService';
+import React, { useContext, useEffect, useState } from 'react';
+import { BiSolidPrinter } from 'react-icons/bi';
+import { MdArrowBack } from 'react-icons/md';
 import { toast } from 'react-toastify';
-import { CircularProgress } from '@mui/material';
+import AttendanceService from '../../api/services/AttendanceService';
+import EventService from '../../api/services/EventService';
+import AppContentCard from '../../components/app-content-card/app-content-card';
+import NormalButton from '../../components/buttons/NormalButton';
+import EventAttendanceTable from '../../components/layout/AdminDashboardComponent/event-attendance-table';
+import EventReportTable from '../../components/layout/AdminDashboardComponent/event-report-table';
 import { AuthContext } from '../../config/AuthProvider';
+import '../Staff/StaffA.css';
 
 const EventReport = () => {
   const [eventReportTable, setEventReportTable] = useState(true);
@@ -29,8 +30,6 @@ const EventReport = () => {
 
   const handleEventClick = (event) => {
     setSelectedEvent(event);
-    // Do whatever you want with the selected event data
-    console.log('Selected Event:', event);
   };
 
   const handleReloadEventList = async () => {
@@ -83,73 +82,82 @@ const EventReport = () => {
   };
 
   return (
-    <div className="staff-Dash">
-      {eventReportTable ? (
-        <div>
-          <div className="staff-SearchEvent">
-            <p className="staff-mainHead">All Event Details</p>
-            <input
-              type="text"
-              placeholder="Search..."
-              style={{
-                width: '150px',
-                padding: '3px 40px',
-                border: '0.5px solid black',
-                borderRadius: '5px',
-                textAlign: 'center',
-              }}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
-          <div className="staff-EventList">
-            <EventReportTable
-              handleOpenReportWindow={() => setEventReportTable(false)}
-              search={search}
-              onEventClick={handleEventClick}
-              eventList={eventList}
-              attendedStudentList={handleAttendanceList}
-            />
-          </div>
-        </div>
-      ) : (
-        <div>
-          <div className="staff-SearchEvent">
-            <p className="staff-mainHead">Event Attendance Details</p>
-            <input
-              type="text"
-              placeholder="Search..."
-              style={{
-                width: '150px',
-                padding: '3px 40px',
-                border: '0.5px solid black',
-                borderRadius: '5px',
-                textAlign: 'center',
-              }}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
-
-          <div id="table-to-print" className="staff-EventList">
-            <EventAttendanceTable search={search} attendanceList={attendanceList} />
-            <div className="staff-List-Buttons">
-              <NormalButton
-                handleClick={() => setEventReportTable(true)}
-                title={'Back'}
-                titlewithiconicon={<MdArrowBack className="staff-buttonIcon" />}
-              />
-              {loadingDownloadReport ? (
-                <CircularProgress />
-              ) : (
-                <NormalButton
-                  title={'Print'}
-                  handleClick={() => handleDownloadAttendanceEventReport(selectedEvent.eventId)}
-                  titlewithiconicon={<BiSolidPrinter className="staff-buttonIcon" />}
+    <div className="row">
+      <div className="col">
+        {eventReportTable ? (
+          <>
+            <div className="row py-2 justify-content-between align-items-center">
+              <div className="col-auto fs-3 fw-bold ms-4">All Event Details</div>
+              <div className="col-auto">
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  style={{
+                    width: '150px',
+                    padding: '3px 40px',
+                    border: '0.5px solid black',
+                    borderRadius: '5px',
+                    textAlign: 'center',
+                  }}
+                  onChange={(e) => setSearch(e.target.value)}
                 />
-              )}
+              </div>
             </div>
-          </div>
-        </div>
-      )}
+            <AppContentCard>
+              <EventReportTable
+                handleOpenReportWindow={() => setEventReportTable(false)}
+                search={search}
+                onEventClick={handleEventClick}
+                eventList={eventList}
+                attendedStudentList={handleAttendanceList}
+              />
+            </AppContentCard>
+          </>
+        ) : (
+          <>
+            <div className="row py-2 justify-content-between align-items-center">
+              <div className="col-auto fs-3 fw-bold ms-4">Event Attendance Details</div>
+              <div className="col-auto">
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  style={{
+                    width: '150px',
+                    padding: '3px 40px',
+                    border: '0.5px solid black',
+                    borderRadius: '5px',
+                    textAlign: 'center',
+                  }}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </div>
+            </div>
+            <AppContentCard hasBottomContents={true}>
+              <EventAttendanceTable search={search} attendanceList={attendanceList} />
+            </AppContentCard>
+            <div className="row px-5 justify-content-around">
+              <div className="col-auto">
+                <NormalButton
+                  handleClick={() => setEventReportTable(true)}
+                  title={'Back'}
+                  icon={<MdArrowBack className="staff-buttonIcon" />}
+                />
+              </div>
+              <div className="col-auto">
+                {loadingDownloadReport ? (
+                  <CircularProgress />
+                ) : (
+                  <NormalButton
+                    title={'Print'}
+                    handleClick={() => handleDownloadAttendanceEventReport(selectedEvent.eventId)}
+                    icon={<BiSolidPrinter className="staff-buttonIcon" />}
+                  />
+                )}
+              </div>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 };

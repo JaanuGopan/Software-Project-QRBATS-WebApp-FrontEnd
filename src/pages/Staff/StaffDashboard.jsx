@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import './StaffA.css';
-import NormalButton from '../../components/layout/AdminDashboardComponent/NormalButton';
-import { MdCreateNewFolder } from 'react-icons/md';
-import { RiDeleteBin5Fill } from 'react-icons/ri';
-import CreateStaff from './CreateStaff';
-import UpdateStaff from './UpdateStaff';
-import StaffTable from '../../components/layout/AdminDashboardComponent/StaffTable';
-import DeleteStaffService from '../../api/services/DeleteStaffService';
+import React, { useEffect, useState } from 'react';
+import { FaPlus } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-import WarningPopup from '../../components/warningPopup/WarningPopup';
 import AdminService from '../../api/services/AdminService';
+import DeleteStaffService from '../../api/services/DeleteStaffService';
+import AppContentCard from '../../components/app-content-card/app-content-card';
+import NormalButton from '../../components/buttons/NormalButton';
+import StaffTable from '../../components/layout/AdminDashboardComponent/staff-table';
+import WarningPopup from '../../components/warningPopup/WarningPopup';
+import CreateStaff from './CreateStaff';
+import './StaffA.css';
+import UpdateStaff from './UpdateStaff';
 
 const StaffDashboard = () => {
   const [staffCreatePopUpWindow, setStaffCreatePopUpWindow] = useState(false);
@@ -25,8 +25,6 @@ const StaffDashboard = () => {
 
   const handleEventClick = (staffs) => {
     setSelectedStaff(staffs);
-    // Do whatever you want with the selected event data
-    console.log('Selected Staffs:', staffs);
   };
 
   const [showDeletePopUpWindow, setShowDeletePopUpWindow] = useState(false);
@@ -49,7 +47,7 @@ const StaffDashboard = () => {
         toast.error(response.data);
       }
     } catch (error) {
-      console.log('error ' + error);
+      console.error('error ' + error);
       toast.error('Error In Staff Deletion. ');
     } finally {
       setProcessingDeleteStaff(false);
@@ -68,76 +66,74 @@ const StaffDashboard = () => {
   };
 
   return (
-    <div className="staff-Dash">
-      <div className="staff-SearchEvent">
-        <p className="staff-mainHead">Staff Details</p>
-        <input
-          type="text"
-          placeholder="Search..."
-          style={{
-            width: '150px',
-            padding: '3px 40px',
-            border: '0.5px solid black',
-            borderRadius: '5px',
-            textAlign: 'center',
-          }}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+    <div className="row">
+      <div className="col">
+        <div className="row my-2 align-items-center justify-content-between">
+          <div className="col-auto ms-4 fs-3 fw-bold">Staff Details</div>
+          <div className="col-auto">
+            <div className="row align-items-center">
+              <div className="col-auto">
+                <NormalButton
+                  title={'Create Staff'}
+                  handleClick={() => setStaffCreatePopUpWindow(true)}
+                  icon={<FaPlus className="buttonIcon" />}
+                />
+              </div>
+              <div className="col-auto">
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  style={{
+                    width: '150px',
+                    padding: '3px 40px',
+                    border: '0.5px solid black',
+                    borderRadius: '5px',
+                    textAlign: 'center',
+                  }}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <AppContentCard>
+          <StaffTable
+            search={search}
+            handleUpdateStaff={() => setStaffUpdatePopUpWindow(true)}
+            handleDeleteStaff={() => setShowDeletePopUpWindow(true)}
+            onStaffClick={handleEventClick}
+            staffsList={staffsList}
+          />
+        </AppContentCard>
+        {staffCreatePopUpWindow && (
+          <div className="staff-Create-Event-Dashboard">
+            <CreateStaff
+              handleCloseCreateStaffWindow={() => setStaffCreatePopUpWindow(false)}
+              reloadStaffList={handleReloadStaffList}
+            />
+          </div>
+        )}
+        {staffUpdatePopUpWindow && (
+          <div className="staff-Create-Event-Dashboard">
+            <UpdateStaff
+              handleCloseUpdateStaffWindow={() => setStaffUpdatePopUpWindow(false)}
+              selectedStaff={selectedStaff}
+              handleReloadStaffList={handleReloadStaffList}
+            />
+          </div>
+        )}
+        {showDeletePopUpWindow && selectedStaff && (
+          <div className="student-creation-delete-popup-window">
+            <WarningPopup
+              handleOk={handleDelete}
+              handleCloseWarningWindow={() => setShowDeletePopUpWindow(false)}
+              buttonText={'Delete'}
+              titleText={'Are you sure you want to delete this staff?'}
+              processing={processingDeleteStaff}
+            />
+          </div>
+        )}
       </div>
-      <div className="staff-EventList">
-        <StaffTable
-          search={search}
-          handleUpdateStaff={() => setStaffUpdatePopUpWindow(true)}
-          onStaffClick={handleEventClick}
-          staffsList={staffsList}
-        />
-        <div className="staff-List-Buttons">
-          <NormalButton
-            handleClick={() => setStaffCreatePopUpWindow(true)}
-            title={'Create'}
-            titlewithiconicon={<MdCreateNewFolder className="staff-buttonIcon" />}
-          />
-          <NormalButton
-            title={'Delete'}
-            handleClick={() => {
-              if (selectedStaff == null) {
-                toast.error('Please Select Staff. ');
-              } else {
-                setShowDeletePopUpWindow(true);
-              }
-            }}
-            titlewithiconicon={<RiDeleteBin5Fill className="staff-buttonIcon" />}
-          />
-        </div>
-      </div>
-      {staffCreatePopUpWindow && (
-        <div className="staff-Create-Event-Dashboard">
-          <CreateStaff
-            handleCloseCreateStaffWindow={() => setStaffCreatePopUpWindow(false)}
-            reloadStaffList={handleReloadStaffList}
-          />
-        </div>
-      )}
-      {staffUpdatePopUpWindow && (
-        <div className="staff-Create-Event-Dashboard">
-          <UpdateStaff
-            handleCloseUpdateStaffWindow={() => setStaffUpdatePopUpWindow(false)}
-            selectedStaff={selectedStaff}
-            handleReloadStaffList={handleReloadStaffList}
-          />
-        </div>
-      )}
-      {showDeletePopUpWindow && selectedStaff && (
-        <div className="student-creation-delete-popup-window">
-          <WarningPopup
-            handleOk={handleDelete}
-            handleCloseWarningWindow={() => setShowDeletePopUpWindow(false)}
-            buttonText={'Delete'}
-            titleText={'Are you sure you want to delete this staff?'}
-            processing={processingDeleteStaff}
-          />
-        </div>
-      )}
     </div>
   );
 };

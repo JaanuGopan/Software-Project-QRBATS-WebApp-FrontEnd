@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../../pages/AdminDashboard/AdminDashboard.css';
+import 'src/pages/dashboard/AdminDashboard/AdminDashboard.jsx';
 
 const TotalCount = ({ total, countIcon, countTitle }) => {
   return (

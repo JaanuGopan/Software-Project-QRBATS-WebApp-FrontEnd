@@ -1,14 +1,13 @@
 import React from 'react';
-import { IoMdCloseCircleOutline } from 'react-icons/io';
-import { IoSettings } from 'react-icons/io5';
-import { FaUserTie } from 'react-icons/fa';
-import { PiStudentBold } from 'react-icons/pi';
-import { MdOutlineEventNote } from 'react-icons/md';
-import { IoLogOut } from 'react-icons/io5';
-import '../../../pages/StaffMainNavigation/StaffMainNavigation.css';
-import logo from '../../../assets/Images/logo/logo_white.png';
-import Sidebarbutton from './Sidebarbutton';
 import { AiFillDashboard } from 'react-icons/ai';
+import { FaUserTie } from 'react-icons/fa';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
+import { IoLogOut, IoSettings } from 'react-icons/io5';
+import { MdOutlineEventNote } from 'react-icons/md';
+import { PiStudentBold } from 'react-icons/pi';
+import logo from '../../../assets/Images/logo/logo_white.png';
+import '../../../pages/StaffMainNavigation/StaffMainNavigation.css';
+import Sidebarbutton from './Sidebarbutton';
 
 const StaffSideBar = ({ handleclose }) => {
   return (
@@ -18,24 +17,12 @@ const StaffSideBar = ({ handleclose }) => {
       </div>
       <img src={logo} className="Sidebarlogo" />
       <div className="SideBar">
-        <Sidebarbutton
-          title={'Dashboard'}
-          titlewithiconicon={<AiFillDashboard className="buttonIcon" />}
-        />
-        <Sidebarbutton
-          title={'Event'}
-          titlewithiconicon={<MdOutlineEventNote className="buttonIcon" />}
-        />
-        <Sidebarbutton title={'Staff'} titlewithiconicon={<FaUserTie className="buttonIcon" />} />
-        <Sidebarbutton
-          title={'Student'}
-          titlewithiconicon={<PiStudentBold className="buttonIcon" />}
-        />
-        <Sidebarbutton
-          title={'Settings'}
-          titlewithiconicon={<IoSettings className="buttonIcon" />}
-        />
-        <Sidebarbutton title={'Logout'} titlewithiconicon={<IoLogOut className="buttonIcon" />} />
+        <Sidebarbutton title={'Dashboard'} icon={<AiFillDashboard className="buttonIcon" />} />
+        <Sidebarbutton title={'Event'} icon={<MdOutlineEventNote className="buttonIcon" />} />
+        <Sidebarbutton title={'Staff'} icon={<FaUserTie className="buttonIcon" />} />
+        <Sidebarbutton title={'Student'} icon={<PiStudentBold className="buttonIcon" />} />
+        <Sidebarbutton title={'Settings'} icon={<IoSettings className="buttonIcon" />} />
+        <Sidebarbutton title={'Logout'} icon={<IoLogOut className="buttonIcon" />} />
       </div>
     </div>
   );

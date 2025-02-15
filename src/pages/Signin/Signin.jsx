@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Signin.css';
-import LoginForm from '../../components/layout/LoginLayout/LoginForm';
+import LoginForm from './LoginLayout/LoginForm';
 import Designer from '../../assets/Images/Designer.jpeg';
 import { useNavigate } from 'react-router-dom';
 import ForgotPassword from '../ForgotPassword/ForgotPassword';

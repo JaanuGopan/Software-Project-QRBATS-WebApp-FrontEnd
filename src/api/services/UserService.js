@@ -1,5 +1,4 @@
 import axios from 'axios';
-import JwtService from './JwtService';
 class UserService {
   static verifyPassword = async (userName, password) => {
     try {
@@ -10,7 +9,7 @@ class UserService {
         return response.data;
       }
     } catch (error) {
-      console.log('Fail to verify password. ' + error);
+      console.error('Fail to verify password. ' + error);
     }
   };
 
@@ -61,7 +60,7 @@ class UserService {
         }
       }
     } catch (error) {
-      console.log('Fail to verify password. ' + error);
+      console.error('Fail to verify password. ' + error);
       if (error.response.status === 400) {
         return error.response;
       }

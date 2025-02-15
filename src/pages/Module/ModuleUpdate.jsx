@@ -1,13 +1,13 @@
-import React, { useContext, useState } from 'react';
-import './ModulePage.css';
-import InputField from '../../components/textfields/InputBox/InputField';
-import { IoMdCloseCircleOutline } from 'react-icons/io';
-import InputList from '../../components/textfields/InputList/InputList';
-import ModuleService from '../../api/services/ModuleService';
-import { toast } from 'react-toastify';
 import { CircularProgress } from '@mui/material';
+import React, { useContext, useState } from 'react';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
+import { toast } from 'react-toastify';
+import ModuleService from '../../api/services/ModuleService';
+import InputField from '../../components/textfields/InputBox/InputField';
+import InputList from '../../components/textfields/InputList/InputList';
 import { AuthContext } from '../../config/AuthProvider';
 import Department from '../../utils/Department';
+import './ModulePage.css';
 
 const ModuleUpdate = ({
   handleCloseModuleUpdateWindow,
@@ -45,12 +45,10 @@ const ModuleUpdate = ({
       );
       if (response.status === 200) {
         toast.success('Module Updated Successfully ', response.data.moduleName);
-        console.log(response);
         handleReloadModuleList();
       } else if (response.status === 400) {
         toast.error(response.data);
       } else {
-        console.log(response.status);
         toast.error('Failed To Update Module.');
       }
     } catch (error) {

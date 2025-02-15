@@ -8,7 +8,7 @@ const ngrokBaseUrl = 'https://lionfish-wondrous-catfish.ngrok-free.app';
 const TIMEOUT = 60 * 1000; // 60 seconds timeout
 
 // Set global Axios defaults
-axios.defaults.baseURL = facultyBaseUrl;
+axios.defaults.baseURL = developmentBaseUrl;
 axios.defaults.timeout = TIMEOUT;
 
 // Request Interceptor

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import '../../pages/AdminDashboard/AdminDashboard.css';
 import { CiViewList } from 'react-icons/ci';
 import { CircularProgress } from '@mui/material';
+import './report-table.css';
 
 const LectureReportTable = ({
   handleOpenLectureWithDateWindow,
@@ -27,18 +27,18 @@ const LectureReportTable = ({
   };
 
   return (
-    <div className="tableDesign">
-      <table className="event-report-tableArrangement">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th className="expand">Name</th>
-            <th>Module Code</th>
-            <th>Day</th>
-            <th>Venue</th>
-            <th>Start Time</th>
-            <th>End Time</th>
-            <th>View</th>
+    <div className="report-table-container">
+      <table className="table table-hover">
+        <thead className='sticky-header'>
+          <tr className='report-table-table-header-row'>
+            <th className='col'>No</th>
+            <th className='col'>Name</th>
+            <th className='col'>Module Code</th>
+            <th className='col'>Day</th>
+            <th className='col'>Venue</th>
+            <th className='col'>Start Time</th>
+            <th className='col'>End Time</th>
+            <th className='col'>View</th>
           </tr>
         </thead>
         {lecturesReportList.filter(
@@ -57,7 +57,7 @@ const LectureReportTable = ({
                 <tr
                   key={index}
                   onClick={() => handleLectureReportClick(lecture)}
-                  className={selectedLectureReport === lecture ? 'selected-row' : 'event-row'}
+                  className={'report-table-row' + (selectedLectureReport === lecture ? ' report-table-selected-row' : '')}
                 >
                   <td>{index + 1}</td>
                   <td>{lecture.lectureName}</td>
@@ -67,17 +67,21 @@ const LectureReportTable = ({
                   <td>{lecture.lectureStartTime}</td>
                   <td>{lecture.lectureEndTime}</td>
                   <td>
-                    {isLoading ? (
-                      <CircularProgress />
-                    ) : (
-                      <button
-                        onClick={() => OpenLectureWithDateWindow(lecture.lectureId)}
-                        className="ViewButton"
-                      >
-                        <CiViewList className="EditIcon" />
-                        <p className="ViewButtonLabel">View Lecture</p>
-                      </button>
-                    )}
+                    <div className='row'>
+                      <div className='col'>
+                        {isLoading ? (
+                          <CircularProgress />
+                        ) : (
+                          <button
+                            onClick={() => OpenLectureWithDateWindow(lecture.lectureId)}
+                            className="ViewButton"
+                          >
+                            <CiViewList className="EditIcon" />
+                            <p className="ViewButtonLabel">View Lecture</p>
+                          </button>
+                        )}
+                      </div>
+                    </div>
                   </td>
                 </tr>
               ))}

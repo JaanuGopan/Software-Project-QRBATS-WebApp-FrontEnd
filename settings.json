@@ -1,0 +1,16 @@
+{
+  "editor.formatOnSave": true,
+  "notebook.formatOnSave.enabled": true,
+  "cSpell.autoFormatConfigFile": true,
+  "dotnet.formatting.organizeImportsOnFormat": true,
+  "dart.previewHotReloadOnSaveWatcher": true,
+  "editor.formatOnPaste": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatterOptions": {
+    "provideFormatter": true
+  },
+  /* remove unused imports */
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  }
+}

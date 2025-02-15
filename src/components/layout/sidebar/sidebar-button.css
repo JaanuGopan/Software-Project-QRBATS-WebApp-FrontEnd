@@ -1,0 +1,22 @@
+.side-bar-button {
+    color: white;
+    width: 100%;
+    cursor: pointer;
+}
+  
+.side-bar-button:hover {
+    background-color: #025587;
+    border-radius: 10px;
+    border: 1px solid white;
+}
+  
+.side-bar-button.active {
+    background-color: #f0f0f0;
+    color: #333;
+    border-left: 3px solid #007bff;
+}
+
+.side-bar-button-icon-container > svg {
+    width: 32px;
+    height: 32px;
+}

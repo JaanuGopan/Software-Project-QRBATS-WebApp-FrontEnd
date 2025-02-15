@@ -6,7 +6,6 @@ class LocationService {
       const response = await axios.get('/api/v1/location/get-all-location-names');
       return response.data;
     } catch (error) {
-      console.log('Error in fetching location names: ', error);
       throw error;
     }
   };

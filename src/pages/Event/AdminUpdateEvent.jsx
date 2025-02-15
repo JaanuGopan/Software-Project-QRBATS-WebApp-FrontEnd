@@ -1,11 +1,11 @@
-import '../Event/EventCreation/EventCreation.css';
-import React, { useState, useRef, useContext } from 'react';
+import { CircularProgress } from '@mui/material';
+import QRCode from 'qrcode.react';
+import React, { useContext, useRef, useState } from 'react';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { toast } from 'react-toastify';
-import QRCode from 'qrcode.react';
 import EventService from '../../api/services/EventService';
-import { CircularProgress } from '@mui/material';
 import { AuthContext } from '../../config/AuthProvider';
+import '../Event/EventCreation/EventCreation.css';
 
 const AdminUpdateEvent = ({
   handleCloseEventUpdateWindow,
@@ -54,7 +54,7 @@ const AdminUpdateEvent = ({
         toast.error(response.data);
       } else {
         toast.error('Error In Event Update. ');
-        console.log(response.data);
+        console.error(response.data);
       }
     } catch (error) {
       console.error('Event failed', error);

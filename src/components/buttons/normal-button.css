@@ -1,0 +1,11 @@
+.normal-button-container {
+  color: white;
+  cursor: pointer;
+  background-color: #0063a0;
+  border-radius: 10px;
+}
+
+.normal-button-container :hover {
+  background-color: #2273a5;
+  border-radius: 10px;
+}

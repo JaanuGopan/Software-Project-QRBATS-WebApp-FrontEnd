@@ -4,7 +4,6 @@ class DeleteStaffService {
   static async deleteStaff(staffId) {
     try {
       const response = await axios.delete(`/api/v1/admin/delete-user?userId=${staffId}`);
-      console.log('deleted Successfully..');
       if (response.status === 200) {
         return response;
       }

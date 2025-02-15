@@ -21,8 +21,6 @@ const CreateStaff = ({ handleCloseCreateStaffWindow, reloadStaffList }) => {
   const departmentList = Department.departmentList;
   const userRoleList = ['ADMIN', 'LECTURER'];
 
-  const notifySuccess = () => toast.success('Successfully Staff Created!');
-
   const [loadingCreateStaff, setLoadingCreateStaff] = useState(false);
 
   const handleInputValidation = () => {
@@ -84,7 +82,6 @@ const CreateStaff = ({ handleCloseCreateStaffWindow, reloadStaffList }) => {
         userRoleList.indexOf(userRole.value)
       );
       if (response.status === 200) {
-        notifySuccess();
         reloadStaffList();
         handleCloseCreateStaffWindow();
         toast.success('User created successfully!');

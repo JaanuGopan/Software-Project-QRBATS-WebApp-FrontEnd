@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import '../../pages/AdminDashboard/AdminDashboard.css';
-import { FaCheck } from 'react-icons/fa6';
+import React, { useEffect, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
+import { FaCheck } from 'react-icons/fa6';
+import './report-table.css';
 
 const LectureStudentsAttendanceTable = ({ search, attendanceList }) => {
   const [attendance, setAttendance] = useState([]);
   const [selectedAttendance, setSelectedAttendance] = useState(null);
 
   useEffect(() => {
-    // Update events whenever eventList prop changes
     setAttendance(attendanceList);
-    console.log('Attendance report : ', attendanceList);
   }, [attendanceList]);
 
   const handleAttendanceClick = (attendance) => {
@@ -18,16 +16,16 @@ const LectureStudentsAttendanceTable = ({ search, attendanceList }) => {
   };
 
   return (
-    <div className="tableDesign">
-      <table className="student-tableArrangement">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th className="expand">Student Name</th>
-            <th>Registration Number</th>
-            <th>Attendance Date</th>
-            <th>Attendance Time</th>
-            <th>Attendance Status</th>
+    <div className="report-table-container">
+      <table className="table table-hover">
+        <thead className="sticky-header">
+          <tr className="report-table-table-header-row">
+            <th className="col">No</th>
+            <th className="col">Student Name</th>
+            <th className="col">Registration Number</th>
+            <th className="col">Attendance Date</th>
+            <th className="col">Attendance Time</th>
+            <th className="col">Attendance Status</th>
           </tr>
         </thead>
 
@@ -46,7 +44,10 @@ const LectureStudentsAttendanceTable = ({ search, attendanceList }) => {
               .map((attendance, index) => (
                 <tr
                   key={index}
-                  className={selectedAttendance === attendance ? 'selected-row' : 'event-row'}
+                  className={
+                    'report-table-row' +
+                    (selectedAttendance === attendance ? ' report-table-selected-row' : '')
+                  }
                 >
                   <td>{index + 1}</td>
                   <td>{attendance.studentName}</td>

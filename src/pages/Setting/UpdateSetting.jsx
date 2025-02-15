@@ -1,18 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react';
-import './Setting.css';
-import { IoMdCloseCircleOutline } from 'react-icons/io';
-import Select from 'react-select';
 import Switch from '@mui/material/Switch';
+import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { useDispatch } from 'react-redux';
-import Department from '../../utils/Department';
+import Select from 'react-select';
 import UserService from '../../api/services/UserService';
 import InputField from '../../components/textfields/InputBox/InputField';
 import InputPassword from '../../components/textfields/InputPassword/InputPassword';
-import toast, { Toaster } from 'react-hot-toast';
 import WarningPopup from '../../components/warningPopup/WarningPopup';
-import { resetSideBarIndex } from '../../redux/features/mainNavigationSlice';
 import { AuthContext } from '../../config/AuthProvider';
-import axios from 'axios';
+import { resetSideBarIndex } from '../../redux/features/mainNavigationSlice';
+import Department from '../../utils/Department';
+import './Setting.css';
 
 const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
   const dispatch = useDispatch();
@@ -154,7 +154,6 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
       setIsLoading(true);
       try {
         const response = await UserService.verifyPassword(userName, oldPassword);
-        console.log(response);
         if (response === true) {
           setShowNewPassword(true);
           notifyPasswordVerify();

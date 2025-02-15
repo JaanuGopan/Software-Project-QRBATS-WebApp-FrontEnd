@@ -1,14 +1,14 @@
-import './EventCreation/EventCreation.css';
-import eventCreationImage from '../../assets/Images/signin/Signin.jpeg';
-import React, { useState, useRef, useContext } from 'react';
+import { CircularProgress } from '@mui/material';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { IoMdCloseCircleOutline } from 'react-icons/io';
-import toast, { Toaster } from 'react-hot-toast';
 import QRCode from 'qrcode.react';
+import React, { useContext, useRef, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
 import EventService from '../../api/services/EventService';
-import { CircularProgress } from '@mui/material';
+import eventCreationImage from '../../assets/Images/signin/Signin.jpeg';
 import { AuthContext } from '../../config/AuthProvider';
+import './EventCreation/EventCreation.css';
 
 const AdminEventCreation = ({
   handleCloseCreateEventWindow,

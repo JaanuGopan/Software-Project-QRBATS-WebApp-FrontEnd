@@ -2,16 +2,13 @@
   display: flex;
   flex-direction: column;
   overflow: scroll;
-  margin-top: 15px;
-  margin-left: 15px;
-  margin-right: 5px;
   padding: 10px;
-  width: 98%;
-  height: 95%;
+  height: 100%;
   border-top: 5px solid #0365a1;
   box-shadow: 0.5px 2px 0.5px 0.5px rgba(25, 65, 85, 0.5);
   border-radius: 10px;
   background-color: #fafafa;
+  margin-top: 20px;
 }
 
 .lecture-creation-title-icon-close-button {

@@ -1,3 +1,7 @@
+.main-navigation-container {
+  /* margin-top: 75px; */
+}
+
 .Admin-main {
   display: flex;
   flex-direction: column;
@@ -5,14 +9,6 @@
   align-items: stretch;
   justify-content: flex-start;
   height: 100vh;
-}
-
-.maincontent {
-  flex-grow: 1;
-  padding: 2px;
-  overflow-y: auto;
-  height: 90vh;
-  width: 100%;
 }
 
 .logout-window {
@@ -29,4 +25,8 @@
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.main-navigation-content-container {
+  height: calc(100vh - 75px);
 }

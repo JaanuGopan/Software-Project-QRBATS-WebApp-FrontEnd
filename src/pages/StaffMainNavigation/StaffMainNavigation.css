@@ -183,14 +183,8 @@
 
 .Staff-Navbar {
   background-color: #0063a0;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  height: 5rem;
+  height: 75px;
   width: 100%;
-  position: relative;
-  flex-wrap: nowrap;
 }
 
 .Staff-Icon {
@@ -272,15 +266,9 @@
 
 .Staff-Sidebar {
   background: linear-gradient(#0063a0, rgba(0, 100, 160, 0.8));
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
   border-top: 5px solid white;
   border-top-right-radius: 20px;
   z-index: 1;
-  height: -webkit-fill-available;
 }
 
 .Sidebarlogo {

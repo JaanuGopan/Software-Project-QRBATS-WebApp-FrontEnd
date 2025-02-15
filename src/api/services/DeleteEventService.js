@@ -6,7 +6,6 @@ class DeleteEventService {
       const response = await axios.post('/api/v1/event/delete-by-id', {
         eventId: eventId,
       });
-      console.log('deleted Successfully..');
       return response.data.token;
     } catch (error) {
       throw new Error('Delete Failed ', error);

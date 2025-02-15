@@ -1,0 +1,45 @@
+.side-bar-container{
+    background: linear-gradient(#0063a0, rgba(0, 100, 160, 0.8));
+    border-top-right-radius: 20px;
+    width: 250px;
+}
+
+@media screen and (max-width: 767px) {
+    .side-bar-container {
+        width: auto;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .side-bar-container {
+        width: 260px;
+        position: fixed;
+    }
+}
+
+.side-bar-logo {
+    width: 150px;
+}
+
+.menu-button {
+    position: absolute;
+    margin-top: 5rem;
+    z-index: 4;
+    cursor: pointer;
+    background-color: #0366a4;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    padding: 5px;
+    box-shadow: 2px 2px 2px 0px rgba(27, 37, 49, 0.5);
+}
+  
+.menu-button:hover {
+    background-color: white;
+
+    .menu-button-icon {
+        color: #0366a4;
+    }
+}
+.menu-button-icon {
+    color: white;
+}

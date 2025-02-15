@@ -1,19 +1,20 @@
-import React, { useState, useEffect, useContext } from 'react';
-import './ReportPage.css';
-import ModuleReportTable from './ModuleReportTable';
-import OverallReportTable from './OverallReportTable';
-import LectureReportTable from './LectureReportTable';
-import ModuleService from '../../api/services/ModuleService';
-import { MdArrowBack } from 'react-icons/md';
-import NormalButton from '../../components/layout/AdminDashboardComponent/NormalButton';
-import { BiSolidPrinter } from 'react-icons/bi';
-import LectureStudentsAttendanceTable from './LectureStudentsAttendanceTable';
-import LectureService from '../../api/services/LectureService';
-import AttendanceService from '../../api/services/AttendanceService';
-import { toast } from 'react-toastify';
-import LectureWithDateReportTable from './LectureWithDateReportTable';
 import { CircularProgress } from '@mui/material';
+import React, { useContext, useEffect, useState } from 'react';
+import { BiSolidPrinter } from 'react-icons/bi';
+import { MdArrowBack } from 'react-icons/md';
+import { toast } from 'react-toastify';
+import AttendanceService from '../../api/services/AttendanceService';
+import LectureService from '../../api/services/LectureService';
+import ModuleService from '../../api/services/ModuleService';
+import AppContentCard from '../../components/app-content-card/app-content-card';
+import NormalButton from '../../components/buttons/NormalButton';
 import { AuthContext } from '../../config/AuthProvider';
+import LectureReportTable from './LectureReportTable';
+import LectureStudentsAttendanceTable from './LectureStudentsAttendanceTable';
+import LectureWithDateReportTable from './LectureWithDateReportTable';
+import ModuleReportTable from './module-report-table';
+import OverallReportTable from './OverallReportTable';
+import './ReportPage.css';
 
 const ReportPage = () => {
   const { user } = useContext(AuthContext);
@@ -42,14 +43,12 @@ const ReportPage = () => {
 
   const handleModuleReportClick = (e) => {
     setSelectedModuleReport(e);
-    console.log('Selected ModuleReport:', e);
   };
 
   const handleReloadModuleReportList = async () => {
     try {
       const modulesList = await ModuleService.getModulesByUserId(userId);
       setModuleReportList(modulesList);
-      console.log(modulesList);
     } catch (error) {
       console.error('Error reloading module report list:', error);
     }
@@ -197,25 +196,27 @@ const ReportPage = () => {
   };
 
   return (
-    <div>
-      <div className="module-report-Dash">
-        <div className="module-report-SearchEvent">
-          <p className="module-report-mainHead">Modules Report</p>
-          <input
-            type="text"
-            placeholder="Search..."
-            style={{
-              width: '150px',
-              padding: '3px 40px',
-              border: '0.5px solid black',
-              borderRadius: '5px',
-              textAlign: 'center',
-            }}
-            onChange={(e) => setSearchModuleReport(e.target.value)}
-          />
+    <div className="row">
+      <div className="col">
+        <div className="row justify-content-between align-items-center my-2">
+          <div className="col-auto fs-3 fw-bold ms-4">Modules Report</div>
+          <div className="col-auto">
+            <input
+              type="text"
+              placeholder="Search..."
+              style={{
+                width: '150px',
+                padding: '3px 40px',
+                border: '0.5px solid black',
+                borderRadius: '5px',
+                textAlign: 'center',
+              }}
+              onChange={(e) => setSearchModuleReport(e.target.value)}
+            />
+          </div>
         </div>
         {showModuleReportWindow && (
-          <div className="module-report-ModuleList">
+          <AppContentCard>
             <ModuleReportTable
               modulesReportList={moduleReportList}
               onModuleReportClick={handleModuleReportClick}
@@ -224,121 +225,141 @@ const ReportPage = () => {
               handleOpenOverallReportWindow={(moduleId) => handleOpenOverallReportWindow(moduleId)}
               handleOpenLecturesReportWindow={(e) => handleLoadLectureReport(e)}
             />
-          </div>
+          </AppContentCard>
         )}
         {showOverallReportWindow && (
-          <div className="module-report-ModuleList">
-            <OverallReportTable
-              search={searchStudentReport}
-              studentAttendanceDetails={studentAttendanceDetails}
-            />
-            <div className="staff-List-Buttons">
-              <NormalButton
-                handleClick={() => {
-                  setShowLectureReportWindow(false);
-                  setShowModuleReportWindow(true);
-                  setShowOverallReportWindow(false);
-                  setShowLectureWithDateWindow(false);
-                }}
-                title={'Back'}
-                titlewithiconicon={<MdArrowBack className="staff-buttonIcon" />}
+          <>
+            <AppContentCard hasBottomContents={true}>
+              <OverallReportTable
+                search={searchStudentReport}
+                studentAttendanceDetails={studentAttendanceDetails}
               />
-              {loadingDownloadOverallReport ? (
-                <CircularProgress />
-              ) : (
+            </AppContentCard>
+            <div className="row justify-content-around">
+              <div className="col-auto">
                 <NormalButton
-                  title={'Print'}
                   handleClick={() => {
-                    handleOverallReportDownload();
+                    setShowLectureReportWindow(false);
+                    setShowModuleReportWindow(true);
+                    setShowOverallReportWindow(false);
+                    setShowLectureWithDateWindow(false);
                   }}
-                  titlewithiconicon={<BiSolidPrinter className="staff-buttonIcon" />}
+                  title={'Back'}
+                  icon={<MdArrowBack className="staff-buttonIcon" />}
                 />
-              )}
+              </div>
+              <div className="col-auto">
+                {loadingDownloadOverallReport ? (
+                  <CircularProgress />
+                ) : (
+                  <NormalButton
+                    title={'Print'}
+                    handleClick={() => {
+                      handleOverallReportDownload();
+                    }}
+                    icon={<BiSolidPrinter className="staff-buttonIcon" />}
+                  />
+                )}
+              </div>
             </div>
-          </div>
+          </>
         )}
         {showLectureReportWindow && (
-          <div className="module-report-ModuleList">
-            <LectureReportTable
-              handleOpenLectureWithDateWindow={(lectureId) =>
-                handleLoadLectureWithDateList(lectureId)
-              }
-              lecturesReportList={lecturesReportList}
-              onLecturesReportClick={(e) => setSelectedLectureReport(e)}
-              searchLecturesReport={searchLecturesReport}
-            />
-            <div className="staff-List-Buttons">
-              <NormalButton
-                handleClick={() => {
-                  setShowLectureReportWindow(false);
-                  setShowModuleReportWindow(true);
-                  setShowOverallReportWindow(false);
-                  setShowLectureWithDateWindow(false);
-                }}
-                title={'Back'}
-                titlewithiconicon={<MdArrowBack className="staff-buttonIcon" />}
+          <>
+            <AppContentCard hasBottomContents={true}>
+              <LectureReportTable
+                handleOpenLectureWithDateWindow={(lectureId) =>
+                  handleLoadLectureWithDateList(lectureId)
+                }
+                lecturesReportList={lecturesReportList}
+                onLecturesReportClick={(e) => setSelectedLectureReport(e)}
+                searchLecturesReport={searchLecturesReport}
               />
+            </AppContentCard>
+            <div className="row justify-content-center">
+              <div className="col-auto">
+                <NormalButton
+                  handleClick={() => {
+                    setShowLectureReportWindow(false);
+                    setShowModuleReportWindow(true);
+                    setShowOverallReportWindow(false);
+                    setShowLectureWithDateWindow(false);
+                  }}
+                  title={'Back'}
+                  icon={<MdArrowBack className="staff-buttonIcon" />}
+                />
+              </div>
             </div>
-          </div>
+          </>
         )}
         {showLectureWithDateWindow && (
-          <div className="module-report-ModuleList">
-            <LectureWithDateReportTable
-              handleOpenLectureAttendanceReportWindow={(lectureId, date) =>
-                handleLoadStudentAttendanceReport(lectureId, date)
-              }
-              lectureWithDateList={lectureWithDateList}
-              onLectureWithDateClick={(e) => setSelectedLectureWithDate(e)}
-              searchLectureWithDate={searchLectureWithDate}
-            />
-            <div className="staff-List-Buttons">
-              <NormalButton
-                handleClick={() => {
-                  setShowLectureReportWindow(true);
-                  setShowModuleReportWindow(false);
-                  setShowOverallReportWindow(false);
-                  setShowLectureWithDateWindow(false);
-                }}
-                title={'Back'}
-                titlewithiconicon={<MdArrowBack className="staff-buttonIcon" />}
+          <>
+            <AppContentCard hasBottomContents={true}>
+              <LectureWithDateReportTable
+                handleOpenLectureAttendanceReportWindow={(lectureId, date) =>
+                  handleLoadStudentAttendanceReport(lectureId, date)
+                }
+                lectureWithDateList={lectureWithDateList}
+                onLectureWithDateClick={(e) => setSelectedLectureWithDate(e)}
+                searchLectureWithDate={searchLectureWithDate}
               />
+            </AppContentCard>
+            <div className="row justify-content-center">
+              <div className="col-auto">
+                <NormalButton
+                  handleClick={() => {
+                    setShowLectureReportWindow(true);
+                    setShowModuleReportWindow(false);
+                    setShowOverallReportWindow(false);
+                    setShowLectureWithDateWindow(false);
+                  }}
+                  title={'Back'}
+                  icon={<MdArrowBack className="staff-buttonIcon" />}
+                />
+              </div>
             </div>
-          </div>
+          </>
         )}
         {showLectureStudentAttendanceReportWindow && (
-          <div className="module-report-ModuleList">
-            <LectureStudentsAttendanceTable
-              attendanceList={lectureStudentAttendanceList}
-              search={searchLectureStudentAttendance}
-            />
-            <div className="staff-List-Buttons">
-              <NormalButton
-                handleClick={() => {
-                  setShowLectureReportWindow(false);
-                  setShowModuleReportWindow(false);
-                  setShowOverallReportWindow(false);
-                  setShowLectureStudentAttendanceReportWindow(false);
-                  setShowLectureWithDateWindow(true);
-                }}
-                title={'Back'}
-                titlewithiconicon={<MdArrowBack className="staff-buttonIcon" />}
+          <>
+            <AppContentCard hasBottomContents={true}>
+              <LectureStudentsAttendanceTable
+                attendanceList={lectureStudentAttendanceList}
+                search={searchLectureStudentAttendance}
               />
-              {loadingDownloadReport ? (
-                <CircularProgress />
-              ) : (
+            </AppContentCard>
+            <div className="row justify-content-around">
+              <div className="col-auto">
                 <NormalButton
-                  title={'Print'}
-                  handleClick={() =>
-                    handleDownloadReport(
-                      selectedLectureWithDate.lectureId,
-                      selectedLectureWithDate.lectureDate
-                    )
-                  }
-                  titlewithiconicon={<BiSolidPrinter className="staff-buttonIcon" />}
+                  handleClick={() => {
+                    setShowLectureReportWindow(false);
+                    setShowModuleReportWindow(false);
+                    setShowOverallReportWindow(false);
+                    setShowLectureStudentAttendanceReportWindow(false);
+                    setShowLectureWithDateWindow(true);
+                  }}
+                  title={'Back'}
+                  icon={<MdArrowBack className="staff-buttonIcon" />}
                 />
-              )}
+              </div>
+              <div className="col-auto">
+                {loadingDownloadReport ? (
+                  <CircularProgress />
+                ) : (
+                  <NormalButton
+                    title={'Print'}
+                    handleClick={() =>
+                      handleDownloadReport(
+                        selectedLectureWithDate.lectureId,
+                        selectedLectureWithDate.lectureDate
+                      )
+                    }
+                    icon={<BiSolidPrinter className="staff-buttonIcon" />}
+                  />
+                )}
+              </div>
             </div>
-          </div>
+          </>
         )}
       </div>
     </div>

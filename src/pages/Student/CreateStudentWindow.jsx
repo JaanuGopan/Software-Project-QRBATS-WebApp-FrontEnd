@@ -1,12 +1,12 @@
+import { CircularProgress } from '@mui/material';
 import React, { useState } from 'react';
-import './Student.css';
-import InputField from '../../components/textfields/InputBox/InputField';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import Select from 'react-select';
-import StudentService from '../../api/services/StudentService';
 import { toast } from 'react-toastify';
-import { CircularProgress } from '@mui/material';
+import StudentService from '../../api/services/StudentService';
+import InputField from '../../components/textfields/InputBox/InputField';
 import Department from '../../utils/Department';
+import './Student.css';
 
 const CreateStudentWindow = ({ handleCloseCreateStudentWindow, handleReloadStudentList }) => {
   const [studentName, setStudentName] = useState('');
@@ -78,7 +78,6 @@ const CreateStudentWindow = ({ handleCloseCreateStudentWindow, handleReloadStude
     }
     try {
       setProcessing(true);
-      console.log('Creating Student');
       const response = await StudentService.createStudentByAdmin(
         studentName,
         studentIndexNo,

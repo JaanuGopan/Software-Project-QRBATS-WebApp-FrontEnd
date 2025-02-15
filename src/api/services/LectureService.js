@@ -3,8 +3,6 @@ import axios from 'axios';
 class LectureService {
   static createLecture = async (requestData) => {
     try {
-      console.log(requestData);
-
       const response = await axios.post('/api/v1/lecture/create-lecture', requestData);
       return response;
     } catch (error) {
@@ -86,7 +84,6 @@ class LectureService {
         `/api/v1/lecture/get-all-lectures-by-day-and-venue?venue=${venue}&day=${day}`
       );
       if (response.status === 200) {
-        console.log(response.data);
         return response;
       }
     } catch (error) {
