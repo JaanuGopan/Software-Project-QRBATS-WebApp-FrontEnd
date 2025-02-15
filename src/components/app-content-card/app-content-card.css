@@ -4,6 +4,7 @@
   border-radius: 10px;
   background-color: #ffffff;
   height: calc(100vh - 75px - 100px);
+  overflow: auto;
 }
 
 .has-bottom-buttons {
