@@ -3,9 +3,7 @@ import axios from 'axios';
 class LectureService {
   static createLecture = async (requestData) => {
     try {
-      console.log(requestData);
-
-      const response = await axios.post('/api/v1/lecture/createlecture', requestData);
+      const response = await axios.post('/api/v1/lecture/create-lecture', requestData);
       return response;
     } catch (error) {
       console.error('Fail to create lecture.', error);
@@ -15,7 +13,9 @@ class LectureService {
 
   static getAllLecturesByUserId = async (userId) => {
     try {
-      const response = await axios.get(`/api/v1/lecture/getalllecturebyuserid/${userId}`);
+      const response = await axios.get(
+        `/api/v1/lecture/get-all-lecture-by-userId?userId=${userId}`
+      );
       if (response.data) {
         return response.data;
       }
@@ -34,7 +34,7 @@ class LectureService {
     lectureEndTime
   ) => {
     try {
-      const response = await axios.put(`/api/v1/lecture/updatelecture/${lectureId}`, {
+      const response = await axios.put(`/api/v1/lecture/update-lecture/${lectureId}`, {
         lectureName: lectureName,
         lectureModuleCode: lectureModuleCode,
         lectureVenue: lectureVenue,
@@ -53,7 +53,7 @@ class LectureService {
 
   static deleteLecture = async (lectureId) => {
     try {
-      const response = await axios.delete(`/api/v1/lecture/deletelecture/${lectureId}`);
+      const response = await axios.delete(`/api/v1/lecture/delete-lecture/${lectureId}`);
       return response;
     } catch (error) {
       console.error('Error in Delete Lecture. ', error);
@@ -66,7 +66,7 @@ class LectureService {
   static getAllLecturesByModuleCode = async (moduleCode) => {
     try {
       const response = await axios.get(
-        `/api/v1/lecture/getalllecturebymodulecode?moduleCode=${moduleCode}`
+        `/api/v1/lecture/get-all-lecture-by-module-code?moduleCode=${moduleCode}`
       );
       if (response.status === 200) {
         return response.data;
@@ -81,10 +81,9 @@ class LectureService {
   static async getAllLecturesByDayAndVenue(day, venue) {
     try {
       const response = await axios.get(
-        `/api/v1/lecture/getalllecturesbydayandvenue?venue=${venue}&day=${day}`
+        `/api/v1/lecture/get-all-lectures-by-day-and-venue?venue=${venue}&day=${day}`
       );
       if (response.status === 200) {
-        console.log(response.data);
         return response;
       }
     } catch (error) {
@@ -96,7 +95,7 @@ class LectureService {
   static async getAllLectureWithDateByLectureId(lectureId) {
     try {
       const response = await axios.get(
-        `/api/v1/lectureattendance/getalllecturewithdatefordaylecture/${lectureId}`
+        `/api/v1/lecture-attendance/get-all-lecture-with-date-for-day-lecture/${lectureId}`
       );
 
       return response;

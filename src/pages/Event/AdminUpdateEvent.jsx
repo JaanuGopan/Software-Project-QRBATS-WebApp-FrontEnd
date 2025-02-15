@@ -1,15 +1,11 @@
-import '../Event/EventCreation/EventCreation.css';
-import React, { useState, useRef } from 'react';
-import axios from 'axios';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
-import { IoMdCloseCircleOutline } from 'react-icons/io';
-import toast, { Toaster } from 'react-hot-toast';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../redux/features/userSlice';
-import QRCode from 'qrcode.react';
-import EventService from '../../api/services/EventService';
 import { CircularProgress } from '@mui/material';
+import QRCode from 'qrcode.react';
+import React, { useContext, useRef, useState } from 'react';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
+import { toast } from 'react-toastify';
+import EventService from '../../api/services/EventService';
+import { AuthContext } from '../../config/AuthProvider';
+import '../Event/EventCreation/EventCreation.css';
 
 const AdminUpdateEvent = ({
   handleCloseEventUpdateWindow,
@@ -25,17 +21,14 @@ const AdminUpdateEvent = ({
   const [eventEndTime, setEventEndTime] = useState(selectedEvent.eventEndTime);
   const [eventVenue, setEventVenue] = useState(selectedEvent.eventVenue);
   const [eventRole, setEventRole] = useState(selectedEvent.eventRole);
-  const [eventAssignedUserId, setEventAssignedUserId] = useState(selectedEvent.eventAssignedUserId);
 
-  const [showModuleNameInput, setShowModuleNameInput] = useState(true);
   const [title, setTitle] = useState('Event');
 
   const qrCodeRef = useRef(null);
 
   const notifySuccess = () => toast.success('Successfully Event Updated!');
 
-  const user = useSelector(selectUser);
-  // Destructure user object for cleaner code
+  const { user } = useContext(AuthContext);
   const { userId } = user || {};
   const [processingUpdateEvent, setProcessingUpdateEvent] = useState(false);
   const handleSubmit = async (e) => {
@@ -61,7 +54,7 @@ const AdminUpdateEvent = ({
         toast.error(response.data);
       } else {
         toast.error('Error In Event Update. ');
-        console.log(response.data);
+        console.error(response.data);
       }
     } catch (error) {
       console.error('Event failed', error);
@@ -126,7 +119,6 @@ const AdminUpdateEvent = ({
           </div>
         </div>
         <div className="eventCreation-input-field">
-          <Toaster />
           <form onSubmit={handleSubmit}>
             <div className="input-with-icon">
               <label className="date-label" htmlFor="eventDate">

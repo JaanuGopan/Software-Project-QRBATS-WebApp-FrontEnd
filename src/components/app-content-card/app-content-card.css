@@ -1,0 +1,11 @@
+.app-content-card-container {
+  border-top: 5px solid #0365a1;
+  box-shadow: 0.5px 2px 0.5px 0.5px rgba(25, 65, 85, 0.5);
+  border-radius: 10px;
+  background-color: #ffffff;
+  height: calc(100vh - 75px - 100px);
+}
+
+.has-bottom-buttons {
+  height: calc(100vh - 75px - 150px);
+}

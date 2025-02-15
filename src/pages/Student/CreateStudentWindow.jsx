@@ -1,14 +1,12 @@
+import { CircularProgress } from '@mui/material';
 import React, { useState } from 'react';
-import './Student.css';
-import axios from 'axios';
-import Designer from '../../assets/Images/Designer.jpeg';
-import { useNavigate } from 'react-router-dom';
-import InputField from '../../components/textfields/InputBox/InputField';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import Select from 'react-select';
+import { toast } from 'react-toastify';
 import StudentService from '../../api/services/StudentService';
-import { ToastContainer, toast } from 'react-toastify';
-import { CircularProgress } from '@mui/material';
+import InputField from '../../components/textfields/InputBox/InputField';
+import Department from '../../utils/Department';
+import './Student.css';
 
 const CreateStudentWindow = ({ handleCloseCreateStudentWindow, handleReloadStudentList }) => {
   const [studentName, setStudentName] = useState('');
@@ -17,12 +15,12 @@ const CreateStudentWindow = ({ handleCloseCreateStudentWindow, handleReloadStude
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [userName, setUserName] = useState('');
-  const [userRole, setUserRole] = useState('');
+  const [userRole, setUserRole] = useState('STUDENT');
   const [semester, setSemester] = useState();
   const [departmentId, setDepartmentId] = useState('');
 
   const semesterList = ['1', '2', '3', '4', '5', '6', '7', '8'];
-  const departmentList = ['DEIE', 'DCOM', 'DMME', 'DCEE', 'DMENA'];
+  const departmentList = Department.studentDepartmentList;
 
   const [processing, setProcessing] = useState(false);
 
@@ -81,14 +79,14 @@ const CreateStudentWindow = ({ handleCloseCreateStudentWindow, handleReloadStude
     try {
       setProcessing(true);
       const response = await StudentService.createStudentByAdmin(
-        -1,
         studentName,
         studentIndexNo,
         email,
         userName,
         password,
         semesterList.indexOf(semester.value) + 1,
-        departmentList.indexOf(departmentId.value) + 1
+        departmentList.indexOf(departmentId.value) + 1,
+        userRole
       );
       if (response.status === 200) {
         toast.success('Successfully Student Created.');

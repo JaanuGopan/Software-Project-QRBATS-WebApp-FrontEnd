@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import DeleteIcon from '@mui/icons-material/Delete';
 import {
   Button,
   CircularProgress,
@@ -6,15 +6,13 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from '@mui/material';
-import InputField from '../../components/textfields/InputBox/InputField';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { pink } from '@mui/material/colors';
-import axios from 'axios';
-import LocationService from '../../api/services/LocationService';
-import { toast, ToastContainer } from 'react-toastify';
+import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LectureService from '../../api/services/LectureService';
-import { Toaster } from 'react-hot-toast';
+import LocationService from '../../api/services/LocationService';
+import InputField from '../../components/textfields/InputBox/InputField';
 
 const RightContainerLectureCreation = ({
   moduleCode,
@@ -242,7 +240,6 @@ const RightContainerLectureCreation = ({
 
   return (
     <div className="right-container-lecture-creation">
-      {/* <ToastContainer /> */}
       <div className="right-container-lecture-creation-heading">
         <label>{`Module Code: ${moduleCode}`}</label>
       </div>

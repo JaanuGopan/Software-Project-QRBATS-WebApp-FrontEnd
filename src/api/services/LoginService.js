@@ -4,7 +4,7 @@ class LoginService {
   static async loginUser(userName, password) {
     try {
       const response = await axios.post(
-        `/api/v1/auth/signin?userName=${userName}&password=${password}`,
+        `/api/v1/auth/login?userName=${userName}&password=${password}`,
         {
           userName: userName,
           password: password,

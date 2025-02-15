@@ -1,19 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import '../../../pages/StaffMainNavigation/StaffMainNavigation.css';
-import profilePic from '../../../assets/Images/Profile.png';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../../redux/features/userSlice';
+import { AuthContext } from '../../../config/AuthProvider';
 
 const ProfileButton = ({ setIndex }) => {
-  // Get the user from Redux state
-  const user = useSelector(selectUser);
+  const { user } = useContext(AuthContext);
+  const { firstName, lastName } = user || {};
 
   const handleClick = () => {
     setIndex(6);
   };
-
-  // Destructure user object for cleaner code
-  const { firstName, lastName } = user || {};
 
   return (
     <div className="ProfileButton" onClick={handleClick}>

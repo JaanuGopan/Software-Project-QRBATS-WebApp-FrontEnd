@@ -1,22 +1,21 @@
-import React, { useState } from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
+import React, { useContext, useState } from 'react';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
+import LectureService from '../../api/services/LectureService';
+import { AuthContext } from '../../config/AuthProvider';
+import AvailableLectureList from './AvailableLectureList';
+import AvailableLectureListForModule from './AvailableLectureListForModule';
 import './LectureCreation.css';
+import LectureQRCodeWindow from './LectureQRCodeWindow';
 import LeftContainerLectureCreation from './LeftContainerLectureCreation';
 import RightContainerLectureCreation from './RightContainerLectureCreation';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../redux/features/userSlice';
-import { IoMdCloseCircleOutline } from 'react-icons/io';
-import LectureQRCodeWindow from './LectureQRCodeWindow';
-import AvailableLectureList from './AvailableLectureList';
-import LectureService from '../../api/services/LectureService';
-import { ToastContainer, toast } from 'react-toastify';
-import CircularProgress from '@mui/material/CircularProgress';
-import AvailableLectureListForModule from './AvailableLectureListForModule';
+
 const LectureCreationPage = ({
   handleCloseCreateLectureWindow,
   handleReloadLectureList = () => {},
   hideCloseButton = true,
 }) => {
-  const user = useSelector(selectUser);
+  const { user } = useContext(AuthContext);
   const { userId, departmentId } = user || {};
   const [dayList, setDayList] = useState([]);
   const [day, setDay] = useState('');
@@ -84,7 +83,6 @@ const LectureCreationPage = ({
 
   const handleLectureShowQRCode = (moduleLectures) => {
     setCreatedLectureDetails(moduleLectures);
-    console.log('Created Lecture List is : ', moduleLectures);
     setShowQRCodeWindow(true);
   };
 
@@ -101,7 +99,6 @@ const LectureCreationPage = ({
 
   return (
     <div className="lecture-creation-main-container">
-      {hideCloseButton && <ToastContainer />}
       {!hideCloseButton && (
         <div className="lecture-create-title-close-button">
           <h3 className="lecture-create-title">Create Lecture Time Table</h3>

@@ -1,19 +1,17 @@
-import './EventCreation/EventCreation.css';
-import eventCreationImage from '../../assets/Images/signin/Signin.jpeg';
-import React, { useState, useRef } from 'react';
-import { IoMdCloseCircleOutline } from 'react-icons/io';
-import toast, { Toaster } from 'react-hot-toast';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../redux/features/userSlice';
-import QRCode from 'qrcode.react';
-import InputList from '../../components/textfields/InputList/InputList';
-import InputField from '../../components/textfields/InputBox/InputField';
-import EventService from '../../api/services/EventService';
 import { CircularProgress } from '@mui/material';
+import QRCode from 'qrcode.react';
+import React, { useContext, useRef, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
+import EventService from '../../api/services/EventService';
+import eventCreationImage from '../../assets/Images/signin/Signin.jpeg';
+import InputField from '../../components/textfields/InputBox/InputField';
+import InputList from '../../components/textfields/InputList/InputList';
+import { AuthContext } from '../../config/AuthProvider';
+import './EventCreation/EventCreation.css';
 
 const EventCreationComponent = () => {
-  // Get the user from Redux state
-  const user = useSelector(selectUser);
+  const { user } = useContext(AuthContext);
   const { userId } = user || {};
 
   const [eventId, setEventId] = useState('');
@@ -87,7 +85,7 @@ const EventCreationComponent = () => {
     if (handleInputValidation()) {
       await handleCreateEvent(e);
     } else {
-      console.log('Please fill all the fields');
+      toast.error('Please fill all the fields');
     }
   };
 

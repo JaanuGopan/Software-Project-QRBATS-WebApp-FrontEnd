@@ -3,7 +3,7 @@ import axios from 'axios';
 class FetchEventsService {
   static async fetchEvents() {
     try {
-      const response = await axios.post('/api/v1/event/getallevents');
+      const response = await axios.post('/api/v1/event/get-all-events');
       return response.data;
     } catch (error) {
       console.error('Error fetching events:', error);

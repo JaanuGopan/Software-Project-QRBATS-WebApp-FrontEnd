@@ -6,20 +6,21 @@ import Select from 'react-select';
 import StudentService from '../../api/services/StudentService';
 import { toast } from 'react-toastify';
 import { CircularProgress } from '@mui/material';
+import Department from '../../utils/Department';
 
 const UpdateStudentWindow = ({
   handleCloseUpdateStudentWindow,
   student,
   handleReloadStudentList,
 }) => {
-  const [studentId, setStudentId] = useState(student.studentId);
+  const [studentId, setStudentId] = useState(student.userId);
   const [indexNumber, setIndexNumber] = useState(student.indexNumber);
-  const [studentName, setStudentName] = useState(student.studentName);
-  const [studentEmail, setStudentEmail] = useState(student.studentEmail);
+  const [studentName, setStudentName] = useState(student.firstName);
+  const [studentEmail, setStudentEmail] = useState(student.email);
   const [userName, setUserName] = useState(student.username);
-  const [StudentRole, setStudentRole] = useState(student.studentRole);
+  const [StudentRole, setStudentRole] = useState(student.role);
   const [departmentId, setDepartmentId] = useState(student.departmentId);
-  const departmentList = ['DEIE', 'DCOM', 'DMME', 'DCEE', 'DMENA'];
+  const departmentList = Department.studentDepartmentList;
 
   const [department, setDepartment] = useState({
     value: departmentList[student.departmentId - 1],
@@ -27,8 +28,8 @@ const UpdateStudentWindow = ({
   });
   const semesterList = ['1', '2', '3', '4', '5', '6', '7', '8'];
   const [semester, setSemester] = useState({
-    value: semesterList[student.currentSemester - 1],
-    label: semesterList[student.currentSemester - 1],
+    value: semesterList[student.semester - 1],
+    label: semesterList[student.semester - 1],
   });
 
   const [updateSuccess, setUpdateSuccess] = useState(false);
@@ -93,7 +94,8 @@ const UpdateStudentWindow = ({
         studentEmail,
         userName,
         departmentList.indexOf(department.value) + 1,
-        semesterList.indexOf(semester.value) + 1
+        semesterList.indexOf(semester.value) + 1,
+        StudentRole
       );
       if (response.status === 200) {
         toast.success('Successfully Updated.');

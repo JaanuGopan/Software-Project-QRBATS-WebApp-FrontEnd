@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaUser, FaLock, FaMailBulk } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import UserService from '../../api/services/UserService';
 import { FaVoicemail } from 'react-icons/fa6';
 import { Email } from '@mui/icons-material';

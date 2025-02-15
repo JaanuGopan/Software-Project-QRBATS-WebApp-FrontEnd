@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import './Student.css';
-import NormalButton from '../../components/layout/AdminDashboardComponent/NormalButton';
-import { MdCreateNewFolder } from 'react-icons/md';
-import { RiDeleteBin5Fill } from 'react-icons/ri';
-import StudentTable from './StudentTable';
-import CreateStudentWindow from './CreateStudentWindow';
-import UpdateStudentWindow from './UpdateStudentWindow';
+import { FaPlus } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 import StudentService from '../../api/services/StudentService';
+import AppContentCard from '../../components/app-content-card/app-content-card';
+import NormalButton from '../../components/buttons/NormalButton';
 import WarningPopup from '../../components/warningPopup/WarningPopup';
-import { ToastContainer, toast } from 'react-toastify';
+import CreateStudentWindow from './CreateStudentWindow';
+import StudentTable from './student-table';
+import './Student.css';
+import UpdateStudentWindow from './UpdateStudentWindow';
 
 const StudentDashboard = () => {
   const [studentCreatePopUpWindow, setStudentCreatePopUpWindow] = useState(false);
@@ -20,7 +20,6 @@ const StudentDashboard = () => {
 
   const handleSelectedStudent = (student) => {
     setSelectedStudent(student);
-    console.log(selectedStudent);
   };
 
   const handleReloadStudentList = async () => {
@@ -38,7 +37,7 @@ const StudentDashboard = () => {
   const handelDeleteStudent = async () => {
     try {
       setProcessingDeleteStudent(true);
-      const response = await StudentService.deleteStudent(selectedStudent.studentId);
+      const response = await StudentService.deleteStudent(selectedStudent.userId);
       if (response) {
         handleReloadStudentList();
         setShowDeletePopUpWindow(false);
@@ -51,80 +50,77 @@ const StudentDashboard = () => {
   };
 
   return (
-    <div className="student-Dash">
-      <ToastContainer />
-      <div className="student-SearchEvent">
-        <p className="student-mainHead">Student Details</p>
-        <input
-          type="text"
-          placeholder="Search..."
-          style={{
-            width: '150px',
-            padding: '3px 40px',
-            border: '0.5px solid black',
-            borderRadius: '5px',
-            textAlign: 'center',
-          }}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      </div>
-      <div className="student-EventList">
-        <StudentTable
-          handleUpdateStudent={(e) => {
-            setSelectedStudent(e);
-            setStudentUpdatePopUpWindow(true);
-          }}
-          onStudentClick={(e) => handleSelectedStudent(e)}
-          studentList={studentList}
-          search={search}
-        />
-        <div className="student-List-Buttons">
-          <NormalButton
-            handleClick={() => setStudentCreatePopUpWindow(true)}
-            title={'Create'}
-            titlewithiconicon={<MdCreateNewFolder className="student-buttonIcon" />}
-          />
-          <NormalButton
-            title={'Delete'}
-            titlewithiconicon={<RiDeleteBin5Fill className="student-buttonIcon" />}
-            handleClick={() => {
-              if (!selectedStudent) {
-                toast.error('Please select a student to delete.');
-              } else {
-                setShowDeletePopUpWindow(true);
-              }
+    <div className="row">
+      <div className="col">
+        <div className="row my-2 justify-content-between">
+          <div className="col-auto fs-3 fw-bold ms-4">Student Details</div>
+          <div className="col-auto">
+            <div className="row align-items-center">
+              <div className="col-auto">
+                <NormalButton
+                  title={'Create Staff'}
+                  handleClick={() => setStudentCreatePopUpWindow(true)}
+                  icon={<FaPlus className="buttonIcon" />}
+                />
+              </div>
+              <div className="col-auto">
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  style={{
+                    width: '150px',
+                    padding: '3px 40px',
+                    border: '0.5px solid black',
+                    borderRadius: '5px',
+                    textAlign: 'center',
+                  }}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <AppContentCard>
+          <StudentTable
+            handleUpdateStudent={(e) => {
+              setSelectedStudent(e);
+              setStudentUpdatePopUpWindow(true);
             }}
+            handleDeleteStudent={() => setShowDeletePopUpWindow(true)}
+            onStudentClick={(e) => handleSelectedStudent(e)}
+            studentList={studentList}
+            search={search}
           />
-        </div>
+        </AppContentCard>
+        {studentCreatePopUpWindow && (
+          <div className="student-Create-Event-Dashboard">
+            <CreateStudentWindow
+              handleCloseCreateStudentWindow={() => setStudentCreatePopUpWindow(false)}
+              handleReloadStudentList={handleReloadStudentList}
+            />
+          </div>
+        )}
+        {studentUpdatePopUpWindow && (
+          <div className="student-Create-Event-Dashboard">
+            <UpdateStudentWindow
+              handleCloseUpdateStudentWindow={() => setStudentUpdatePopUpWindow(false)}
+              student={selectedStudent}
+              handleReloadStudentList={handleReloadStudentList}
+            />
+          </div>
+        )}
+        {showDeletePopUpWindow && selectedStudent && (
+          <div className="student-creation-delete-popup-window">
+            <WarningPopup
+              handleOk={handelDeleteStudent}
+              handleCloseWarningWindow={() => setShowDeletePopUpWindow(false)}
+              buttonText={'Delete'}
+              titleText={'Are you sure you want to delete this student?'}
+              processing={processingDeleteStudent}
+            />
+          </div>
+        )}
       </div>
-      {studentCreatePopUpWindow && (
-        <div className="student-Create-Event-Dashboard">
-          <CreateStudentWindow
-            handleCloseCreateStudentWindow={() => setStudentCreatePopUpWindow(false)}
-            handleReloadStudentList={handleReloadStudentList}
-          />
-        </div>
-      )}
-      {studentUpdatePopUpWindow && (
-        <div className="student-Create-Event-Dashboard">
-          <UpdateStudentWindow
-            handleCloseUpdateStudentWindow={() => setStudentUpdatePopUpWindow(false)}
-            student={selectedStudent}
-            handleReloadStudentList={handleReloadStudentList}
-          />
-        </div>
-      )}
-      {showDeletePopUpWindow && selectedStudent && (
-        <div className="student-creation-delete-popup-window">
-          <WarningPopup
-            handleOk={handelDeleteStudent}
-            handleCloseWarningWindow={() => setShowDeletePopUpWindow(false)}
-            buttonText={'Delete'}
-            titleText={'Are you sure you want to delete this student?'}
-            processing={processingDeleteStudent}
-          />
-        </div>
-      )}
     </div>
   );
 };

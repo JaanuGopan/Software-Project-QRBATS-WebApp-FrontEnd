@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import NormalButton from '../../components/layout/AdminDashboardComponent/NormalButton';
+import React, { useContext, useEffect, useState } from 'react';
 import { MdCreateNewFolder } from 'react-icons/md';
-import ModuleTable from './ModuleTable';
+import { toast } from 'react-toastify';
 import ModuleService from '../../api/services/ModuleService';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../redux/features/userSlice';
-import ModuleUpdate from './ModuleUpdate';
-import { RiDeleteBin5Fill } from 'react-icons/ri';
-import './ModulePage.css';
-import ModuleCreate from './ModuleCreate';
-import { ToastContainer, toast } from 'react-toastify';
+import AppContentCard from '../../components/app-content-card/app-content-card';
+import NormalButton from '../../components/buttons/NormalButton';
 import WarningPopup from '../../components/warningPopup/WarningPopup';
+import { AuthContext } from '../../config/AuthProvider';
+import ModuleTable from './module-table';
+import ModuleCreate from './ModuleCreate';
+import './ModulePage.css';
+import ModuleUpdate from './ModuleUpdate';
 
 const ModulePage = () => {
-  const user = useSelector(selectUser);
+  const { user } = useContext(AuthContext);
   const { userId } = user || {};
 
   const [showModuleTable, setShowModuleTable] = useState(true);
@@ -31,13 +30,11 @@ const ModulePage = () => {
 
   const handleModuleClick = (module) => {
     setSelectedModule(module);
-    console.log('Selected Module:', module);
   };
 
   const handleReloadModuleList = async () => {
     ModuleService.getModulesByUserId(userId).then((modules) => {
       setModuleList(modules);
-      console.log(modules);
     });
   };
 
@@ -69,10 +66,6 @@ const ModulePage = () => {
   };
 
   const handleOpenDeletePopUpWindow = () => {
-    if (!selectedModule) {
-      toast.error('Please select a module to delete.');
-      return;
-    }
     setShowDeleteModuleWindow(true);
   };
 
@@ -88,7 +81,6 @@ const ModulePage = () => {
       );
       if (response.status === 200) {
         toast.success('Module Created Successfully ', response.data.moduleName);
-        console.log(response);
         handleReloadModuleList();
         setShowModuleCreateWindow(false);
       } else if (response.status === 400) {
@@ -103,81 +95,75 @@ const ModulePage = () => {
   };
 
   return (
-    <div>
-      <ToastContainer />
-      <div className="module-Dash">
-        <div className="module-SearchEvent">
-          <p className="module-mainHead">Modules</p>
-          <input
-            type="text"
-            placeholder="Search..."
-            style={{
-              width: '150px',
-              padding: '3px 40px',
-              border: '0.5px solid black',
-              borderRadius: '5px',
-              textAlign: 'center',
-            }}
-            onChange={(e) => setSearchModule(e.target.value)}
-          />
+    <div className="row">
+      <div className="col">
+        <div className="row my-3 justify-content-between align-items-center">
+          <div className="col-auto fs-4 fw-bold ms-4">Modules</div>
+          <div className="col-auto">
+            <div className="row align-items-center">
+              <div className="col">
+                <NormalButton
+                  handleClick={() => {
+                    setShowModuleCreateWindow(true);
+                  }}
+                  title={'Create'}
+                  icon={<MdCreateNewFolder className="buttonIcon" />}
+                />
+              </div>
+              <div className="col">
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  style={{
+                    width: '150px',
+                    padding: '3px 40px',
+                    border: '0.5px solid black',
+                    borderRadius: '5px',
+                    textAlign: 'center',
+                  }}
+                  onChange={(e) => setSearchModule(e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="module-ModuleList">
+        <AppContentCard>
           <ModuleTable
             modulesList={moduleList}
             onModuleClick={handleModuleClick}
             searchModule={searchModule}
-            handleDeleteModule={() => {}}
-            handleOpenCreateModuleWindow={() => {}}
+            handleDeleteModule={handleOpenDeletePopUpWindow}
             handleOpenUpdateModuleWindow={() => {
               setShowUpdateModuleWindow(true);
             }}
           />
-
-          <div className="module-List-Buttons">
-            <NormalButton
-              handleClick={() => {
-                setShowModuleCreateWindow(true);
-              }}
-              title={'Create'}
-              titlewithiconicon={<MdCreateNewFolder className="buttonIcon" />}
-            />
-            <NormalButton
-              title={'Delete'}
-              handleClick={handleOpenDeletePopUpWindow}
-              titlewithiconicon={<RiDeleteBin5Fill className="buttonIcon" />}
-            />
-          </div>
-        </div>
+        </AppContentCard>
         {showUpdateModuleWindow && (
-          <div
-            className="Module-Create-module-Dashboard"
-            handleClick={() => {
-              setShowModuleCreateWindow(false);
-            }}
-          >
-            <ModuleUpdate
-              handleCloseModuleUpdateWindow={() => {
-                setShowUpdateModuleWindow(false);
-              }}
-              handleReloadModuleList={handleReloadModuleList}
-              selectedModule={selectedModule}
-            />
+          <div className="row align-items-center justify-content-center module-create-or-update-modal-container">
+            <div className="col">
+              <ModuleUpdate
+                handleCloseModuleUpdateWindow={() => {
+                  setShowUpdateModuleWindow(false);
+                }}
+                handleReloadModuleList={handleReloadModuleList}
+                selectedModule={selectedModule}
+              />
+            </div>
           </div>
         )}
         {showModuleCreateWindow && (
-          <div
-            className="Module-Create-module-Dashboard"
-            handleClick={() => {
-              setShowUpdateModuleWindow(false);
-            }}
-          >
-            <ModuleCreate
-              handleCloseModuleCreateWindow={() => {
-                setShowModuleCreateWindow(false);
-              }}
-              handleReloadModuleList={handleReloadModuleList}
-              handleModuleCreate={(moduleData) => handleModuleCreate(moduleData)}
-            />
+          <div className="container-fluid align-items-center justify-content-center module-create-or-update-modal-container">
+            <div className="row h-100">
+              <div className="col">
+                <ModuleCreate
+                  handleCloseModuleCreateWindow={() => {
+                    setShowModuleCreateWindow(false);
+                  }}
+                  handleReloadModuleList={handleReloadModuleList}
+                  handleModuleCreate={(moduleData) => handleModuleCreate(moduleData)}
+                />
+              </div>
+            </div>
           </div>
         )}
         {showDeleteModuleWindow && selectedModule && (

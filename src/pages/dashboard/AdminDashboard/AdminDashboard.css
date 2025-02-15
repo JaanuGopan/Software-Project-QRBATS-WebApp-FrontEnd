@@ -1,0 +1,463 @@
+@media screen and (max-width: 1800px) {
+  .mainHead {
+    font-size: x-large;
+    margin-top: 5px;
+    padding-left: 35px;
+  }
+  .informationText {
+    font-size: large;
+  }
+  .buttonIcon {
+    height: 1.5rem;
+    width: 1.5rem;
+    size: 1.5rem;
+  }
+  .NormalButton {
+    height: 2.5rem;
+    padding: 0.2vw;
+    padding-left: 1vw;
+  }
+  .NormalButtonLabel {
+    font-size: larger;
+    padding: 1vw;
+    margin-bottom: 0px;
+  }
+  .admin-Dash {
+    margin: 0px;
+  }
+  .SearchEvent {
+    margin-right: 35px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .mainHead {
+    font-size: large;
+    margin-top: 10px;
+    padding-left: 35px;
+  }
+  .informationText {
+    font-size: large;
+  }
+  .buttonIcon {
+    height: 2rem;
+    width: 2rem;
+    size: 2rem;
+  }
+  .NormalButtonLabel {
+    font-size: small;
+    margin-bottom: 0px;
+  }
+  .admin-Dash {
+    margin: 0px;
+  }
+  .SearchEvent {
+    margin-right: 35px;
+  }
+}
+
+@media screen and (max-width: 426px) {
+  .informationText {
+    font-size: medium;
+  }
+  .NormalButtonLabel {
+    font-size: small;
+    margin-bottom: 0px;
+  }
+  .buttonIcon {
+    height: 1rem;
+    width: 1rem;
+    size: 1rem;
+  }
+  .admin-Dash {
+    margin: 0px;
+  }
+  .SearchEvent {
+    margin-right: 0px;
+  }
+  .mainHead {
+    padding-left: 5px;
+  }
+  .buttonIcon {
+    height: 1.5rem;
+    width: 1.5rem;
+    size: 1.5rem;
+  }
+}
+
+.nodata {
+  height: auto;
+  width: 100%;
+  display: flex;
+  padding-top: 35%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-Dash {
+  flex-grow: 1;
+  height: 90vh;
+  width: 100%;
+}
+
+.mainHead {
+  color: #0d295e;
+  font-weight: bold;
+  margin-bottom: 0px;
+  margin-left: 10px;
+}
+
+.mainInform {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.inform {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: stretch;
+  border: 3px solid white;
+  border-radius: 10px;
+  padding: 2%;
+  width: 20vw;
+  height: 20vh;
+  margin: 1%;
+  max-width: 300px;
+  min-width: 115px;
+  background: linear-gradient(#0063a0, rgba(0, 100, 160, 0.8));
+}
+
+.inform1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.AdminEventList {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding: 10px;
+  width: 100%;
+  height: 75vh;
+  border-top: 5px solid #0365a1;
+  box-shadow: 0.5px 2px 0.5px 0.5px rgba(25, 65, 85, 0.5);
+  border-radius: 10px;
+  background-color: #fafafa;
+}
+
+.tableDesign {
+  /* position: relative;
+  height: 350px;
+  display: block;*/
+  width: 100%;
+  height: -webkit-fill-available;
+  height: 100%;
+}
+
+.tableArrangement {
+  display: block;
+  overflow: hidden;
+  table-layout: auto;
+  border-collapse: collapse;
+  box-shadow: 0px 5px 5px #ccc;
+  border-radius: 10px;
+  white-space: nowrap;
+  width: 100em;
+  max-width: 90%;
+  margin: auto;
+  overflow-x: auto;
+  height: 65vh;
+  overflow-y: auto;
+  border-bottom: 2px solid #0063a0;
+}
+
+.student-tableArrangement {
+  display: block;
+  overflow: hidden;
+  table-layout: auto;
+  border-collapse: collapse;
+  box-shadow: 0px 5px 5px #ccc;
+  border-radius: 10px;
+  white-space: nowrap;
+  width: 100em;
+  max-width: 90%;
+  margin: auto;
+  overflow-x: auto;
+  height: 65vh;
+  overflow-y: auto;
+  border-bottom: 2px solid #0063a0;
+}
+
+.event-report-tableArrangement {
+  display: block;
+  overflow: hidden;
+  table-layout: auto;
+  border-collapse: collapse;
+  box-shadow: 0px 5px 5px #ccc;
+  border-radius: 10px;
+  white-space: nowrap;
+  width: 100em;
+  max-width: 90%;
+  margin: auto;
+  overflow-x: auto;
+  height: 70vh;
+  overflow-y: auto;
+  border-bottom: 2px solid #0063a0;
+}
+
+.tableArrangement thead {
+  position: sticky;
+  top: 0;
+  background-color: #c1e2f9;
+  color: #0d295e;
+  border-bottom: 3px solid #0063a0;
+  text-align: center;
+}
+
+.student-tableArrangement thead {
+  position: sticky;
+  top: 0;
+  background-color: #c1e2f9;
+  color: #0d295e;
+  border-bottom: 3px solid #0063a0;
+  text-align: center;
+}
+
+.event-report-tableArrangement thead {
+  position: sticky;
+  top: 0;
+  background-color: #c1e2f9;
+  color: #0d295e;
+  border-bottom: 3px solid #0063a0;
+  text-align: center;
+}
+
+.tableArrangement th {
+  padding: 0.8rem;
+  text-align: center;
+}
+
+.student-tableArrangement th {
+  padding: 0.8rem;
+  text-align: center;
+}
+
+.event-report-tableArrangement th {
+  padding: 0.8rem;
+  text-align: center;
+}
+
+.tableArrangement td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.student-tableArrangement td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.event-report-tableArrangement td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.tableArrangement tbody {
+  overflow-y: auto;
+}
+
+.student-tableArrangement tbody {
+  overflow-y: auto;
+}
+
+.event-report-tableArrangement tbody {
+  overflow-y: auto;
+}
+
+.tableArrangement tbody tr {
+  border: 0.01px solid rgba(91, 178, 255, 0.608);
+  border-radius: 5px;
+}
+
+.student-tableArrangement tbody tr {
+  border: 0.01px solid rgba(91, 178, 255, 0.608);
+  border-radius: 5px;
+}
+
+.event-report-tableArrangement tbody tr {
+  border: 0.01px solid rgba(91, 178, 255, 0.608);
+  border-radius: 5px;
+}
+
+.tableArrangement tbody tr:hover {
+  background-color: azure;
+  cursor: pointer;
+}
+
+.student-tableArrangement tbody tr:hover {
+  background-color: azure;
+  cursor: pointer;
+}
+
+.event-report-tableArrangement tbody tr:hover {
+  background-color: azure;
+  cursor: pointer;
+}
+
+.expand {
+  width: 100%;
+}
+
+.List-Buttons {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-around;
+  padding: 1rem;
+}
+
+.NormalButton {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  background-color: #0063a0;
+  border-radius: 10px;
+}
+
+.NormalButton:hover {
+  border: 1px solid #025587;
+  background-color: #2273a5;
+}
+
+.EditButton {
+  border-radius: 30px;
+  background-color: #0063a0;
+  color: white;
+  padding: 10px 15px;
+}
+
+.EditButton:hover {
+  background-color: white;
+  color: #0063a0;
+  border: 1px solid #0063a0;
+}
+
+.Admin-Create-Event-Dashboard {
+  position: fixed;
+  z-index: 4;
+  left: 0;
+  top: 0;
+  overflow-y: scroll;
+  width: 100%;
+  height: 100vh;
+  padding-top: 5vh;
+  padding-bottom: 5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.EditIcon {
+  padding: 0px;
+}
+
+.qr-code {
+  background-color: white;
+  max-width: 60vw;
+}
+.lecturer-dashboard-toggle-buttons-search {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.lecturer-dashboard-toggle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.lecturer-dashboard-toggle-label {
+  font-weight: bold;
+  background-color: white;
+}
+
+.size-box {
+  display: flex;
+  flex-direction: row;
+  width: 10px;
+}
+
+.SearchEvent {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 10px;
+  width: 90%;
+  align-self: center;
+  justify-self: center;
+}
+
+.selected-row {
+  background-color: #f0ffff;
+  /* Change the background color to lightblue */
+}
+
+.ViewButton {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  padding: 5px 10px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+.ViewButton:hover {
+  background-color: white;
+  color: #0063a0;
+  border: 1px solid #0063a0;
+}
+
+.ViewButtonLabel {
+  margin: 0px;
+  padding-left: 3px;
+}
+
+.delete-event-container {
+  position: fixed;
+  z-index: 4;
+  left: 0;
+  top: 0;
+  overflow-y: scroll;
+  width: 100%;
+  height: 100vh;
+  padding-top: 5vh;
+  padding-bottom: 5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
