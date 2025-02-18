@@ -58,7 +58,7 @@ const StudentDashboard = () => {
             <div className="row align-items-center">
               <div className="col-auto">
                 <NormalButton
-                  title={'Create Staff'}
+                  title={'Create Student'}
                   handleClick={() => setStudentCreatePopUpWindow(true)}
                   icon={<FaPlus className="buttonIcon" />}
                 />
