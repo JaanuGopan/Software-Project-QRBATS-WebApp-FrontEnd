@@ -2,34 +2,26 @@ import { CircularProgress } from '@mui/material';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import QRCode from 'qrcode.react';
-import React, { useContext, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
+import { useSelector } from 'react-redux';
 import EventService from '../../api/services/EventService';
 import eventCreationImage from '../../assets/Images/signin/Signin.jpeg';
-import { AuthContext } from '../../config/AuthProvider';
 import './EventCreation/EventCreation.css';
 
-const AdminEventCreation = ({
-  handleCloseCreateEventWindow,
-  reloadEventList,
-  locationList,
-  showCloseButton,
-}) => {
+const AdminEventCreation = ({ handleCloseCreateEventWindow, reloadEventList, showCloseButton }) => {
+  const locationList = useSelector((state) => state.locationList);
+
   const [eventId, setEventId] = useState('');
   const [eventName, setEventName] = useState('');
-  const [moduleName, setModuleName] = useState(null);
   const [eventDate, setEventDate] = useState('');
   const [eventTime, setEventTime] = useState('');
   const [eventEndTime, setEventEndTime] = useState('');
-  const [eventVenue, setEventVenue] = useState('');
+  const [locationId, setLocationId] = useState();
   const [showQRCode, setShowQRCode] = useState(false);
-  const [eventRole, setEventRole] = useState('EVENT');
-  const [eventAssignedUserId, setEventAssignedUserId] = useState(null);
-
-  const [showModuleNameInput, setShowModuleNameInput] = useState(true);
+  const [processing, setProcessing] = useState(false);
   const [title, setTitle] = useState('Event');
-
   const qrCodeRef = useRef(null);
 
   const notifySuccess = () => toast.success('Successfully Event Created!');
@@ -39,16 +31,8 @@ const AdminEventCreation = ({
     setEventDate('');
     setEventTime('');
     setEventEndTime('');
-    setEventVenue('');
-    setEventAssignedUserId(null);
-    setEventRole('EVENT');
+    setLocation([]);
   };
-
-  // Destructure user object for cleaner code
-  const { user } = useContext(AuthContext);
-  const { userId } = user || {};
-
-  const [processing, setProcessing] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -59,25 +43,15 @@ const AdminEventCreation = ({
         eventDate,
         eventTime,
         eventEndTime,
-        eventVenue,
-        eventRole,
-        moduleName,
-        userId
+        locationId
       );
       if (response.status === 200) {
         setEventId(response.data.eventId);
         notifySuccess();
         reloadEventList();
         setShowQRCode(true);
-      } else if (response.status === 400) {
-        toast.error(response.data);
-      } else {
-        toast.error('Error In Event Creation. ');
       }
       clearEventDetails();
-    } catch (error) {
-      console.error('Event failed', error);
-      toast.error('Error In Event Creation. ');
     } finally {
       setProcessing(false);
     }
@@ -166,13 +140,13 @@ const AdminEventCreation = ({
                 </label>
                 <select
                   required
-                  value={eventVenue}
-                  onChange={(e) => setEventVenue(e.target.value)}
+                  value={locationId}
+                  onChange={(e) => setLocationId(e.target.value)}
                   className="form-control mb-2"
                 >
                   <option value="">Select Venue</option>
                   {locationList.map((option, index) => (
-                    <option key={index} value={option.locationName}>
+                    <option key={index} value={option.locationId}>
                       {option.locationName}
                     </option>
                   ))}

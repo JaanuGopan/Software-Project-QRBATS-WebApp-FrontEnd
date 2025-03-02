@@ -11,11 +11,9 @@ class LectureService {
     }
   };
 
-  static getAllLecturesByUserId = async (userId) => {
+  static getAllLecturesByUserId = async () => {
     try {
-      const response = await axios.get(
-        `/api/v1/lecture/get-all-lecture-by-userId?userId=${userId}`
-      );
+      const response = await axios.get(`/api/v1/lecture/get-all-lecture-for-user`);
       if (response.data) {
         return response.data;
       }
@@ -93,17 +91,10 @@ class LectureService {
   }
 
   static async getAllLectureWithDateByLectureId(lectureId) {
-    try {
-      const response = await axios.get(
-        `/api/v1/lecture-attendance/get-all-lecture-with-date-for-day-lecture/${lectureId}`
-      );
-
-      return response;
-    } catch (error) {
-      if (error.response.status === 400) {
-        return error.response;
-      }
-    }
+    const response = await axios.get(
+      `/api/v1/lecture-attendance/get-all-lecture-with-date-for-day-lecture/${lectureId}`
+    );
+    return response;
   }
 }
 

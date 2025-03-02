@@ -1,9 +1,14 @@
 import React from 'react';
 import './normal-button.css';
 
-const NormalButton = ({ title, icon, handleClick }) => {
+const NormalButton = ({ title, icon, handleClick, type = 'normal' }) => {
   return (
-    <div className="row my-1 align-items-center normal-button-container" onClick={handleClick}>
+    <div
+      className={
+        'row my-1 align-items-center normal-button-container' + (type === 'save' ? ' save' : '')
+      }
+      onClick={handleClick}
+    >
       <div className="col">
         <div className="row py-2">
           <div className="col-auto pe-0">{icon}</div>

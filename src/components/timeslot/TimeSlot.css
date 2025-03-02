@@ -1,0 +1,74 @@
+.timeslot-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #f9f9f9;
+  margin-bottom: 16px;
+}
+
+.timeslot-card .row {
+  margin-bottom: 8px;
+}
+
+.timeslot-card .col {
+  display: flex;
+  align-items: center;
+}
+
+.timeslot-card select,
+.timeslot-card input[type='time'],
+.timeslot-card input[type='date'] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+}
+
+.timeslot-card .verify-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: #0063a0;
+}
+
+.timeslot-card .delete-timeslot-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: #e44949;
+}
+
+.timeslot-card .delete-timeslot-btn :hover{
+  color: red;
+}
+
+.timeslot-card .date-btn {
+  background: white;
+  color: #0063a0;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.selected-date {
+  display: flex;
+  align-items: center;
+  background: white;
+  color: #0063a0;
+  border-radius: 4px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  border: 1px solid #0063a0;
+}
+
+.selected-date .delete-btn {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+  font-size: 16px;
+}

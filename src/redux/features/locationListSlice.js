@@ -2,14 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 
 export const locationListSlice = createSlice({
   name: 'locationList',
-  initialState: ['NCC', 'LT1', 'LT2', 'Auditorium', 'DEIE', 'DMME', 'DCEE'],
+  initialState: [],
   reducers: {
     setLocationList: (state, action) => {
-      state = [];
-      state.push(...state, action.payload);
+      return action.payload;
     },
-    resetLocationList: (state) => {
-      state = [];
+    resetLocationList: () => {
+      return [];
     },
   },
 });

@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
-import Select from 'react-select';
-import ModuleService from '../../api/services/ModuleService';
 import { Button, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import Select from 'react-select';
 import { toast } from 'react-toastify';
-import { AuthContext } from '../../config/AuthProvider';
+import ModuleService from '../../api/services/ModuleService';
 
 const LeftContainerLectureCreation = ({
   getModuleCode,
@@ -15,11 +14,8 @@ const LeftContainerLectureCreation = ({
   onDayChange,
   handleGetAvailableLecturesForModule,
 }) => {
-  const { user } = useContext(AuthContext);
-  const { userId, departmentId } = user || {};
-
   const handleGetModulesList = async () => {
-    const response = await ModuleService.getModulesByUserId(userId);
+    const response = await ModuleService.getModulesByUserId();
     if (response) {
       const moduleList = response.map((module) => ({
         value: module.moduleId,

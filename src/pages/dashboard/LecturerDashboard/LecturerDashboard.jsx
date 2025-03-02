@@ -1,14 +1,12 @@
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import EventService from '../../../api/services/EventService';
 import LectureService from '../../../api/services/LectureService';
-import LocationService from '../../../api/services/LocationService';
 import AppContentCard from '../../../components/app-content-card/app-content-card';
 import EventTable from '../../../components/tables/event-table';
 import LecturesTable from '../../../components/tables/lectures-table';
 import WarningPopup from '../../../components/warningPopup/WarningPopup';
-import { AuthContext } from '../../../config/AuthProvider';
 import AdminUpdateEvent from '../../Event/AdminUpdateEvent';
 import LecturesEdit from '../../Lectures/LecturesEdit';
 import './LectureDashboard.css';
@@ -22,18 +20,14 @@ const LecturerDashboard = () => {
   const [selectedEventLecture, setSelectedEventLecture] = useState(null);
   const [searchLecture, setSearchLecture] = useState('');
   const [selectTable, setSelectTable] = useState('Lectures');
-  const [venuesList, setVenuesList] = useState([]);
   const [showEditLectureWindow, setShowEditLectureWindow] = useState(false);
   const [editLecture, setEditLecture] = useState(null);
   const [processingDeleteLecture, setProcessingDeleteLecture] = useState(false);
   const [lectureList, setLectureList] = useState([]);
   const [processingDeleteEvent, setProcessingDeleteEvent] = useState(false);
 
-  const { user } = useContext(AuthContext);
-  const { userId } = user || {};
-
   const handleReloadEventLectureList = async () => {
-    EventService.getEventByUserID(userId)
+    EventService.getEventByUserID()
       .then((list) => {
         setEventLectureList(list);
       })
@@ -44,7 +38,7 @@ const LecturerDashboard = () => {
   };
 
   const handleReloadLectureList = async () => {
-    const response = await LectureService.getAllLecturesByUserId(userId);
+    const response = await LectureService.getAllLecturesByUserId();
     if (response) {
       setLectureList(response);
     }
@@ -81,14 +75,8 @@ const LecturerDashboard = () => {
     }
   };
 
-  const handleGetLocationNameList = async () => {
-    const response = await LocationService.getAllLocationNames();
-    setVenuesList(response);
-  };
-
   useEffect(() => {
     handleReloadEventLectureList();
-    handleGetLocationNameList();
     handleReloadLectureList();
   }, []);
 
@@ -199,7 +187,6 @@ const LecturerDashboard = () => {
               handleCloseEventUpdateWindow={() => setShowUpdateLecturePopup(false)}
               selectedEvent={selectedEventLecture}
               reloadEventList={handleReloadEventLectureList}
-              locationNameList={venuesList}
             />
           </div>
         )}
@@ -212,7 +199,6 @@ const LecturerDashboard = () => {
                 setEditLecture(null);
               }}
               handleReload={handleReloadLectureList}
-              locationNameList={venuesList}
               reloadLecturesList={handleReloadLectureList}
             />
           </div>

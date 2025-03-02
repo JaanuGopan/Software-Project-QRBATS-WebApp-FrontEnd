@@ -1,7 +1,7 @@
 import { CircularProgress } from '@mui/material';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BiSolidPrinter } from 'react-icons/bi';
 import { MdArrowBack } from 'react-icons/md';
 import { toast } from 'react-toastify';
@@ -11,7 +11,6 @@ import AppContentCard from '../../components/app-content-card/app-content-card';
 import NormalButton from '../../components/buttons/NormalButton';
 import EventAttendanceTable from '../../components/layout/AdminDashboardComponent/event-attendance-table';
 import EventReportTable from '../../components/layout/AdminDashboardComponent/event-report-table';
-import { AuthContext } from '../../config/AuthProvider';
 import '../Staff/StaffA.css';
 
 const EventReport = () => {
@@ -21,8 +20,6 @@ const EventReport = () => {
   const [search, setSearch] = useState('');
   const [selectedAttendance, setSelectedAttendance] = useState(null);
   const [attendanceList, setAttendanceList] = useState([]);
-  const { user } = useContext(AuthContext);
-  const { userId } = user || {};
 
   useEffect(() => {
     handleReloadEventList();
@@ -33,7 +30,7 @@ const EventReport = () => {
   };
 
   const handleReloadEventList = async () => {
-    EventService.getEventByUserID(userId)
+    EventService.getEventByUserID()
       .then((events) => {
         setEventList(events);
       })

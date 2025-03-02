@@ -11,7 +11,6 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LectureService from '../../api/services/LectureService';
-import LocationService from '../../api/services/LocationService';
 import InputField from '../../components/textfields/InputBox/InputField';
 
 const RightContainerLectureCreation = ({
@@ -26,16 +25,6 @@ const RightContainerLectureCreation = ({
   const [selectedDay, setSelectedDay] = useState(dayList[0] || '');
   const [times, setTimes] = useState(timesList);
   const maxTimeSlots = 20;
-  const [venueList, setVenuesList] = useState([]);
-
-  const handleGetLocationNameList = async () => {
-    try {
-      const response = await LocationService.getAllLocationNames();
-      setVenuesList(response);
-    } catch (error) {
-      console.error('Error fetching location names:', error);
-    }
-  };
 
   useEffect(() => {
     setTimes((prevTimes) => {
@@ -54,7 +43,6 @@ const RightContainerLectureCreation = ({
       );
       setSelectedDay(dayWithoutTimes || dayList[dayList.length - 1]);
     }
-    handleGetLocationNameList();
   }, [dayList]);
 
   const handleGetAvailableLectureForDay = async (moduleCode, day) => {

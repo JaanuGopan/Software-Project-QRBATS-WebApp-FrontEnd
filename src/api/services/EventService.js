@@ -11,26 +11,14 @@ class EventService {
     }
   }
 
-  static async saveEvent(
-    eventName,
-    eventDate,
-    eventTime,
-    eventEndTime,
-    eventVenue,
-    eventRole,
-    moduleName,
-    userId
-  ) {
+  static async saveEvent(eventName, eventDate, eventStartTime, eventEndTime, locationId) {
     try {
-      const response = await axios.post('/api/v1/event/create', {
+      const response = await axios.post('/api/v1/event/save-event', {
         eventName: eventName,
         eventDate: eventDate,
-        eventTime: eventTime,
+        eventStartTime: eventStartTime,
         eventEndTime: eventEndTime,
-        eventVenue: eventVenue,
-        eventRole: eventRole,
-        eventModuleName: moduleName,
-        eventAssignedUserId: userId,
+        locationId: locationId,
       });
       if (response.status === 200) {
         return response;
@@ -78,9 +66,9 @@ class EventService {
     }
   }
 
-  static async getEventByUserID(userId) {
+  static async getEventByUserID() {
     try {
-      const response = await axios.get(`/api/v1/event/get-event-by-userId?userId=${userId}`);
+      const response = await axios.get(`/api/v1/event/get-all-event-for-user`);
       return response.data;
     } catch (error) {
       console.error('Event Get Failed ', error);

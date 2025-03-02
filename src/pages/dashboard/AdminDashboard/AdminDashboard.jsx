@@ -1,13 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import EventService from '../../../api/services/EventService';
-import LocationService from '../../../api/services/LocationService';
 import AppContentCard from '../../../components/app-content-card/app-content-card';
 import NormalButton from '../../../components/buttons/NormalButton';
 import EventTable from '../../../components/tables/event-table';
 import WarningPopup from '../../../components/warningPopup/WarningPopup';
-import { AuthContext } from '../../../config/AuthProvider';
 import AdminEventCreation from '../../Event/AdminEventCreation';
 import AdminUpdateEvent from '../../Event/AdminUpdateEvent';
 import './AdminDashboard.css';
@@ -17,22 +15,12 @@ const AdminDashboard = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [eventList, setEventList] = useState([]);
   const [search, setSearch] = useState('');
-  const [venuesList, setVenuesList] = useState([]);
   const [showDeleteEventPopup, setShowDeleteEventPopup] = useState(false);
   const [processingDeleteEvent, setProcessingDeleteEvent] = useState(false);
   const [showEventCreationModal, setShowEventCreationModal] = useState(false);
 
-  const { user } = useContext(AuthContext);
-  const { userId } = user || {};
-
-  const handleGetLocationNameList = async () => {
-    const response = await LocationService.getAllLocationNames();
-    setVenuesList(response);
-  };
-
   useEffect(() => {
     handleReloadEventList();
-    handleGetLocationNameList();
   }, []);
 
   const handleEventClick = (event) => {
@@ -65,7 +53,7 @@ const AdminDashboard = () => {
   };
 
   const handleReloadEventList = async () => {
-    EventService.getEventByUserID(userId)
+    EventService.getEventByUserID()
       .then((events) => {
         setEventList(events);
       })
@@ -119,7 +107,6 @@ const AdminDashboard = () => {
             <AdminEventCreation
               handleCloseCreateEventWindow={() => setShowEventCreationModal(false)}
               reloadEventList={handleReloadEventList}
-              locationList={venuesList}
               showCloseButton={true}
             />
           </div>
@@ -130,7 +117,6 @@ const AdminDashboard = () => {
               handleCloseEventUpdateWindow={() => setEventUpdatePopUpWindow(false)}
               selectedEvent={selectedEvent}
               reloadEventList={handleReloadEventList}
-              locationNameList={venuesList}
             />
           </div>
         )}

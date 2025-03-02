@@ -1,5 +1,5 @@
 import { CircularProgress } from '@mui/material';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BiSolidPrinter } from 'react-icons/bi';
 import { MdArrowBack } from 'react-icons/md';
 import { toast } from 'react-toastify';
@@ -8,7 +8,6 @@ import LectureService from '../../api/services/LectureService';
 import ModuleService from '../../api/services/ModuleService';
 import AppContentCard from '../../components/app-content-card/app-content-card';
 import NormalButton from '../../components/buttons/NormalButton';
-import { AuthContext } from '../../config/AuthProvider';
 import LectureReportTable from './LectureReportTable';
 import LectureStudentsAttendanceTable from './LectureStudentsAttendanceTable';
 import LectureWithDateReportTable from './LectureWithDateReportTable';
@@ -17,8 +16,6 @@ import OverallReportTable from './OverallReportTable';
 import './ReportPage.css';
 
 const ReportPage = () => {
-  const { user } = useContext(AuthContext);
-  const { userId } = user || {};
   const [showModuleReportWindow, setShowModuleReportWindow] = useState(true);
   const [showOverallReportWindow, setShowOverallReportWindow] = useState(false);
   const [showLectureReportWindow, setShowLectureReportWindow] = useState(false);
@@ -47,7 +44,7 @@ const ReportPage = () => {
 
   const handleReloadModuleReportList = async () => {
     try {
-      const modulesList = await ModuleService.getModulesByUserId(userId);
+      const modulesList = await ModuleService.getModulesByUserId();
       setModuleReportList(modulesList);
     } catch (error) {
       console.error('Error reloading module report list:', error);

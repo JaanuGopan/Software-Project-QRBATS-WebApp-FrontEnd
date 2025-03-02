@@ -1,67 +1,28 @@
 import { CircularProgress } from '@mui/material';
 import QRCode from 'qrcode.react';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
-import Select from 'react-select';
+import { useSelector } from 'react-redux';
 import EventService from '../../../api/services/EventService';
-import LocationService from '../../../api/services/LocationService';
-import ModuleService from '../../../api/services/ModuleService';
 import eventCreationImage from '../../../assets/Images/designer_pic/Designer_pic4.jpeg';
-import { AuthContext } from '../../../config/AuthProvider';
 import '../../Event/EventCreation/EventCreation.css';
 
 const EventCreation = ({
   handleCloseCreateLectureWindow,
   reloadLectureList,
   hideCloseButton,
-  locationNameList,
   showImage = true,
 }) => {
-  const { user } = useContext(AuthContext);
-  const { userId, departmentId } = user || {};
+  const locationList = useSelector((state) => state.locationList);
   const [eventId, setEventId] = useState('');
   const [eventName, setEventName] = useState('');
-  const [moduleName, setModuleName] = useState('');
   const [eventDate, setEventDate] = useState('');
   const [eventTime, setEventTime] = useState('');
   const [eventEndTime, setEventEndTime] = useState('');
-  const [eventVenue, setEventVenue] = useState('');
+  const [locationId, setLocationId] = useState();
   const [showQRCode, setShowQRCode] = useState(false);
-  const [eventRole, setEventRole] = useState('EVENT');
-  const [eventAssignedUserId, setEventAssignedUserId] = useState(userId);
-  const [title, setTitle] = useState('Event');
-  const [moduleNameList, setModuleNameList] = useState([]);
-
-  const [venueList, setVenuesList] = useState([
-    'NCC',
-    'LT1',
-    'LT2',
-    'Auditorium',
-    'DEIE',
-    'DMME',
-    'DCEE',
-  ]);
-
-  const handleGetModulesList = async () => {
-    const response = await ModuleService.getAllModulesByDepartmentId(departmentId);
-    if (response) {
-      const moduleList = response.map((module) => ({
-        value: module.moduleId,
-        label: module.moduleCode,
-      }));
-      setModuleNameList(moduleList);
-    }
-  };
-
-  const handleGetLocationNameList = async () => {
-    try {
-      const response = await LocationService.getAllLocationNames();
-      setVenuesList(response);
-    } catch (error) {
-      console.error('Error fetching location names:', error);
-    }
-  };
+  const [processingCreateEvent, setProcessingCreateEvent] = useState(false);
 
   const qrCodeRef = useRef(null);
 
@@ -72,13 +33,7 @@ const EventCreation = ({
     setEventDate('');
     setEventTime('');
     setEventEndTime('');
-    setEventVenue('');
-    setEventAssignedUserId(null);
-    setEventRole('LECTURE');
-    setModuleName(null);
   };
-
-  const [processingCreateEvent, setProcessingCreateEvent] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -89,10 +44,7 @@ const EventCreation = ({
         eventDate,
         eventTime,
         eventEndTime,
-        eventVenue,
-        eventRole,
-        eventRole === 'LECTURE' ? moduleName.label : '',
-        userId
+        locationId
       );
       if (response.status === 200) {
         setEventId(response.eventId);
@@ -131,23 +83,7 @@ const EventCreation = ({
   };
 
   const qrCodeDetails = JSON.stringify(eventDetails);
-
   const [qrCodeWindow, setQrCodeWindow] = useState(false);
-
-  const [selectedButton, setSelectedButton] = useState(2);
-
-  const handleSelectedButton = (button) => {
-    setSelectedButton(button);
-    if (button === 2) {
-      setEventRole('EVENT');
-      setModuleName(null);
-      setTitle('Event');
-    } else {
-      setEventRole('LECTURE');
-      setTitle('Lecture');
-    }
-  };
-
   const today = new Date().toISOString().split('T')[0];
 
   const handleCloseQrCodeWindow = () => {
@@ -156,25 +92,18 @@ const EventCreation = ({
     handleCloseCreateLectureWindow();
   };
 
-  useEffect(() => {
-    handleGetModulesList();
-    handleGetLocationNameList();
-  }, []);
-
   return (
     <div className="event-main-container1">
       <Toaster />
       {!hideCloseButton && (
         <div className="event-create-title-close-button">
-          <h3 className="event-create-title">Create {` ${title}`}</h3>
+          <h3 className="event-create-title">Create Event</h3>
           <div className="event-create-close-button" onClick={handleCloseCreateLectureWindow}>
             <IoMdCloseCircleOutline id="close-icon" />
           </div>
         </div>
       )}
-      {hideCloseButton && (
-        <h3 className="event-create-title-without-close">Create {` ${title}`}</h3>
-      )}
+      {hideCloseButton && <h3 className="event-create-title-without-close">Create Event</h3>}
       <div className="eventCreation-field">
         {showImage && <img src={eventCreationImage} className="Create-logo" alt="Logo" />}
         <div className="eventCreation-input-field">
@@ -185,42 +114,25 @@ const EventCreation = ({
           /> */}
           <form onSubmit={handleSubmit}>
             <div className="input-with-icon">
-              <label className="date-label" htmlFor="moduleCode">
-                {`${title} Name`}
+              <label className="date-label" htmlFor="eventName">
+                {`Event Name`}
               </label>
               <input
                 required
                 type="text"
                 id="eventName"
                 name="eventName"
-                placeholder={`${title} Name`}
+                placeholder={`Event Name`}
                 className="form-control mb-2"
                 value={eventName}
                 onChange={(e) => setEventName(e.target.value)}
               />
             </div>
-
-            {selectedButton === 1 && (
-              <div className="input-with-icon">
-                <label className="date-label" htmlFor="moduleCode">
-                  {`Module Code`}
-                </label>
-                <Select
-                  required
-                  id="moduleName"
-                  name="moduleName"
-                  options={moduleNameList}
-                  onChange={(e) => setModuleName(e)}
-                  value={moduleName}
-                  placeholder={'Select Module Code'}
-                />
-              </div>
-            )}
             <div className="date-div">
               <div className="eventCreation-form">
                 <div>
                   <label className="date-label" htmlFor="eventDate">
-                    {`${title} Starting Date`}
+                    {`Event Starting Date`}
                   </label>
                   <input
                     required
@@ -243,12 +155,12 @@ const EventCreation = ({
                 <select
                   required
                   value={eventVenue}
-                  onChange={(e) => setEventVenue(e.target.value)}
+                  onChange={(e) => setLocationId(e.target.value)}
                   className="form-control mb-2"
                 >
                   <option value="">Select Venue</option>
-                  {venueList.map((option, index) => (
-                    <option key={index} value={option.locationName}>
+                  {locationList.map((option, index) => (
+                    <option key={index} value={option.locationId}>
                       {option.locationName}
                     </option>
                   ))}
@@ -259,28 +171,28 @@ const EventCreation = ({
             <div className="eventCreation-form">
               <div>
                 <label className="form-label" htmlFor="eventDate">
-                  {`${title} Starting Time`}
+                  {`Event Starting Time`}
                 </label>
                 <input
                   required
                   type="time"
                   value={eventTime}
                   onChange={(e) => setEventTime(e.target.value)}
-                  placeholder={`${title} Time`}
+                  placeholder={`Event Time`}
                   className="form-control mb-2"
                 />
               </div>
               <div className="eventCreation-form">
                 <div>
                   <label className="form-label" htmlFor="eventEndTime">
-                    {`${title} End Time`}
+                    {`Event End Time`}
                   </label>
                   <input
                     required
                     type="time"
                     value={eventEndTime}
                     onChange={(e) => setEventEndTime(e.target.value)}
-                    placeholder={`${title} End Time`}
+                    placeholder={`Event End Time`}
                     className="form-control mb-2"
                   />
                 </div>
@@ -298,7 +210,7 @@ const EventCreation = ({
                 type="submit"
                 className="btn btn-success w-100 mt-2"
               >
-                Create {` ${title}`}
+                Create Event
               </button>
             )}
           </form>
@@ -323,7 +235,7 @@ const EventCreation = ({
                 />
               </div>
               <div>
-                <p className="text-center">Scan this QR code to join {title}</p>
+                <p className="text-center">Scan this QR code to join the event</p>
               </div>
               <div className="row-center">
                 <div className="QRbutton">

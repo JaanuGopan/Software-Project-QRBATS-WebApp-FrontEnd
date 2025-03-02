@@ -73,8 +73,6 @@ const EventCreateDashboard = () => {
         setShowQRCode(true);
       }
       notifySuccess();
-    } catch (error) {
-      console.error('Event failed', error);
     } finally {
       setProcessing(false);
     }

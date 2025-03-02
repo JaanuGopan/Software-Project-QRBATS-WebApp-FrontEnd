@@ -5,7 +5,9 @@ import LocationService from '../../api/services/LocationService';
 import Navbar from '../../components/layout/navbar/navbar';
 import SideBar from '../../components/layout/sidebar/sidebar';
 import { AuthContext } from '../../config/AuthProvider';
+import { setLocationList } from '../../redux/features/locationListSlice';
 import { resetSideBarIndex } from '../../redux/features/mainNavigationSlice';
+import CalendarPage from '../calendar-page/calender-page';
 import AdminDashboard from '../dashboard/AdminDashboard/AdminDashboard';
 import EventCreationDashboard from '../dashboard/LecturerDashboard/even-creation-dashboard';
 import LecturerDashboard from '../dashboard/LecturerDashboard/LecturerDashboard';
@@ -16,11 +18,11 @@ import ModulePage from '../Module/ModulePage';
 import ReportPage from '../ReportPage/ReportPage';
 import Setting from '../Setting/Setting';
 import StaffDashboard from '../Staff/StaffDashboard';
-import '../StaffMainNavigation/StaffMainNavigation.css';
 import StudentDashboard from '../Student/StudentDashboard';
+import Timetable from '../timetable/timetable';
 import './MainNavigation.css';
 
-function MainNavigationPage() {
+const MainNavigationPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const sideBarIndex = useSelector((state) => state.mainNavigation);
@@ -42,7 +44,6 @@ function MainNavigationPage() {
     logout();
   };
 
-  // If user is already logged in, redirect to mainNavigation
   useEffect(() => {
     if (!user) {
       navigate('/signin');
@@ -53,16 +54,49 @@ function MainNavigationPage() {
     }
   }, [user, navigate]);
 
+  useEffect(() => {
+    LocationService.getAllLocationNames().then((res) => {
+      dispatch(setLocationList(res));
+    });
+  }, [dispatch]);
+
   const [isHidden, setIsHidden] = useState(false);
   const handleShow = () => {
-    if (isHidden) {
-      setIsHidden(false);
-    } else {
-      setIsHidden(true);
-    }
+    setIsHidden(!isHidden);
   };
   const handleClose = () => {
     setIsHidden(true);
+  };
+
+  const renderContent = () => {
+    const lecturerMenu = [
+      <LecturerDashboard />,
+      <Timetable />,
+      <LectureCreationPage />,
+      <EventCreationDashboard />,
+      <ModulePage />,
+      <ReportPage />,
+      <EventReport />,
+      <CalendarPage />,
+      <Setting />,
+    ];
+
+    const adminMenu = [
+      <AdminDashboard />,
+      <StaffDashboard />,
+      <StudentDashboard />,
+      <EventReport />,
+      null,
+      null,
+      <Setting />,
+    ];
+
+    if (role === 'LECTURER') {
+      return lecturerMenu[openMenu];
+    } else if (role === 'ADMIN') {
+      return adminMenu[openMenu];
+    }
+    return null;
   };
 
   return (
@@ -84,32 +118,8 @@ function MainNavigationPage() {
                 role={role}
               />
             </div>
-            <div className="col main-navigation-content-container">
-              {role === 'LECTURER' ? (
-                <>
-                  {openMenu === 0 && <LecturerDashboard />}
-                  {openMenu === 1 && <LectureCreationPage />}
-                  {openMenu === 2 && <EventCreationDashboard />}
-                  {openMenu === 3 && <ModulePage />}
-                  {openMenu === 4 && <ReportPage />}
-                  {openMenu === 5 && <EventReport />}
-                  {openMenu === 6 && <Setting />}
-                </>
-              ) : (
-                <>
-                  {role === 'ADMIN' && (
-                    <>
-                      {openMenu === 0 && <AdminDashboard />}
-                      {openMenu === 1 && <StaffDashboard />}
-                      {openMenu === 2 && <StudentDashboard />}
-                      {openMenu === 3 && <EventReport />}
-                      {openMenu === 6 && <Setting />}
-                    </>
-                  )}
-                </>
-              )}
-            </div>
-            {handleShowLogoutWindow === true && (
+            <div className="col main-navigation-content-container">{renderContent()}</div>
+            {handleShowLogoutWindow && (
               <div className="logout-window">
                 <LogoutConfirmation
                   handleCloseLogoutWindow={() => {
@@ -124,6 +134,6 @@ function MainNavigationPage() {
       </div>
     </div>
   );
-}
+};
 
 export default MainNavigationPage;

@@ -1,20 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdCreateNewFolder } from 'react-icons/md';
 import { toast } from 'react-toastify';
 import ModuleService from '../../api/services/ModuleService';
 import AppContentCard from '../../components/app-content-card/app-content-card';
 import NormalButton from '../../components/buttons/NormalButton';
 import WarningPopup from '../../components/warningPopup/WarningPopup';
-import { AuthContext } from '../../config/AuthProvider';
 import ModuleTable from './module-table';
 import ModuleCreate from './ModuleCreate';
 import './ModulePage.css';
 import ModuleUpdate from './ModuleUpdate';
 
 const ModulePage = () => {
-  const { user } = useContext(AuthContext);
-  const { userId } = user || {};
-
   const [showModuleTable, setShowModuleTable] = useState(true);
   const [showUpdateModuleWindow, setShowUpdateModuleWindow] = useState(false);
   const [showModuleCreateWindow, setShowModuleCreateWindow] = useState(false);
@@ -33,7 +29,7 @@ const ModulePage = () => {
   };
 
   const handleReloadModuleList = async () => {
-    ModuleService.getModulesByUserId(userId).then((modules) => {
+    ModuleService.getModulesByUserId().then((modules) => {
       setModuleList(modules);
     });
   };
@@ -45,11 +41,11 @@ const ModulePage = () => {
 
   const [processingDelete, setProcessingDelete] = useState(false);
 
-  const handleDeleteModule = async () => {
+  const handleDeleteModule = async (moduleId) => {
     try {
       setProcessingDelete(true);
-      const response = await ModuleService.deleteModuleById(selectedModule.moduleId);
-      if (response.status === 200) {
+      const response = await ModuleService.deleteModuleById(moduleId);
+      if (response.status === 204) {
         handleReloadModuleList();
         toast.success('Module Deleted Successfully!');
         setSelectedModule(null);
@@ -71,15 +67,18 @@ const ModulePage = () => {
 
   const handleModuleCreate = async (moduleData) => {
     try {
-      const response = await ModuleService.createModule(
+      const response = await ModuleService.saveModule(
+        null,
         moduleData.moduleCode,
         moduleData.moduleName,
         moduleData.moduleEnrolmentKey,
         moduleData.semester,
         moduleData.departmentId,
-        moduleData.userId
+        moduleData.studentBatch,
+        moduleData.statingDate,
+        moduleData.endingDate
       );
-      if (response.status === 200) {
+      if (response.status === 201) {
         toast.success('Module Created Successfully ', response.data.moduleName);
         handleReloadModuleList();
         setShowModuleCreateWindow(false);
@@ -132,7 +131,7 @@ const ModulePage = () => {
             modulesList={moduleList}
             onModuleClick={handleModuleClick}
             searchModule={searchModule}
-            handleDeleteModule={handleOpenDeletePopUpWindow}
+            handleDeleteModule={(moduleId) => handleOpenDeletePopUpWindow()}
             handleOpenUpdateModuleWindow={() => {
               setShowUpdateModuleWindow(true);
             }}
@@ -169,7 +168,7 @@ const ModulePage = () => {
         {showDeleteModuleWindow && selectedModule && (
           <div className="module-delete-window-container">
             <WarningPopup
-              handleOk={handleDeleteModule}
+              handleOk={() => handleDeleteModule(selectedModule.id)}
               handleCancel={() => {}}
               handleCloseWarningWindow={() => {
                 setShowDeleteModuleWindow(false);

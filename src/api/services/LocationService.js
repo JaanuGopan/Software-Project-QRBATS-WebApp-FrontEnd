@@ -3,7 +3,7 @@ import axios from 'axios';
 class LocationService {
   static getAllLocationNames = async () => {
     try {
-      const response = await axios.get('/api/v1/location/get-all-location-names');
+      const response = await axios.get('/api/v1/location/get-all-location');
       return response.data;
     } catch (error) {
       throw error;
