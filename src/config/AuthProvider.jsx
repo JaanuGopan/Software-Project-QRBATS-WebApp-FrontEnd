@@ -1,5 +1,5 @@
-import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import React, { createContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 export const AuthContext = createContext(null);
@@ -41,9 +41,7 @@ const AuthProvider = ({ children }) => {
 
   // Function to handle logout
   const logout = () => {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('refreshToken');
-    localStorage.removeItem('user');
+    localStorage.clear();
     setAuthToken(null);
     setUser(null);
   };
