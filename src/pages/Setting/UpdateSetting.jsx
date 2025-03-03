@@ -244,14 +244,16 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
                 helperText={errors.userName}
               />
             </div>
-            <div>
-              <label>Change Password</label>
-              <Switch
-                checked={showOldPassword}
-                onChange={handleShowOldPassword}
-                inputProps={{ 'aria-label': 'controlled' }}
-              />
-            </div>
+            {false && (
+              <div>
+                <label>Change Password</label>
+                <Switch
+                  checked={showOldPassword}
+                  onChange={handleShowOldPassword}
+                  inputProps={{ 'aria-label': 'controlled' }}
+                />
+              </div>
+            )}
 
             {showOldPassword === true && showNewPassword === false && (
               <div className="Setting-input-with-icon">
