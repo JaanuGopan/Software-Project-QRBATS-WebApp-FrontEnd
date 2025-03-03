@@ -30,7 +30,7 @@ const EventTable = ({ eventList, onEventClick, search, handleUpdateEvent, handle
           (event) =>
             event.eventName.toLowerCase().includes(search.toLowerCase()) ||
             event.eventVenue.toLowerCase().includes(search.toLowerCase())
-        ).length > 0 ? (
+        ).length > 0 && (
           <tbody>
             {eventList
               .filter(
@@ -67,10 +67,9 @@ const EventTable = ({ eventList, onEventClick, search, handleUpdateEvent, handle
                 </tr>
               ))}
           </tbody>
-        ) : (
-          <tbody className="nodata">No Data Available</tbody>
         )}
       </table>
+      {eventList.length === 0 && <div className="col">No Data Available</div>}
     </div>
   );
 };

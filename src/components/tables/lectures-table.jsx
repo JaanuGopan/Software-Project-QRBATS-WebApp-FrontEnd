@@ -1,10 +1,16 @@
+import { IconButton } from '@mui/material';
 import React, { useState } from 'react';
 import { FaEdit } from 'react-icons/fa';
-import './lectures-table.css';
-import { IconButton } from '@mui/material';
 import { MdDeleteForever } from 'react-icons/md';
+import './lectures-table.css';
 
-const LecturesTable = ({ lecturesList, onLectureClick, search, handleLectureUpdate, handleLectureDelete }) => {
+const LecturesTable = ({
+  lecturesList,
+  onLectureClick,
+  search,
+  handleLectureUpdate,
+  handleLectureDelete,
+}) => {
   const [selectedLecture, setSelectedLecture] = useState(null);
 
   const handleLectureClick = (clickedLecture) => {
@@ -14,23 +20,23 @@ const LecturesTable = ({ lecturesList, onLectureClick, search, handleLectureUpda
   return (
     <div className="lectures-table-container">
       <table className="table table-hover">
-        <thead className='sticky-header'>
-          <tr className='lectures-table-table-header-row'>
-            <th className='col'>No</th>
+        <thead className="sticky-header">
+          <tr className="lectures-table-table-header-row">
+            <th className="col">No</th>
             <th className="col">Name</th>
-            <th className='col'>Module Code</th>
-            <th className='col'>Day</th>
-            <th className='col'>Venue</th>
-            <th className='col'>Start Time</th>
-            <th className='col'>End Time</th>
-            <th className='col'>Actions</th>
+            <th className="col">Module Code</th>
+            <th className="col">Day</th>
+            <th className="col">Venue</th>
+            <th className="col">Start Time</th>
+            <th className="col">End Time</th>
+            <th className="col">Actions</th>
           </tr>
         </thead>
         {lecturesList.filter(
           (lecture) =>
             lecture.lectureName.toLowerCase().includes(search.toLowerCase()) ||
             lecture.lectureModuleCode.toLowerCase().includes(search.toLowerCase())
-        ).length > 0 ? (
+        ).length > 0 && (
           <tbody>
             {lecturesList
               .filter(
@@ -42,7 +48,10 @@ const LecturesTable = ({ lecturesList, onLectureClick, search, handleLectureUpda
                 <tr
                   key={index}
                   onClick={() => handleLectureClick(lecture)}
-                  className={'lecture-table-row' + (selectedLecture === lecture ? ' lectures-table-selected-row' : '')}
+                  className={
+                    'lecture-table-row' +
+                    (selectedLecture === lecture ? ' lectures-table-selected-row' : '')
+                  }
                 >
                   <td>{index + 1}</td>
                   <td>{lecture.lectureName}</td>
@@ -52,22 +61,25 @@ const LecturesTable = ({ lecturesList, onLectureClick, search, handleLectureUpda
                   <td>{lecture.lectureStartTime}</td>
                   <td>{lecture.lectureEndTime}</td>
                   <td>
-                    <div className='row table-action-icons'>
-                      <div className='col px-0 d-flex justify-content-center align-items-center'>
-                        <IconButton onClick={() => handleLectureUpdate(lecture)} ><FaEdit color='#0063a0' size={"20px"}/></IconButton>
+                    <div className="row table-action-icons">
+                      <div className="col px-0 d-flex justify-content-center align-items-center">
+                        <IconButton onClick={() => handleLectureUpdate(lecture)}>
+                          <FaEdit color="#0063a0" size={'20px'} />
+                        </IconButton>
                       </div>
-                      <div className='col ps-0  d-flex justify-content-center align-items-center'>
-                        <IconButton onClick={() => handleLectureDelete(lecture)} ><MdDeleteForever color='#f01e2c' size={"20px"}/></IconButton>
+                      <div className="col ps-0  d-flex justify-content-center align-items-center">
+                        <IconButton onClick={() => handleLectureDelete(lecture)}>
+                          <MdDeleteForever color="#f01e2c" size={'20px'} />
+                        </IconButton>
                       </div>
                     </div>
                   </td>
                 </tr>
               ))}
           </tbody>
-        ) : (
-          <tbody className="nodata">No Data Available</tbody>
         )}
       </table>
+      {lecturesList.length === 0 && <div className="col">No Data Available</div>}
     </div>
   );
 };

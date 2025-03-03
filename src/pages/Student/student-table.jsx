@@ -38,7 +38,7 @@ const StudentTable = ({
           (student) =>
             student.firstName.toLowerCase().includes(search.toLowerCase()) ||
             student.indexNumber.toLowerCase().includes(search.toLowerCase())
-        ).length > 0 ? (
+        ).length > 0 && (
           <tbody>
             {studentList
               .filter(
@@ -76,10 +76,9 @@ const StudentTable = ({
                 </tr>
               ))}
           </tbody>
-        ) : (
-          <tbody className="nodata">No Data Available</tbody>
         )}
       </table>
+      {studentList.length === 0 && <div className="col">No Data Available</div>}
     </div>
   );
 };
