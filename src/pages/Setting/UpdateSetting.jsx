@@ -10,7 +10,6 @@ import InputField from '../../components/textfields/InputBox/InputField';
 import InputPassword from '../../components/textfields/InputPassword/InputPassword';
 import WarningPopup from '../../components/warningPopup/WarningPopup';
 import { AuthContext } from '../../config/AuthProvider';
-import { resetSideBarIndex } from '../../redux/features/mainNavigationSlice';
 import Department from '../../utils/Department';
 import './Setting.css';
 
@@ -112,7 +111,6 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
   };
 
   const handleLogoutClick = () => {
-    dispatch(resetSideBarIndex());
     logout();
   };
 
