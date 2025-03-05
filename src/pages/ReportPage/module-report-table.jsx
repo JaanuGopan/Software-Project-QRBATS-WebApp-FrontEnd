@@ -57,7 +57,7 @@ const ModuleReportTable = ({
           (module) =>
             module.moduleName.toLowerCase().includes(searchModuleReport.toLowerCase()) ||
             module.moduleCode.toLowerCase().includes(searchModuleReport.toLowerCase())
-        ).length > 0 ? (
+        ).length > 0 && (
           <tbody>
             {modulesReportList
               .filter(
@@ -117,10 +117,9 @@ const ModuleReportTable = ({
                 </tr>
               ))}
           </tbody>
-        ) : (
-          <tbody className="nodata">No Data Available</tbody>
         )}
       </table>
+      {modulesReportList.length === 0 && <div className="col">No Data Available</div>}
     </div>
   );
 };

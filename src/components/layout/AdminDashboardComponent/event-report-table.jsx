@@ -71,7 +71,7 @@ const EventReportTable = ({
           (event) =>
             event.eventName.toLowerCase().includes(search.toLowerCase()) ||
             event.eventVenue.toLowerCase().includes(search.toLowerCase())
-        ).length > 0 ? (
+        ).length > 0 && (
           <tbody>
             {events
               .filter(
@@ -114,10 +114,9 @@ const EventReportTable = ({
                 </tr>
               ))}
           </tbody>
-        ) : (
-          <tbody className="nodata">No Data Available</tbody>
         )}
       </table>
+      {events.length === 0 && <div className="col">No Data Available</div>}
     </div>
   );
 };

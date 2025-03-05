@@ -44,7 +44,7 @@ const ModuleTable = ({
           (module) =>
             module.moduleName.toLowerCase().includes(searchModule.toLowerCase()) ||
             module.moduleCode.toLowerCase().includes(searchModule.toLowerCase())
-        ).length > 0 ? (
+        ).length > 0 && (
           <tbody>
             {moduleList
               .filter(
@@ -83,14 +83,9 @@ const ModuleTable = ({
                 </tr>
               ))}
           </tbody>
-        ) : (
-          <tbody className="d-flex justify-content-center">
-            <div className="row w-100">
-              <div className="col">No Data Available</div>
-            </div>
-          </tbody>
         )}
       </table>
+      {moduleList.length === 0 && <div className="col">No Data Available</div>}
     </div>
   );
 };

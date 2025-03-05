@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import LocationService from '../../api/services/LocationService';
 import Navbar from '../../components/layout/navbar/navbar';
 import SideBar from '../../components/layout/sidebar/sidebar';
 import { AuthContext } from '../../config/AuthProvider';
 import { setLocationList } from '../../redux/features/locationListSlice';
-import { resetSideBarIndex } from '../../redux/features/mainNavigationSlice';
 import CalendarPage from '../calendar-page/calender-page';
 import AdminDashboard from '../dashboard/AdminDashboard/AdminDashboard';
 import EventCreationDashboard from '../dashboard/LecturerDashboard/even-creation-dashboard';
@@ -25,8 +24,7 @@ import './MainNavigation.css';
 const MainNavigationPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const sideBarIndex = useSelector((state) => state.mainNavigation);
-  const locationList = useSelector((state) => state.locationList);
+  const sideBarIndex = localStorage.getItem('sideBarIndex');
   const { user, logout } = useContext(AuthContext);
   const { role } = user || {};
 
@@ -40,7 +38,6 @@ const MainNavigationPage = () => {
   };
 
   const handleLogoutClick = () => {
-    dispatch(resetSideBarIndex());
     logout();
   };
 
@@ -50,7 +47,9 @@ const MainNavigationPage = () => {
     }
     handleGetLocationNameList();
     if (sideBarIndex) {
-      setOpenMenu(parseInt(sideBarIndex.sideBarIndex));
+      setOpenMenu(parseInt(sideBarIndex));
+    } else {
+      handleNavigate(0);
     }
   }, [user, navigate]);
 
@@ -99,19 +98,25 @@ const MainNavigationPage = () => {
     return null;
   };
 
+  const handleNavigate = (index) => {
+    setOpenMenu(index);
+    localStorage.removeItem('sideBarIndex');
+    localStorage.setItem('sideBarIndex', index);
+  };
+
   return (
     <div className="container-fluid pe-0 main-navigation-container">
       <div className="row h-100">
         <div className="col position-fixed">
           <div className="row">
-            <Navbar setIndex={setOpenMenu} />
+            <Navbar setIndex={handleNavigate} />
           </div>
           <div className="row w-100 h-100 flex-nowrap">
             <div className="col-auto">
               <SideBar
                 handleClose={handleClose}
                 index={openMenu}
-                setIndex={setOpenMenu}
+                setIndex={handleNavigate}
                 handleShowLogoutWindow={() => {
                   setHandleShowLogoutWindow(true);
                 }}

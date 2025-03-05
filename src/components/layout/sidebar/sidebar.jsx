@@ -9,7 +9,6 @@ import { TbReport } from 'react-icons/tb';
 import { useDispatch } from 'react-redux';
 import logo from '../../../assets/Images/logo/logo_white.png';
 import '../../../pages/StaffMainNavigation/StaffMainNavigation.css';
-import { setSideBarIndex } from '../../../redux/features/mainNavigationSlice';
 import SideBarButton from './sidebar-button';
 import './sidebar.css';
 
@@ -18,7 +17,6 @@ const SideBar = ({ index, setIndex, handleShowLogoutWindow, role }) => {
   const [showSideBar, setShowSideBar] = useState(true);
 
   const handleMenuClick = (menuIndex) => {
-    dispatch(setSideBarIndex(menuIndex));
     setIndex(menuIndex);
     checkScreenWidth();
   };

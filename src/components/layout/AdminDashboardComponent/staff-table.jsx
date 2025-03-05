@@ -32,7 +32,7 @@ const StaffTable = ({ search, handleUpdateStaff, handleDeleteStaff, onStaffClick
             staff.firstName.toLowerCase().includes(search.toLowerCase()) ||
             staff.lastName.toLowerCase().includes(search.toLowerCase()) ||
             staff.username.toLowerCase().includes(search.toLowerCase())
-        ).length > 0 ? (
+        ).length > 0 && (
           <tbody>
             {staffsList
               .filter(
@@ -68,10 +68,9 @@ const StaffTable = ({ search, handleUpdateStaff, handleDeleteStaff, onStaffClick
                 </tr>
               ))}
           </tbody>
-        ) : (
-          <tbody className="nodata">No Data Available</tbody>
         )}
       </table>
+      {staffsList.length === 0 && <div className="col">No Data Available</div>}
     </div>
   );
 };

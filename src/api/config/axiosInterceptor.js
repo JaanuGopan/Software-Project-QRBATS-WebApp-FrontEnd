@@ -5,12 +5,12 @@ import 'react-toastify/dist/ReactToastify.css';
 const developmentBaseUrl = 'http://localhost:8080';
 const productionBaseUrl = 'https://api.example.com';
 const facultyBaseUrl = 'http://10.50.227.44:8080';
-const ngrokBaseUrl = 'https://lionfish-wondrous-catfish.ngrok-free.app';
+const ngrokBaseUrl = 'https://redfish-real-directly.ngrok-free.app';
 
 const TIMEOUT = 60 * 1000; // 60 seconds timeout
 
 // Set global Axios defaults
-axios.defaults.baseURL = developmentBaseUrl;
+axios.defaults.baseURL = facultyBaseUrl;
 axios.defaults.timeout = TIMEOUT;
 
 // Request Interceptor
@@ -67,9 +67,7 @@ axios.interceptors.response.use(
     return Promise.reject(error);
 
     function handleLogout() {
-      localStorage.removeItem('authToken');
-      localStorage.removeItem('refreshToken');
-      localStorage.removeItem('user');
+      localStorage.clear();
       window.location.href = '/';
     }
   }

@@ -1,6 +1,6 @@
+import { CircularProgress } from '@mui/material';
 import React, { useState } from 'react';
 import { CiViewList } from 'react-icons/ci';
-import { CircularProgress } from '@mui/material';
 import './report-table.css';
 
 const LectureReportTable = ({
@@ -29,23 +29,23 @@ const LectureReportTable = ({
   return (
     <div className="report-table-container">
       <table className="table table-hover">
-        <thead className='sticky-header'>
-          <tr className='report-table-table-header-row'>
-            <th className='col'>No</th>
-            <th className='col'>Name</th>
-            <th className='col'>Module Code</th>
-            <th className='col'>Day</th>
-            <th className='col'>Venue</th>
-            <th className='col'>Start Time</th>
-            <th className='col'>End Time</th>
-            <th className='col'>View</th>
+        <thead className="sticky-header">
+          <tr className="report-table-table-header-row">
+            <th className="col">No</th>
+            <th className="col">Name</th>
+            <th className="col">Module Code</th>
+            <th className="col">Day</th>
+            <th className="col">Venue</th>
+            <th className="col">Start Time</th>
+            <th className="col">End Time</th>
+            <th className="col">View</th>
           </tr>
         </thead>
         {lecturesReportList.filter(
           (lecture) =>
             lecture.lectureName.toLowerCase().includes(searchLecturesReport.toLowerCase()) ||
             lecture.lectureDay.toLowerCase().includes(searchLecturesReport.toLowerCase())
-        ).length > 0 ? (
+        ).length > 0 && (
           <tbody>
             {lecturesReportList
               .filter(
@@ -57,7 +57,10 @@ const LectureReportTable = ({
                 <tr
                   key={index}
                   onClick={() => handleLectureReportClick(lecture)}
-                  className={'report-table-row' + (selectedLectureReport === lecture ? ' report-table-selected-row' : '')}
+                  className={
+                    'report-table-row' +
+                    (selectedLectureReport === lecture ? ' report-table-selected-row' : '')
+                  }
                 >
                   <td>{index + 1}</td>
                   <td>{lecture.lectureName}</td>
@@ -67,8 +70,8 @@ const LectureReportTable = ({
                   <td>{lecture.lectureStartTime}</td>
                   <td>{lecture.lectureEndTime}</td>
                   <td>
-                    <div className='row'>
-                      <div className='col'>
+                    <div className="row">
+                      <div className="col">
                         {isLoading ? (
                           <CircularProgress />
                         ) : (
@@ -86,10 +89,9 @@ const LectureReportTable = ({
                 </tr>
               ))}
           </tbody>
-        ) : (
-          <tbody className="nodata">No Data Available</tbody>
         )}
       </table>
+      {lecturesReportList.length === 0 && <div className="col">No Data Available</div>}
     </div>
   );
 };
