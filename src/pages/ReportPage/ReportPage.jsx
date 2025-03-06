@@ -232,7 +232,11 @@ const ReportPage = () => {
             <AppContentCard hasBottomContents={true}>
               <OverallReportTable
                 search={searchStudentReport}
-                studentAttendanceDetails={studentAttendanceDetails}
+                studentAttendanceDetails={studentAttendanceDetails.sort((a, b) => {
+                  const numA = parseInt(a.indexNumber.split('/')[2]); // Extract numeric part
+                  const numB = parseInt(b.indexNumber.split('/')[2]); // Extract numeric part
+                  return numA - numB; // Sort in ascending order
+                })}
               />
             </AppContentCard>
             <div className="row justify-content-around">
@@ -324,7 +328,11 @@ const ReportPage = () => {
           <>
             <AppContentCard hasBottomContents={true}>
               <LectureStudentsAttendanceTable
-                attendanceList={lectureStudentAttendanceList}
+                attendanceList={lectureStudentAttendanceList.sort((a, b) => {
+                  const numA = parseInt(a.studentIndexNumber.split('/')[2]); // Extract numeric part
+                  const numB = parseInt(b.studentIndexNumber.split('/')[2]); // Extract numeric part
+                  return numA - numB; // Sort in ascending order
+                })}
                 search={searchLectureStudentAttendance}
               />
             </AppContentCard>

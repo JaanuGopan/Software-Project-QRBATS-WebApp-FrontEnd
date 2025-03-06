@@ -10,8 +10,8 @@ const OverallReportTable = ({ search, studentAttendanceDetails }) => {
         <thead className="sticky-header">
           <tr className="report-table-table-header-row">
             <th className="col">No</th>
-            <th className="col">Student Name</th>
             <th className="col">Registration Number</th>
+            <th className="col">Student Name</th>
             <th className="col">Attended Lecture</th>
             <th className="col">Attendance Percentage</th>
           </tr>
@@ -38,8 +38,8 @@ const OverallReportTable = ({ search, studentAttendanceDetails }) => {
                   }
                 >
                   <td>{index + 1}</td>
-                  <td>{details.studentName}</td>
                   <td>{details.indexNumber}</td>
+                  <td>{details.studentName}</td>
                   <td>
                     {details.attendedLectureCount} /{' '}
                     {details.attendedLectureCount + details.missedLectureCount}
