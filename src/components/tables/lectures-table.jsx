@@ -34,15 +34,15 @@ const LecturesTable = ({
         </thead>
         {lecturesList.filter(
           (lecture) =>
-            lecture.lectureName.toLowerCase().includes(search.toLowerCase()) ||
-            lecture.lectureModuleCode.toLowerCase().includes(search.toLowerCase())
+            lecture.name.toLowerCase().includes(search.toLowerCase()) ||
+            lecture.moduleCode.toLowerCase().includes(search.toLowerCase())
         ).length > 0 && (
           <tbody>
             {lecturesList
               .filter(
                 (lecture) =>
-                  lecture.lectureName.toLowerCase().includes(search.toLowerCase()) ||
-                  lecture.lectureModuleCode.toLowerCase().includes(search.toLowerCase())
+                  lecture.name.toLowerCase().includes(search.toLowerCase()) ||
+                  lecture.moduleCode.toLowerCase().includes(search.toLowerCase())
               )
               .map((lecture, index) => (
                 <tr
@@ -54,10 +54,10 @@ const LecturesTable = ({
                   }
                 >
                   <td>{index + 1}</td>
-                  <td>{lecture.lectureName}</td>
-                  <td>{lecture.lectureModuleCode}</td>
-                  <td>{lecture.lectureDay}</td>
-                  <td>{lecture.lectureVenue}</td>
+                  <td>{lecture.name}</td>
+                  <td>{lecture.moduleCode}</td>
+                  <td>{lecture.lectureDate}</td>
+                  <td>{lecture.locationName}</td>
                   <td>{lecture.lectureStartTime}</td>
                   <td>{lecture.lectureEndTime}</td>
                   <td>

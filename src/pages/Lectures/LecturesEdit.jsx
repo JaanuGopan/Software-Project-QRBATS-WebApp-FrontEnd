@@ -15,17 +15,15 @@ const LecturesEdit = ({
   reloadLecturesList,
   locationNameList,
 }) => {
-  const [lectureId, setLectureId] = useState(selectedLecture.lectureId);
-  const [lectureName, setLectureName] = useState(selectedLecture.lectureName);
-  const [lectureModuleCode, setLectureModuleCode] = useState(selectedLecture.lectureModuleCode);
-  const [lectureDay, setLectureDay] = useState(selectedLecture.lectureDay);
+  const [lectureId, setLectureId] = useState(selectedLecture.id);
+  const [lectureName, setLectureName] = useState(selectedLecture.name);
+  const [lectureModuleCode, setLectureModuleCode] = useState(selectedLecture.moduleCode);
+  const [lectureDay, setLectureDay] = useState(selectedLecture.lectureDate);
   const [lectureStartTime, setLectureStartTime] = useState(selectedLecture.lectureStartTime);
   const [lectureEndTime, setLectureEndTime] = useState(selectedLecture.lectureEndTime);
-  const [lectureVenue, setLectureVenue] = useState(selectedLecture.lectureVenue);
+  const [lectureVenue, setLectureVenue] = useState(selectedLecture.locationName);
   const [showQRCode, setShowQRCode] = useState(false);
-  const [lectureAssignedUserId, setLectureAssignedUserId] = useState(
-    selectedLecture.lectureAssignedUserId
-  );
+  const [lectureAssignedUserId, setLectureAssignedUserId] = useState(selectedLecture.createdBy);
 
   const lectureDayList = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
