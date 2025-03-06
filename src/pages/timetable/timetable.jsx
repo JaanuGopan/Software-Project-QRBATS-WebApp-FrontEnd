@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { BiSolidSave } from 'react-icons/bi';
 import { MdCreateNewFolder } from 'react-icons/md';
+import ModuleService from '../../api/services/ModuleService.js';
 import NormalButton from '../../components/buttons/NormalButton';
 import TimeSlot from '../../components/timeslot/TimeSlot';
 import './timetable.css';
-import ModuleService from '../../api/services/ModuleService.js';
-import Select from 'react-select';
-import { BiSolidSave } from 'react-icons/bi';
 
 const Timetable = () => {
   const [lectureList, setLectureList] = useState([{ id: 1 }]);
-  const [selectedModuleId, setSelectedModuleId] = useState();
-  const [selectedModule, setSelectedModule] = useState();
-  const [moduleList, setModuleList] = useState([]);
 
   const handleCreateClick = () => {
     setLectureList([...lectureList, { id: lectureList.length + 1 }]);
@@ -39,7 +35,7 @@ const Timetable = () => {
               <div className="col-auto me-2">
                 <NormalButton
                   handleClick={handleCreateClick}
-                  title={'Create'}
+                  title={'Add'}
                   icon={<MdCreateNewFolder className="buttonIcon" />}
                 />
               </div>
@@ -51,69 +47,20 @@ const Timetable = () => {
                   type={'save'}
                 />
               </div>
-              <div className="col">
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  style={{
-                    width: '150px',
-                    padding: '3px 40px',
-                    border: '0.5px solid black',
-                    borderRadius: '5px',
-                    textAlign: 'center',
-                  }}
-                  onChange={(e) => {}}
-                />
+            </div>
+          </div>
+        </div>
+
+        <div className="row scrollable-container justify-content-start">
+          <div className="col">
+            {lectureList.map((lecture, index) => (
+              <div key={index} className="row">
+                <div className="col">
+                  <TimeSlot lecture={lecture} onDelete={() => handleDeleteTimeSlot(index)} />
+                </div>
               </div>
-            </div>
+            ))}
           </div>
-        </div>
-        <div className={'row mb-3'}>
-          <div className={'col'}>
-            <label>Module Name</label>
-            <Select
-              id="selectModule"
-              placeholder={'Select Module Code'}
-              onChange={(e) => {
-                setSelectedModuleId(e.value);
-                const module = moduleList.find((module) => module.id === e.value);
-                setSelectedModule(module);
-              }}
-              options={moduleList.map((module) => ({ value: module.id, label: module.moduleName }))}
-              value={{
-                value: selectedModuleId,
-                label: moduleList.find((module) => module.id === selectedModuleId)?.moduleName,
-              }}
-            />
-          </div>
-          <div className={'col'}>
-            <label>Module Code</label>
-            <Select
-              id="selectModule"
-              placeholder={'Select Module Code'}
-              onChange={(e) => {
-                setSelectedModuleId(e.value);
-                const module = moduleList.find((module) => module.id === e.value);
-                setSelectedModule(module);
-              }}
-              options={moduleList.map((module) => ({ value: module.id, label: module.moduleCode }))}
-              value={{
-                value: selectedModuleId,
-                label: moduleList.find((module) => module.id === selectedModuleId)?.moduleCode,
-              }}
-            />
-          </div>
-        </div>
-        <div className="row scrollable-container">
-          {lectureList.map((lecture, index) => (
-            <div key={index} className="col-12">
-              <TimeSlot
-                lecture={lecture}
-                onDelete={() => handleDeleteTimeSlot(index)}
-                module={selectedModule}
-              />
-            </div>
-          ))}
         </div>
       </div>
     </div>
