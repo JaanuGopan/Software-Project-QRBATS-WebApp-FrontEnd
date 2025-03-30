@@ -1,8 +1,18 @@
-import { CircularProgress } from '@mui/material';
+import {
+  CircularProgress,
+  IconButton,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableSortLabel,
+} from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { CiViewList } from 'react-icons/ci';
 import FetchAttendanceByEventIdService from '../../../api/services/FetchAttendanceByEventIdService';
-
 import './event-report-table.css';
 
 const EventReportTable = ({
@@ -15,9 +25,11 @@ const EventReportTable = ({
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [attendanceList, setAttendanceList] = useState([]);
+  const [loadingEventReport, setLoadingEventReport] = useState(false);
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('eventName');
 
   useEffect(() => {
-    // Update events whenever eventList prop changes
     setEvents(eventList);
   }, [eventList]);
 
@@ -32,18 +44,17 @@ const EventReportTable = ({
   };
 
   const handleReloadAttendanceList = async (eventId) => {
-    await FetchAttendanceByEventIdService.fetchAttendance(eventId)
+    await FetchAttendanceByEventIdService.fetchEventAttendance(eventId)
       .then((attendanceList) => {
         setAttendanceList(attendanceList);
         handleAttendanceList(attendanceList);
-        handleOpenReportWindow();
+        handleOpenReportWindow(attendanceList);
       })
       .catch((error) => {
         console.error('Error fetching attendance:', error);
       });
   };
 
-  const [loadingEventReport, setLoadingEventReport] = useState(false);
   const handleViewEventAttendance = async (eventId) => {
     try {
       setLoadingEventReport(true);
@@ -53,71 +64,95 @@ const EventReportTable = ({
     }
   };
 
+  const handleRequestSort = (property) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
+
+  const sortedEvents = [...events]
+    .filter(
+      (event) =>
+        event.name.toLowerCase().includes(search.toLowerCase()) ||
+        event.locationName.toLowerCase().includes(search.toLowerCase())
+    )
+    .sort((a, b) => {
+      if (a[orderBy] < b[orderBy]) return order === 'asc' ? -1 : 1;
+      if (a[orderBy] > b[orderBy]) return order === 'asc' ? 1 : -1;
+      return 0;
+    });
+
   return (
-    <div className="event-report-table-container">
-      <table className="table table-hover">
-        <thead className="sticky-header">
-          <tr className="event-report-table-table-header-row">
-            <th className="col">No</th>
-            <th className="col">Name</th>
-            <th className="col">Start Date</th>
-            <th className="col">Venue</th>
-            <th className="col">Start Time</th>
-            <th className="col">End Time</th>
-            <th className="col">View</th>
-          </tr>
-        </thead>
-        {events.filter(
-          (event) =>
-            event.eventName.toLowerCase().includes(search.toLowerCase()) ||
-            event.eventVenue.toLowerCase().includes(search.toLowerCase())
-        ).length > 0 && (
-          <tbody>
-            {events
-              .filter(
-                (event) =>
-                  event.eventName.toLowerCase().includes(search.toLowerCase()) ||
-                  event.eventVenue.toLowerCase().includes(search.toLowerCase())
-              )
-              .map((event, index) => (
-                <tr
-                  key={index}
-                  onClick={() => handleEventClick(event)}
-                  className={
-                    'event-report-table-row' +
-                    (selectedEvent === event ? ' event-report-table-selected-row' : '')
-                  }
-                >
-                  <td>{index + 1}</td>
-                  <td>{event.eventName}</td>
-                  <td>{event.eventDate}</td>
-                  <td>{event.eventVenue}</td>
-                  <td>{event.eventTime}</td>
-                  <td>{event.eventEndTime}</td>
-                  <td>
-                    <div className="row">
-                      <div className="col">
-                        {loadingEventReport ? (
-                          <CircularProgress />
-                        ) : (
-                          <button
-                            onClick={() => handleViewEventAttendance(event.eventId)}
-                            className="ViewButton"
-                          >
-                            <CiViewList className="EditIcon" />
-                            <p className="ViewButtonLabel">View</p>
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        )}
-      </table>
-      {events.length === 0 && <div className="col">No Data Available</div>}
-    </div>
+    <TableContainer component={Paper} className="table-container">
+      <Table stickyHeader>
+        <TableHead>
+          <TableRow>
+            {[
+              { id: 'index', label: 'No' },
+              { id: 'eventName', label: 'Name' },
+              { id: 'eventDate', label: 'Start Date' },
+              { id: 'eventVenue', label: 'Venue' },
+              { id: 'eventTime', label: 'Start Time' },
+              { id: 'eventEndTime', label: 'End Time' },
+              { id: 'actions', label: 'View' },
+            ].map((column) => (
+              <TableCell
+                key={column.id}
+                style={{
+                  fontWeight: 'bold',
+                  ...(column.id === 'actions' && { textAlign: 'center' }),
+                }}
+              >
+                {column.id !== 'actions' ? (
+                  <TableSortLabel
+                    active={orderBy === column.id}
+                    direction={orderBy === column.id ? order : 'asc'}
+                    onClick={() => handleRequestSort(column.id)}
+                  >
+                    {column.label}
+                  </TableSortLabel>
+                ) : (
+                  column.label
+                )}
+              </TableCell>
+            ))}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {sortedEvents.length > 0 ? (
+            sortedEvents.map((event, index) => (
+              <TableRow
+                key={index}
+                onClick={() => handleEventClick(event)}
+                selected={selectedEvent === event}
+              >
+                <TableCell>{index + 1}</TableCell>
+                <TableCell>{event.name}</TableCell>
+                <TableCell>{event.lectureDate}</TableCell>
+                <TableCell>{event.locationName}</TableCell>
+                <TableCell>{event.lectureStartTime}</TableCell>
+                <TableCell>{event.lectureEndTime}</TableCell>
+                <TableCell className="text-nowrap">
+                  {loadingEventReport ? (
+                    <CircularProgress />
+                  ) : (
+                    <IconButton onClick={() => handleViewEventAttendance(event.id)}>
+                      <CiViewList className="EditIcon" />
+                    </IconButton>
+                  )}
+                </TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={7} align="center">
+                No Data Available
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 

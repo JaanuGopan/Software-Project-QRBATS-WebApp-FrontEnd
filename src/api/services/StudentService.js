@@ -9,7 +9,8 @@ class StudentService {
     password,
     currentSemester,
     departmentId,
-    userRole
+    userRole,
+    studentBatch
   ) => {
     try {
       const response = await axios.post('/api/v1/auth/signup', {
@@ -21,6 +22,7 @@ class StudentService {
         semester: currentSemester,
         departmentId,
         role: userRole,
+        batch: int(studentBatch),
       });
       if (response.status === 200) {
         return response;

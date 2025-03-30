@@ -64,7 +64,7 @@
 
 .module-create-or-update-modal-container {
   position: fixed;
-  z-index: 4;
+  z-index: 5;
   left: 0;
   top: 0;
   width: 100%;
@@ -278,7 +278,7 @@
 
 .module-delete-window-container {
   position: fixed;
-  z-index: 4;
+  z-index: 5;
   left: 0;
   top: 0;
   overflow-y: scroll;

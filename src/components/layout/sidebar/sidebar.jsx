@@ -35,6 +35,134 @@ const SideBar = ({ index, setIndex, handleShowLogoutWindow, role }) => {
     return () => window.removeEventListener('resize', checkScreenWidth);
   }, []);
 
+  const renderLecturerMenu = () => (
+    <>
+      <div className="row justify-content-center my-1 mt-sm-5 mt-md-0">
+        <SideBarButton
+          handleSidebarMenu={() => handleMenuClick(0)}
+          title={'Dashboard'}
+          icon={<AiFillDashboard />}
+          isOpen={index === 0}
+        />
+      </div>
+      <div className="row justify-content-center my-1">
+        <SideBarButton
+          handleSidebarMenu={() => handleMenuClick(1)}
+          title={'Lecture'}
+          icon={<IoMdSchool />}
+          isOpen={index === 1}
+        />
+      </div>
+      <div className="row justify-content-center my-1">
+        <SideBarButton
+          handleSidebarMenu={() => handleMenuClick(2)}
+          title={'Event'}
+          icon={<MdQrCode />}
+          isOpen={index === 2}
+        />
+      </div>
+      <div className="row justify-content-center my-1">
+        <SideBarButton
+          handleSidebarMenu={() => handleMenuClick(3)}
+          title={'Module'}
+          icon={<MdOutlineEventNote />}
+          isOpen={index === 3}
+        />
+      </div>
+      <div className="row justify-content-center my-1">
+        <SideBarButton
+          handleSidebarMenu={() => handleMenuClick(4)}
+          title={'Lecture Report'}
+          icon={<TbReport />}
+          isOpen={index === 4}
+        />
+      </div>
+      <div className="row justify-content-center my-1">
+        <SideBarButton
+          handleSidebarMenu={() => handleMenuClick(5)}
+          title={'Event Report'}
+          icon={<TbReport />}
+          isOpen={index === 5}
+        />
+      </div>
+      {/* <div className="row justify-content-center my-1">
+        <SideBarButton
+          handleSidebarMenu={() => handleMenuClick(7)}
+          title={'Calendar'}
+          icon={<IoCalendarOutline />}
+          isOpen={index === 7}
+        />
+      </div> */}
+      <div className="row justify-content-center my-1">
+        <SideBarButton
+          handleSidebarMenu={() => handleMenuClick(6)}
+          title={'Settings'}
+          icon={<IoSettings />}
+          isOpen={index === 6}
+        />
+      </div>
+      <div className="row justify-content-center my-1">
+        <SideBarButton
+          handleSidebarMenu={handleShowLogoutWindow}
+          title={'Logout'}
+          icon={<IoLogOut />}
+        />
+      </div>
+    </>
+  );
+
+  const renderAdminMenu = () => (
+    <>
+      <div className="row justify-content-center my-1 mt-sm-5 mt-md-0">
+        <SideBarButton
+          handleSidebarMenu={() => handleMenuClick(0)}
+          title={'Dashboard'}
+          icon={<AiFillDashboard />}
+          isOpen={index === 0}
+        />
+      </div>
+      <div className="row justify-content-center my-1">
+        <SideBarButton
+          handleSidebarMenu={() => handleMenuClick(1)}
+          title={'Staff'}
+          icon={<FaUserTie />}
+          isOpen={index === 1}
+        />
+      </div>
+      <div className="row justify-content-center my-1">
+        <SideBarButton
+          handleSidebarMenu={() => handleMenuClick(2)}
+          title={'Student'}
+          icon={<PiStudentBold />}
+          isOpen={index === 2}
+        />
+      </div>
+      <div className="row justify-content-center my-1">
+        <SideBarButton
+          handleSidebarMenu={() => handleMenuClick(3)}
+          title={'Report'}
+          icon={<TbReport />}
+          isOpen={index === 3}
+        />
+      </div>
+      <div className="row justify-content-center my-1">
+        <SideBarButton
+          handleSidebarMenu={() => handleMenuClick(6)}
+          title={'Settings'}
+          icon={<IoSettings />}
+          isOpen={index === 6}
+        />
+      </div>
+      <div className="row justify-content-center my-1">
+        <SideBarButton
+          handleSidebarMenu={handleShowLogoutWindow}
+          title={'Logout'}
+          icon={<IoLogOut />}
+        />
+      </div>
+    </>
+  );
+
   return (
     <>
       <div className="row">
@@ -50,125 +178,7 @@ const SideBar = ({ index, setIndex, handleShowLogoutWindow, role }) => {
                 <img src={logo} className="side-bar-logo" alt="Logo" />
               </div>
             </div>
-            {role === 'LECTURER' ? (
-              <>
-                <div className="row mt-3 mt-sm-5 mt-md-1 justify-content-center my-1">
-                  <SideBarButton
-                    handleSidebarMenu={() => handleMenuClick(0)}
-                    title={'Dashboard'}
-                    icon={<AiFillDashboard />}
-                    isOpen={index === 0}
-                  />
-                </div>
-                <div className="row justify-content-center my-1">
-                  <SideBarButton
-                    handleSidebarMenu={() => handleMenuClick(1)}
-                    title={'Lecture'}
-                    icon={<IoMdSchool />}
-                    isOpen={index === 1}
-                  />
-                </div>
-                <div className="row justify-content-center my-1">
-                  <SideBarButton
-                    handleSidebarMenu={() => handleMenuClick(2)}
-                    title={'Event'}
-                    icon={<MdQrCode />}
-                    isOpen={index === 2}
-                  />
-                </div>
-                <div className="row justify-content-center my-1">
-                  <SideBarButton
-                    handleSidebarMenu={() => handleMenuClick(3)}
-                    title={'Module'}
-                    icon={<MdOutlineEventNote />}
-                    isOpen={index === 3}
-                  />
-                </div>
-                <div className="row justify-content-center my-1">
-                  <SideBarButton
-                    handleSidebarMenu={() => handleMenuClick(4)}
-                    title={'Lecture Report'}
-                    icon={<TbReport />}
-                    isOpen={index === 4}
-                  />
-                </div>
-                <div className="row justify-content-center my-1">
-                  <SideBarButton
-                    handleSidebarMenu={() => handleMenuClick(5)}
-                    title={'Event Report'}
-                    icon={<TbReport />}
-                    isOpen={index === 5}
-                  />
-                </div>
-                <div className="row justify-content-center my-1">
-                  <SideBarButton
-                    handleSidebarMenu={() => handleMenuClick(6)}
-                    title={'Settings'}
-                    icon={<IoSettings />}
-                    isOpen={index === 6}
-                  />
-                </div>
-                <div className="row justify-content-center my-1">
-                  <SideBarButton
-                    handleSidebarMenu={handleShowLogoutWindow}
-                    title={'Logout'}
-                    icon={<IoLogOut />}
-                  />
-                </div>
-              </>
-            ) : (
-              role === 'ADMIN' && (
-                <>
-                  <div className="row mt-5 mt-md-1 justify-content-center my-1">
-                    <SideBarButton
-                      handleSidebarMenu={() => handleMenuClick(0)}
-                      title={'Dashboard'}
-                      icon={<AiFillDashboard />}
-                      isOpen={index === 0}
-                    />
-                  </div>
-                  <div className="row justify-content-center my-1">
-                    <SideBarButton
-                      handleSidebarMenu={() => handleMenuClick(1)}
-                      title={'Staff'}
-                      icon={<FaUserTie />}
-                      isOpen={index === 1}
-                    />
-                  </div>
-                  <div className="row justify-content-center my-1">
-                    <SideBarButton
-                      handleSidebarMenu={() => handleMenuClick(2)}
-                      title={'Student'}
-                      icon={<PiStudentBold />}
-                      isOpen={index === 2}
-                    />
-                  </div>
-                  <div className="row justify-content-center my-1">
-                    <SideBarButton
-                      handleSidebarMenu={() => handleMenuClick(3)}
-                      title={'Report'}
-                      icon={<TbReport />}
-                      isOpen={index === 3}
-                    />
-                  </div>
-                  <div className="row justify-content-center my-1">
-                    <SideBarButton
-                      handleSidebarMenu={() => handleMenuClick(6)}
-                      title={'Settings'}
-                      icon={<IoSettings />}
-                      isOpen={index === 6}
-                    />
-                  </div>
-                  <div className="row justify-content-center my-1">
-                    <SideBarButton
-                      handleSidebarMenu={handleShowLogoutWindow}
-                      title={'Logout'}
-                      icon={<IoLogOut />}
-                    />
-                  </div>
-                </>
-              )
-            )}
+            {role === 'LECTURER' ? renderLecturerMenu() : role === 'ADMIN' && renderAdminMenu()}
           </div>
         </div>
       )}

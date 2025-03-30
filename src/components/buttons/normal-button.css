@@ -9,3 +9,19 @@
   background-color: #2273a5;
   border-radius: 10px;
 }
+
+.save {
+  background-color: darkgreen;
+}
+
+.save :hover {
+  background-color: green;
+}
+
+.back {
+  background-color: darkgreen;
+}
+
+.back :hover {
+  background-color: green;
+}

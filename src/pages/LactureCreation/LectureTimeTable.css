@@ -1,0 +1,32 @@
+.lecture-time-table input[type='time'],
+.lecture-time-table input[type='date'] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+}
+
+.selected-date {
+  background-color: rgba(46, 125, 50, 0.08);
+  color: #2e7d32;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 5px;
+
+  .delete-icon {
+    color: #2e7d32;
+    padding: 3px;
+  }
+}
+
+.selected-date-with-conflict {
+  background-color: rgba(237, 108, 2, 0.08);
+  color: #ed6c02;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 5px;
+
+  .delete-icon {
+    color: #ed6c02;
+    padding: 3px;
+  }
+}

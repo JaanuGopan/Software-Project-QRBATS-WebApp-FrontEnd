@@ -1,5 +1,20 @@
 .main-navigation-container {
-  /* margin-top: 75px; */
+  height: calc(100vh) !important;
+  width: calc(100vw) !important;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+.nav-bar-container {
+  z-index: 5;
+}
+
+.main-content-container {
+  margin-top: 75px !important;
+  height: calc(100vh - 75px) !important;
+  width: calc(100vw) !important;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 
 .Admin-main {
@@ -13,7 +28,7 @@
 
 .logout-window {
   position: fixed;
-  z-index: 4;
+  z-index: 5;
   left: 0;
   top: 0;
   overflow-y: scroll;
@@ -28,5 +43,6 @@
 }
 
 .main-navigation-content-container {
-  height: calc(100vh - 75px);
+  width: calc(100vw - 250px) !important;
+  height: calc(100vh - 75px) !important;
 }

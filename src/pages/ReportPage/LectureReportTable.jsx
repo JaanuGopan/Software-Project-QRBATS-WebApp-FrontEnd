@@ -1,98 +1,125 @@
-import { CircularProgress } from '@mui/material';
+import {
+  CircularProgress,
+  IconButton,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableSortLabel,
+} from '@mui/material';
 import React, { useState } from 'react';
 import { CiViewList } from 'react-icons/ci';
 import './report-table.css';
 
 const LectureReportTable = ({
-  handleOpenLectureWithDateWindow,
+  handleOpenLectureReport,
   searchLecturesReport,
   onLecturesReportClick,
   lecturesReportList,
 }) => {
   const [selectedLectureReport, setSelectedLectureReport] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('name');
 
   const handleLectureReportClick = (e) => {
     setSelectedLectureReport(e);
     onLecturesReportClick(e);
   };
 
-  const [isLoading, setIsLoading] = useState(false);
-  const OpenLectureWithDateWindow = async (lectureId) => {
+  const openLectureReport = async (lectureId) => {
     try {
       setIsLoading(true);
-      await handleOpenLectureWithDateWindow(lectureId);
+      await handleOpenLectureReport(lectureId);
     } finally {
       setIsLoading(false);
     }
   };
 
+  const handleRequestSort = (property) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
+
+  const filteredLectures = lecturesReportList
+    .filter(
+      (lecture) =>
+        lecture.name.toLowerCase().includes(searchLecturesReport.toLowerCase()) ||
+        lecture.lectureDate.toLowerCase().includes(searchLecturesReport.toLowerCase())
+    )
+    .sort((a, b) => {
+      if (a[orderBy] < b[orderBy]) return order === 'asc' ? -1 : 1;
+      if (a[orderBy] > b[orderBy]) return order === 'asc' ? 1 : -1;
+      return 0;
+    });
+
   return (
-    <div className="report-table-container">
-      <table className="table table-hover">
-        <thead className="sticky-header">
-          <tr className="report-table-table-header-row">
-            <th className="col">No</th>
-            <th className="col">Name</th>
-            <th className="col">Module Code</th>
-            <th className="col">Day</th>
-            <th className="col">Venue</th>
-            <th className="col">Start Time</th>
-            <th className="col">End Time</th>
-            <th className="col">View</th>
-          </tr>
-        </thead>
-        {lecturesReportList.filter(
-          (lecture) =>
-            lecture.lectureName.toLowerCase().includes(searchLecturesReport.toLowerCase()) ||
-            lecture.lectureDay.toLowerCase().includes(searchLecturesReport.toLowerCase())
-        ).length > 0 && (
-          <tbody>
-            {lecturesReportList
-              .filter(
-                (lecture) =>
-                  lecture.lectureName.toLowerCase().includes(searchLecturesReport.toLowerCase()) ||
-                  lecture.lectureDay.toLowerCase().includes(searchLecturesReport.toLowerCase())
-              )
-              .map((lecture, index) => (
-                <tr
-                  key={index}
-                  onClick={() => handleLectureReportClick(lecture)}
-                  className={
-                    'report-table-row' +
-                    (selectedLectureReport === lecture ? ' report-table-selected-row' : '')
-                  }
-                >
-                  <td>{index + 1}</td>
-                  <td>{lecture.lectureName}</td>
-                  <td>{lecture.lectureModuleCode}</td>
-                  <td>{lecture.lectureDay}</td>
-                  <td>{lecture.lectureVenue}</td>
-                  <td>{lecture.lectureStartTime}</td>
-                  <td>{lecture.lectureEndTime}</td>
-                  <td>
-                    <div className="row">
-                      <div className="col">
-                        {isLoading ? (
-                          <CircularProgress />
-                        ) : (
-                          <button
-                            onClick={() => OpenLectureWithDateWindow(lecture.lectureId)}
-                            className="ViewButton"
-                          >
-                            <CiViewList className="EditIcon" />
-                            <p className="ViewButtonLabel">View Lecture</p>
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        )}
-      </table>
-      {lecturesReportList.length === 0 && <div className="col">No Data Available</div>}
-    </div>
+    <TableContainer component={Paper} className="table-container">
+      <Table stickyHeader>
+        <TableHead>
+          <TableRow>
+            {[
+              { id: 'index', label: 'No' },
+              { id: 'lectureDate', label: 'Date' },
+              { id: 'locationName', label: 'Venue' },
+              { id: 'lectureStartTime', label: 'Start Time' },
+              { id: 'lectureEndTime', label: 'End Time' },
+              { id: 'actions', label: 'View' },
+            ].map((column) => (
+              <TableCell key={column.id} style={{ fontWeight: 'bold' }}>
+                {column.id !== 'actions' ? (
+                  <TableSortLabel
+                    active={orderBy === column.id}
+                    direction={orderBy === column.id ? order : 'asc'}
+                    onClick={() => handleRequestSort(column.id)}
+                  >
+                    {column.label}
+                  </TableSortLabel>
+                ) : (
+                  column.label
+                )}
+              </TableCell>
+            ))}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {filteredLectures.length > 0 ? (
+            filteredLectures.map((lecture, index) => (
+              <TableRow
+                key={index}
+                onClick={() => handleLectureReportClick(lecture)}
+                selected={selectedLectureReport === lecture}
+              >
+                <TableCell>{index + 1}</TableCell>
+                <TableCell>{lecture.lectureDate}</TableCell>
+                <TableCell>{lecture.locationName}</TableCell>
+                <TableCell>{lecture.lectureStartTime}</TableCell>
+                <TableCell>{lecture.lectureEndTime}</TableCell>
+                <TableCell>
+                  <IconButton onClick={() => openLectureReport(lecture.id)}>
+                    {isLoading && selectedLectureReport?.id === lecture.id ? (
+                      <CircularProgress size={20} />
+                    ) : (
+                      <CiViewList style={{ color: '#0063a0' }} />
+                    )}
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={9} align="center">
+                No Data Available
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 

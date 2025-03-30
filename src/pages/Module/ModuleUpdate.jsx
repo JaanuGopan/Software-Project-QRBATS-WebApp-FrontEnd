@@ -1,11 +1,10 @@
 import { CircularProgress } from '@mui/material';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { toast } from 'react-toastify';
 import ModuleService from '../../api/services/ModuleService';
 import InputField from '../../components/textfields/InputBox/InputField';
 import InputList from '../../components/textfields/InputList/InputList';
-import { AuthContext } from '../../config/AuthProvider';
 import Department from '../../utils/Department';
 import './ModulePage.css';
 
@@ -14,57 +13,43 @@ const ModuleUpdate = ({
   handleReloadModuleList,
   selectedModule,
 }) => {
-  const [moduleId, setModuleId] = useState(selectedModule.moduleId);
+  const [moduleId, setModuleId] = useState(selectedModule.id);
   const [moduleName, setModuleName] = useState(selectedModule.moduleName);
   const [moduleCode, setModuleCode] = useState(selectedModule.moduleCode);
   const [semester, setSemester] = useState(selectedModule.semester);
   const [moduleEnrolmentKey, setModuleEnrolmentKey] = useState(selectedModule.moduleEnrolmentKey);
   const departmentList = Department.departmentList;
-
   const [departmentId, setDepartmentId] = useState(departmentList[selectedModule.departmentId - 1]);
-
-  const { user } = useContext(AuthContext);
-  const { userId } = user || {};
+  const [studentBatch, setStudentBatch] = useState(selectedModule.studentBatch);
+  const [statingDate, setStartingDate] = useState(selectedModule.statingDate);
+  const [endingDate, setEndingDate] = useState(selectedModule.endingDate);
+  const [processing, setProcessing] = useState(false);
 
   const semesterList = ['1', '2', '3', '4', '5', '6', '7', '8'];
-
-  const [processing, setProcessing] = useState(false);
+  const studentBatchList = ['20', '21', '22', '23', '24', '25'];
 
   const handleUpdateModule = async (e) => {
     e.preventDefault();
     try {
       setProcessing(true);
-      const response = await ModuleService.updateModule(
+      const response = await ModuleService.saveModule(
         moduleId,
         moduleCode,
         moduleName,
         moduleEnrolmentKey,
         semester,
         departmentList.indexOf(departmentId) + 1,
-        userId
+        studentBatch,
+        statingDate,
+        endingDate
       );
-      if (response.status === 200) {
+      if (response.status === 201) {
         toast.success('Module Updated Successfully ', response.data.moduleName);
         handleReloadModuleList();
-      } else if (response.status === 400) {
-        toast.error(response.data);
-      } else {
-        toast.error('Failed To Update Module.');
       }
-    } catch (error) {
-      console.error('Fail To Update modules.', error);
-      toast.error('Error In Updating Module.');
     } finally {
       setProcessing(false);
     }
-  };
-
-  const handleClearData = () => {
-    setModuleCode('');
-    setModuleName('');
-    setDepartmentId('');
-    setModuleEnrolmentKey('');
-    setSemester('');
   };
 
   return (
@@ -117,7 +102,6 @@ const ModuleUpdate = ({
                   </div>
                 </div>
               </div>
-
               <div className="module-creation-input">
                 <label>Department</label>
                 <div className="module-creation-input-field">
@@ -135,6 +119,44 @@ const ModuleUpdate = ({
                 </div>
               </div>
               <div className="module-creation-input">
+                <label>Student Batch</label>
+                <div className="module-creation-input-field">
+                  <div className="choice-input mb-3">
+                    <InputList
+                      placeholder="Select Student Batch"
+                      value={studentBatch}
+                      onChange={(e) => setStudentBatch(e.target.value)}
+                      list={studentBatchList}
+                      inputType="text"
+                      initialValue="Select student batch"
+                      className="student-select-input"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="module-creation-input">
+                <label>Start Date</label>
+                <div className="module-creation-input-field">
+                  <InputField
+                    placeholder="Enter Module Start Date"
+                    value={statingDate}
+                    onChange={(e) => setStartingDate(e.target.value)}
+                    inputType="date"
+                  />
+                </div>
+              </div>
+              <div className="module-creation-input">
+                <label>End Date</label>
+                <div className="module-creation-input-field">
+                  <InputField
+                    placeholder="Enter Module End Date"
+                    value={endingDate}
+                    onChange={(e) => setEndingDate(e.target.value)}
+                    inputType="date"
+                  />
+                </div>
+              </div>
+              <div className="module-creation-input">
                 <label>Enrolment Key</label>
                 <div className="module-creation-input-field">
                   <InputField
@@ -145,7 +167,6 @@ const ModuleUpdate = ({
                   />
                 </div>
               </div>
-
               <div className="create-module-create-button">
                 {processing ? (
                   <CircularProgress />

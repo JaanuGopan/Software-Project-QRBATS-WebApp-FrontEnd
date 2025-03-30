@@ -1,3 +1,6 @@
+.lecturer-dashboard-container {
+}
+
 .lecture-creation-dashboard {
   overflow: scroll;
 }
@@ -22,7 +25,7 @@
 
 .delete-lecture-container {
   position: fixed;
-  z-index: 4;
+  z-index: 5;
   left: 0;
   top: 0;
   overflow-y: scroll;

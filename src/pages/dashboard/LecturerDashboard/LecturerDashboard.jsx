@@ -1,39 +1,34 @@
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import EventService from '../../../api/services/EventService';
 import LectureService from '../../../api/services/LectureService';
-import LocationService from '../../../api/services/LocationService';
 import AppContentCard from '../../../components/app-content-card/app-content-card';
 import EventTable from '../../../components/tables/event-table';
 import LecturesTable from '../../../components/tables/lectures-table';
 import WarningPopup from '../../../components/warningPopup/WarningPopup';
-import { AuthContext } from '../../../config/AuthProvider';
-import AdminUpdateEvent from '../../Event/AdminUpdateEvent';
 import LecturesEdit from '../../Lectures/LecturesEdit';
 import './LectureDashboard.css';
 
 const LecturerDashboard = () => {
   const [showUpdateLecturePopup, setShowUpdateLecturePopup] = useState(false);
   const [showDeleteLecturePopup, setShowDeleteLecturePopup] = useState(false);
+  const [showDeleteLectureListPopup, setShowDeleteLectureListPopup] = useState(false);
   const [showDeleteEventPopup, setShowDeleteEventPopup] = useState(false);
   const [eventLectureList, setEventLectureList] = useState([]);
   const [selectedLecture, setSelectedLecture] = useState(null);
+  const [selectedLectureList, setSelectedLectureList] = useState(null);
   const [selectedEventLecture, setSelectedEventLecture] = useState(null);
   const [searchLecture, setSearchLecture] = useState('');
   const [selectTable, setSelectTable] = useState('Lectures');
-  const [venuesList, setVenuesList] = useState([]);
   const [showEditLectureWindow, setShowEditLectureWindow] = useState(false);
   const [editLecture, setEditLecture] = useState(null);
   const [processingDeleteLecture, setProcessingDeleteLecture] = useState(false);
   const [lectureList, setLectureList] = useState([]);
   const [processingDeleteEvent, setProcessingDeleteEvent] = useState(false);
 
-  const { user } = useContext(AuthContext);
-  const { userId } = user || {};
-
   const handleReloadEventLectureList = async () => {
-    EventService.getEventByUserID(userId)
+    EventService.getEventByUserID()
       .then((list) => {
         setEventLectureList(list);
       })
@@ -44,7 +39,7 @@ const LecturerDashboard = () => {
   };
 
   const handleReloadLectureList = async () => {
-    const response = await LectureService.getAllLecturesByUserId(userId);
+    const response = await LectureService.getAllLecturesByUserId();
     if (response) {
       setLectureList(response);
     }
@@ -62,41 +57,46 @@ const LecturerDashboard = () => {
     setShowDeleteLecturePopup(true);
   };
 
+  const handleShowLectureListDeleteWindow = (lectureList) => {
+    setSelectedLectureList(lectureList);
+    setShowDeleteLectureListPopup(true);
+  };
+
   const handleDeleteLecture = async () => {
     try {
       setProcessingDeleteLecture(true);
-      const response = await LectureService.deleteLecture(selectedLecture.lectureId);
-      if (response.status === 200) {
-        handleReloadLectureList();
-        setSelectedLecture(null);
-        toast.success(`Successfully ${selectedLecture.lectureName} Lecture Deleted.`);
-        setShowDeleteLecturePopup(false);
-      } else if (response.status === 400) {
-        toast.error(response.data);
-      } else {
-        toast.error(`Error In Deleting Lecture ${selectedLecture.lectureName}.`);
-      }
+      const response = await LectureService.deleteLecture(selectedLecture.id);
+      handleReloadLectureList();
+      setSelectedLecture(null);
+      toast.success(`Successfully ${selectedLecture.lectureDate} Lecture Deleted.`);
+      setShowDeleteLecturePopup(false);
     } finally {
       setProcessingDeleteLecture(false);
     }
   };
 
-  const handleGetLocationNameList = async () => {
-    const response = await LocationService.getAllLocationNames();
-    setVenuesList(response);
+  const handleDeleteLectureList = async () => {
+    try {
+      setProcessingDeleteLecture(true);
+      for (const lecture of selectedLectureList) {
+        await LectureService.deleteLecture(lecture.id);
+      }
+      handleReloadLectureList();
+      setSelectedLectureList(null);
+      toast.success(`Successfully Lectures Deleted.`);
+      setShowDeleteLectureListPopup(false);
+    } finally {
+      setShowDeleteLectureListPopup(false);
+    }
   };
 
   useEffect(() => {
     handleReloadEventLectureList();
-    handleGetLocationNameList();
     handleReloadLectureList();
   }, []);
 
-  const handleShowDeleteEventWindow = () => {
-    if (selectedEventLecture === null) {
-      toast.error('Please Select Event To Delete.');
-      return;
-    }
+  const handleShowDeleteEventWindow = (event) => {
+    setSelectedEventLecture(event);
     setShowDeleteEventPopup(true);
   };
 
@@ -104,17 +104,11 @@ const LecturerDashboard = () => {
     if (selectedEventLecture) {
       try {
         setProcessingDeleteEvent(true);
-        const response = await EventService.deleteEvent(selectedEventLecture.eventId);
-        if (response.status === 200) {
-          handleReloadEventLectureList();
-          setSelectedEventLecture(null);
-          toast.success(`Successfully ${selectedEventLecture.eventName} Event Deleted.`);
-          setShowDeleteEventPopup(false);
-        } else if (response.status === 400) {
-          toast.error(response.data);
-        } else {
-          toast.error(`Error In Deleting Lecture ${selectedEventLecture.eventName}.`);
-        }
+        const response = await EventService.deleteEvent(selectedEventLecture.id);
+        handleReloadEventLectureList();
+        setSelectedEventLecture(null);
+        toast.success(`Successfully ${selectedEventLecture.name} Event Deleted.`);
+        setShowDeleteEventPopup(false);
       } finally {
         setProcessingDeleteEvent(false);
       }
@@ -130,28 +124,28 @@ const LecturerDashboard = () => {
   };
 
   return (
-    <div className="row h-100">
+    <div className="row lecturer-dashboard-container">
       <div className="col">
-        <div>
-          <p className="ms-5 mt-2 fw-bold fs-4">{'Lecturer Dashboard'}</p>
-        </div>
-        <div className="row mx-1">
+        <div className="row align-items-center mx-1">
           <div className="col">
             <div className="row">
-              <div className="col-auto d-flex align-items-center pe-0">Select Table :</div>
               <div className="col-auto">
-                <ToggleButtonGroup
-                  color="primary"
-                  value={selectTable}
-                  exclusive
-                  onChange={(e) => handleChange(e.target.value)}
-                  aria-label="Platform"
-                >
-                  <ToggleButton value="Lectures">Lectures</ToggleButton>
-                  <ToggleButton value="Events">Events</ToggleButton>
-                </ToggleButtonGroup>
+                <p className="ms-5 mt-2 fw-bold fs-4">{'Lecturer Dashboard'}</p>
               </div>
             </div>
+          </div>
+          <div className="col-auto d-flex align-items-center pe-0">Select Table :</div>
+          <div className="col-auto">
+            <ToggleButtonGroup
+              color="primary"
+              value={selectTable}
+              exclusive
+              onChange={(e) => handleChange(e.target.value)}
+              aria-label="Platform"
+            >
+              <ToggleButton value="Lectures">Lectures</ToggleButton>
+              <ToggleButton value="Events">Events</ToggleButton>
+            </ToggleButtonGroup>
           </div>
           <div className="col-auto">
             <input
@@ -169,7 +163,7 @@ const LecturerDashboard = () => {
           </div>
         </div>
         {selectTable === 'Lectures' ? (
-          <AppContentCard hasBottomContents={true}>
+          <AppContentCard>
             <LecturesTable
               lecturesList={lectureList}
               search={searchLecture}
@@ -180,6 +174,7 @@ const LecturerDashboard = () => {
                 handleEditLecture(lecture);
               }}
               handleLectureDelete={handleShowDeleteWindow}
+              handleDeleteSelectedLectures={handleShowLectureListDeleteWindow}
             />
           </AppContentCard>
         ) : (
@@ -195,11 +190,10 @@ const LecturerDashboard = () => {
         )}
         {showUpdateLecturePopup && (
           <div className="Admin-Create-Event-Dashboard">
-            <AdminUpdateEvent
-              handleCloseEventUpdateWindow={() => setShowUpdateLecturePopup(false)}
-              selectedEvent={selectedEventLecture}
-              reloadEventList={handleReloadEventLectureList}
-              locationNameList={venuesList}
+            <LecturesEdit
+              handleCloseUpdateLectureWindow={() => setShowUpdateLecturePopup(false)}
+              selectedLecture={selectedEventLecture}
+              reloadLecturesList={handleReloadEventLectureList}
             />
           </div>
         )}
@@ -212,7 +206,6 @@ const LecturerDashboard = () => {
                 setEditLecture(null);
               }}
               handleReload={handleReloadLectureList}
-              locationNameList={venuesList}
               reloadLecturesList={handleReloadLectureList}
             />
           </div>
@@ -223,6 +216,17 @@ const LecturerDashboard = () => {
               handleCloseWarningWindow={() => setShowDeleteLecturePopup(false)}
               handleOk={handleDeleteLecture}
               titleText={'Are You Sure You Want To Delete This Lecture?'}
+              buttonText={'Delete'}
+              processing={processingDeleteLecture}
+            />
+          </div>
+        )}
+        {showDeleteLectureListPopup && (
+          <div className="delete-lecture-container">
+            <WarningPopup
+              handleCloseWarningWindow={() => setShowDeleteLectureListPopup(false)}
+              handleOk={handleDeleteLectureList}
+              titleText={'Are You Sure You Want To Delete Selected Lectures?'}
               buttonText={'Delete'}
               processing={processingDeleteLecture}
             />

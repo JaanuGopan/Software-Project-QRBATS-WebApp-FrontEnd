@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { Button, CircularProgress } from '@mui/material';
+import React from 'react';
 import './WarningPopup.css';
-import { CircularProgress } from '@mui/material';
 
 const WarningPopup = ({
   handleCloseWarningWindow,
@@ -11,22 +11,30 @@ const WarningPopup = ({
   processing = false,
 }) => {
   return (
-    <div className="warning-popup-main-container">
-      <div className="warning-popup-field">
-        <div className="warning-popup-text">
+    <div className="row warning-popup-main-container">
+      <div className="col">
+        <div className="row mb-2">
           <h6>{titleText}</h6>
         </div>
-        <div className="warning-popup-buttons">
-          {processing ? (
-            <CircularProgress />
-          ) : (
-            <button onClick={handleOk} className="btn btn-danger">
-              {buttonText}
-            </button>
-          )}
-          <button onClick={handleCloseWarningWindow} className="btn btn-secondary">
-            Cancel
-          </button>
+        <div className="row g-3 align-items-center justify-content-center">
+          <div className="col-auto">
+            {processing ? (
+              <CircularProgress />
+            ) : (
+              <Button onClick={handleOk} variant="contained" color="error">
+                {buttonText}
+              </Button>
+            )}
+          </div>
+          <div className="col-auto">
+            <Button
+              onClick={handleCloseWarningWindow}
+              variant="contained"
+              style={{ backgroundColor: '#6c757d', color: '#fff' }}
+            >
+              Cancel
+            </Button>
+          </div>
         </div>
       </div>
     </div>

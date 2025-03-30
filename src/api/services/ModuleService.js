@@ -1,79 +1,39 @@
 import axios from 'axios';
 
 class ModuleService {
-  static getModulesByUserId = async (userId) => {
-    try {
-      const response = await axios.get(`/api/v1/module/get-module-by-lecturerId/${userId}`);
-      return response.data;
-    } catch (error) {
-      console.error('Fail to get modules. ' + error);
-    }
+  static getModulesByUserId = async () => {
+    const response = await axios.get(`/api/v1/module/get-all-modules-for-user`);
+    return response.data;
   };
 
-  static createModule = async (
+  static saveModule = async (
+    id,
     moduleCode,
     moduleName,
     moduleEnrolmentKey,
     semester,
     departmentId,
-    userId
+    studentBatch,
+    statingDate,
+    endingDate
   ) => {
-    try {
-      const response = await axios.post('/api/v1/module/create-module', {
-        moduleCode: moduleCode,
-        moduleName: moduleName,
-        moduleEnrolmentKey: moduleEnrolmentKey,
-        semester: semester,
-        departmentId: departmentId,
-        userId: userId,
-      });
-      return response;
-    } catch (error) {
-      console.error('Fail to create modules. ' + error);
-      if (error.response.status === 400) {
-        console.error('Error Response is ', error.response);
-        return error.response;
-      }
-    }
-  };
-
-  static updateModule = async (
-    moduleId,
-    moduleCode,
-    moduleName,
-    moduleEnrolmentKey,
-    semester,
-    departmentId,
-    userId
-  ) => {
-    try {
-      const response = await axios.put('/api/v1/module/update-module', {
-        moduleId: moduleId,
-        moduleCode: moduleCode,
-        moduleName: moduleName,
-        moduleEnrolmentKey: moduleEnrolmentKey,
-        semester: semester,
-        departmentId: departmentId,
-        lectureId: userId,
-      });
-      return response;
-    } catch (error) {
-      console.error('Error In Updating Module.', error);
-      if (error.response.status === 400) {
-        console.error('Error Response is ', error.response);
-        return error.response;
-      }
-    }
+    const response = await axios.post('/api/v1/module/save-module', {
+      id: id || null,
+      moduleCode: moduleCode,
+      moduleName: moduleName,
+      moduleEnrolmentKey: moduleEnrolmentKey,
+      semester: semester,
+      departmentId: departmentId,
+      studentBatch: studentBatch,
+      statingDate: statingDate,
+      endingDate: endingDate,
+    });
+    return response;
   };
 
   static deleteModuleById = async (moduleId) => {
-    try {
-      const response = await axios.delete(`/api/v1/module/delete-module/${moduleId}`);
-      return response;
-    } catch (error) {
-      console.error('fail to delete module : ' + error);
-      return error.response.data;
-    }
+    const response = await axios.delete(`/api/v1/module/delete-module?moduleId=${moduleId}`);
+    return response;
   };
 
   static getAllModulesByDepartmentId = async (departmentId) => {
