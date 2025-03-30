@@ -6,7 +6,6 @@ import Navbar from '../../components/layout/navbar/navbar';
 import SideBar from '../../components/layout/sidebar/sidebar';
 import { AuthContext } from '../../config/AuthProvider';
 import { setLocationList } from '../../redux/features/locationListSlice';
-import CalendarPage from '../calendar-page/calender-page';
 import AdminDashboard from '../dashboard/AdminDashboard/AdminDashboard';
 import EventCreationDashboard from '../dashboard/LecturerDashboard/even-creation-dashboard';
 import LecturerDashboard from '../dashboard/LecturerDashboard/LecturerDashboard';
@@ -18,7 +17,6 @@ import ReportPage from '../ReportPage/ReportPage';
 import Setting from '../Setting/Setting';
 import StaffDashboard from '../Staff/StaffDashboard';
 import StudentDashboard from '../Student/StudentDashboard';
-import Timetable from '../timetable/timetable';
 import './MainNavigation.css';
 
 const MainNavigationPage = () => {
@@ -70,13 +68,11 @@ const MainNavigationPage = () => {
   const renderContent = () => {
     const lecturerMenu = [
       <LecturerDashboard />,
-      <Timetable />,
       <LectureCreationPage />,
       <EventCreationDashboard />,
       <ModulePage />,
       <ReportPage />,
       <EventReport />,
-      <CalendarPage />,
       <Setting />,
     ];
 
@@ -107,11 +103,11 @@ const MainNavigationPage = () => {
   return (
     <div className="container-fluid pe-0 main-navigation-container">
       <div className="row h-100">
-        <div className="col position-fixed">
-          <div className="row">
+        <div className="col">
+          <div className="row position-fixed w-100 nav-bar-container">
             <Navbar setIndex={handleNavigate} />
           </div>
-          <div className="row w-100 h-100 flex-nowrap">
+          <div className="main-content-container row flex-nowrap">
             <div className="col-auto">
               <SideBar
                 handleClose={handleClose}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { AiFillDashboard } from 'react-icons/ai';
 import { FaUserTie } from 'react-icons/fa';
 import { IoMdSchool } from 'react-icons/io';
-import { IoCalendarOutline, IoLogOut, IoMenu, IoSettings } from 'react-icons/io5';
+import { IoLogOut, IoMenu, IoSettings } from 'react-icons/io5';
 import { MdOutlineEventNote, MdQrCode } from 'react-icons/md';
 import { PiStudentBold } from 'react-icons/pi';
 import { TbReport } from 'react-icons/tb';
@@ -37,7 +37,7 @@ const SideBar = ({ index, setIndex, handleShowLogoutWindow, role }) => {
 
   const renderLecturerMenu = () => (
     <>
-      <div className="row justify-content-center my-1">
+      <div className="row justify-content-center my-1 mt-sm-5 mt-md-0">
         <SideBarButton
           handleSidebarMenu={() => handleMenuClick(0)}
           title={'Dashboard'}
@@ -48,65 +48,57 @@ const SideBar = ({ index, setIndex, handleShowLogoutWindow, role }) => {
       <div className="row justify-content-center my-1">
         <SideBarButton
           handleSidebarMenu={() => handleMenuClick(1)}
-          title={'Time Table'}
-          icon={<IoCalendarOutline />}
+          title={'Lecture'}
+          icon={<IoMdSchool />}
           isOpen={index === 1}
         />
       </div>
       <div className="row justify-content-center my-1">
         <SideBarButton
           handleSidebarMenu={() => handleMenuClick(2)}
-          title={'Lecture'}
-          icon={<IoMdSchool />}
+          title={'Event'}
+          icon={<MdQrCode />}
           isOpen={index === 2}
         />
       </div>
       <div className="row justify-content-center my-1">
         <SideBarButton
           handleSidebarMenu={() => handleMenuClick(3)}
-          title={'Event'}
-          icon={<MdQrCode />}
+          title={'Module'}
+          icon={<MdOutlineEventNote />}
           isOpen={index === 3}
         />
       </div>
       <div className="row justify-content-center my-1">
         <SideBarButton
           handleSidebarMenu={() => handleMenuClick(4)}
-          title={'Module'}
-          icon={<MdOutlineEventNote />}
+          title={'Lecture Report'}
+          icon={<TbReport />}
           isOpen={index === 4}
         />
       </div>
       <div className="row justify-content-center my-1">
         <SideBarButton
           handleSidebarMenu={() => handleMenuClick(5)}
-          title={'Lecture Report'}
+          title={'Event Report'}
           icon={<TbReport />}
           isOpen={index === 5}
         />
       </div>
-      <div className="row justify-content-center my-1">
-        <SideBarButton
-          handleSidebarMenu={() => handleMenuClick(6)}
-          title={'Event Report'}
-          icon={<TbReport />}
-          isOpen={index === 6}
-        />
-      </div>
-      <div className="row justify-content-center my-1">
+      {/* <div className="row justify-content-center my-1">
         <SideBarButton
           handleSidebarMenu={() => handleMenuClick(7)}
           title={'Calendar'}
           icon={<IoCalendarOutline />}
           isOpen={index === 7}
         />
-      </div>
+      </div> */}
       <div className="row justify-content-center my-1">
         <SideBarButton
-          handleSidebarMenu={() => handleMenuClick(8)}
+          handleSidebarMenu={() => handleMenuClick(6)}
           title={'Settings'}
           icon={<IoSettings />}
-          isOpen={index === 8}
+          isOpen={index === 6}
         />
       </div>
       <div className="row justify-content-center my-1">
@@ -121,7 +113,7 @@ const SideBar = ({ index, setIndex, handleShowLogoutWindow, role }) => {
 
   const renderAdminMenu = () => (
     <>
-      <div className="row justify-content-center my-1">
+      <div className="row justify-content-center my-1 mt-sm-5 mt-md-0">
         <SideBarButton
           handleSidebarMenu={() => handleMenuClick(0)}
           title={'Dashboard'}

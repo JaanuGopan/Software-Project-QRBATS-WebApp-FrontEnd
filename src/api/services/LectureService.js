@@ -1,14 +1,9 @@
 import axios from 'axios';
 
 class LectureService {
-  static createLecture = async (requestData) => {
-    try {
-      const response = await axios.post('/api/v1/lecture/create-lecture', requestData);
-      return response;
-    } catch (error) {
-      console.error('Fail to create lecture.', error);
-      return error.response;
-    }
+  static createSingleLecture = async (requestData) => {
+    const response = await axios.post('/api/v1/lecture/create-single-lecture', requestData);
+    return response.data;
   };
 
   static getAllLecturesByUserId = async () => {
@@ -22,58 +17,50 @@ class LectureService {
     }
   };
 
+  static getAllLecturesByModuleIdAndUserId = async (moduleId) => {
+    try {
+      const response = await axios.get(
+        `/api/v1/lecture/get-all-lecture-for-user-by-moduleId?moduleId=${moduleId}`
+      );
+      if (response.data) {
+        return response.data;
+      }
+    } catch (error) {
+      console.error('get all lectures by userId failed:', error);
+    }
+  };
+
   static updateLecture = async (
     lectureId,
     lectureName,
-    lectureModuleCode,
-    lectureVenue,
-    lectureDay,
+    locationId,
+    lectureDate,
     lectureStartTime,
     lectureEndTime
   ) => {
-    try {
-      const response = await axios.put(`/api/v1/lecture/update-lecture/${lectureId}`, {
-        lectureName: lectureName,
-        lectureModuleCode: lectureModuleCode,
-        lectureVenue: lectureVenue,
-        lectureDay: lectureDay,
-        lectureStartTime: lectureStartTime,
-        lectureEndTime: lectureEndTime,
-      });
-      if (response.status === 200) {
-        return response;
-      }
-    } catch (error) {
-      console.error('Fail to update lecture.', error.response.data);
-      return error.response.data;
+    const response = await axios.put(`/api/v1/lecture/update-single-lecture`, {
+      id: lectureId,
+      name: lectureName,
+      locationId: locationId,
+      lectureDate: lectureDate,
+      lectureStartTime: lectureStartTime,
+      lectureEndTime: lectureEndTime,
+    });
+    if (response.data) {
+      return response.data;
     }
   };
 
   static deleteLecture = async (lectureId) => {
-    try {
-      const response = await axios.delete(`/api/v1/lecture/delete-lecture/${lectureId}`);
-      return response;
-    } catch (error) {
-      console.error('Error in Delete Lecture. ', error);
-      if (error.response.status === 400) {
-        return error.response;
-      }
-    }
+    const response = await axios.delete(`/api/v1/lecture/delete-lecture?id=${lectureId}`);
+    return response.data;
   };
 
-  static getAllLecturesByModuleCode = async (moduleCode) => {
-    try {
-      const response = await axios.get(
-        `/api/v1/lecture/get-all-lecture-by-module-code?moduleCode=${moduleCode}`
-      );
-      if (response.status === 200) {
-        return response.data;
-      } else if (response.status === 400) {
-        return response.data;
-      }
-    } catch (error) {
-      console.error('failed to fetch lectures by moduleCode. ', error);
-    }
+  static getAllFinishedLecturesByModuleId = async (moduleId) => {
+    const response = await axios.get(
+      `/api/v1/lecture/get-all-finished-lecture-for-user-by-moduleId?moduleId=${moduleId}`
+    );
+    return response.data;
   };
 
   static async getAllLecturesByDayAndVenue(day, venue) {
@@ -90,11 +77,11 @@ class LectureService {
     }
   }
 
-  static async getAllLectureWithDateByLectureId(lectureId) {
+  static async getLectureReportByLectureId(lectureId) {
     const response = await axios.get(
-      `/api/v1/lecture-attendance/get-all-lecture-with-date-for-day-lecture/${lectureId}`
+      `/api/v1/attendance/get-all-attendance-by-lectureId?lectureId=${lectureId}`
     );
-    return response;
+    return response.data;
   }
 }
 

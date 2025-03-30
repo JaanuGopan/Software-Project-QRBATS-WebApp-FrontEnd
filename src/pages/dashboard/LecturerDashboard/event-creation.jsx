@@ -23,6 +23,7 @@ const EventCreation = ({
   const [locationId, setLocationId] = useState();
   const [showQRCode, setShowQRCode] = useState(false);
   const [processingCreateEvent, setProcessingCreateEvent] = useState(false);
+  const [eventLocationId, setEventLocationId] = useState();
 
   const qrCodeRef = useRef(null);
 
@@ -46,16 +47,12 @@ const EventCreation = ({
         eventEndTime,
         locationId
       );
-      if (response.status === 200) {
-        setEventId(response.eventId);
+      if (response) {
+        setEventId(response.id);
         notifySuccess();
         reloadLectureList();
         setShowQRCode(true);
         clearEventDetails();
-      } else if (response.status === 400) {
-        toast.error(response.data);
-      } else {
-        toast.error('Error In Event Creation. ');
       }
     } catch (error) {
       console.error('Lecture creation failed', error);
@@ -81,8 +78,10 @@ const EventCreation = ({
   const eventDetails = {
     eventId: eventId,
   };
+  // encode eventDetails to base64
+  const encodedQRCode = btoa(JSON.stringify(eventDetails));
 
-  const qrCodeDetails = JSON.stringify(eventDetails);
+  const qrCodeDetails = encodedQRCode;
   const [qrCodeWindow, setQrCodeWindow] = useState(false);
   const today = new Date().toISOString().split('T')[0];
 
@@ -107,11 +106,6 @@ const EventCreation = ({
       <div className="eventCreation-field">
         {showImage && <img src={eventCreationImage} className="Create-logo" alt="Logo" />}
         <div className="eventCreation-input-field">
-          {/* <DualButtonComponent
-            onSelect={handleSelectedButton}
-            buttonText1={"Lecture"}
-            buttonText2={"Event"}
-          /> */}
           <form onSubmit={handleSubmit}>
             <div className="input-with-icon">
               <label className="date-label" htmlFor="eventName">
@@ -154,7 +148,7 @@ const EventCreation = ({
                 </label>
                 <select
                   required
-                  value={eventVenue}
+                  value={locationId}
                   onChange={(e) => setLocationId(e.target.value)}
                   className="form-control mb-2"
                 >

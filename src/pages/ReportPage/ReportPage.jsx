@@ -1,6 +1,4 @@
-import { CircularProgress } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { BiSolidPrinter } from 'react-icons/bi';
 import { MdArrowBack } from 'react-icons/md';
 import { toast } from 'react-toastify';
 import AttendanceService from '../../api/services/AttendanceService';
@@ -9,8 +7,7 @@ import ModuleService from '../../api/services/ModuleService';
 import AppContentCard from '../../components/app-content-card/app-content-card';
 import NormalButton from '../../components/buttons/NormalButton';
 import LectureReportTable from './LectureReportTable';
-import LectureStudentsAttendanceTable from './LectureStudentsAttendanceTable';
-import LectureWithDateReportTable from './LectureWithDateReportTable';
+import LectureStudentReportTable from './LectureStudentReportTable';
 import ModuleReportTable from './module-report-table';
 import OverallReportTable from './OverallReportTable';
 import './ReportPage.css';
@@ -19,20 +16,16 @@ const ReportPage = () => {
   const [showModuleReportWindow, setShowModuleReportWindow] = useState(true);
   const [showOverallReportWindow, setShowOverallReportWindow] = useState(false);
   const [showLectureReportWindow, setShowLectureReportWindow] = useState(false);
-  const [showLectureStudentAttendanceReportWindow, setShowLectureStudentAttendanceReportWindow] =
-    useState(false);
-  const [showLectureWithDateWindow, setShowLectureWithDateWindow] = useState(false);
+  const [showStudentLectureReport, setShowStudentLectureReport] = useState(false);
 
   const [selectedModuleReport, setSelectedModuleReport] = useState(null);
   const [moduleReportList, setModuleReportList] = useState([]);
-  const [searchModuleReport, setSearchModuleReport] = useState('');
-  const [searchLecturesReport, setSearchLecturesReport] = useState('');
-  const [searchStudentReport, setSearchStudentReport] = useState('');
   const [selectedLectureReport, setSelectedLectureReport] = useState(null);
-  const [lecturesReportList, setLecturesReportList] = useState([]);
+  const [lectureList, setLectureList] = useState([]);
+  const [selectedModuleFinishedLectureList, setSelectedModuleFinishedLectureList] = useState([]);
   const [lectureStudentAttendanceList, setLectureStudentAttendanceList] = useState([]);
-  const [searchLectureStudentAttendance, setSearchLectureStudentAttendance] = useState('');
   const [studentAttendanceDetails, setStudentAttendanceDetails] = useState([]);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     handleReloadModuleReportList();
@@ -51,11 +44,11 @@ const ReportPage = () => {
     }
   };
 
-  const handleLoadLectureReport = async (moduleCode) => {
+  const handleLoadLectureReport = async (module) => {
     try {
-      const response = await LectureService.getAllLecturesByModuleCode(moduleCode);
+      const response = await LectureService.getAllFinishedLecturesByModuleId(module.id);
       if (response) {
-        setLecturesReportList(response);
+        setLectureList(response);
         setShowModuleReportWindow(false);
         setShowLectureReportWindow(true);
       }
@@ -64,102 +57,41 @@ const ReportPage = () => {
     }
   };
 
-  const handleLoadStudentAttendanceReport = async (lectureId, date) => {
-    try {
-      const response = await AttendanceService.getAllAttendanceByLectureIdAndDate(lectureId, date);
-      if (response.status === 200) {
-        setLectureStudentAttendanceList(response.data);
-        setShowLectureStudentAttendanceReportWindow(true);
-        setShowLectureReportWindow(false);
-        setShowModuleReportWindow(false);
-        setShowOverallReportWindow(false);
-        setShowLectureWithDateWindow(false);
-      } else {
-        console.error('Error fetching attendance:', response);
-      }
-    } catch (error) {
-      console.error('Error fetching attendance:', error);
-    }
-  };
-
-  const [loadingDownloadReport, setLoadingDownloadReport] = useState(false);
-
-  const handleDownloadReport = async (lectureId, date) => {
-    try {
-      setLoadingDownloadReport(true);
-      const response = await AttendanceService.downloadLectureAttendanceByLectureIdAndDate(
-        lectureId,
-        date
-      );
-      if (response.status === 200) {
-        const data = response.data;
-        const blob = new Blob([data], { type: 'text/csv' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = `lecture_${selectedLectureWithDate.lectureModuleCode}_attendance_${date}.csv`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      } else if (response.status === 400) {
-        toast.error(response.data);
-      } else {
-        toast.error('Error in downloading the report.');
-      }
-    } catch (error) {
-      toast.error('An error occurred while downloading the report.');
-    } finally {
-      setLoadingDownloadReport(false);
-    }
-  };
-
   const [moduleId, setModuleId] = useState(null);
 
   const handleOpenOverallReportWindow = async (moduleId) => {
     setStudentAttendanceDetails([]);
-    setModuleId(moduleId); // new
+    setModuleId(moduleId);
     await getAllStudentsAttendanceReport(moduleId);
   };
 
   const getAllStudentsAttendanceReport = async (moduleId) => {
-    try {
-      const response = await AttendanceService.getStudentsAttendanceDetails(moduleId);
-      if (response.status === 200) {
-        setStudentAttendanceDetails(response.data);
-        setShowLectureStudentAttendanceReportWindow(false);
-        setShowLectureReportWindow(false);
-        setShowModuleReportWindow(false);
-        setShowOverallReportWindow(true);
-        setShowLectureWithDateWindow(false);
-      } else if (response.status === 400) {
-        toast.error(response.data);
-      } else {
-        toast.error('Error in getting overall report.');
-      }
-    } catch (error) {
-      toast.error('Error in getting overall report.');
-    }
+    const responseData = await AttendanceService.getStudentsAttendanceDetails(moduleId);
+    const lectureList = await LectureService.getAllFinishedLecturesByModuleId(moduleId);
+    setSelectedModuleFinishedLectureList(lectureList);
+    setStudentAttendanceDetails(responseData);
+    setShowLectureStudentAttendanceReportWindow(false);
+    setShowLectureReportWindow(false);
+    setShowModuleReportWindow(false);
+    setShowOverallReportWindow(true);
+    setShowStudentLectureReport(false);
   };
 
-  const [lectureWithDateList, setLectureWithDateList] = useState([]);
-  const [searchLectureWithDate, setSearchLectureWithDate] = useState('');
-  const [selectedLectureWithDate, setSelectedLectureWithDate] = useState(null);
+  const [lectureReportList, setLectureReportList] = useState([]);
+  const [selectedStudentReport, setSelectedStudentReport] = useState(null);
+  const [showLectureStudentAttendanceReportWindow, setShowLectureStudentAttendanceReportWindow] =
+    useState(false);
 
-  const handleLoadLectureWithDateList = async (lectureId) => {
+  const handleLoadLectureStudentReportList = async (lectureId) => {
     try {
-      setLectureWithDateList([]);
-      const response = await LectureService.getAllLectureWithDateByLectureId(lectureId);
-      if (response.status === 200) {
-        setLectureWithDateList(response.data);
-        setShowLectureStudentAttendanceReportWindow(false);
-        setShowLectureReportWindow(false);
-        setShowModuleReportWindow(false);
-        setShowOverallReportWindow(false);
-        setShowLectureWithDateWindow(true);
-      } else if (response.status === 400) {
-        toast.error(response.data);
-      } else {
-        toast.error('Error In Getting Lecture With Date List.');
-      }
+      setLectureReportList([]);
+      const responseData = await LectureService.getLectureReportByLectureId(lectureId);
+      setLectureReportList(responseData);
+      setShowLectureStudentAttendanceReportWindow(false);
+      setShowLectureReportWindow(false);
+      setShowModuleReportWindow(false);
+      setShowOverallReportWindow(false);
+      setShowStudentLectureReport(true);
     } catch (error) {
       toast.error('Error In Getting Lecture With Date List.');
     }
@@ -192,24 +124,98 @@ const ReportPage = () => {
     }
   };
 
+  // 📌 Export Table to Excel
+  const exportOverallReportToExcel = (sortedStudents, lectureList) => {
+    const wb = XLSX.utils.book_new();
+    const wsData = [
+      [
+        'No',
+        'Index Number',
+        'Student Name',
+        'Finished Lectures',
+        'Attended Lectures',
+        'Attendance %',
+        ...lectureList.map((lec) => lec.lectureDate),
+      ],
+      ...sortedStudents.map((details, index) => [
+        index + 1,
+        details.indexNumber,
+        details.studentName,
+        details.finishedLectureCount,
+        details.attendanceCount,
+        `${Number(details.attendancePercentage).toFixed(2)} %`,
+        ...lectureList.map((lecture) =>
+          details.attendedLectureDateList.includes(lecture.lectureDate) ? 'Present' : 'Absent'
+        ),
+      ]),
+    ];
+    const ws = XLSX.utils.aoa_to_sheet(wsData);
+    XLSX.utils.book_append_sheet(wb, ws, 'Attendance Report');
+    XLSX.writeFile(wb, 'Attendance_Report.xlsx');
+  };
+
   return (
     <div className="row">
       <div className="col">
         <div className="row justify-content-between align-items-center my-2">
-          <div className="col-auto fs-3 fw-bold ms-4">Modules Report</div>
+          <div className="col-auto fs-5 fw-bold ms-4">
+            {showLectureReportWindow
+              ? `${selectedModuleReport?.moduleName?.slice(0, 30)}${selectedModuleReport?.moduleName?.length > 30 ? '...' : ''} Lectures`
+              : showOverallReportWindow
+                ? `${selectedModuleReport?.moduleName?.slice(0, 30)}${selectedModuleReport?.moduleName?.length > 30 ? '...' : ''} Overall Report`
+                : showStudentLectureReport
+                  ? `${selectedModuleReport?.moduleName?.slice(0, 30)}${selectedModuleReport?.moduleName?.length > 30 ? '...' : ''} ${selectedLectureReport?.lectureDate} lecture Report`
+                  : 'Modules Report'}
+          </div>
           <div className="col-auto">
-            <input
-              type="text"
-              placeholder="Search..."
-              style={{
-                width: '150px',
-                padding: '3px 40px',
-                border: '0.5px solid black',
-                borderRadius: '5px',
-                textAlign: 'center',
-              }}
-              onChange={(e) => setSearchModuleReport(e.target.value)}
-            />
+            <div className="row align-items-center">
+              {(showOverallReportWindow || showLectureReportWindow || showStudentLectureReport) && (
+                <div className="col-auto">
+                  <NormalButton
+                    handleClick={() => {
+                      if (showOverallReportWindow) {
+                        setShowLectureReportWindow(false);
+                        setShowModuleReportWindow(true);
+                        setShowOverallReportWindow(false);
+                        setShowStudentLectureReport(false);
+                      } else if (showLectureReportWindow) {
+                        setShowLectureReportWindow(false);
+                        setShowModuleReportWindow(true);
+                        setShowOverallReportWindow(false);
+                        setShowStudentLectureReport(false);
+                      } else if (showStudentLectureReport) {
+                        setShowLectureReportWindow(true);
+                        setShowModuleReportWindow(false);
+                        setShowOverallReportWindow(false);
+                        setShowStudentLectureReport(false);
+                      }
+                    }}
+                    title={'Back'}
+                    icon={<MdArrowBack className="staff-buttonIcon" />}
+                  />
+                </div>
+              )}
+              <div className="col-auto">
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  style={{
+                    width: '150px',
+                    padding: '3px 40px',
+                    border: '0.5px solid black',
+                    borderRadius: '5px',
+                    textAlign: 'center',
+                  }}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+                {/* <TextField
+                  id="outlined-basic"
+                  label="Search"
+                  variant="outlined"
+                  onChange={(e) => setSearch(e.target.value)}
+                /> */}
+              </div>
+            </div>
           </div>
         </div>
         {showModuleReportWindow && (
@@ -217,146 +223,41 @@ const ReportPage = () => {
             <ModuleReportTable
               modulesReportList={moduleReportList}
               onModuleReportClick={handleModuleReportClick}
-              searchModuleReport={searchModuleReport}
+              searchModuleReport={search}
               handleModuleReportReload={handleReloadModuleReportList}
-              handleOpenOverallReportWindow={(moduleId) => handleOpenOverallReportWindow(moduleId)}
-              handleOpenLecturesReportWindow={(e) => handleLoadLectureReport(e)}
+              handleOpenOverallReportWindow={handleOpenOverallReportWindow}
+              handleOpenLecturesReportWindow={handleLoadLectureReport}
             />
           </AppContentCard>
         )}
         {showOverallReportWindow && (
-          <>
-            <AppContentCard hasBottomContents={true}>
-              <OverallReportTable
-                search={searchStudentReport}
-                studentAttendanceDetails={studentAttendanceDetails}
-              />
-            </AppContentCard>
-            <div className="row justify-content-around">
-              <div className="col-auto">
-                <NormalButton
-                  handleClick={() => {
-                    setShowLectureReportWindow(false);
-                    setShowModuleReportWindow(true);
-                    setShowOverallReportWindow(false);
-                    setShowLectureWithDateWindow(false);
-                  }}
-                  title={'Back'}
-                  icon={<MdArrowBack className="staff-buttonIcon" />}
-                />
-              </div>
-              <div className="col-auto">
-                {loadingDownloadOverallReport ? (
-                  <CircularProgress />
-                ) : (
-                  <NormalButton
-                    title={'Print'}
-                    handleClick={() => {
-                      handleOverallReportDownload();
-                    }}
-                    icon={<BiSolidPrinter className="staff-buttonIcon" />}
-                  />
-                )}
-              </div>
-            </div>
-          </>
+          <AppContentCard hasBottomContents={true}>
+            <OverallReportTable
+              search={search}
+              studentAttendanceDetails={studentAttendanceDetails}
+              lectureList={selectedModuleFinishedLectureList}
+            />
+          </AppContentCard>
         )}
         {showLectureReportWindow && (
-          <>
-            <AppContentCard hasBottomContents={true}>
-              <LectureReportTable
-                handleOpenLectureWithDateWindow={(lectureId) =>
-                  handleLoadLectureWithDateList(lectureId)
-                }
-                lecturesReportList={lecturesReportList}
-                onLecturesReportClick={(e) => setSelectedLectureReport(e)}
-                searchLecturesReport={searchLecturesReport}
-              />
-            </AppContentCard>
-            <div className="row justify-content-center">
-              <div className="col-auto">
-                <NormalButton
-                  handleClick={() => {
-                    setShowLectureReportWindow(false);
-                    setShowModuleReportWindow(true);
-                    setShowOverallReportWindow(false);
-                    setShowLectureWithDateWindow(false);
-                  }}
-                  title={'Back'}
-                  icon={<MdArrowBack className="staff-buttonIcon" />}
-                />
-              </div>
-            </div>
-          </>
+          <AppContentCard hasBottomContents={true}>
+            <LectureReportTable
+              handleOpenLectureReport={handleLoadLectureStudentReportList}
+              lecturesReportList={lectureList}
+              onLecturesReportClick={setSelectedLectureReport}
+              searchLecturesReport={search}
+            />
+          </AppContentCard>
         )}
-        {showLectureWithDateWindow && (
-          <>
-            <AppContentCard hasBottomContents={true}>
-              <LectureWithDateReportTable
-                handleOpenLectureAttendanceReportWindow={(lectureId, date) =>
-                  handleLoadStudentAttendanceReport(lectureId, date)
-                }
-                lectureWithDateList={lectureWithDateList}
-                onLectureWithDateClick={(e) => setSelectedLectureWithDate(e)}
-                searchLectureWithDate={searchLectureWithDate}
-              />
-            </AppContentCard>
-            <div className="row justify-content-center">
-              <div className="col-auto">
-                <NormalButton
-                  handleClick={() => {
-                    setShowLectureReportWindow(true);
-                    setShowModuleReportWindow(false);
-                    setShowOverallReportWindow(false);
-                    setShowLectureWithDateWindow(false);
-                  }}
-                  title={'Back'}
-                  icon={<MdArrowBack className="staff-buttonIcon" />}
-                />
-              </div>
-            </div>
-          </>
-        )}
-        {showLectureStudentAttendanceReportWindow && (
-          <>
-            <AppContentCard hasBottomContents={true}>
-              <LectureStudentsAttendanceTable
-                attendanceList={lectureStudentAttendanceList}
-                search={searchLectureStudentAttendance}
-              />
-            </AppContentCard>
-            <div className="row justify-content-around">
-              <div className="col-auto">
-                <NormalButton
-                  handleClick={() => {
-                    setShowLectureReportWindow(false);
-                    setShowModuleReportWindow(false);
-                    setShowOverallReportWindow(false);
-                    setShowLectureStudentAttendanceReportWindow(false);
-                    setShowLectureWithDateWindow(true);
-                  }}
-                  title={'Back'}
-                  icon={<MdArrowBack className="staff-buttonIcon" />}
-                />
-              </div>
-              <div className="col-auto">
-                {loadingDownloadReport ? (
-                  <CircularProgress />
-                ) : (
-                  <NormalButton
-                    title={'Print'}
-                    handleClick={() =>
-                      handleDownloadReport(
-                        selectedLectureWithDate.lectureId,
-                        selectedLectureWithDate.lectureDate
-                      )
-                    }
-                    icon={<BiSolidPrinter className="staff-buttonIcon" />}
-                  />
-                )}
-              </div>
-            </div>
-          </>
+        {showStudentLectureReport && (
+          <AppContentCard hasBottomContents={true}>
+            <LectureStudentReportTable
+              lectureReportList={lectureReportList}
+              onStudentReportClick={setSelectedStudentReport}
+              search={search}
+              lecture={selectedLectureReport}
+            />
+          </AppContentCard>
         )}
       </div>
     </div>

@@ -7,7 +7,7 @@ import NormalButton from '../../../components/buttons/NormalButton';
 import EventTable from '../../../components/tables/event-table';
 import WarningPopup from '../../../components/warningPopup/WarningPopup';
 import AdminEventCreation from '../../Event/AdminEventCreation';
-import AdminUpdateEvent from '../../Event/AdminUpdateEvent';
+import LecturesEdit from '../../Lectures/LecturesEdit';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
@@ -113,10 +113,10 @@ const AdminDashboard = () => {
         )}
         {eventUpdatePopUpWindow && (
           <div className="Admin-Create-Event-Dashboard">
-            <AdminUpdateEvent
-              handleCloseEventUpdateWindow={() => setEventUpdatePopUpWindow(false)}
-              selectedEvent={selectedEvent}
-              reloadEventList={handleReloadEventList}
+            <LecturesEdit
+              handleCloseUpdateLectureWindow={() => setEventUpdatePopUpWindow(false)}
+              selectedLecture={selectedEvent}
+              reloadLecturesList={handleReloadEventList}
             />
           </div>
         )}

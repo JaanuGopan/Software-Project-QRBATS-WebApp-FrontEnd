@@ -1,11 +1,5 @@
-import { CircularProgress } from '@mui/material';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
 import React, { useEffect, useState } from 'react';
-import { BiSolidPrinter } from 'react-icons/bi';
 import { MdArrowBack } from 'react-icons/md';
-import { toast } from 'react-toastify';
-import AttendanceService from '../../api/services/AttendanceService';
 import EventService from '../../api/services/EventService';
 import AppContentCard from '../../components/app-content-card/app-content-card';
 import NormalButton from '../../components/buttons/NormalButton';
@@ -43,48 +37,13 @@ const EventReport = () => {
     setAttendanceList(attendanceStudentList);
   };
 
-  const generatePDF = () => {
-    const input = document.getElementById('table-to-print');
-    html2canvas(input).then((canvas) => {
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF();
-      pdf.addImage(imgData, 'PNG', 0, 0);
-      pdf.save('table.pdf');
-    });
-  };
-
-  const [loadingDownloadReport, setLoadingDownloadReport] = useState(false);
-
-  const handleDownloadAttendanceEventReport = async (eventId) => {
-    try {
-      setLoadingDownloadReport(true);
-      const response = await AttendanceService.downloadEventAttendance(eventId);
-      if (response.status === 200) {
-        const data = response.data;
-        const blob = new Blob([data], { type: 'text/csv' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = `event_${eventId}_attendance.csv`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      } else if (response.status === 400) {
-        toast.error(response.data);
-      } else {
-        toast.error('Error In Downloading Report.');
-      }
-    } finally {
-      setLoadingDownloadReport(false);
-    }
-  };
-
   return (
     <div className="row">
       <div className="col">
         {eventReportTable ? (
           <>
             <div className="row py-2 justify-content-between align-items-center">
-              <div className="col-auto fs-3 fw-bold ms-4">All Event Details</div>
+              <div className="col-auto fs-5 fw-bold ms-4">All Event Details</div>
               <div className="col-auto">
                 <input
                   type="text"
@@ -113,7 +72,7 @@ const EventReport = () => {
         ) : (
           <>
             <div className="row py-2 justify-content-between align-items-center">
-              <div className="col-auto fs-3 fw-bold ms-4">Event Attendance Details</div>
+              <div className="col-auto fs-5 fw-bold ms-4">Event Attendance Details</div>
               <div className="col-auto">
                 <input
                   type="text"
@@ -139,17 +98,6 @@ const EventReport = () => {
                   title={'Back'}
                   icon={<MdArrowBack className="staff-buttonIcon" />}
                 />
-              </div>
-              <div className="col-auto">
-                {loadingDownloadReport ? (
-                  <CircularProgress />
-                ) : (
-                  <NormalButton
-                    title={'Print'}
-                    handleClick={() => handleDownloadAttendanceEventReport(selectedEvent.eventId)}
-                    icon={<BiSolidPrinter className="staff-buttonIcon" />}
-                  />
-                )}
               </div>
             </div>
           </>

@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './LogoutConfirmation.css';
-import eventCreationImage from '../../assets/Images/signin/Signin.jpeg';
-import { IoMdCloseCircleOutline } from 'react-icons/io';
 
 const LogoutConfirmation = ({ handleCloseLogoutWindow, handleLogout }) => {
   return (

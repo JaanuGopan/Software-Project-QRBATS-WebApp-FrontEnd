@@ -7,6 +7,7 @@ import StudentService from '../../api/services/StudentService';
 import InputField from '../../components/textfields/InputBox/InputField';
 import Department from '../../utils/Department';
 import './Student.css';
+import Utils from './../../utils/Utils';
 
 const CreateStudentWindow = ({ handleCloseCreateStudentWindow, handleReloadStudentList }) => {
   const [studentName, setStudentName] = useState('');
@@ -18,9 +19,11 @@ const CreateStudentWindow = ({ handleCloseCreateStudentWindow, handleReloadStude
   const [userRole, setUserRole] = useState('STUDENT');
   const [semester, setSemester] = useState();
   const [departmentId, setDepartmentId] = useState('');
+  const [studentBatch, setStudentBatch] = useState();
 
   const semesterList = ['1', '2', '3', '4', '5', '6', '7', '8'];
   const departmentList = Department.studentDepartmentList;
+  const studentBatchList = Utils.studentBatchList;
 
   const [processing, setProcessing] = useState(false);
 
@@ -35,7 +38,7 @@ const CreateStudentWindow = ({ handleCloseCreateStudentWindow, handleReloadStude
     const indexNoPattern = /^EG\/20[0-9]{2}\/[0-9]{4}$/;
 
     if (!indexNoPattern.test(studentIndexNo)) {
-      toast.error('Invalid index number');
+      toast.error('Invalid index number. The format should be like "EG/20XX/XXXX"');
       return false;
     }
 
@@ -54,6 +57,16 @@ const CreateStudentWindow = ({ handleCloseCreateStudentWindow, handleReloadStude
       return false;
     }
 
+    if (userName.length < 6) {
+      toast.error('Username must be at least 6 characters');
+      return false;
+    }
+
+    if (userName.includes(' ')) {
+      toast.error('Username cannot contain spaces');
+      return false;
+    }
+
     if (!departmentId) {
       toast.error('Department is required');
       return false;
@@ -61,6 +74,20 @@ const CreateStudentWindow = ({ handleCloseCreateStudentWindow, handleReloadStude
 
     if (!semester.value) {
       toast.error('Semester is required');
+      return false;
+    }
+
+    if (!password.trim()) {
+      toast.error('Password is required');
+      return false;
+    }
+
+    // password include at least one uppercase letter, one lowercase letter, one number and more than 8 characters
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/;
+    if (!passwordRegex.test(password)) {
+      toast.error(
+        'Password must contain at least one uppercase letter, one lowercase letter, one number and more than 8 characters'
+      );
       return false;
     }
 
@@ -86,7 +113,8 @@ const CreateStudentWindow = ({ handleCloseCreateStudentWindow, handleReloadStude
         password,
         semesterList.indexOf(semester.value) + 1,
         departmentList.indexOf(departmentId.value) + 1,
-        userRole
+        userRole,
+        studentBatch
       );
       if (response.status === 200) {
         toast.success('Successfully Student Created.');
@@ -211,6 +239,23 @@ const CreateStudentWindow = ({ handleCloseCreateStudentWindow, handleReloadStude
                       label: dept,
                     }))}
                     placeholder={'Select Department'}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="student-creation-input">
+              <label>Student Batch</label>
+              <div className="student-creation-input-field">
+                <div className="eventCreation-form">
+                  <Select
+                    required
+                    value={studentBatch}
+                    onChange={(e) => setStudentBatch(e)}
+                    options={studentBatchList.map((b) => ({
+                      value: b,
+                      label: b,
+                    }))}
+                    placeholder={'Select Batch'}
                   />
                 </div>
               </div>

@@ -1,0 +1,45 @@
+.created-timetable-view-modal-container {
+  position: fixed;
+  z-index: 5;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px !important;
+}
+
+.created-timetable-view-modal {
+  border: 4px solid transparent;
+  border-top: 6px solid #0077c0;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 5;
+  position: relative;
+}
+
+.created-timetable-view-modal-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 5px;
+}
+
+.created-timetable-view-modal-close-icon {
+  align-self: center;
+  justify-self: center;
+  color: red;
+  height: 30px;
+  width: 30px;
+}
+
+.created-timetable-view-modal-close-icon:hover {
+  align-self: center;
+  justify-self: center;
+  color: white;
+  background-color: red;
+  border-radius: 100%;
+}
