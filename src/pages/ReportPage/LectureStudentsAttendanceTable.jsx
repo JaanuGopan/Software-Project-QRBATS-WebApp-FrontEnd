@@ -21,8 +21,8 @@ const LectureStudentsAttendanceTable = ({ search, attendanceList }) => {
         <thead className="sticky-header">
           <tr className="report-table-table-header-row">
             <th className="col">No</th>
-            <th className="col">Student Name</th>
             <th className="col">Registration Number</th>
+            <th className="col">Student Name</th>
             <th className="col">Attendance Date</th>
             <th className="col">Attendance Time</th>
             <th className="col">Attendance Status</th>
@@ -50,8 +50,8 @@ const LectureStudentsAttendanceTable = ({ search, attendanceList }) => {
                   }
                 >
                   <td>{index + 1}</td>
-                  <td>{attendance.studentName}</td>
                   <td>{attendance.studentIndexNumber}</td>
+                  <td>{attendance.studentName}</td>
                   <td>{attendance.attendanceStatus ? attendance.attendedDate : '-'}</td>
                   <td>{attendance.attendanceStatus ? attendance.attendedTime : '-'}</td>
                   <td>
