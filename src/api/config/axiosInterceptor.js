@@ -10,7 +10,7 @@ const ngrokBaseUrl = 'https://redfish-real-directly.ngrok-free.app';
 const TIMEOUT = 60 * 1000; // 60 seconds timeout
 
 // Set global Axios defaults
-axios.defaults.baseURL = developmentBaseUrl;
+axios.defaults.baseURL = facultyBaseUrl;
 axios.defaults.timeout = TIMEOUT;
 
 // Request Interceptor
@@ -43,10 +43,10 @@ axios.interceptors.response.use(
           position: 'top-right',
           autoClose: 3000,
         });
-        //handleLogout();
+        handleLogout();
       } else if (error.response.status === 403) {
         toast.warn('Forbidden! Access denied.', { position: 'top-right', autoClose: 3000 });
-        //handleLogout();
+        handleLogout();
       } else if (error.response.status >= 500) {
         toast.error('Server error! Please try again later.', {
           position: 'top-right',
