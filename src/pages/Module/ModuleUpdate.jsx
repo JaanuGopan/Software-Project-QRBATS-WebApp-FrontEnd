@@ -6,6 +6,7 @@ import ModuleService from '../../api/services/ModuleService';
 import InputField from '../../components/textfields/InputBox/InputField';
 import InputList from '../../components/textfields/InputList/InputList';
 import Department from '../../utils/Department';
+import Utils from '../../utils/Utils';
 import './ModulePage.css';
 
 const ModuleUpdate = ({
@@ -26,7 +27,7 @@ const ModuleUpdate = ({
   const [processing, setProcessing] = useState(false);
 
   const semesterList = ['1', '2', '3', '4', '5', '6', '7', '8'];
-  const studentBatchList = ['20', '21', '22', '23', '24', '25'];
+  const studentBatchList = Utils.studentBatchList;
 
   const handleUpdateModule = async (e) => {
     e.preventDefault();

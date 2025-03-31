@@ -14,23 +14,30 @@ class UserService {
   };
 
   static async updateUser(userId, firstName, lastName, email, userName, password, departmentId) {
-    try {
-      const response = await axios.put('/api/v1/auth/update-user', {
-        userId: userId,
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        userName: userName,
-        password: password ? password : null,
-        departmentId: departmentId,
-      });
-      if (response.status === 200) {
-        return response;
-      }
-    } catch (error) {
-      if (error.response.status === 400) {
-        return error.response;
-      }
+    const response = await axios.put('/api/v1/auth/update-user', {
+      userId: userId,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      userName: userName,
+      password: password ? password : null,
+      departmentId: departmentId,
+    });
+    if (response.status === 200) {
+      return response;
+    }
+  }
+
+  static async adminUpdateUser(userId, firstName, lastName, email, departmentId) {
+    const response = await axios.put('/api/v1/auth/admin-update-user', {
+      userId: userId,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      departmentId: departmentId,
+    });
+    if (response.status === 200) {
+      return response;
     }
   }
 

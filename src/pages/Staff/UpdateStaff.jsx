@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import './StaffA.css';
-import { useNavigate } from 'react-router-dom';
-import InputField from '../../components/textfields/InputBox/InputField';
-import { IoMdCloseCircleOutline } from 'react-icons/io';
-import Select from 'react-select';
-import UserService from '../../api/services/UserService';
-import { toast } from 'react-toastify';
 import { CircularProgress } from '@mui/material';
+import React, { useState } from 'react';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
+import { useNavigate } from 'react-router-dom';
+import Select from 'react-select';
+import { toast } from 'react-toastify';
+import UserService from '../../api/services/UserService';
+import InputField from '../../components/textfields/InputBox/InputField';
 import Department from '../../utils/Department';
+import './StaffA.css';
 
 const UpdateStaff = ({ handleCloseUpdateStaffWindow, selectedStaff, handleReloadStaffList }) => {
   const [userId, setUserId] = useState(selectedStaff.userId);
@@ -59,24 +59,18 @@ const UpdateStaff = ({ handleCloseUpdateStaffWindow, selectedStaff, handleReload
     }
     try {
       setLoadingUpdateStaff(true);
-      const response = await UserService.updateUser(
+      const response = await UserService.adminUpdateUser(
         userId,
         firstName,
         lastName,
         email,
-        '',
-        '',
         departmentId
       );
       if (response.status === 200) {
         handleReloadStaffList();
         handleCloseUpdateStaffWindow();
         toast.success('User Updated Successfully!');
-      } else if (response.status === 400) {
-        toast.error(response.data);
       }
-    } catch {
-      toast.error('User Updation Failed!');
     } finally {
       setLoadingUpdateStaff(false);
     }
