@@ -6,8 +6,8 @@ import { toast } from 'react-toastify';
 import StudentService from '../../api/services/StudentService';
 import InputField from '../../components/textfields/InputBox/InputField';
 import Department from '../../utils/Department';
-import './Student.css';
 import Utils from './../../utils/Utils';
+import './Student.css';
 
 const CreateStudentWindow = ({ handleCloseCreateStudentWindow, handleReloadStudentList }) => {
   const [studentName, setStudentName] = useState('');
@@ -34,16 +34,15 @@ const CreateStudentWindow = ({ handleCloseCreateStudentWindow, handleReloadStude
       toast.error('Student name is required');
       return false;
     }
+
     // indexno = "EG/20XX/XXXX"
     const indexNoPattern = /^EG\/20[0-9]{2}\/[0-9]{4}$/;
-
-    if (!indexNoPattern.test(studentIndexNo)) {
-      toast.error('Invalid index number. The format should be like "EG/20XX/XXXX"');
-      return false;
-    }
-
     if (!studentIndexNo.trim()) {
       toast.error('Index number is required');
+      return false;
+    }
+    if (!indexNoPattern.test(studentIndexNo)) {
+      toast.error('Invalid index number. The format should be like "EG/20XX/XXXX"');
       return false;
     }
 
@@ -56,12 +55,10 @@ const CreateStudentWindow = ({ handleCloseCreateStudentWindow, handleReloadStude
       toast.error('Username is required');
       return false;
     }
-
     if (userName.length < 6) {
       toast.error('Username must be at least 6 characters');
       return false;
     }
-
     if (userName.includes(' ')) {
       toast.error('Username cannot contain spaces');
       return false;
@@ -72,8 +69,13 @@ const CreateStudentWindow = ({ handleCloseCreateStudentWindow, handleReloadStude
       return false;
     }
 
-    if (!semester.value) {
+    if (!semester || !semester.value) {
       toast.error('Semester is required');
+      return false;
+    }
+
+    if (!studentBatch) {
+      toast.error('Batch is required');
       return false;
     }
 
@@ -82,12 +84,17 @@ const CreateStudentWindow = ({ handleCloseCreateStudentWindow, handleReloadStude
       return false;
     }
 
-    // password include at least one uppercase letter, one lowercase letter, one number and more than 8 characters
+    // password must include at least one uppercase letter, one lowercase letter, one number, and be more than 8 characters
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/;
     if (!passwordRegex.test(password)) {
       toast.error(
-        'Password must contain at least one uppercase letter, one lowercase letter, one number and more than 8 characters'
+        'Password must contain at least one uppercase letter, one lowercase letter, one number, and be more than 8 characters'
       );
+      return false;
+    }
+
+    if (/^(?=.*[#,?$%]).+$/.test(password)) {
+      toast.error("Password should not include the characters '#', '%', '?', or '$'.");
       return false;
     }
 
@@ -111,17 +118,14 @@ const CreateStudentWindow = ({ handleCloseCreateStudentWindow, handleReloadStude
         email,
         userName,
         password,
-        semesterList.indexOf(semester.value) + 1,
+        semester.value,
         departmentList.indexOf(departmentId.value) + 1,
         userRole,
-        studentBatch
+        studentBatch.value
       );
-      if (response.status === 200) {
-        toast.success('Successfully Student Created.');
+      if (response) {
         handleReloadStudentList();
         handleCloseCreateStudentWindow();
-      } else {
-        toast.error(response);
       }
     } finally {
       setProcessing(false);

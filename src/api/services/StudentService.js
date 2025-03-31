@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 class StudentService {
   static createStudentByAdmin = async (
@@ -12,23 +13,20 @@ class StudentService {
     userRole,
     studentBatch
   ) => {
-    try {
-      const response = await axios.post('/api/v1/auth/signup', {
-        firstName: studentName,
-        indexNumber,
-        email: studentEmail,
-        userName,
-        password,
-        semester: currentSemester,
-        departmentId,
-        role: userRole,
-        batch: int(studentBatch),
-      });
-      if (response.status === 200) {
-        return response;
-      }
-    } catch (error) {
-      return error?.response?.data;
+    const response = await axios.post('/api/v1/auth/signup', {
+      firstName: studentName,
+      indexNumber,
+      email: studentEmail,
+      userName,
+      password,
+      semester: currentSemester,
+      departmentId,
+      role: userRole,
+      batch: Number(studentBatch),
+    });
+    if (response) {
+      toast.success('Successfully Student Created.');
+      return response.data;
     }
   };
 
