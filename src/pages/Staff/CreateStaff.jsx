@@ -1,12 +1,12 @@
+import { CircularProgress } from '@mui/material';
 import React, { useState } from 'react';
-import './StaffA.css';
-import InputField from '../../components/textfields/InputBox/InputField';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
-import CreateUserService from '../../api/services/CreateUserService';
 import Select from 'react-select';
 import { toast } from 'react-toastify';
-import { CircularProgress } from '@mui/material';
+import CreateUserService from '../../api/services/CreateUserService';
+import InputField from '../../components/textfields/InputBox/InputField';
 import Department from '../../utils/Department';
+import './StaffA.css';
 
 const CreateStaff = ({ handleCloseCreateStaffWindow, reloadStaffList }) => {
   const [firstName, setFirstName] = useState('');
@@ -42,6 +42,10 @@ const CreateStaff = ({ handleCloseCreateStaffWindow, reloadStaffList }) => {
       toast.error('Please enter username');
       return false;
     }
+    if (userName.length < 6) {
+      toast.error('Username must be at least 6 characters');
+      return false;
+    }
     if (password.trim() === '') {
       toast.error('Please enter password');
       return false;
@@ -52,6 +56,18 @@ const CreateStaff = ({ handleCloseCreateStaffWindow, reloadStaffList }) => {
     }
     if (password !== confirmPassword) {
       toast.error('Passwords do not match');
+      return false;
+    }
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/;
+    if (!passwordRegex.test(password)) {
+      toast.error(
+        'Password must contain at least one uppercase letter, one lowercase letter, one number, and be more than 8 characters'
+      );
+      return false;
+    }
+
+    if (/^(?=.*[#,?$%]).+$/.test(password)) {
+      toast.error("Password should not include the characters '#', '%', '?', or '$'.");
       return false;
     }
     if (!departmentId) {

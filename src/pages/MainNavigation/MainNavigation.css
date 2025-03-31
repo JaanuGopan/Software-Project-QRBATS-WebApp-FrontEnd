@@ -28,7 +28,7 @@
 
 .logout-window {
   position: fixed;
-  z-index: 5;
+  z-index: 7;
   left: 0;
   top: 0;
   overflow-y: scroll;
