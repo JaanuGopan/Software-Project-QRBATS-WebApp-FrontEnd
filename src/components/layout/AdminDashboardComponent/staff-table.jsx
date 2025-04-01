@@ -53,77 +53,75 @@ const StaffTable = ({ search, handleUpdateStaff, handleDeleteStaff, onStaffClick
     });
 
   return (
-    <div className="table-container">
-      <TableContainer component={Paper}>
-        <Table stickyHeader>
-          <TableHead>
-            <TableRow>
-              {[
-                { id: 'no', label: 'No' },
-                { id: 'name', label: 'Name' },
-                { id: 'department', label: 'Department' },
-                { id: 'email', label: 'Email' },
-                { id: 'actions', label: 'Actions' },
-              ].map((column) => (
-                <TableCell
-                  key={column.id}
-                  style={{
-                    fontWeight: 'bold',
-                    textAlign: column.id === 'actions' ? 'center' : 'left',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  {column.id !== 'actions' && column.id !== 'no' ? (
-                    <TableSortLabel
-                      active={orderBy === column.id}
-                      direction={orderBy === column.id ? order : 'asc'}
-                      onClick={() => handleRequestSort(column.id)}
-                    >
-                      {column.label}
-                    </TableSortLabel>
-                  ) : (
-                    column.label
-                  )}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {filteredStaffs.length > 0 ? (
-              filteredStaffs.map((staff, index) => (
-                <TableRow
-                  key={index}
-                  onClick={() => handleStaffClick(staff)}
-                  selected={selectedStaff === staff}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell>{`${staff.firstName} ${staff.lastName}`}</TableCell>
-                  <TableCell>{departmentList[staff.departmentId - 1]}</TableCell>
-                  <TableCell>{staff.email}</TableCell>
-                  <TableCell style={{ textAlign: 'center' }}>
-                    <div className="d-flex justify-content-center align-items-center">
-                      <IconButton onClick={() => handleUpdateStaff(staff)}>
-                        <FaEdit color="#0063a0" size={'20px'} />
-                      </IconButton>
-                      <IconButton onClick={() => handleDeleteStaff(staff)}>
-                        <MdDeleteForever color="#f01e2c" size={'20px'} />
-                      </IconButton>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={5} align="center">
-                  No Data Available
+    <TableContainer component={Paper} className="table-container">
+      <Table stickyHeader>
+        <TableHead>
+          <TableRow>
+            {[
+              { id: 'no', label: 'No' },
+              { id: 'name', label: 'Name' },
+              { id: 'department', label: 'Department' },
+              { id: 'email', label: 'Email' },
+              { id: 'actions', label: 'Actions' },
+            ].map((column) => (
+              <TableCell
+                key={column.id}
+                style={{
+                  fontWeight: 'bold',
+                  textAlign: column.id === 'actions' ? 'center' : 'left',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {column.id !== 'actions' && column.id !== 'no' ? (
+                  <TableSortLabel
+                    active={orderBy === column.id}
+                    direction={orderBy === column.id ? order : 'asc'}
+                    onClick={() => handleRequestSort(column.id)}
+                  >
+                    {column.label}
+                  </TableSortLabel>
+                ) : (
+                  column.label
+                )}
+              </TableCell>
+            ))}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {filteredStaffs.length > 0 ? (
+            filteredStaffs.map((staff, index) => (
+              <TableRow
+                key={index}
+                onClick={() => handleStaffClick(staff)}
+                selected={selectedStaff === staff}
+                style={{ cursor: 'pointer' }}
+              >
+                <TableCell>{index + 1}</TableCell>
+                <TableCell>{`${staff.firstName} ${staff.lastName}`}</TableCell>
+                <TableCell>{departmentList[staff.departmentId - 1]}</TableCell>
+                <TableCell>{staff.email}</TableCell>
+                <TableCell style={{ textAlign: 'center' }}>
+                  <div className="d-flex justify-content-center align-items-center">
+                    <IconButton onClick={() => handleUpdateStaff(staff)}>
+                      <FaEdit color="#0063a0" size={'20px'} />
+                    </IconButton>
+                    <IconButton onClick={() => handleDeleteStaff(staff)}>
+                      <MdDeleteForever color="#f01e2c" size={'20px'} />
+                    </IconButton>
+                  </div>
                 </TableCell>
               </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={5} align="center">
+                No Data Available
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 

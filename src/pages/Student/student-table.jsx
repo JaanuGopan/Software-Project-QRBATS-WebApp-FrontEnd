@@ -58,79 +58,77 @@ const StudentTable = ({
     });
 
   return (
-    <div className="table-container">
-      <TableContainer component={Paper}>
-        <Table stickyHeader>
-          <TableHead>
-            <TableRow>
-              {[
-                { id: 'no', label: 'No' },
-                { id: 'name', label: 'Name' },
-                { id: 'indexNumber', label: 'IndexNo' },
-                { id: 'department', label: 'Department' },
-                { id: 'semester', label: 'Semester' },
-                { id: 'actions', label: 'Actions' },
-              ].map((column) => (
-                <TableCell
-                  key={column.id}
-                  style={{
-                    fontWeight: 'bold',
-                    textAlign: column.id === 'actions' ? 'center' : 'left',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  {column.id !== 'actions' && column.id !== 'no' ? (
-                    <TableSortLabel
-                      active={orderBy === column.id}
-                      direction={orderBy === column.id ? order : 'asc'}
-                      onClick={() => handleRequestSort(column.id)}
-                    >
-                      {column.label}
-                    </TableSortLabel>
-                  ) : (
-                    column.label
-                  )}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {filteredStudents.length > 0 ? (
-              filteredStudents.map((student, index) => (
-                <TableRow
-                  key={index}
-                  onClick={() => handleStudentClick(student)}
-                  selected={selectedStudent === student}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <TableCell>{index + 1}</TableCell>
-                  <TableCell>{student.firstName}</TableCell>
-                  <TableCell>{student.indexNumber}</TableCell>
-                  <TableCell>{departmentList[student.departmentId - 1]}</TableCell>
-                  <TableCell>{student.semester}</TableCell>
-                  <TableCell style={{ textAlign: 'center' }}>
-                    <div className="d-flex justify-content-center align-items-center">
-                      <IconButton onClick={() => handleUpdateStudent(student)}>
-                        <FaEdit color="#0063a0" size={'20px'} />
-                      </IconButton>
-                      <IconButton onClick={() => handleDeleteStudent(student)}>
-                        <MdDeleteForever color="#f01e2c" size={'20px'} />
-                      </IconButton>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={6} align="center">
-                  No Data Available
+    <TableContainer component={Paper} className="table-container">
+      <Table stickyHeader>
+        <TableHead>
+          <TableRow>
+            {[
+              { id: 'no', label: 'No' },
+              { id: 'name', label: 'Name' },
+              { id: 'indexNumber', label: 'IndexNo' },
+              { id: 'department', label: 'Department' },
+              { id: 'semester', label: 'Semester' },
+              { id: 'actions', label: 'Actions' },
+            ].map((column) => (
+              <TableCell
+                key={column.id}
+                style={{
+                  fontWeight: 'bold',
+                  textAlign: column.id === 'actions' ? 'center' : 'left',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {column.id !== 'actions' && column.id !== 'no' ? (
+                  <TableSortLabel
+                    active={orderBy === column.id}
+                    direction={orderBy === column.id ? order : 'asc'}
+                    onClick={() => handleRequestSort(column.id)}
+                  >
+                    {column.label}
+                  </TableSortLabel>
+                ) : (
+                  column.label
+                )}
+              </TableCell>
+            ))}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {filteredStudents.length > 0 ? (
+            filteredStudents.map((student, index) => (
+              <TableRow
+                key={index}
+                onClick={() => handleStudentClick(student)}
+                selected={selectedStudent === student}
+                style={{ cursor: 'pointer' }}
+              >
+                <TableCell>{index + 1}</TableCell>
+                <TableCell>{student.firstName}</TableCell>
+                <TableCell>{student.indexNumber}</TableCell>
+                <TableCell>{departmentList[student.departmentId - 1]}</TableCell>
+                <TableCell>{student.semester}</TableCell>
+                <TableCell style={{ textAlign: 'center' }}>
+                  <div className="d-flex justify-content-center align-items-center">
+                    <IconButton onClick={() => handleUpdateStudent(student)}>
+                      <FaEdit color="#0063a0" size={'20px'} />
+                    </IconButton>
+                    <IconButton onClick={() => handleDeleteStudent(student)}>
+                      <MdDeleteForever color="#f01e2c" size={'20px'} />
+                    </IconButton>
+                  </div>
                 </TableCell>
               </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={6} align="center">
+                No Data Available
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 
