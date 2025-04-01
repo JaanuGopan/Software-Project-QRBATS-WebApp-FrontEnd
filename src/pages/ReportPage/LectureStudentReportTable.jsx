@@ -75,8 +75,8 @@ const LectureStudentReportTable = ({
   };
 
   return (
-    <div className="table-container">
-      <TableContainer component={Paper}>
+    <>
+      <TableContainer component={Paper} className="table-container">
         <Table stickyHeader>
           <TableHead>
             <TableRow>
@@ -159,7 +159,7 @@ const LectureStudentReportTable = ({
           </Button>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
