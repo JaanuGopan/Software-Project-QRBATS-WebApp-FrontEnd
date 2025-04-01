@@ -34,16 +34,10 @@ const AdminDashboard = () => {
   const handleDelete = async () => {
     try {
       setProcessingDeleteEvent(true);
-      const response = await EventService.deleteEvent(selectedEvent.eventId);
-      if (response.status === 200) {
-        handleReloadEventList();
-        setSelectedEvent(null);
-        toast.success(`Successfully ${selectedEvent.eventName} Event Deleted.`);
-      } else if (response.status === 400) {
-        toast.error(response.data);
-      } else {
-        toast.error(`Error In Deleting Event ${selectedEvent.eventName}.`);
-      }
+      const response = await EventService.deleteEvent(selectedEvent.id);
+      handleReloadEventList();
+      setSelectedEvent(null);
+      toast.success(`Successfully Event Deleted.`);
     } catch (error) {
       console.error('error ' + error);
     } finally {
