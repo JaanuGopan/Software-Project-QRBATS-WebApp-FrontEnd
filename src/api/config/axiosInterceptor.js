@@ -6,11 +6,12 @@ const developmentBaseUrl = 'http://localhost:8080';
 const productionBaseUrl = 'https://api.example.com';
 const facultyBaseUrl = 'http://10.50.227.44:8080';
 const ngrokBaseUrl = 'https://redfish-real-directly.ngrok-free.app';
+const facultyServerPublicIp = 'http://192.248.50.239:8080';
 
 const TIMEOUT = 60 * 1000; // 60 seconds timeout
 
 // Set global Axios defaults
-axios.defaults.baseURL = facultyBaseUrl;
+axios.defaults.baseURL = facultyServerPublicIp;
 axios.defaults.timeout = TIMEOUT;
 
 // Request Interceptor
