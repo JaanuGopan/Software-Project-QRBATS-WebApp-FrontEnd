@@ -2,11 +2,13 @@ name: Deploy SkyTicker Frontend
 
 on:
   push:
-    branches: [master] # Or your deployment branch
+    branches: [master]
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
+    outputs:
+      build-path: ${{ steps.set-build-path.outputs.build-path }}
 
     steps:
       - name: Checkout repo
@@ -23,11 +25,19 @@ jobs:
       - name: Build React app
         run: npm run build
 
+      - name: Set build path output
+        id: set-build-path
+        run: echo "::set-output name=build-path::dist"
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
       - name: Copy files to server via SSH
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: 'dist/*'
+          source: '${{ needs.build.outputs.build-path }}/*'
           target: ${{ secrets.REMOTE_PATH }}
