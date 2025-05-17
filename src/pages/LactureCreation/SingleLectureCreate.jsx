@@ -169,7 +169,7 @@ const SingleLectureCreate = () => {
                       className="form-control mb-2"
                       value={lectureDate}
                       onChange={(e) => setLectureDate(e.target.value)}
-                      //min={new Date().toISOString().split('T')[0]}
+                      min={new Date().toISOString().split('T')[0]}
                       max={selectedModule.endingDate}
                     />
                   </div>
@@ -223,7 +223,7 @@ const SingleLectureCreate = () => {
                         );
                       }}
                       className="form-control mb-2"
-                      min={lectureDate === today && new Date().toTimeString().slice(0, 5)}
+                      //min={lectureDate === today && new Date().toTimeString().slice(0, 5)}
                     />
                   </div>
                 </div>

@@ -2,7 +2,7 @@ name: Deploy SkyTicker Frontend
 
 on:
   push:
-    branches: [master] # Or your deployment branch
+    branches: [master]
 
 jobs:
   deploy:
