@@ -35,10 +35,10 @@ const SingleLectureCreate = () => {
   const handleSaveLecture = async (e) => {
     e.preventDefault();
 
-    if (lectureDate === today && lectureStartTime < new Date().toTimeString().slice(0, 5)) {
+    /* if (lectureDate === today && lectureStartTime < new Date().toTimeString().slice(0, 5)) {
       toast.warning('The lecture start time should be in the future.');
       return;
-    }
+    } */
 
     if (lectureEndTime <= lectureStartTime) {
       toast.warning('The lecture end time should be greater than the lecture start time.');
@@ -169,7 +169,7 @@ const SingleLectureCreate = () => {
                       className="form-control mb-2"
                       value={lectureDate}
                       onChange={(e) => setLectureDate(e.target.value)}
-                      min={new Date().toISOString().split('T')[0]}
+                      //min={new Date().toISOString().split('T')[0]}
                       max={selectedModule.endingDate}
                     />
                   </div>
@@ -210,13 +210,13 @@ const SingleLectureCreate = () => {
                       type="time"
                       value={lectureStartTime}
                       onChange={(e) => {
-                        if (
+                        /*if (
                           lectureDate === today &&
                           e.target.value < new Date().toTimeString().slice(0, 5)
                         ) {
                           toast.warning('The lecture start time should be in future.');
                           return;
-                        }
+                        } */
                         setLectureStartTime(`${e.target.value}:00`);
                         setLectureName(
                           `${lectureModuleCode}_${lectureDate}_${e.target.value}:00_Lecture`

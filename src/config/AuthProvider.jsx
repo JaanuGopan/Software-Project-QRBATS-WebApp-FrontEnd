@@ -17,7 +17,7 @@ const AuthProvider = ({ children }) => {
     const response = await axios.get(
       `/api/v1/auth/login?userName=${userName}&password=${password}`
     );
-    if (response.status === 200) {
+    if (response.status === 200 && response.data && response.data.token) {
       toast.success('Successfully LogIn.');
       const { token, refreshToken, user } = response.data;
 
