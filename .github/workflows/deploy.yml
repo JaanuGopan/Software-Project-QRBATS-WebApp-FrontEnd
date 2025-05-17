@@ -31,12 +31,3 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: 'dist/*'
           target: ${{ secrets.REMOTE_PATH }}
-
-      - name: Restart web server (optional)
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            sudo systemctl restart nginx
