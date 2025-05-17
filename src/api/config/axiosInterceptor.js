@@ -11,7 +11,7 @@ const facultyServerPublicIp = 'http://192.248.50.239:8080';
 const TIMEOUT = 60 * 1000; // 60 seconds timeout
 
 // Set global Axios defaults
-axios.defaults.baseURL = facultyServerPublicIp;
+axios.defaults.baseURL = '';
 axios.defaults.timeout = TIMEOUT;
 
 // Request Interceptor
