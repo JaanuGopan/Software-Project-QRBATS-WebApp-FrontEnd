@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import './Signin.css';
-import LoginForm from './LoginLayout/LoginForm';
-import Designer from '../../assets/Images/Designer.jpeg';
+import { useState } from 'react';
+import { BiLeftArrowAlt } from 'react-icons/bi';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 import ForgotPassword from '../ForgotPassword/ForgotPassword';
 import OtpVerification from '../ForgotPassword/OtpVerification';
 import ResetPassword from '../ForgotPassword/RestPassword';
-import { BiLeftArrowAlt } from 'react-icons/bi';
+import LoginForm from './LoginLayout/LoginForm';
+import './Signin.css';
 
-function Signin() {
+function Signin({ handleCloseSignin }) {
   const navigate = useNavigate();
   const [showLogin, setShowLogin] = useState(true);
   const [showForgetPassword, setShowForgotPassword] = useState(false);
@@ -66,7 +66,7 @@ function Signin() {
 
   const handleBackButtonAction = () => {
     if (showLogin) {
-      navigate('/');
+      handleCloseSignin();
     } else if (showForgetPassword) {
       handleCloseSendOtp();
     } else if (showOtpVerification) {
@@ -77,16 +77,18 @@ function Signin() {
   };
 
   return (
-    <div className="mainBackground">
-      <div className="ComponentBackground">
+    <div className="ComponentBackground">
+      <div className="ComponentContent">
+        <div className="row">
+          <div className="col-auto me-0 close-btn">
+            <IoMdCloseCircleOutline className="close-icon" onClick={handleCloseSignin} />
+          </div>
+        </div>
         <button onClick={handleBackButtonAction} className="back-button">
           <BiLeftArrowAlt size={'20px'} />
         </button>
         <p className="head1">{title}</p>
         <div className="content">
-          <div className="image-container">
-            <img className="Designer" src={Designer} alt="" />
-          </div>
           <div className="bodyContent">
             {showLogin && <LoginForm handleShowForgotPassword={handleShowSendOtp} />}
             {showForgetPassword && (

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import LocationService from '../../api/services/LocationService';
@@ -41,7 +41,7 @@ const MainNavigationPage = () => {
 
   useEffect(() => {
     if (!user) {
-      navigate('/signin');
+      navigate('/');
     }
     handleGetLocationNameList();
     if (sideBarIndex) {

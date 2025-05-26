@@ -1,14 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react';
-import '../../../pages/UserInterface/UserInterface.css';
-import logo from '../../../assets/Images/logo/logo_white.png';
 import { Button } from '@mui/material';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import logo from '../../../assets/Images/logo/logo_white.png';
 import { AuthContext } from '../../../config/AuthProvider';
+import Signin from '../../../pages/Signin/Signin';
+import '../../../pages/UserInterface/UserInterface.css';
 
 const Navigator = () => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const loginButtonLabel = user ? 'Dashboard' : 'Login';
+
+  const [showSigninPopup, setShowSigninPopup] = useState(false);
 
   return (
     <div className="navigate">
@@ -26,7 +29,9 @@ const Navigator = () => {
         </p>
       </div>
       <Button
-        onClick={() => navigate('/signin')}
+        onClick={() => {
+          user ? navigate('/mainNavigation') : setShowSigninPopup(true);
+        }}
         id="loginID"
         style={{
           color: '#0063A0',
@@ -38,6 +43,7 @@ const Navigator = () => {
       >
         {loginButtonLabel}
       </Button>
+      {showSigninPopup && <Signin handleCloseSignin={() => setShowSigninPopup(false)} />}
     </div>
   );
 };

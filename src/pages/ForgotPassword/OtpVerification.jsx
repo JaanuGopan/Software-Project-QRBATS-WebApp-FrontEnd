@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { FaUser, FaLock, FaMailBulk } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { CircularProgress } from '@mui/material';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import UserService from '../../api/services/UserService';
-import { FaVoicemail } from 'react-icons/fa6';
-import { Email } from '@mui/icons-material';
-import { CircularProgress } from '@mui/material';
+import AppInput from '../../components/app-input/app-input';
 
 const OtpVerification = ({ handleCloseOtpVerification, handleShowPasswordChange, email }) => {
   const [otp, setOtp] = useState('');
@@ -33,30 +30,31 @@ const OtpVerification = ({ handleCloseOtpVerification, handleShowPasswordChange,
   };
 
   return (
-    <div className="form-container">
+    <div className="row w-100 justify-content-center">
       <form onSubmit={handleSubmit}>
-        <div className="signin-form-group">
-          <div className="signin-input-with-icon">
-            <Email className="input-icon" />
-            <input
-              required
+        <div className="col">
+          <div className="row mb-3">
+            <AppInput
+              required={true}
+              label="Otp"
               type="text"
               id="otp"
               name="otp"
               placeholder="otp"
-              className="signin-input-field"
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
             />
           </div>
 
-          {processing ? (
-            <CircularProgress />
-          ) : (
-            <button id="LoginID" type="submit" className="btn btn-primary w-100">
-              Verify Otp
-            </button>
-          )}
+          <div className="row">
+            {processing ? (
+              <CircularProgress />
+            ) : (
+              <button id="LoginID" type="submit" className="btn btn-primary w-100">
+                Verify Otp
+              </button>
+            )}
+          </div>
         </div>
       </form>
     </div>

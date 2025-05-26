@@ -1,6 +1,6 @@
 import { CircularProgress } from '@mui/material';
 import QRCode from 'qrcode.react';
-import React, { useContext, useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import EventService from '../../api/services/EventService';

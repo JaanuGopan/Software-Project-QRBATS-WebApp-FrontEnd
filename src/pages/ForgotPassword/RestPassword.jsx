@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { BiUser } from 'react-icons/bi';
-import { MdPassword } from 'react-icons/md';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import UserService from '../../api/services/UserService';
+import AppInput from '../../components/app-input/app-input';
 
 const ResetPassword = ({ handleCloseResetPassword, handleShowLogin, email }) => {
   const [password, setPassword] = useState('');
@@ -39,52 +38,51 @@ const ResetPassword = ({ handleCloseResetPassword, handleShowLogin, email }) => 
   };
 
   return (
-    <div className="form-container">
+    <div className="row w-100 justify-content-center">
       <form onSubmit={handleSubmit}>
-        <div className="signin-form-group">
-          <div className="signin-input-with-icon">
-            <BiUser className="input-icon" />
-            <input
-              required
+        <div className="col">
+          <div className="row mb-3">
+            <AppInput
+              required={true}
+              label="Username"
               type="text"
               id="userName"
               name="userName"
               placeholder="Username"
-              className="signin-input-field"
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
             />
           </div>
-          <div className="signin-input-with-icon">
-            <MdPassword className="input-icon" />
-            <input
-              required
+          <div className="row mb-3">
+            <AppInput
+              required={true}
+              label="Email"
               type="password"
               id="password"
               name="password"
               placeholder="Password"
-              className="signin-input-field"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div className="signin-input-with-icon">
-            <MdPassword className="input-icon" />
-            <input
-              required
+          <div className="row mb-3">
+            <AppInput
+              required={true}
+              label="Confirm Password"
               type="password"
               id="confirmPassword"
               name="confirmPassword"
               placeholder="Confirm Password"
-              className="signin-input-field"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
 
-          <button id="LoginID" type="submit" className="btn btn-primary w-100">
-            Verify OTP
-          </button>
+          <div className="row">
+            <button id="LoginID" type="submit" className="btn btn-primary w-100">
+              Verify OTP
+            </button>
+          </div>
         </div>
       </form>
     </div>

@@ -1,20 +1,15 @@
-import React, { useContext } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import LandingPage from './pages/UserInterface/LandingPage';
-import MainNavigationPage from './pages/MainNavigation/MainNavigation';
-import Signin from './pages/Signin/Signin';
+import { useContext } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { AuthContext } from './config/AuthProvider';
+import MainNavigationPage from './pages/MainNavigation/MainNavigation';
+import LandingPage from './pages/UserInterface/LandingPage';
 
 const AppRoutes = () => {
   const { user } = useContext(AuthContext);
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
-      <Route path="/signin" element={user ? <Navigate to="/mainNavigation" /> : <Signin />} />
-      <Route
-        path="/mainNavigation"
-        element={user ? <MainNavigationPage /> : <Navigate to="/signin" />}
-      />
+      <Route path="/mainNavigation" element={user ? <MainNavigationPage /> : <Navigate to="/" />} />
     </Routes>
   );
 };

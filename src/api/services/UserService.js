@@ -42,16 +42,10 @@ class UserService {
   }
 
   static sendOtp = async (email) => {
-    try {
-      const response = await axios.post(`/api/v1/auth/forgot-password-send-otp?email=${email}`);
-      if (response.status === 200) {
-        if (response.data === true) {
-          return response;
-        }
-      }
-    } catch (error) {
-      if (error.response.status === 400) {
-        return error.response;
+    const response = await axios.post(`/api/v1/auth/forgot-password-send-otp?email=${email}`);
+    if (response.status === 200) {
+      if (response.data === true) {
+        return response;
       }
     }
   };
