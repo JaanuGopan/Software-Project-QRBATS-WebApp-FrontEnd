@@ -85,11 +85,11 @@ function Signin({ handleCloseSignin }) {
           </div>
         </div>
         <button onClick={handleBackButtonAction} className="back-button">
-          <BiLeftArrowAlt size={'20px'} />
+          <BiLeftArrowAlt className="back-icon" size={'20px'} />
         </button>
         <p className="head1">{title}</p>
-        <div className="content">
-          <div className="bodyContent">
+        <div className="row justify-content-center">
+          <div className="col-12 col-md-8 col-lg-6">
             {showLogin && <LoginForm handleShowForgotPassword={handleShowSendOtp} />}
             {showForgetPassword && (
               <ForgotPassword
