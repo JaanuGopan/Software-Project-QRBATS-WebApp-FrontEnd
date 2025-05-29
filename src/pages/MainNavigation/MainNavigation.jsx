@@ -19,15 +19,13 @@ import StaffDashboard from '../Staff/StaffDashboard';
 import StudentDashboard from '../Student/StudentDashboard';
 import './MainNavigation.css';
 
-const MainNavigationPage = () => {
+const MainNavigationPage = ({ contentName }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const sideBarIndex = localStorage.getItem('sideBarIndex');
   const { user, logout } = useContext(AuthContext);
   const { role } = user || {};
 
   const [venuesList, setVenuesList] = useState([]);
-  const [openMenu, setOpenMenu] = useState(0);
   const [handleShowLogoutWindow, setHandleShowLogoutWindow] = useState(false);
 
   const handleGetLocationNameList = async () => {
@@ -44,11 +42,6 @@ const MainNavigationPage = () => {
       navigate('/');
     }
     handleGetLocationNameList();
-    if (sideBarIndex) {
-      setOpenMenu(parseInt(sideBarIndex));
-    } else {
-      handleNavigate(0);
-    }
   }, [user, navigate]);
 
   useEffect(() => {
@@ -66,38 +59,42 @@ const MainNavigationPage = () => {
   };
 
   const renderContent = () => {
-    const lecturerMenu = [
-      <LecturerDashboard />,
-      <LectureCreationPage />,
-      <EventCreationDashboard />,
-      <ModulePage />,
-      <ReportPage />,
-      <EventReport />,
-      <Setting />,
-    ];
-
-    const adminMenu = [
-      <AdminDashboard />,
-      <StaffDashboard />,
-      <StudentDashboard />,
-      <EventReport />,
-      null,
-      null,
-      <Setting />,
-    ];
-
     if (role === 'LECTURER') {
-      return lecturerMenu[openMenu];
+      switch (contentName) {
+        case 'LecturerDashboard':
+          return <LecturerDashboard />;
+        case 'LectureCreationPage':
+          return <LectureCreationPage />;
+        case 'EventCreationDashboard':
+          return <EventCreationDashboard />;
+        case 'ModulePage':
+          return <ModulePage />;
+        case 'ReportPage':
+          return <ReportPage />;
+        case 'EventReport':
+          return <EventReport />;
+        case 'Settings':
+          return <Setting />;
+        default:
+          return null;
+      }
     } else if (role === 'ADMIN') {
-      return adminMenu[openMenu];
+      switch (contentName) {
+        case 'AdminDashboard':
+          return <AdminDashboard />;
+        case 'StaffDashboard':
+          return <StaffDashboard />;
+        case 'StudentDashboard':
+          return <StudentDashboard />;
+        case 'EventReport':
+          return <EventReport />;
+        case 'Settings':
+          return <Setting />;
+        default:
+          return null;
+      }
     }
     return null;
-  };
-
-  const handleNavigate = (index) => {
-    setOpenMenu(index);
-    localStorage.removeItem('sideBarIndex');
-    localStorage.setItem('sideBarIndex', index);
   };
 
   return (
@@ -105,14 +102,12 @@ const MainNavigationPage = () => {
       <div className="row h-100">
         <div className="col">
           <div className="row position-fixed w-100 nav-bar-container">
-            <Navbar setIndex={handleNavigate} />
+            <Navbar />
           </div>
           <div className="main-content-container row flex-nowrap">
             <div className="col-auto">
               <SideBar
                 handleClose={handleClose}
-                index={openMenu}
-                setIndex={handleNavigate}
                 handleShowLogoutWindow={() => {
                   setHandleShowLogoutWindow(true);
                 }}

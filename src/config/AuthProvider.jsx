@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 export const AuthContext = createContext(null);
@@ -13,7 +13,7 @@ const AuthProvider = ({ children }) => {
   const [authToken, setAuthToken] = useState(localStorage.getItem('authToken') || null);
 
   // Function to handle login
-  const login = async (userName, password) => {
+  const login = async (userName, password, navigator) => {
     const response = await axios.get(
       `/api/v1/auth/login?userName=${userName}&password=${password}`
     );
@@ -27,6 +27,14 @@ const AuthProvider = ({ children }) => {
 
       setAuthToken(token);
       setUser(user);
+
+      if (navigator) {
+        if (user.role === 'ADMIN') {
+          navigator('/admin/dashboard');
+        } else if (user.role === 'LECTURER') {
+          navigator('/lecturer/dashboard');
+        }
+      }
     }
   };
 

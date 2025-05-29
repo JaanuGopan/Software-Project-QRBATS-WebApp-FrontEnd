@@ -30,7 +30,11 @@ const Navigator = () => {
       </div>
       <Button
         onClick={() => {
-          user ? navigate('/mainNavigation') : setShowSigninPopup(true);
+          user?.role === 'ADMIN'
+            ? navigate('/admin/dashboard')
+            : user?.role === 'LECTURER'
+              ? navigate('/lecturer/dashboard')
+              : setShowSigninPopup(true);
         }}
         id="loginID"
         style={{

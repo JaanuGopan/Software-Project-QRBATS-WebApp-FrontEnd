@@ -22,8 +22,7 @@ const LoginForm = ({ handleShowForgotPassword }) => {
     e.preventDefault();
     try {
       setProcessing(true);
-      const response = await login(userName, password);
-      navigate('/mainNavigation');
+      const user = await login(userName, password, navigate);
     } catch (error) {
       toast.error('Error In LogIn Service.');
       console.error('Login failed', error);

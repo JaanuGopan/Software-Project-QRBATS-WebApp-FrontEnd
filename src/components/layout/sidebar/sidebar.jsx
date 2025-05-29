@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AiFillDashboard } from 'react-icons/ai';
 import { FaUserTie } from 'react-icons/fa';
 import { IoMdSchool } from 'react-icons/io';
@@ -7,18 +7,68 @@ import { MdOutlineEventNote, MdQrCode } from 'react-icons/md';
 import { PiStudentBold } from 'react-icons/pi';
 import { TbReport } from 'react-icons/tb';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import logo from '../../../assets/Images/logo/logo_white.png';
 import '../../../pages/StaffMainNavigation/StaffMainNavigation.css';
 import SideBarButton from './sidebar-button';
 import './sidebar.css';
 
-const SideBar = ({ index, setIndex, handleShowLogoutWindow, role }) => {
+const SideBar = ({ handleShowLogoutWindow, role }) => {
   const dispatch = useDispatch();
   const [showSideBar, setShowSideBar] = useState(true);
+  const [activeMenu, setActiveMenu] = useState(0);
+  const navigate = useNavigate();
 
   const handleMenuClick = (menuIndex) => {
-    setIndex(menuIndex);
-    checkScreenWidth();
+    // Navigate to the correct route based on role and menuIndex
+    setActiveMenu(menuIndex);
+    if (role === 'ADMIN') {
+      switch (menuIndex) {
+        case 0:
+          navigate('/admin/dashboard');
+          break;
+        case 1:
+          navigate('/admin/staff');
+          break;
+        case 2:
+          navigate('/admin/student');
+          break;
+        case 3:
+          navigate('/admin/report');
+          break;
+        case 6:
+          navigate('/admin/settings');
+          break;
+        default:
+          break;
+      }
+    } else if (role === 'LECTURER') {
+      switch (menuIndex) {
+        case 0:
+          navigate('/lecturer/dashboard');
+          break;
+        case 1:
+          navigate('/lecturer/lectures');
+          break;
+        case 2:
+          navigate('/lecturer/events');
+          break;
+        case 3:
+          navigate('/lecturer/modules');
+          break;
+        case 4:
+          navigate('/lecturer/reports');
+          break;
+        case 5:
+          navigate('/lecturer/event-report');
+          break;
+        case 6:
+          navigate('/lecturer/settings');
+          break;
+        default:
+          break;
+      }
+    }
   };
 
   const handleHideSidebar = () => {
@@ -42,7 +92,7 @@ const SideBar = ({ index, setIndex, handleShowLogoutWindow, role }) => {
           handleSidebarMenu={() => handleMenuClick(0)}
           title={'Dashboard'}
           icon={<AiFillDashboard />}
-          isOpen={index === 0}
+          isOpen={activeMenu === 0}
         />
       </div>
       <div className="row justify-content-center my-1">
@@ -50,7 +100,7 @@ const SideBar = ({ index, setIndex, handleShowLogoutWindow, role }) => {
           handleSidebarMenu={() => handleMenuClick(1)}
           title={'Lecture'}
           icon={<IoMdSchool />}
-          isOpen={index === 1}
+          isOpen={activeMenu === 1}
         />
       </div>
       <div className="row justify-content-center my-1">
@@ -58,7 +108,7 @@ const SideBar = ({ index, setIndex, handleShowLogoutWindow, role }) => {
           handleSidebarMenu={() => handleMenuClick(2)}
           title={'Event'}
           icon={<MdQrCode />}
-          isOpen={index === 2}
+          isOpen={activeMenu === 2}
         />
       </div>
       <div className="row justify-content-center my-1">
@@ -66,7 +116,7 @@ const SideBar = ({ index, setIndex, handleShowLogoutWindow, role }) => {
           handleSidebarMenu={() => handleMenuClick(3)}
           title={'Module'}
           icon={<MdOutlineEventNote />}
-          isOpen={index === 3}
+          isOpen={activeMenu === 3}
         />
       </div>
       <div className="row justify-content-center my-1">
@@ -74,7 +124,7 @@ const SideBar = ({ index, setIndex, handleShowLogoutWindow, role }) => {
           handleSidebarMenu={() => handleMenuClick(4)}
           title={'Lecture Report'}
           icon={<TbReport />}
-          isOpen={index === 4}
+          isOpen={activeMenu === 4}
         />
       </div>
       <div className="row justify-content-center my-1">
@@ -82,23 +132,15 @@ const SideBar = ({ index, setIndex, handleShowLogoutWindow, role }) => {
           handleSidebarMenu={() => handleMenuClick(5)}
           title={'Event Report'}
           icon={<TbReport />}
-          isOpen={index === 5}
+          isOpen={activeMenu === 5}
         />
       </div>
-      {/* <div className="row justify-content-center my-1">
-        <SideBarButton
-          handleSidebarMenu={() => handleMenuClick(7)}
-          title={'Calendar'}
-          icon={<IoCalendarOutline />}
-          isOpen={index === 7}
-        />
-      </div> */}
       <div className="row justify-content-center my-1">
         <SideBarButton
           handleSidebarMenu={() => handleMenuClick(6)}
           title={'Settings'}
           icon={<IoSettings />}
-          isOpen={index === 6}
+          isOpen={activeMenu === 6}
         />
       </div>
       <div className="row justify-content-center my-1">
@@ -118,7 +160,7 @@ const SideBar = ({ index, setIndex, handleShowLogoutWindow, role }) => {
           handleSidebarMenu={() => handleMenuClick(0)}
           title={'Dashboard'}
           icon={<AiFillDashboard />}
-          isOpen={index === 0}
+          isOpen={activeMenu === 0}
         />
       </div>
       <div className="row justify-content-center my-1">
@@ -126,7 +168,7 @@ const SideBar = ({ index, setIndex, handleShowLogoutWindow, role }) => {
           handleSidebarMenu={() => handleMenuClick(1)}
           title={'Staff'}
           icon={<FaUserTie />}
-          isOpen={index === 1}
+          isOpen={activeMenu === 1}
         />
       </div>
       <div className="row justify-content-center my-1">
@@ -134,7 +176,7 @@ const SideBar = ({ index, setIndex, handleShowLogoutWindow, role }) => {
           handleSidebarMenu={() => handleMenuClick(2)}
           title={'Student'}
           icon={<PiStudentBold />}
-          isOpen={index === 2}
+          isOpen={activeMenu === 2}
         />
       </div>
       <div className="row justify-content-center my-1">
@@ -142,7 +184,7 @@ const SideBar = ({ index, setIndex, handleShowLogoutWindow, role }) => {
           handleSidebarMenu={() => handleMenuClick(3)}
           title={'Report'}
           icon={<TbReport />}
-          isOpen={index === 3}
+          isOpen={activeMenu === 3}
         />
       </div>
       <div className="row justify-content-center my-1">
@@ -150,7 +192,7 @@ const SideBar = ({ index, setIndex, handleShowLogoutWindow, role }) => {
           handleSidebarMenu={() => handleMenuClick(6)}
           title={'Settings'}
           icon={<IoSettings />}
-          isOpen={index === 6}
+          isOpen={activeMenu === 6}
         />
       </div>
       <div className="row justify-content-center my-1">
