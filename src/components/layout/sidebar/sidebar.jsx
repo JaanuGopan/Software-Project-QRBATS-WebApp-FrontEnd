@@ -18,7 +18,9 @@ const SideBar = ({ handleShowLogoutWindow, role }) => {
   const location = useLocation();
 
   const handleMenuClick = (menuIndex) => {
-    window.screen.width >= 576 && setShowSideBar(false);
+    if (window.innerWidth <= 576) {
+      setShowSideBar(false);
+    }
 
     if (role === 'ADMIN') {
       switch (menuIndex) {
