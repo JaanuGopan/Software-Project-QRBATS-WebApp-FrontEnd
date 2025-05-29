@@ -6,22 +6,20 @@ import { IoLogOut, IoMenu, IoSettings } from 'react-icons/io5';
 import { MdOutlineEventNote, MdQrCode } from 'react-icons/md';
 import { PiStudentBold } from 'react-icons/pi';
 import { TbReport } from 'react-icons/tb';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../../assets/Images/logo/logo_white.png';
 import '../../../pages/StaffMainNavigation/StaffMainNavigation.css';
 import SideBarButton from './sidebar-button';
 import './sidebar.css';
 
 const SideBar = ({ handleShowLogoutWindow, role }) => {
-  const dispatch = useDispatch();
   const [showSideBar, setShowSideBar] = useState(true);
-  const [activeMenu, setActiveMenu] = useState(0);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleMenuClick = (menuIndex) => {
-    // Navigate to the correct route based on role and menuIndex
-    setActiveMenu(menuIndex);
+    window.screen.width >= 576 && setShowSideBar(false);
+
     if (role === 'ADMIN') {
       switch (menuIndex) {
         case 0:
@@ -85,6 +83,11 @@ const SideBar = ({ handleShowLogoutWindow, role }) => {
     return () => window.removeEventListener('resize', checkScreenWidth);
   }, []);
 
+  // Helper to check if current path matches
+  const isActive = (paths) => {
+    return paths.some((path) => location.pathname.startsWith(path));
+  };
+
   const renderLecturerMenu = () => (
     <>
       <div className="row justify-content-center my-1 mt-sm-5 mt-md-0">
@@ -92,7 +95,7 @@ const SideBar = ({ handleShowLogoutWindow, role }) => {
           handleSidebarMenu={() => handleMenuClick(0)}
           title={'Dashboard'}
           icon={<AiFillDashboard />}
-          isOpen={activeMenu === 0}
+          isOpen={isActive(['/lecturer/dashboard'])}
         />
       </div>
       <div className="row justify-content-center my-1">
@@ -100,7 +103,7 @@ const SideBar = ({ handleShowLogoutWindow, role }) => {
           handleSidebarMenu={() => handleMenuClick(1)}
           title={'Lecture'}
           icon={<IoMdSchool />}
-          isOpen={activeMenu === 1}
+          isOpen={isActive(['/lecturer/lectures'])}
         />
       </div>
       <div className="row justify-content-center my-1">
@@ -108,7 +111,7 @@ const SideBar = ({ handleShowLogoutWindow, role }) => {
           handleSidebarMenu={() => handleMenuClick(2)}
           title={'Event'}
           icon={<MdQrCode />}
-          isOpen={activeMenu === 2}
+          isOpen={isActive(['/lecturer/events'])}
         />
       </div>
       <div className="row justify-content-center my-1">
@@ -116,7 +119,7 @@ const SideBar = ({ handleShowLogoutWindow, role }) => {
           handleSidebarMenu={() => handleMenuClick(3)}
           title={'Module'}
           icon={<MdOutlineEventNote />}
-          isOpen={activeMenu === 3}
+          isOpen={isActive(['/lecturer/modules'])}
         />
       </div>
       <div className="row justify-content-center my-1">
@@ -124,7 +127,7 @@ const SideBar = ({ handleShowLogoutWindow, role }) => {
           handleSidebarMenu={() => handleMenuClick(4)}
           title={'Lecture Report'}
           icon={<TbReport />}
-          isOpen={activeMenu === 4}
+          isOpen={isActive(['/lecturer/reports'])}
         />
       </div>
       <div className="row justify-content-center my-1">
@@ -132,7 +135,7 @@ const SideBar = ({ handleShowLogoutWindow, role }) => {
           handleSidebarMenu={() => handleMenuClick(5)}
           title={'Event Report'}
           icon={<TbReport />}
-          isOpen={activeMenu === 5}
+          isOpen={isActive(['/lecturer/event-report'])}
         />
       </div>
       <div className="row justify-content-center my-1">
@@ -140,7 +143,7 @@ const SideBar = ({ handleShowLogoutWindow, role }) => {
           handleSidebarMenu={() => handleMenuClick(6)}
           title={'Settings'}
           icon={<IoSettings />}
-          isOpen={activeMenu === 6}
+          isOpen={isActive(['/lecturer/settings'])}
         />
       </div>
       <div className="row justify-content-center my-1">
@@ -160,7 +163,7 @@ const SideBar = ({ handleShowLogoutWindow, role }) => {
           handleSidebarMenu={() => handleMenuClick(0)}
           title={'Dashboard'}
           icon={<AiFillDashboard />}
-          isOpen={activeMenu === 0}
+          isOpen={isActive(['/admin/dashboard'])}
         />
       </div>
       <div className="row justify-content-center my-1">
@@ -168,7 +171,7 @@ const SideBar = ({ handleShowLogoutWindow, role }) => {
           handleSidebarMenu={() => handleMenuClick(1)}
           title={'Staff'}
           icon={<FaUserTie />}
-          isOpen={activeMenu === 1}
+          isOpen={isActive(['/admin/staff'])}
         />
       </div>
       <div className="row justify-content-center my-1">
@@ -176,7 +179,7 @@ const SideBar = ({ handleShowLogoutWindow, role }) => {
           handleSidebarMenu={() => handleMenuClick(2)}
           title={'Student'}
           icon={<PiStudentBold />}
-          isOpen={activeMenu === 2}
+          isOpen={isActive(['/admin/student'])}
         />
       </div>
       <div className="row justify-content-center my-1">
@@ -184,7 +187,7 @@ const SideBar = ({ handleShowLogoutWindow, role }) => {
           handleSidebarMenu={() => handleMenuClick(3)}
           title={'Report'}
           icon={<TbReport />}
-          isOpen={activeMenu === 3}
+          isOpen={isActive(['/admin/report'])}
         />
       </div>
       <div className="row justify-content-center my-1">
@@ -192,7 +195,7 @@ const SideBar = ({ handleShowLogoutWindow, role }) => {
           handleSidebarMenu={() => handleMenuClick(6)}
           title={'Settings'}
           icon={<IoSettings />}
-          isOpen={activeMenu === 6}
+          isOpen={isActive(['/admin/settings'])}
         />
       </div>
       <div className="row justify-content-center my-1">
@@ -213,7 +216,7 @@ const SideBar = ({ handleShowLogoutWindow, role }) => {
         </div>
       </div>
       {showSideBar && (
-        <div className="row h-100 side-bar-container mt-2 z-3">
+        <div className="row h-100 side-bar-container mt-2" style={{ zIndex: '1000' }}>
           <div className="col">
             <div className="row d-sm-none d-md-flex align-items-center justify-content-center">
               <div className="col d-flex align-items-center justify-content-center my-4">
