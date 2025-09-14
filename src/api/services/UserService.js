@@ -3,7 +3,7 @@ class UserService {
   static verifyPassword = async (userName, password) => {
     try {
       const response = await axios.get(
-        `/api/v1/auth/verifypassword?userName=${userName}&password=${password}`
+        `/api/v1/auth/verify-password-profile-edit?userName=${userName}&password=${password}`
       );
       if (response) {
         return response.data;
@@ -19,7 +19,7 @@ class UserService {
       firstName: firstName,
       lastName: lastName,
       email: email,
-      userName: userName,
+      userName: userName ? userName : null,
       password: password ? password : null,
       departmentId: departmentId,
     });

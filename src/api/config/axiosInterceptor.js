@@ -6,7 +6,8 @@ const developmentBaseUrl = 'http://localhost:8080';
 const productionBaseUrl = 'https://api.example.com';
 const facultyBaseUrl = 'http://10.50.227.44:8080';
 const ngrokBaseUrl = 'https://redfish-real-directly.ngrok-free.app';
-const facultyServerPublicIp = 'http://192.248.50.239:8080';
+const facultyServerBackendApi = 'http://192.248.50.239:8080';
+const facultyServerPublicIp = 'http://192.248.50.239';
 
 const TIMEOUT = 60 * 1000; // 60 seconds timeout
 
@@ -47,7 +48,7 @@ axios.interceptors.response.use(
         handleLogout();
       } else if (error.response.status === 403) {
         toast.warn('Forbidden! Access denied.', { position: 'top-right', autoClose: 3000 });
-        handleLogout();
+        //handleLogout();
       } else if (error.response.status >= 500) {
         toast.error('Server error! Please try again later.', {
           position: 'top-right',

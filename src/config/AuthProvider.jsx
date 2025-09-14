@@ -14,9 +14,11 @@ const AuthProvider = ({ children }) => {
 
   // Function to handle login
   const login = async (userName, password, navigator) => {
+    alert(userName + password);
     const response = await axios.get(
-      `/api/v1/auth/login?userName=${userName}&password=${password}`
+      `/api/v1/auth/login?userName=${encodeURIComponent(userName)}&password=${encodeURIComponent(password)}`
     );
+
     if (response.status === 200 && response.data && response.data.token) {
       toast.success('Successfully LogIn.');
       const { token, refreshToken, user } = response.data;
@@ -36,6 +38,7 @@ const AuthProvider = ({ children }) => {
         }
       }
     }
+    return response;
   };
 
   // Function to handle logout

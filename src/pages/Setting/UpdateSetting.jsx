@@ -1,10 +1,10 @@
 import Switch from '@mui/material/Switch';
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import { useContext, useEffect, useState } from 'react';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { useDispatch } from 'react-redux';
 import Select from 'react-select';
+import { toast } from 'react-toastify';
 import UserService from '../../api/services/UserService';
 import InputField from '../../components/textfields/InputBox/InputField';
 import InputPassword from '../../components/textfields/InputPassword/InputPassword';
@@ -23,13 +23,14 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
   const [email, setEmail] = useState('');
   const [userRole, setUserRole] = useState();
   const [departmentId, setDepartmentId] = useState({});
-  const [userName, setUserName] = useState('');
+  const [oldUserName, setOldUserName] = useState('');
+  const [newUserName, setNewUserName] = useState('');
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const [errors, setErrors] = useState({});
-  const [showOldPassword, setShowOldPassword] = useState(false);
-  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showOldUsernameAndPassword, setShowOldUsernameAndPassword] = useState(false);
+  const [showNewUsernameAndPassword, setShowNewUsernameAndPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const departmentList = Department.departmentList.map((value, index) => ({
@@ -43,7 +44,7 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
   useEffect(() => {
     if (user) {
       const response = axios.get('/api/v1/auth/user').then((res) => {
-        setUserName(res.data.userName);
+        //setUserName(res.data.userName);
         setFirstName(res.data.firstName);
         setLastName(res.data.lastName);
         setEmail(res.data.email);
@@ -56,9 +57,9 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
     }
   }, []);
 
-  const handleShowOldPassword = (event) => {
-    setShowOldPassword(event.target.checked);
-    setShowNewPassword(false);
+  const handleShowOldUsernameAndPassword = (event) => {
+    setShowOldUsernameAndPassword(event.target.checked);
+    setShowNewUsernameAndPassword(false);
     setOldPassword('');
   };
 
@@ -89,12 +90,7 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
       formErrors['email'] = 'Email is not valid';
     }
 
-    if (!userName) {
-      formIsValid = false;
-      formErrors['userName'] = 'User Name cannot be empty';
-    }
-
-    if (showNewPassword) {
+    if (showNewUsernameAndPassword) {
       if (!newPassword) {
         formIsValid = false;
         formErrors['newPassword'] = 'New Password cannot be empty';
@@ -103,6 +99,11 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
       if (newPassword !== confirmNewPassword) {
         formIsValid = false;
         formErrors['confirmNewPassword'] = 'Passwords do not match';
+      }
+
+      if (!newUserName) {
+        formIsValid = false;
+        formErrors['newUserName'] = 'New User Name cannot be empty';
       }
     }
 
@@ -125,7 +126,7 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
           firstName,
           lastName,
           email,
-          userName,
+          newUserName,
           newPassword,
           departmentId.value
         );
@@ -148,19 +149,30 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
 
   const handleVerifyPassword = async (e) => {
     e.preventDefault();
-    if (oldPassword) {
+    if (oldPassword && oldUserName) {
       setIsLoading(true);
       try {
-        const response = await UserService.verifyPassword(userName, oldPassword);
+        const response = await UserService.verifyPassword(oldUserName, oldPassword);
         if (response === true) {
-          setShowNewPassword(true);
+          setShowNewUsernameAndPassword(true);
           notifyPasswordVerify();
+        } else {
+          toast.error('Old User Name or Password is incorrect');
         }
       } catch (error) {
         console.error(error);
       } finally {
         setIsLoading(false);
       }
+    } else {
+      let formErrors = {};
+      if (!oldUserName) {
+        formErrors['oldUserName'] = 'Old User Name cannot be empty';
+      }
+      if (!oldPassword) {
+        formErrors['oldPassword'] = 'Old Password cannot be empty';
+      }
+      setErrors(formErrors);
     }
   };
 
@@ -173,7 +185,6 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
 
   return (
     <div className="setting-update-main-container">
-      <Toaster />
       <div className="setting-update-title-close-button">
         <h3 className="setting-update-title">Update Profile</h3>
         <div className="setting-update-close-button" onClick={handleCloseUpdateSettingWindow}>
@@ -231,66 +242,93 @@ const UpdateSetting = ({ handleCloseUpdateSettingWindow }) => {
                 />
               </div>
             )}
-            <div className="Setting-input-with-icon">
-              <label>User Name</label>
-              <InputField
-                inputType={'text'}
-                placeholder={'Enter UserName'}
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-                error={!!errors.userName}
-                helperText={errors.userName}
-              />
-            </div>
-            {false && (
-              <div>
-                <label>Change Password</label>
-                <Switch
-                  checked={showOldPassword}
-                  onChange={handleShowOldPassword}
-                  inputProps={{ 'aria-label': 'controlled' }}
-                />
-              </div>
-            )}
-
-            {showOldPassword === true && showNewPassword === false && (
-              <div className="Setting-input-with-icon">
-                <label>Old Password</label>
-                <div className="col">
-                  <InputPassword
-                    placeholder={'Enter Old Password'}
-                    value={oldPassword}
-                    onChange={(e) => setOldPassword(e.target.value)}
-                    buttonText={'verify'}
-                    onButtonClick={(e) => handleVerifyPassword(e)}
-                    isLoading={isLoading}
-                    error={!!errors.oldPassword}
-                    helperText={errors.oldPassword}
+            {true && (
+              <div className="row my-2 align-items-center">
+                <div className="col-auto">
+                  <label>Change Username or Password</label>
+                </div>
+                <div className="col-auto">
+                  <Switch
+                    checked={showOldUsernameAndPassword}
+                    onChange={handleShowOldUsernameAndPassword}
+                    inputProps={{ 'aria-label': 'controlled' }}
                   />
                 </div>
               </div>
             )}
-            {showOldPassword && showNewPassword && (
-              <div className="Setting-input-with-icon">
-                <label>New Password</label>
-                <InputPassword
-                  placeholder={'Enter new Password'}
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  showButton={false}
-                  error={!!errors.newPassword}
-                  helperText={errors.newPassword}
-                />
-                <label>Confirm New Password</label>
-                <InputPassword
-                  placeholder={'Renter new Password'}
-                  value={confirmNewPassword}
-                  onChange={(e) => setConfirmNewPassword(e.target.value)}
-                  showButton={false}
-                  error={!!errors.confirmNewPassword}
-                  helperText={errors.confirmNewPassword}
-                />
-              </div>
+
+            {showOldUsernameAndPassword === true && showNewUsernameAndPassword === false && (
+              <>
+                <div className="Setting-input-with-icon">
+                  <label>Old User Name</label>
+                  <div className="col">
+                    <InputField
+                      inputType={'text'}
+                      placeholder={'Enter Old UserName'}
+                      value={oldUserName}
+                      onChange={(e) => {
+                        setOldUserName(e.target.value);
+                        setErrors({ ...errors, oldUserName: '' });
+                      }}
+                      error={!!errors.oldUserName}
+                      helperText={errors.oldUserName}
+                    />
+                  </div>
+                </div>
+                <div className="Setting-input-with-icon">
+                  <label>Old Password</label>
+                  <div className="col">
+                    <InputPassword
+                      placeholder={'Enter Old Password'}
+                      value={oldPassword}
+                      onChange={(e) => {
+                        setOldPassword(e.target.value);
+                        setErrors({ ...errors, oldPassword: '' });
+                      }}
+                      buttonText={'verify'}
+                      onButtonClick={(e) => handleVerifyPassword(e)}
+                      isLoading={isLoading}
+                      error={!!errors.oldPassword}
+                      helperText={errors.oldPassword}
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+            {showOldUsernameAndPassword && showNewUsernameAndPassword && (
+              <>
+                <div className="Setting-input-with-icon">
+                  <label>New User Name</label>
+                  <InputField
+                    inputType={'text'}
+                    placeholder={'Enter New UserName'}
+                    value={newUserName}
+                    onChange={(e) => setNewUserName(e.target.value)}
+                    error={!!errors.newUserName}
+                    helperText={errors.newUserName}
+                  />
+                </div>
+                <div className="Setting-input-with-icon">
+                  <label>New Password</label>
+                  <InputPassword
+                    placeholder={'Enter new Password'}
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    showButton={false}
+                    error={!!errors.newPassword}
+                    helperText={errors.newPassword}
+                  />
+                  <label>Confirm New Password</label>
+                  <InputPassword
+                    placeholder={'Renter new Password'}
+                    value={confirmNewPassword}
+                    onChange={(e) => setConfirmNewPassword(e.target.value)}
+                    showButton={false}
+                    error={!!errors.confirmNewPassword}
+                    helperText={errors.confirmNewPassword}
+                  />
+                </div>
+              </>
             )}
 
             <div className="settings-update-button">
