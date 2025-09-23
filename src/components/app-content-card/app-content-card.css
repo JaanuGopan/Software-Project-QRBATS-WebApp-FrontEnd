@@ -7,5 +7,5 @@
 }
 
 .has-bottom-buttons {
-  height: calc(100vh - 75px - 150px);
+  height: calc(100vh - 75px - 150px + 75px);
 }
