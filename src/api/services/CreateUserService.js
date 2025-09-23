@@ -3,7 +3,7 @@ import axios from 'axios';
 class CreateUserService {
   static async saveUser(firstName, lastName, email, password, userName, departmentId, role) {
     try {
-      const response = await axios.post('/api/v1/auth/signup', {
+      const response = await axios.post('/api/v1/auth/admin-creates-user', {
         firstName: firstName,
         lastName: lastName,
         email: email,

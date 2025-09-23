@@ -77,8 +77,8 @@ function Signin({ handleCloseSignin }) {
   };
 
   return (
-    <div className="ComponentBackground">
-      <div className="ComponentContent">
+    <div className=" ComponentBackground">
+      <div className="col ComponentContent">
         <div className="row">
           <div className="col-auto me-0 close-btn">
             <IoMdCloseCircleOutline className="close-icon" onClick={handleCloseSignin} />
@@ -88,28 +88,40 @@ function Signin({ handleCloseSignin }) {
           <BiLeftArrowAlt className="back-icon" size={'20px'} />
         </button>
         <p className="head1">{title}</p>
-        <div className="row justify-content-center">
-          <div className="col-12 col-md-8 col-lg-6">
-            {showLogin && <LoginForm handleShowForgotPassword={handleShowSendOtp} />}
+        <div className="row justify-content-center align-items-center">
+          <div className="col">
+            {showLogin && (
+              <div className="row">
+                <div className="col">
+                  <LoginForm handleShowForgotPassword={handleShowSendOtp} />
+                </div>
+              </div>
+            )}
             {showForgetPassword && (
-              <ForgotPassword
-                handleCloseForgotPassword={handleCloseSendOtp}
-                handleShowOtpVerification={(email) => handleShowOtpVerification(email)}
-              />
+              <div className="row">
+                <ForgotPassword
+                  handleCloseForgotPassword={handleCloseSendOtp}
+                  handleShowOtpVerification={(email) => handleShowOtpVerification(email)}
+                />
+              </div>
             )}
             {showOtpVerification && !showForgetPassword && email !== '' && (
-              <OtpVerification
-                handleCloseOtpVerification={handleCloseOtpVerification}
-                handleShowPasswordChange={handleShowResetPassword}
-                email={email}
-              />
+              <div className="row">
+                <OtpVerification
+                  handleCloseOtpVerification={handleCloseOtpVerification}
+                  handleShowPasswordChange={handleShowResetPassword}
+                  email={email}
+                />
+              </div>
             )}
             {showResetPassword && (
-              <ResetPassword
-                handleCloseResetPassword={handleCloseResetPassword}
-                handleShowLogin={handleCloseSendOtp}
-                email={email}
-              />
+              <div className="row">
+                <ResetPassword
+                  handleCloseResetPassword={handleCloseResetPassword}
+                  handleShowLogin={handleCloseSendOtp}
+                  email={email}
+                />
+              </div>
             )}
           </div>
         </div>

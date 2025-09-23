@@ -1,5 +1,5 @@
 import { CircularProgress } from '@mui/material';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import Select from 'react-select';
 import { toast } from 'react-toastify';
@@ -90,11 +90,6 @@ const CreateStudentWindow = ({ handleCloseCreateStudentWindow, handleReloadStude
       toast.error(
         'Password must contain at least one uppercase letter, one lowercase letter, one number, and be more than 8 characters'
       );
-      return false;
-    }
-
-    if (/^(?=.*[#,?$%]).+$/.test(password)) {
-      toast.error("Password should not include the characters '#', '%', '?', or '$'.");
       return false;
     }
 

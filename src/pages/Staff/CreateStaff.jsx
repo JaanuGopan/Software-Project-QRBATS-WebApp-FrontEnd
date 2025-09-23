@@ -1,5 +1,5 @@
 import { CircularProgress } from '@mui/material';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import Select from 'react-select';
 import { toast } from 'react-toastify';
@@ -66,10 +66,6 @@ const CreateStaff = ({ handleCloseCreateStaffWindow, reloadStaffList }) => {
       return false;
     }
 
-    if (/^(?=.*[#,?$%]).+$/.test(password)) {
-      toast.error("Password should not include the characters '#', '%', '?', or '$'.");
-      return false;
-    }
     if (!departmentId) {
       toast.error('Please select department');
       return false;
