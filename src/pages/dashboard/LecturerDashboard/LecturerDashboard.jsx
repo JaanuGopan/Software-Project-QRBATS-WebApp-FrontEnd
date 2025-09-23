@@ -1,9 +1,10 @@
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import EventService from '../../../api/services/EventService';
 import LectureService from '../../../api/services/LectureService';
 import AppContentCard from '../../../components/app-content-card/app-content-card';
+import AppSearch from '../../../components/app-search/app-search';
 import EventTable from '../../../components/tables/event-table';
 import LecturesTable from '../../../components/tables/lectures-table';
 import WarningPopup from '../../../components/warningPopup/WarningPopup';
@@ -148,18 +149,7 @@ const LecturerDashboard = () => {
             </ToggleButtonGroup>
           </div>
           <div className="col-auto">
-            <input
-              type="text"
-              placeholder="Search..."
-              style={{
-                width: '150px',
-                padding: '3px 40px',
-                border: '0.5px solid black',
-                borderRadius: '5px',
-                textAlign: 'center',
-              }}
-              onChange={(e) => setSearchLecture(e.target.value)}
-            />
+            <AppSearch setSearch={setSearchLecture} />
           </div>
         </div>
         {selectTable === 'Lectures' ? (

@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MdArrowBack } from 'react-icons/md';
 import EventService from '../../api/services/EventService';
 import AppContentCard from '../../components/app-content-card/app-content-card';
+import AppSearch from '../../components/app-search/app-search';
 import NormalButton from '../../components/buttons/NormalButton';
 import EventAttendanceTable from '../../components/layout/AdminDashboardComponent/event-attendance-table';
 import EventReportTable from '../../components/layout/AdminDashboardComponent/event-report-table';
@@ -45,18 +46,7 @@ const EventReport = () => {
             <div className="row py-2 justify-content-between align-items-center">
               <div className="col-auto fs-5 fw-bold ms-4">All Event Details</div>
               <div className="col-auto">
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  style={{
-                    width: '150px',
-                    padding: '3px 40px',
-                    border: '0.5px solid black',
-                    borderRadius: '5px',
-                    textAlign: 'center',
-                  }}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
+                <AppSearch setSearch={setSearch} />
               </div>
             </div>
             <AppContentCard>
@@ -74,18 +64,7 @@ const EventReport = () => {
             <div className="row py-2 justify-content-between align-items-center">
               <div className="col-auto fs-5 fw-bold ms-4">Event Attendance Details</div>
               <div className="col-auto">
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  style={{
-                    width: '150px',
-                    padding: '3px 40px',
-                    border: '0.5px solid black',
-                    borderRadius: '5px',
-                    textAlign: 'center',
-                  }}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
+                <AppSearch setSearch={setSearch} />
               </div>
             </div>
             <AppContentCard hasBottomContents={true}>

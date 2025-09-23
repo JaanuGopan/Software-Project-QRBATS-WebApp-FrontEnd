@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import EventService from '../../../api/services/EventService';
 import AppContentCard from '../../../components/app-content-card/app-content-card';
+import AppSearch from '../../../components/app-search/app-search';
 import NormalButton from '../../../components/buttons/NormalButton';
 import EventTable from '../../../components/tables/event-table';
 import WarningPopup from '../../../components/warningPopup/WarningPopup';
@@ -71,18 +72,7 @@ const AdminDashboard = () => {
                 />
               </div>
               <div className="col-auto">
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  style={{
-                    width: '150px',
-                    padding: '3px 40px',
-                    border: '0.5px solid black',
-                    borderRadius: '5px',
-                    textAlign: 'center',
-                  }}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
+                <AppSearch setSearch={setSearch} />
               </div>
             </div>
           </div>

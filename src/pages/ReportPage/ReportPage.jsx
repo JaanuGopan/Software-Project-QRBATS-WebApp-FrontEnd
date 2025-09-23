@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MdArrowBack } from 'react-icons/md';
 import { toast } from 'react-toastify';
 import AttendanceService from '../../api/services/AttendanceService';
 import LectureService from '../../api/services/LectureService';
 import ModuleService from '../../api/services/ModuleService';
 import AppContentCard from '../../components/app-content-card/app-content-card';
+import AppSearch from '../../components/app-search/app-search';
 import NormalButton from '../../components/buttons/NormalButton';
 import LectureReportTable from './LectureReportTable';
 import LectureStudentReportTable from './LectureStudentReportTable';
@@ -196,24 +197,7 @@ const ReportPage = () => {
                 </div>
               )}
               <div className="col-auto">
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  style={{
-                    width: '150px',
-                    padding: '3px 40px',
-                    border: '0.5px solid black',
-                    borderRadius: '5px',
-                    textAlign: 'center',
-                  }}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
-                {/* <TextField
-                  id="outlined-basic"
-                  label="Search"
-                  variant="outlined"
-                  onChange={(e) => setSearch(e.target.value)}
-                /> */}
+                <AppSearch setSearch={setSearch} />
               </div>
             </div>
           </div>

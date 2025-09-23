@@ -1,0 +1,7 @@
+.app-search-input {
+  width: 200px;
+  padding: 4px 3px;
+  border: 1px solid #0063a0;
+  border-radius: 5px;
+  text-align: start;
+}

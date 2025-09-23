@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MdArrowBack, MdCreateNewFolder } from 'react-icons/md';
 import { toast } from 'react-toastify';
 import LectureService from '../../api/services/LectureService';
 import ModuleService from '../../api/services/ModuleService';
 import AppContentCard from '../../components/app-content-card/app-content-card';
+import AppSearch from '../../components/app-search/app-search';
 import NormalButton from '../../components/buttons/NormalButton';
 import LecturesTable from '../../components/tables/lectures-table';
 import WarningPopup from '../../components/warningPopup/WarningPopup';
@@ -200,18 +201,7 @@ const ModulePage = () => {
               )}
 
               <div className="col">
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  style={{
-                    width: '150px',
-                    padding: '3px 40px',
-                    border: '0.5px solid black',
-                    borderRadius: '5px',
-                    textAlign: 'center',
-                  }}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
+                <AppSearch setSearch={setSearch} />
               </div>
             </div>
           </div>
