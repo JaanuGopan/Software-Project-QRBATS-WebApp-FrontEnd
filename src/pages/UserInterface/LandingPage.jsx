@@ -1,11 +1,9 @@
-import React from 'react';
-import Navigator from '../../components/layout/UserInterfaceCom/Navigator';
-import './UserInterface.css';
-import AvailableDepartment from '../../components/layout/UserInterfaceCom/AvailableDepartment';
-import { FaStar, FaMapLocationDot, FaUsers, FaUser } from 'react-icons/fa6';
 import { FaFacebook, FaGooglePlus, FaLinkedin } from 'react-icons/fa';
+import { FaMapLocationDot } from 'react-icons/fa6';
 import { IoLogoYoutube } from 'react-icons/io';
+import Navigator from '../../components/layout/UserInterfaceCom/Navigator';
 import HomePageFirstContainerImageSlide from './HomePageFirstContainerImageSlide';
+import './UserInterface.css';
 
 const LandingPage = () => {
   return (
@@ -30,10 +28,10 @@ const LandingPage = () => {
         </div>
       </div>
       <div className="userinterface-container">
-        <div className="userinterface-row">
+        {/* <div className="userinterface-row">
           <AvailableDepartment />
-        </div>
-        <div className="userinterface-users">
+        </div> */}
+        {/* <div className="userinterface-users">
           <h2 style={{ color: 'white', textAlign: 'center' }}>USERS</h2>
           <h5 style={{ color: '#FFFFFF', textAlign: 'center' }}>The Website Useful For</h5>
           <div
@@ -69,7 +67,7 @@ const LandingPage = () => {
               <h5 style={{ paddingLeft: '5px' }}>Admin</h5>
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="userinterface-container1">
           <div className="column">
             <h2
