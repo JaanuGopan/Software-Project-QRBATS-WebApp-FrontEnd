@@ -1,6 +1,6 @@
 import { CircularProgress } from '@mui/material';
 import QRCode from 'qrcode.react';
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { useSelector } from 'react-redux';

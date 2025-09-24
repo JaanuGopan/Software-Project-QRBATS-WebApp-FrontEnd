@@ -120,11 +120,12 @@
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
-  height: 11vh;
+  height: 75px;
   width: 100%;
   min-height: 75px;
   margin: 0px;
-  position: relative;
+  position: fixed;
+  z-index: 5;
 }
 
 .navigate1 {
@@ -241,6 +242,7 @@ a:hover {
   justify-content: space-between;
   padding: 0px 26px;
   background-color: white;
+  margin-top: 75px;
 }
 
 .home-page-first-container-content-container {

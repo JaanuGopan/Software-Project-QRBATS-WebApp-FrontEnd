@@ -11,13 +11,20 @@ const LandingPage = () => {
       <Navigator />
       <div className="home-page-first-container">
         <div className="home-page-first-container-content-container">
-          <h4>Welcome to SkyTicker</h4>
+          <h4
+            style={{
+              color: '#305599',
+              marginBottom: '5px',
+            }}
+          >
+            Welcome to SkyTicker
+          </h4>
           <p className="home-page-first-container-content">
             QR-CODE BASED ATTENDANCE TRACKING SYSTEM USING GPS LOCATION
           </p>
           <p className="home-page-first-container-content-description">
             Our QR-Code Based Attendance Tracking System for university students leverages GPS
-            location to streamline attendance management. Administrators can effortlessly create and
+            location to streamline attendance management. Lecturers can effortlessly create and
             oversee lectures and events, while students mark attendance by scanning a QR code with a
             mobile app. GPS verification ensures accurate logging, making the process efficient and
             reliable.
@@ -28,100 +35,60 @@ const LandingPage = () => {
         </div>
       </div>
       <div className="userinterface-container">
-        {/* <div className="userinterface-row">
-          <AvailableDepartment />
-        </div> */}
-        {/* <div className="userinterface-users">
-          <h2 style={{ color: 'white', textAlign: 'center' }}>USERS</h2>
-          <h5 style={{ color: '#FFFFFF', textAlign: 'center' }}>The Website Useful For</h5>
-          <div
-            style={{
-              display: 'flex',
-              color: 'yellow',
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              alignItems: 'center',
-              justifyContent: 'space-around',
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                flex: 'nowrap',
-                alignItems: 'center',
-              }}
-            >
-              <FaUsers size={20} />
-              <h4 style={{ paddingLeft: '5px' }}>Lecture</h4>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                flex: 'nowrap',
-                alignItems: 'center',
-              }}
-            >
-              <FaUser size={20} />
-              <h5 style={{ paddingLeft: '5px' }}>Admin</h5>
-            </div>
-          </div>
-        </div> */}
         <div className="userinterface-container1">
           <div className="column">
-            <h2
-              style={{
-                color: '#305599',
-                textAlign: 'center',
-                marginBottom: '1px',
-              }}
-            >
-              SKYTICKER
-            </h2>
+            <div className="row align-items-center">
+              <div className="col-auto pe-0">
+                <img
+                  style={{ width: '80px', padding: '10px' }}
+                  src="https://skyticker-mobile.vercel.app/static/media/logo.0046c89c41a6f76706e0.png"
+                  alt="SkyTicker Mobile"
+                />
+              </div>
+              <div className="col-auto pe-0">
+                <h2
+                  style={{
+                    color: '#305599',
+                    textAlign: 'center',
+                    marginBottom: '1px',
+                  }}
+                >
+                  SkyTicker Mobile
+                </h2>
+              </div>
+            </div>
+
             <p style={{ textAlign: 'justify', margin: '0px' }}>
-              Our QR-Code Based Attendance Tracking System for university students leverages GPS
-              location to streamline attendance management. Administrators can effortlessly create
-              and oversee lectures and events, while students mark attendance by scanning a QR code
-              with a mobile app. GPS verification ensures accurate logging, making the process
-              efficient and reliable.
+              Download the SkyTicker mobile app for students to enhance seamless attendance
+              tracking. Scan QR codes to mark your attendance quickly and accurately, ensuring you
+              never miss a class or event. Stay organized and up to date with SkyTicker!
             </p>
-          </div>
-          <div className="column">
-            <h2
-              style={{
-                color: '#305599',
-                textAlign: 'center',
-                marginBottom: '1px',
-              }}
-            >
-              INFO
-            </h2>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                textAlign: 'center',
-              }}
-            >
-              <a target="_blank" style={{ padding: '0% 0% 1% 0%' }} href="https://www.ruh.ac.lk/">
-                University of Ruhuna
-              </a>
-              <a target="_blank" href="https://www.eng.ruh.ac.lk">
-                Faculty of Engineering
-              </a>
+
+            <div className="row align-items-center">
+              <div className="col-auto cursor-pointer">
+                <a
+                  className="text-decoration-underline"
+                  href="https://skyticker-mobile.vercel.app/"
+                >
+                  Download SkyTicker Mobile App
+                </a>
+              </div>
             </div>
           </div>
           <div id="contact-us" className="column">
-            <h2
-              style={{
-                color: '#305599',
-                textAlign: 'center',
-                marginBottom: '0px',
-              }}
-            >
-              CONTACT US
-            </h2>
+            <div className="row align-items-center">
+              <div className="col-auto pe-0">
+                <h2
+                  style={{
+                    color: '#305599',
+                    textAlign: 'center',
+                    marginBottom: '0px',
+                  }}
+                >
+                  CONTACT US
+                </h2>
+              </div>
+            </div>
             <p
               style={{
                 textAlign: 'justify',
@@ -138,7 +105,7 @@ const LandingPage = () => {
                 padding: '0% 0% 1% 0%',
               }}
             >
-              Phone :- +94 75 416 4532
+              Phone: +94 123 456 789
             </p>
             <p
               style={{
@@ -147,7 +114,7 @@ const LandingPage = () => {
                 padding: '0% 0% 5% 0%',
               }}
             >
-              Mail :-{' '}
+              Email:{' '}
               <a target="_blank" href="">
                 skyticker.uor@gmail.com
               </a>

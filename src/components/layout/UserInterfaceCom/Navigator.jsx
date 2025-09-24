@@ -15,18 +15,23 @@ const Navigator = () => {
 
   return (
     <div className="navigate">
-      <div className="navigate1">
-        <img className="logo1" src={logo} alt="Sky Ticker" />
-        <p
-          style={{
-            color: 'white',
-            marginBottom: '0px',
-            fontSize: `25px`,
-            fontWeight: '600',
-          }}
-        >
-          SKY TICKER
-        </p>
+      <div className="d-flex align-items-center justify-content-between ms-3">
+        <div className="col-auto mx-2">
+          <div className="row">
+            <div className="col-auto pe-0">
+              <img
+                className=""
+                style={{ cursor: 'pointer', width: '70px' }}
+                src={logo}
+                alt="Sky Ticker"
+                onClick={() => navigator('/')}
+              />
+            </div>
+            <div className="col-auto d-flex align-items-center ps-0">
+              <p className="Webname">SKY TICKER</p>
+            </div>
+          </div>
+        </div>
       </div>
       <Button
         onClick={() => {

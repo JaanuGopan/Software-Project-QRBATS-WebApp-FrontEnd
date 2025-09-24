@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import LocationService from '../../api/services/LocationService';
 import Navbar from '../../components/layout/navbar/navbar';
@@ -25,13 +25,9 @@ const MainNavigationPage = ({ contentName }) => {
   const { user, logout } = useContext(AuthContext);
   const { role } = user || {};
 
-  const [venuesList, setVenuesList] = useState([]);
-  const [handleShowLogoutWindow, setHandleShowLogoutWindow] = useState(false);
+  const locationList = useSelector((state) => state.locationList);
 
-  const handleGetLocationNameList = async () => {
-    const response = await LocationService.getAllLocationNames();
-    setVenuesList(response);
-  };
+  const [handleShowLogoutWindow, setHandleShowLogoutWindow] = useState(false);
 
   const handleLogoutClick = () => {
     logout();
@@ -41,13 +37,14 @@ const MainNavigationPage = ({ contentName }) => {
     if (!user) {
       navigate('/');
     }
-    handleGetLocationNameList();
   }, [user, navigate]);
 
   useEffect(() => {
-    LocationService.getAllLocationNames().then((res) => {
-      dispatch(setLocationList(res));
-    });
+    if (!locationList || locationList.length === 0) {
+      LocationService.getAllLocationNames().then((res) => {
+        dispatch(setLocationList(res));
+      });
+    }
   }, [dispatch]);
 
   const [isHidden, setIsHidden] = useState(false);
