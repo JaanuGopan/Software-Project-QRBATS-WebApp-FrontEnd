@@ -63,7 +63,6 @@ const LandingPage = () => {
               tracking. Scan QR codes to mark your attendance quickly and accurately, ensuring you
               never miss a class or event. Stay organized and up to date with SkyTicker!
             </p>
-
             <div className="row align-items-center">
               <div className="col-auto cursor-pointer">
                 <a
